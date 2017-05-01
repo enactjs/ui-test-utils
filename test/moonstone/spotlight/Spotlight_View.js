@@ -1,7 +1,8 @@
 import Item from '@enact/moonstone/Item';
-import SpotlightContainerDecorator from '@enact/spotlight/SpotlightContainerDecorator';
 import MoonstoneDecorator from '@enact/moonstone/MoonstoneDecorator';
 import React from 'react';
+import spotlight from '@enact/spotlight';
+import SpotlightContainerDecorator from '@enact/spotlight/SpotlightContainerDecorator';
 
 const Container = SpotlightContainerDecorator('div');
 const style = {
@@ -23,6 +24,12 @@ const style = {
 		flex: '1'
 	}
 };
+
+window.spotlight = spotlight;
+
+// NOTE: Forcing pointer mode off so we can be sure that regardless of webOS pointer mode the app
+// runs the same way
+spotlight.setPointerMode(false);
 
 const app = () => <div>
 	<p>
