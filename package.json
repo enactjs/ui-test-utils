@@ -4,7 +4,7 @@
   "description": "UI Testing for the Enact framework",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "wdio wdio.conf.js"
   },
   "author": "Roy Sutton <roy.sutton@lge.com>",
   "license": "Apache-2.0",
