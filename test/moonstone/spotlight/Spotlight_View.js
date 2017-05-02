@@ -31,7 +31,7 @@ window.spotlight = spotlight;
 // runs the same way
 spotlight.setPointerMode(false);
 
-const app = () => <div>
+const app = (props) => <div {...props}>
 	<p>
 		The containers below will spot the last-focused element. Keep track of the
 		last-focused element in the container when testing and ensure that the correct
@@ -43,7 +43,7 @@ const app = () => <div>
 		<Container style={style.container}>
 			<Item id="item1" className="spottable-default">1</Item>
 			<Item id="item2">2</Item>
-			<Item id="item2">3</Item>
+			<Item id="item3">3</Item>
 			<div id="itemns1">Non-spottable content 1</div>
 			<div id="itemns2">Non-spottable content 2</div>
 			<div id="itemns3">Non-spottable content 3</div>

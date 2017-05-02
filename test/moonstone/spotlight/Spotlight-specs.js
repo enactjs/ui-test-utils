@@ -26,12 +26,51 @@ describe('Spotlight', function () {
 		expect(Page.item1.hasFocus()).to.be.true();
 	});
 
-	it('should return to last spotted control in container', function () {
+	it('should spot default item in next container', function () {
 		Page.open();
 		Page.spotlightDown();
 		Page.spotlightRight();
 		expect(Page.itemA.hasFocus()).to.be.true();
-		Page.spotlightLeft();
-		expect(Page.item2.hasFocus()).to.be.true();
 	});
+
+	it('should spot last spotted control in container when re-entering', function () {
+		Page.open();
+		Page.spotlightDown();
+		Page.spotlightRight();
+		expect(Page.itemA.hasFocus(), 'moved containers').to.be.true();
+		Page.spotlightLeft();
+		expect(Page.item2.hasFocus(), 'moved back').to.be.true();
+	});
+
+	it('should spot nearest control in container when leaving pointer mode with a target in direction', function () {
+		Page.open();
+		// Hovering non-focusable item with pointer
+		Page.item2.moveToObject()
+		// move down (no more spotted controls)
+		Page.spotlightDown();
+		// Should re-spot item 1
+		expect(Page.item3.hasFocus()).to.be.true();
+	});
+
+	it('should spot next container when leaving pointer mode with focus on spottable item', function () {
+		Page.open();
+		// Hovering non-focusable item with pointer
+		Page.item2.moveToObject()
+		// move down (no more spotted controls)
+		Page.spotlightRight();
+		// Should re-spot item 1
+		expect(Page.itemA.hasFocus()).to.be.true();
+	});
+
+	it('should spot closest control in container when leaving pointer in new container', function () {
+		Page.open();
+		// Hovering non-focusable item in different container with pointer
+		Page.nonSpottableItemB.moveToObject()
+		// move down
+		Page.spotlightDown();
+		// Should spot item A
+		expect(Page.itemA.hasFocus()).to.be.true();
+	});
+
+
 });
