@@ -10,6 +10,8 @@ let ILibPlugin = require('ilib-webpack-plugin');
 let pkg = require('./package.json') || {};
 let enact = pkg.enact || {};
 
+process.env.NODE_ENV = 'development';
+
 module.exports = {
 	bail: true,
 	devtool: 'cheap-module-source-map',
