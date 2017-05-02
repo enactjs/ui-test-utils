@@ -1,3 +1,5 @@
+const buildApps = require('./build-apps');
+
 exports.config = {
 
 	//
@@ -143,8 +145,9 @@ exports.config = {
 	 * @param {Object} config wdio configuration object
 	 * @param {Array.<Object>} capabilities list of capabilities details
 	 */
-	// onPrepare: function (config, capabilities) {
-	// },
+	onPrepare: function () {
+		return buildApps();
+	},
 	/**
 	 * Gets executed just before initialising the webdriver session and test framework. It allows you
 	 * to manipulate configurations depending on the capability or spec.
