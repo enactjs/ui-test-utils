@@ -1,4 +1,3 @@
-let fs = require('fs');
 let Page = require('./Input5WayPage');
 
 describe('Input', function () {
@@ -17,9 +16,6 @@ describe('Input', function () {
 	it.only('should focus input 2 on 5-way right', function () {
 		Page.open();
 		Page.spotlightRight();
-		//		browser.saveScreenshot('./wat.png');
-		// let screenshot = browser.saveScreenshot();
-		// fs.writeFileSync('./myShort.png', screenshot)
 		expect(Page.input2.hasFocus()).to.be.true();
 	});
 
