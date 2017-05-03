@@ -13,7 +13,7 @@ describe('Input', function () {
 		expect(Page.input1.element('input').hasFocus()).to.be.true();
 	});
 
-	it.only('should focus input 2 on 5-way right', function () {
+	it('should focus input 2 on 5-way right', function () {
 		Page.open();
 		Page.spotlightRight();
 		expect(Page.input2.hasFocus()).to.be.true();
