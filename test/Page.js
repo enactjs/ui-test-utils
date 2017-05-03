@@ -7,6 +7,10 @@ class Page {
 
 	open (appPath, urlExtra = '') {
 		const url = `localhost:4567/${appPath}/${urlExtra}`
+		browser.setViewportSize({
+			width: 1920,
+			height: 1080
+		});
 		browser.url(url);
 	}
 
@@ -26,6 +30,9 @@ class Page {
 	}
 	spotlightDown () {
 		return this.keyDelay('Down arrow');
+	}
+	spotlightSelect () {
+		return this.keyDelay('Enter');
 	}
 }
 

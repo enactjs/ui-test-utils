@@ -1,0 +1,26 @@
+let fs = require('fs');
+let Page = require('./Input5WayPage');
+
+describe('Input', function () {
+
+	it('should have focus on first input at start', function () {
+		Page.open();
+		expect(Page.input1.hasFocus()).to.be.true();
+	});
+
+	it('should focus input element on enter', function () {
+		Page.open();
+		Page.spotlightSelect();
+		expect(Page.input1.element('input').hasFocus()).to.be.true();
+	});
+
+	it.only('should focus input 2 on 5-way right', function () {
+		Page.open();
+		Page.spotlightRight();
+		//		browser.saveScreenshot('./wat.png');
+		// let screenshot = browser.saveScreenshot();
+		// fs.writeFileSync('./myShort.png', screenshot)
+		expect(Page.input2.hasFocus()).to.be.true();
+	});
+
+});

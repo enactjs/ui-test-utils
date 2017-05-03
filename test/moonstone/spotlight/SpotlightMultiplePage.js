@@ -8,7 +8,7 @@ class SpotlightMultiplePage extends Page {
 	}
 
 	open (urlExtra) {
-		super.open(`${__dirname}/Spotlight_View.js`, urlExtra);
+		super.open('Spotlight-View', urlExtra);
 	}
 
 	get item1 () { return browser.element('#item1'); }

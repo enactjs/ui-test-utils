@@ -2,8 +2,7 @@ let Page = require('./SpotlightMultiplePage');
 
 describe('Spotlight', function () {
 
-	// Note: On TV, we might want to check pointer mode first?
-	it('should have no focus on load', function () {
+	it('should focus first item on load', function () {
 		Page.open();
 		expect(Page.item1.hasFocus()).to.be.true();
 	});
