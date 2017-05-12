@@ -4,7 +4,7 @@ import React from 'react';
 import spotlight from '@enact/spotlight';
 import SpotlightContainerDecorator from '@enact/spotlight/SpotlightContainerDecorator';
 
-const Container = SpotlightContainerDecorator('div');
+const Container = SpotlightContainerDecorator({enterTo: 'last-focused'}, 'div');
 const style = {
 	container: {
 		width: '300px',
