@@ -1,4 +1,5 @@
 const buildApps = require('./build-apps');
+const localIp = require('address').ip();
 
 exports.config = {
 
@@ -46,7 +47,10 @@ exports.config = {
 		// 5 instances get started at a time.
 		maxInstances: 5,
 		//
-		browserName: 'chrome'
+		browserName: 'chrome',
+		chromeOptions: {
+			debuggerAddress: `${process.env.TV_IP}:9998`
+		}
 	}],
 	//
 	// ===================
@@ -74,7 +78,7 @@ exports.config = {
 	//
 	// Set a base URL in order to shorten url command calls. If your url parameter starts
 	// with "/", then the base url gets prepended.
-	baseUrl: 'http://localhost:4567',
+	baseUrl: `http://${localIp}:4567`,
 	//
 	// Default timeout for all waitFor* commands.
 	waitforTimeout: 10000,

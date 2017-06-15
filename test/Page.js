@@ -6,7 +6,7 @@ class Page {
 	}
 
 	open (appPath, urlExtra = '') {
-		const url = `localhost:4567/${appPath}/${urlExtra}`
+		const url = `/${appPath}/${urlExtra}`
 		browser.setViewportSize({
 			width: 1920,
 			height: 1080
