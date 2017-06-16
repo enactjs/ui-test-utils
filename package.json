@@ -4,17 +4,18 @@
   "description": "UI Testing for the Enact framework",
   "main": "index.js",
   "scripts": {
-    "test": "wdio wdio.conf.js"
+    "test": "wdio wdio.conf.js",
+    "test-tv": "wdio wdio.tv.conf.js"
   },
   "author": "Roy Sutton <roy.sutton@lge.com>",
   "license": "Apache-2.0",
   "dependencies": {
-    "@enact/core": "^1.0.0",
-    "@enact/i18n": "^1.0.0",
-    "@enact/moonstone": "^1.0.0",
-    "@enact/spotlight": "^1.0.0",
-    "@enact/ui": "^1.0.0",
-    "@enact/webos": "^1.0.0",
+    "@enact/core": "^1.3.1",
+    "@enact/i18n": "^1.3.1",
+    "@enact/moonstone": "^1.3.1",
+    "@enact/spotlight": "^1.3.1",
+    "@enact/ui": "^1.3.1",
+    "@enact/webos": "^1.3.1",
     "address": "^1.0.2",
     "autoprefixer": "~6.7.7",
     "babel-core": "~6.24.1",

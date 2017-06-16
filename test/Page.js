@@ -7,10 +7,13 @@ class Page {
 
 	open (appPath, urlExtra = '') {
 		const url = `/${appPath}/${urlExtra}`
-		browser.setViewportSize({
-			width: 1920,
-			height: 1080
-		});
+		// Can't resize browser window when connected to remote debugger!
+		if (!browser._options || !browser._options.remote) {
+			browser.setViewportSize({
+				width: 1920,
+				height: 1080
+			});
+		}
 		browser.url(url);
 	}
 
