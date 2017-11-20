@@ -26,11 +26,17 @@ class SpotlightMultiplePage extends Page {
 		super();
 		this.title = 'ExpandableList Test';
 		this.expandable1 = new ExpandableInterface('expandable1');
+		this.expandable1.selectedClass = '.RadioItem__selected';
 		this.expandable2 = new ExpandableInterface('expandable2');
+		this.expandable2.selectedClass = '.Checkbox__selected';
 		this.expandable3 = new ExpandableInterface('expandable3');
+		this.expandable3.selectedClass = '.RadioItem__selected';
 		this.expandable4 = new ExpandableInterface('expandable4');
+		this.expandable4.selectedClass = '.RadioItem__selected';
 		this.expandable5 = new ExpandableInterface('expandable5');
+		this.expandable5.selectedClass = '.RadioItem__selected';
 		this.expandable6 = new ExpandableInterface('expandable6');
+		this.expandable6.selectedClass = '.RadioItem__selected';
 	}
 
 	open (urlExtra) {

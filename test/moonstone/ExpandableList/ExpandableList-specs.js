@@ -65,7 +65,7 @@ describe('ExpandableList', function () {
 				Page.spotlightSelect();
 				browser.pause(250);
 				Page.spotlightSelect();
-				expect(Page.expandable1.item1.isExisting('.RadioItem__selected')).to.be.true();
+				expect(Page.expandable1.item1.isExisting(Page.expandable1.selectedClass)).to.be.true();
 			});
 
 			it('should update value text on select', function () {
@@ -83,7 +83,7 @@ describe('ExpandableList', function () {
 				browser.pause(250);
 				Page.spotlightSelect();
 				Page.spotlightSelect();
-				expect(Page.expandable1.item1.isExisting('.RadioItem__selected')).to.be.true();
+				expect(Page.expandable1.item1.isExisting(Page.expandable1.selectedClass)).to.be.true();
 			});
 
 			it('should only allow one selected item', function () {
@@ -93,8 +93,8 @@ describe('ExpandableList', function () {
 				Page.spotlightSelect();
 				Page.spotlightDown();
 				Page.spotlightSelect();
-				expect(Page.expandable1.item1.isExisting('.RadioItem__selected')).to.be.false();
-				expect(Page.expandable1.item2.isExisting('.RadioItem__selected')).to.be.true();
+				expect(Page.expandable1.item1.isExisting(Page.expandable1.selectedClass)).to.be.false();
+				expect(Page.expandable1.item2.isExisting(Page.expandable1.selectedClass)).to.be.true();
 			});
 		});
 
@@ -124,7 +124,7 @@ describe('ExpandableList', function () {
 				Page.expandable1.title.click();
 				browser.pause(250);
 				Page.expandable1.item1.click();
-				expect(Page.expandable1.item1.isExisting('.RadioItem__selected')).to.be.true();
+				expect(Page.expandable1.item1.isExisting(Page.expandable1.selectedClass)).to.be.true();
 			});
 
 			it('should update value text', function () {
@@ -144,7 +144,7 @@ describe('ExpandableList', function () {
 				browser.pause(250);
 				Page.expandable1.item1.click();
 				Page.expandable1.item1.click();
-				expect(Page.expandable1.item1.isExisting('.RadioItem__selected')).to.be.true();
+				expect(Page.expandable1.item1.isExisting(Page.expandable1.selectedClass)).to.be.true();
 			});
 
 			it('should only allow one selected item', function () {
@@ -153,8 +153,8 @@ describe('ExpandableList', function () {
 				browser.pause(250);
 				Page.expandable1.item1.click();
 				Page.expandable1.item2.click();
-				expect(Page.expandable1.item1.isExisting('.RadioItem__selected')).to.be.false();
-				expect(Page.expandable1.item2.isExisting('.RadioItem__selected')).to.be.true();
+				expect(Page.expandable1.item1.isExisting(Page.expandable1.selectedClass)).to.be.false();
+				expect(Page.expandable1.item2.isExisting(Page.expandable1.selectedClass)).to.be.true();
 			});
 		});
 	});
@@ -196,7 +196,7 @@ describe('ExpandableList', function () {
 				Page.spotlightSelect();
 				browser.pause(250);
 				Page.spotlightSelect();
-				expect(Page.expandable2.item1.isExisting('.Checkbox__selected')).to.be.true();
+				expect(Page.expandable2.item1.isExisting(Page.expandable2.selectedClass)).to.be.true();
 			});
 
 			it('should update value text on select', function () {
@@ -216,7 +216,7 @@ describe('ExpandableList', function () {
 				browser.pause(250);
 				Page.spotlightSelect();
 				Page.spotlightSelect();
-				expect(Page.expandable2.item1.isExisting('.Checkbox__selected')).to.be.false();
+				expect(Page.expandable2.item1.isExisting(Page.expandable2.selectedClass)).to.be.false();
 			});
 
 			it('should allow multiple selected items', function () {
@@ -227,8 +227,8 @@ describe('ExpandableList', function () {
 				Page.spotlightSelect();
 				Page.spotlightDown();
 				Page.spotlightSelect();
-				expect(Page.expandable2.item1.isExisting('.Checkbox__selected')).to.be.true();
-				expect(Page.expandable2.item2.isExisting('.Checkbox__selected')).to.be.true();
+				expect(Page.expandable2.item1.isExisting(Page.expandable2.selectedClass)).to.be.true();
+				expect(Page.expandable2.item2.isExisting(Page.expandable2.selectedClass)).to.be.true();
 			});
 
 			it('should combine value text with multi-select', function () {
@@ -271,7 +271,7 @@ describe('ExpandableList', function () {
 				Page.expandable2.title.click();
 				browser.pause(250);
 				Page.expandable2.item1.click();
-				expect(Page.expandable2.item1.isExisting('.Checkbox__selected')).to.be.true();
+				expect(Page.expandable2.item1.isExisting(Page.expandable2.selectedClass)).to.be.true();
 			});
 
 			it('should update value text', function () {
@@ -291,7 +291,7 @@ describe('ExpandableList', function () {
 				browser.pause(250);
 				Page.expandable2.item1.click();
 				Page.expandable2.item1.click();
-				expect(Page.expandable2.item1.isExisting('.Checkbox__selected')).to.be.false();
+				expect(Page.expandable2.item1.isExisting(Page.expandable2.selectedClass)).to.be.false();
 			});
 
 			it('should allow multiple selected items', function () {
@@ -300,8 +300,8 @@ describe('ExpandableList', function () {
 				browser.pause(250);
 				Page.expandable2.item1.click();
 				Page.expandable2.item2.click();
-				expect(Page.expandable2.item1.isExisting('.Checkbox__selected')).to.be.true();
-				expect(Page.expandable2.item2.isExisting('.Checkbox__selected')).to.be.true();
+				expect(Page.expandable2.item1.isExisting(Page.expandable2.selectedClass)).to.be.true();
+				expect(Page.expandable2.item2.isExisting(Page.expandable2.selectedClass)).to.be.true();
 			});
 		});
 	});
@@ -343,7 +343,7 @@ describe('ExpandableList', function () {
 				Page.spotlightSelect();
 				browser.pause(250);
 				Page.spotlightSelect();
-				expect(Page.expandable3.item1.isExisting('.RadioItem__selected')).to.be.true();
+				expect(Page.expandable3.item1.isExisting(Page.expandable3.selectedClass)).to.be.true();
 			});
 
 			it('should update value text on select', function () {
@@ -363,7 +363,7 @@ describe('ExpandableList', function () {
 				browser.pause(250);
 				Page.spotlightSelect();
 				Page.spotlightSelect();
-				expect(Page.expandable3.item1.isExisting('.RadioItem__selected')).to.be.false();
+				expect(Page.expandable3.item1.isExisting(Page.expandable3.selectedClass)).to.be.false();
 			});
 
 			it('should reset none text if nothing selected', function () {
@@ -385,8 +385,8 @@ describe('ExpandableList', function () {
 				Page.spotlightSelect();
 				Page.spotlightDown();
 				Page.spotlightSelect();
-				expect(Page.expandable3.item1.isExisting('.RadioItem__selected')).to.be.false();
-				expect(Page.expandable3.item2.isExisting('.RadioItem__selected')).to.be.true();
+				expect(Page.expandable3.item1.isExisting(Page.expandable3.selectedClass)).to.be.false();
+				expect(Page.expandable3.item2.isExisting(Page.expandable3.selectedClass)).to.be.true();
 			});
 		});
 
@@ -416,7 +416,7 @@ describe('ExpandableList', function () {
 				Page.expandable3.title.click();
 				browser.pause(250);
 				Page.expandable3.item1.click();
-				expect(Page.expandable3.item1.isExisting('.RadioItem__selected')).to.be.true();
+				expect(Page.expandable3.item1.isExisting(Page.expandable3.selectedClass)).to.be.true();
 			});
 
 			it('should update value text', function () {
@@ -436,7 +436,7 @@ describe('ExpandableList', function () {
 				browser.pause(250);
 				Page.expandable3.item1.click();
 				Page.expandable3.item1.click();
-				expect(Page.expandable3.item1.isExisting('.RadioItem__selected')).to.be.false();
+				expect(Page.expandable3.item1.isExisting(Page.expandable3.selectedClass)).to.be.false();
 			});
 
 			it('should only allow one selected item', function () {
@@ -445,8 +445,8 @@ describe('ExpandableList', function () {
 				browser.pause(250);
 				Page.expandable3.item1.click();
 				Page.expandable3.item2.click();
-				expect(Page.expandable3.item1.isExisting('.RadioItem__selected')).to.be.false();
-				expect(Page.expandable3.item2.isExisting('.RadioItem__selected')).to.be.true();
+				expect(Page.expandable3.item1.isExisting(Page.expandable3.selectedClass)).to.be.false();
+				expect(Page.expandable3.item2.isExisting(Page.expandable3.selectedClass)).to.be.true();
 			});
 		});
 	});
