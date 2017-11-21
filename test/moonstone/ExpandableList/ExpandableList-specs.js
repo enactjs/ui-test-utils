@@ -558,6 +558,37 @@ describe('ExpandableList', function () {
 		});
 	});
 
+	describe('disabled', function () {
+		it('should be initially closed', function () {
+			Page.open();
+			expect(Page.expandable5.isOpen).to.be.false();
+			expect(Page.expandable5.chevron).to.equal('󯿭');
+			expect(Page.expandable5.item1.isVisible()).to.be.false();
+		});
+
+		describe('5-way', function () {
+			it('should not be spottable', function () {
+				Page.open();
+				Page.expandable6.focus();
+				Page.spotlightDown();
+				expect(Page.expandable7.title.hasFocus()).to.be.false();
+			});
+		});
+
+		describe('pointer', function () {
+			it('should stay closed on title click', function () {
+				Page.open();
+				Page.expandable7.title.click();
+				// TODO: Perhaps trap `ontransitionend` so we don't have to rely on magic numbers?
+				// Though, in this case, it should never fire
+				browser.pause(250);
+				expect(Page.expandable7.isOpen).to.be.false();
+				expect(Page.expandable7.chevron).to.equal('󯿭');
+				expect(Page.expandable7.item1.isVisible()).to.be.false();
+			});
+		});
+	});
+
 	describe('general 5-way navigation', function () {
 		it('should not stop 5-way down when closed', function () {
 			Page.open();
