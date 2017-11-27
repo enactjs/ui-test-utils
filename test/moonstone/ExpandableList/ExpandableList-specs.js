@@ -4,25 +4,29 @@ describe('ExpandableList', function () {
 
 	it('should have focus on first expandable at start', function () {
 		Page.open();
-		expect(Page.expandable1.title.hasFocus()).to.be.true();
+		expect(Page.expandableRadio.title.hasFocus()).to.be.true();
 	});
 
 	describe('radio select', function () {
+		const expandable = Page.expandableRadio;
+
+		validateTitle(expandable, 'ExpandableList Radio Select');
+
 		it('should have correct title', function () {
 			Page.open();
-			expect(Page.expandable1.titleText).to.equal('ExpandableList Radio Select');
+			expect(expandable.titleText).to.equal('ExpandableList Radio Select');
 		});
 
 		it('should have correct none text', function () {
 			Page.open();
-			expect(Page.expandable1.valueText).to.equal('Nothing Selected');
+			expect(expandable.valueText).to.equal('Nothing Selected');
 		});
 
 		it('should be initially closed', function () {
 			Page.open();
-			expect(Page.expandable1.isOpen).to.be.false();
-			expect(Page.expandable1.chevron).to.equal('󯿭');
-			expect(Page.expandable1.item1.isVisible()).to.be.false();
+			expect(expandable.isOpen).to.be.false();
+			expect(expandable.chevron).to.equal('󯿭');
+			expect(expandable.item1.isVisible()).to.be.false();
 		});
 
 		describe('5-way', function () {
@@ -31,33 +35,33 @@ describe('ExpandableList', function () {
 				Page.spotlightSelect();
 				// TODO: Perhaps trap `ontransitionend` so we don't have to rely on magic numbers?
 				browser.pause(250);
-				expect(Page.expandable1.isOpen).to.be.true();
-				expect(Page.expandable1.chevron).to.equal('󯿮');
-				expect(Page.expandable1.item1.isVisible()).to.be.true();
-				expect(Page.expandable1.item1.hasFocus()).to.be.true();
+				expect(expandable.isOpen).to.be.true();
+				expect(expandable.chevron).to.equal('󯿮');
+				expect(expandable.item1.isVisible()).to.be.true();
+				expect(expandable.item1.hasFocus()).to.be.true();
 			});
 
 			it('should close when moving up to header', function () {
 				Page.open();
 				Page.spotlightSelect();
 				browser.pause(250);
-				expect(Page.expandable1.isOpen).to.be.true();
+				expect(expandable.isOpen).to.be.true();
 				Page.spotlightUp();
 				browser.pause(250);
-				expect(Page.expandable1.isOpen).to.be.false();
-				expect(Page.expandable1.title.hasFocus()).to.be.true();
+				expect(expandable.isOpen).to.be.false();
+				expect(expandable.title.hasFocus()).to.be.true();
 			});
 
 			it('should not allow 5-way exit from bottom', function () {
 				Page.open();
 				Page.spotlightSelect();
 				browser.pause(250);
-				expect(Page.expandable1.isOpen).to.be.true();
+				expect(expandable.isOpen).to.be.true();
 				Page.spotlightDown();
 				Page.spotlightDown();
-				expect(Page.expandable1.item3.hasFocus()).to.be.true();
+				expect(expandable.item3.hasFocus()).to.be.true();
 				Page.spotlightDown();
-				expect(Page.expandable1.item3.hasFocus()).to.be.true();
+				expect(expandable.item3.hasFocus()).to.be.true();
 			});
 
 			it('should select item when pressing select', function () {
@@ -65,7 +69,7 @@ describe('ExpandableList', function () {
 				Page.spotlightSelect();
 				browser.pause(250);
 				Page.spotlightSelect();
-				expect(Page.expandable1.item1.isExisting(Page.expandable1.selectedClass)).to.be.true();
+				expect(expandable.item1.isExisting(expandable.selectedClass)).to.be.true();
 			});
 
 			it('should update value text on select', function () {
@@ -74,7 +78,7 @@ describe('ExpandableList', function () {
 				browser.pause(250);
 				Page.spotlightSelect();
 				Page.spotlightUp();
-				expect(Page.expandable1.valueText).to.equal('option1');
+				expect(expandable.valueText).to.equal('option1');
 			});
 
 			it('should not unselect item', function () {
@@ -83,7 +87,7 @@ describe('ExpandableList', function () {
 				browser.pause(250);
 				Page.spotlightSelect();
 				Page.spotlightSelect();
-				expect(Page.expandable1.item1.isExisting(Page.expandable1.selectedClass)).to.be.true();
+				expect(expandable.item1.isExisting(expandable.selectedClass)).to.be.true();
 			});
 
 			it('should only allow one selected item', function () {
@@ -93,68 +97,68 @@ describe('ExpandableList', function () {
 				Page.spotlightSelect();
 				Page.spotlightDown();
 				Page.spotlightSelect();
-				expect(Page.expandable1.item1.isExisting(Page.expandable1.selectedClass)).to.be.false();
-				expect(Page.expandable1.item2.isExisting(Page.expandable1.selectedClass)).to.be.true();
+				expect(expandable.item1.isExisting(expandable.selectedClass)).to.be.false();
+				expect(expandable.item2.isExisting(expandable.selectedClass)).to.be.true();
 			});
 		});
 
 		describe('pointer', function () {
 			it('should open on title click when closed', function () {
 				Page.open();
-				Page.expandable1.title.click();
+				expandable.title.click();
 				// TODO: Perhaps trap `ontransitionend` so we don't have to rely on magic numbers?
 				browser.pause(250);
-				expect(Page.expandable1.isOpen).to.be.true();
-				expect(Page.expandable1.chevron).to.equal('󯿮');
-				expect(Page.expandable1.item1.isVisible()).to.be.true();
+				expect(expandable.isOpen).to.be.true();
+				expect(expandable.chevron).to.equal('󯿮');
+				expect(expandable.item1.isVisible()).to.be.true();
 			});
 
 			it('should close on title click when open', function () {
 				Page.open();
-				Page.expandable1.title.click();
+				expandable.title.click();
 				browser.pause(250);
-				expect(Page.expandable1.isOpen).to.be.true();
-				Page.expandable1.title.click();
+				expect(expandable.isOpen).to.be.true();
+				expandable.title.click();
 				browser.pause(250);
-				expect(Page.expandable1.isOpen).to.be.false();
+				expect(expandable.isOpen).to.be.false();
 			});
 
 			it('should select item', function () {
 				Page.open();
-				Page.expandable1.title.click();
+				expandable.title.click();
 				browser.pause(250);
-				Page.expandable1.item1.click();
-				expect(Page.expandable1.item1.isExisting(Page.expandable1.selectedClass)).to.be.true();
+				expandable.item1.click();
+				expect(expandable.item1.isExisting(expandable.selectedClass)).to.be.true();
 			});
 
 			it('should update value text', function () {
 				Page.open();
 				Page.open();
-				Page.expandable1.title.click();
+				expandable.title.click();
 				browser.pause(250);
-				Page.expandable1.item1.click();
-				Page.expandable1.title.click();
+				expandable.item1.click();
+				expandable.title.click();
 				browser.pause(250);
-				expect(Page.expandable1.valueText).to.equal('option1');
+				expect(expandable.valueText).to.equal('option1');
 			});
 
 			it('should not unselect item', function () {
 				Page.open();
-				Page.expandable1.title.click();
+				expandable.title.click();
 				browser.pause(250);
-				Page.expandable1.item1.click();
-				Page.expandable1.item1.click();
-				expect(Page.expandable1.item1.isExisting(Page.expandable1.selectedClass)).to.be.true();
+				expandable.item1.click();
+				expandable.item1.click();
+				expect(expandable.item1.isExisting(expandable.selectedClass)).to.be.true();
 			});
 
 			it('should only allow one selected item', function () {
 				Page.open();
-				Page.expandable1.title.click();
+				expandable.title.click();
 				browser.pause(250);
-				Page.expandable1.item1.click();
-				Page.expandable1.item2.click();
-				expect(Page.expandable1.item1.isExisting(Page.expandable1.selectedClass)).to.be.false();
-				expect(Page.expandable1.item2.isExisting(Page.expandable1.selectedClass)).to.be.true();
+				expandable.item1.click();
+				expandable.item2.click();
+				expect(expandable.item1.isExisting(expandable.selectedClass)).to.be.false();
+				expect(expandable.item2.isExisting(expandable.selectedClass)).to.be.true();
 			});
 		});
 	});
@@ -580,7 +584,7 @@ describe('ExpandableList', function () {
 				Page.open();
 				Page.expandable7.title.click();
 				// TODO: Perhaps trap `ontransitionend` so we don't have to rely on magic numbers?
-				// Though, in this case, it should never fire
+				// Though, in this case, it should never fire, but we need to wait just in case.
 				browser.pause(250);
 				expect(Page.expandable7.isOpen).to.be.false();
 				expect(Page.expandable7.chevron).to.equal('󯿭');
@@ -600,13 +604,19 @@ describe('ExpandableList', function () {
 	describe('general pointer operation', function () {
 		it('should not close other expandable when opening', function () {
 			Page.open();
-			Page.expandable1.title.click();
+			Page.expandableRadio.title.click();
 			browser.pause(250);
 			Page.expandable2.title.click();
 			browser.pause(250);
-			expect(Page.expandable1.isOpen).to.be.true();
+			expect(Page.expandableRadio.isOpen).to.be.true();
 			expect(Page.expandable2.isOpen).to.be.true();
 		});
 	});
 });
 
+function validateTitle (expandable, title) {
+	it('should have correct title', function () {
+		Page.open();
+		expect(expandable.titleText).to.equal(title);
+	});
+}

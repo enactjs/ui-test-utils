@@ -25,8 +25,8 @@ class SpotlightMultiplePage extends Page {
 	constructor () {
 		super();
 		this.title = 'ExpandableList Test';
-		this.expandable1 = new ExpandableInterface('expandable1');
-		this.expandable1.selectedClass = '.RadioItem__selected';
+		this.expandableRadio = new ExpandableInterface('expandable1');
+		this.expandableRadio.selectedClass = '.RadioItem__selected';
 		this.expandable2 = new ExpandableInterface('expandable2');
 		this.expandable2.selectedClass = '.Checkbox__selected';
 		this.expandable3 = new ExpandableInterface('expandable3');
