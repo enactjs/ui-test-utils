@@ -1,7 +1,7 @@
 'use strict';
 const Page = require('../../Page.js');
 
-class SpotlightMultiplePage extends Page {
+class Input5WayPage extends Page {
 	constructor () {
 		super();
 		this.title = 'Input 5-Way Test';
@@ -17,5 +17,5 @@ class SpotlightMultiplePage extends Page {
 	get input4 () { return browser.element('#input4'); }
 }
 
-module.exports = new SpotlightMultiplePage();
+module.exports = new Input5WayPage();
 
