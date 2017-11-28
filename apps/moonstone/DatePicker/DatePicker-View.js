@@ -11,15 +11,11 @@ spotlight.setPointerMode(false);
 
 const app = (props) => <div {...props}>
 	<div>
-		<div>
-			<DatePicker
-				id="picker1"
-				defaultValue={new Date()}
-			/>
-			{/*<DatePicker*/}
-				{/*id="picker2"*/}
-			{/*/>*/}
-		</div>
+		<DatePicker
+			id="picker"
+			noneText="Nothing Selected"
+			title="Date Picker"
+		/>
 	</div>
 </div>;
 

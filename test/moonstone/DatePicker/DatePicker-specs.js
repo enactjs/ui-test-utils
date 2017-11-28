@@ -2,15 +2,19 @@ let Page = require('./DatePickerPage');
 
 describe('DatePicker', function () {
 
-	// it('should have focus on first picker at start', function () {
-	// 	Page.open();
-	// 	expect(Page.picker1.hasFocus()).to.be.true();
-	// });
+	it('should have focus on start', function () {
+		Page.open();
+		expect(Page.picker.title.hasFocus()).to.be.true();
+	});
+
+	it('should have correct title', function () {
+		Page.open();
+		expect(Page.picker.titleText).to.equal('Date Picker');
+	});
 
 	it('should have nothing selected by default', function () {
 		Page.open();
-		console.log('ERG', Page.picker1.value);
-		expect(Page.picker1.valueOf() === 'Nothing selected');
+		expect(Page.picker.valueText).to.equal('Nothing Selected');
 	});
 
 	// it('should focus input element on enter', function () {
