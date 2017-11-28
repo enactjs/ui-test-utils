@@ -12,7 +12,7 @@ spotlight.setPointerMode(false);
 const app = (props) => <div {...props}>
 	<div>
 		<DatePicker
-			id="datePicker"
+			id="datePicker1"
 			noneText="Nothing Selected"
 			title="Date Picker Default"
 		/>
