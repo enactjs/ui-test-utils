@@ -12,11 +12,11 @@ class PickerInterface {
 
 	get title () { return browser.element(`#${this.id}>div`); }
 	get titleText () { return browser.element(`#${this.id} .LabeledItem__title .Marquee__text`).getText(); }
-	// get chevron () { return browser.element(`#${this.id}>div .Icon__icon`).getText(); }
-	// get value () { return browser.element(`#${this.id}>div>div:nth-of-type(2)`); }
+	get chevron () { return browser.element(`#${this.id}>div .Icon__icon`).getText(); }
+	// get value () { return browser.element(`#${this.id}`).value; }
 	get valueText () { return browser.element(`#${this.id} .LabeledItem__label`).getText(); }
-	// get isOpen () { return browser.isExisting(`#${this.id} .Transition__shown`); }
-	// get item1 () { return browser.element(`#${this.id} [role="checkbox"]`); }
+	get isOpen () { return browser.isExisting(`#${this.id} .Transition__shown`); }
+	get item1 () { return browser.element(`#${this.id} .Picker__joined`); }
 	// get item2 () { return browser.element(`#${this.id} [role="checkbox"]:nth-of-type(2)`); }
 	// get item3 () { return browser.element(`#${this.id} [role="checkbox"]:nth-of-type(3)`); }
 
@@ -27,8 +27,8 @@ class DatePickerPage extends Page {
 	constructor () {
 		super();
 		this.title = 'DatePicker Test';
-		this.picker = new PickerInterface('picker');
-		this.picker.selectedClass = '.picker__selected';
+		this.datePicker = new PickerInterface('datePicker');
+		this.datePicker.selectedClass = '.datePicker__selected';
 	}
 
 	open (urlExtra) {
