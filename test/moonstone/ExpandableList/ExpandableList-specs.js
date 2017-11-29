@@ -12,14 +12,14 @@ describe('ExpandableList', function () {
 
 		validateTitle(expandable, 'ExpandableList Radio Select');
 
-		it('should have correct title', function () {
-			Page.open();
-			expect(expandable.titleText).to.equal('ExpandableList Radio Select');
-		});
-
 		it('should have correct none text', function () {
 			Page.open();
 			expect(expandable.valueText).to.equal('Nothing Selected');
+		});
+
+		it('should be initially closed', function () {
+			Page.open();
+			expectClosed(expandable);
 		});
 
 		it('should be initially closed', function () {
@@ -614,9 +614,18 @@ describe('ExpandableList', function () {
 	});
 });
 
+// Validations are self-contained 'it' statements
 function validateTitle (expandable, title) {
 	it('should have correct title', function () {
 		Page.open();
 		expect(expandable.titleText).to.equal(title);
 	});
 }
+
+// Expects are blocks of expects or other commands to be embedded in an 'it' statement
+function expectClosed (expandable) {
+	expect(expandable.isOpen).to.be.false();
+	expect(expandable.chevron).to.equal('󯿭');
+	expect(expandable.item1.isVisible()).to.be.false();
+}
+
