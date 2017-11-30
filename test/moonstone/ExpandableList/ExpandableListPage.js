@@ -25,20 +25,22 @@ class SpotlightMultiplePage extends Page {
 	constructor () {
 		super();
 		this.title = 'ExpandableList Test';
-		this.expandableRadio = new ExpandableInterface('expandable1');
-		this.expandableRadio.selectedClass = '.RadioItem__selected';
-		this.expandable2 = new ExpandableInterface('expandable2');
-		this.expandable2.selectedClass = '.Checkbox__selected';
-		this.expandable3 = new ExpandableInterface('expandable3');
-		this.expandable3.selectedClass = '.RadioItem__selected';
-		this.expandable4 = new ExpandableInterface('expandable4');
-		this.expandable4.selectedClass = '.RadioItem__selected';
-		this.expandable5 = new ExpandableInterface('expandable5');
-		this.expandable5.selectedClass = '.RadioItem__selected';
-		this.expandable6 = new ExpandableInterface('expandable6');
-		this.expandable6.selectedClass = '.RadioItem__selected';
-		this.expandable7 = new ExpandableInterface('expandable7');
-		this.expandable7.selectedClass = '.RadioItem__selected';
+		this.components = {};
+		// TODO: Put `selectedClass` into constructor
+		this.components.radioSelect = new ExpandableInterface('expandable1');
+		this.components.radioSelect.selectedClass = '.RadioItem__selected';
+		this.components.multiSelect = new ExpandableInterface('expandable2');
+		this.components.multiSelect.selectedClass = '.Checkbox__selected';
+		this.components.singleSelect = new ExpandableInterface('expandable3');
+		this.components.singleSelect.selectedClass = '.RadioItem__selected';
+		this.components.noLockBottom = new ExpandableInterface('expandable4');
+		this.components.noLockBottom.selectedClass = '.RadioItem__selected';
+		this.components.noAutoClose = new ExpandableInterface('expandable5');
+		this.components.noAutoClose.selectedClass = '.RadioItem__selected';
+		this.components.defaultOpen = new ExpandableInterface('expandable6');
+		this.components.defaultOpen.selectedClass = '.RadioItem__selected';
+		this.components.disabled = new ExpandableInterface('expandable7');
+		this.components.disabled.selectedClass = '.RadioItem__selected';
 	}
 
 	open (urlExtra) {
