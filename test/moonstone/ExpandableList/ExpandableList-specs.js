@@ -26,7 +26,7 @@ describe('ExpandableList', function () {
 			Page.open();
 			expect(expandable.isOpen).to.be.false();
 			expect(expandable.chevron).to.equal('󯿭');
-			expect(expandable.item1.isVisible()).to.be.false();
+			expect(expandable.item(0).isVisible()).to.be.false();
 		});
 
 		describe('5-way', function () {
@@ -37,8 +37,8 @@ describe('ExpandableList', function () {
 				browser.pause(250);
 				expect(expandable.isOpen).to.be.true();
 				expect(expandable.chevron).to.equal('󯿮');
-				expect(expandable.item1.isVisible()).to.be.true();
-				expect(expandable.item1.hasFocus()).to.be.true();
+				expect(expandable.item(0).isVisible()).to.be.true();
+				expect(expandable.item(0).hasFocus()).to.be.true();
 			});
 
 			it('should close when moving up to header', function () {
@@ -59,9 +59,9 @@ describe('ExpandableList', function () {
 				expect(expandable.isOpen).to.be.true();
 				Page.spotlightDown();
 				Page.spotlightDown();
-				expect(expandable.item3.hasFocus()).to.be.true();
+				expect(expandable.item(2).hasFocus()).to.be.true();
 				Page.spotlightDown();
-				expect(expandable.item3.hasFocus()).to.be.true();
+				expect(expandable.item(2).hasFocus()).to.be.true();
 			});
 
 			it('should select item when pressing select', function () {
@@ -69,7 +69,7 @@ describe('ExpandableList', function () {
 				Page.spotlightSelect();
 				browser.pause(250);
 				Page.spotlightSelect();
-				expect(expandable.item1.isExisting(expandable.selectedClass)).to.be.true();
+				expect(expandable.item(0).isExisting(expandable.selectedClass)).to.be.true();
 			});
 
 			it('should update value text on select', function () {
@@ -87,7 +87,7 @@ describe('ExpandableList', function () {
 				browser.pause(250);
 				Page.spotlightSelect();
 				Page.spotlightSelect();
-				expect(expandable.item1.isExisting(expandable.selectedClass)).to.be.true();
+				expect(expandable.item(0).isExisting(expandable.selectedClass)).to.be.true();
 			});
 
 			it('should only allow one selected item', function () {
@@ -97,8 +97,8 @@ describe('ExpandableList', function () {
 				Page.spotlightSelect();
 				Page.spotlightDown();
 				Page.spotlightSelect();
-				expect(expandable.item1.isExisting(expandable.selectedClass)).to.be.false();
-				expect(expandable.item2.isExisting(expandable.selectedClass)).to.be.true();
+				expect(expandable.item(0).isExisting(expandable.selectedClass)).to.be.false();
+				expect(expandable.item(1).isExisting(expandable.selectedClass)).to.be.true();
 			});
 		});
 
@@ -110,7 +110,7 @@ describe('ExpandableList', function () {
 				browser.pause(250);
 				expect(expandable.isOpen).to.be.true();
 				expect(expandable.chevron).to.equal('󯿮');
-				expect(expandable.item1.isVisible()).to.be.true();
+				expect(expandable.item(0).isVisible()).to.be.true();
 			});
 
 			it('should close on title click when open', function () {
@@ -127,8 +127,8 @@ describe('ExpandableList', function () {
 				Page.open();
 				expandable.title.click();
 				browser.pause(250);
-				expandable.item1.click();
-				expect(expandable.item1.isExisting(expandable.selectedClass)).to.be.true();
+				expandable.item(0).click();
+				expect(expandable.item(0).isExisting(expandable.selectedClass)).to.be.true();
 			});
 
 			it('should update value text', function () {
@@ -136,7 +136,7 @@ describe('ExpandableList', function () {
 				Page.open();
 				expandable.title.click();
 				browser.pause(250);
-				expandable.item1.click();
+				expandable.item(0).click();
 				expandable.title.click();
 				browser.pause(250);
 				expect(expandable.valueText).to.equal('option1');
@@ -146,19 +146,19 @@ describe('ExpandableList', function () {
 				Page.open();
 				expandable.title.click();
 				browser.pause(250);
-				expandable.item1.click();
-				expandable.item1.click();
-				expect(expandable.item1.isExisting(expandable.selectedClass)).to.be.true();
+				expandable.item(0).click();
+				expandable.item(0).click();
+				expect(expandable.item(0).isExisting(expandable.selectedClass)).to.be.true();
 			});
 
 			it('should only allow one selected item', function () {
 				Page.open();
 				expandable.title.click();
 				browser.pause(250);
-				expandable.item1.click();
-				expandable.item2.click();
-				expect(expandable.item1.isExisting(expandable.selectedClass)).to.be.false();
-				expect(expandable.item2.isExisting(expandable.selectedClass)).to.be.true();
+				expandable.item(0).click();
+				expandable.item(1).click();
+				expect(expandable.item(0).isExisting(expandable.selectedClass)).to.be.false();
+				expect(expandable.item(1).isExisting(expandable.selectedClass)).to.be.true();
 			});
 		});
 	});
@@ -178,7 +178,7 @@ describe('ExpandableList', function () {
 			Page.open();
 			expect(Page.expandable2.isOpen).to.be.false();
 			expect(Page.expandable2.chevron).to.equal('󯿭');
-			expect(Page.expandable2.item1.isVisible()).to.be.false();
+			expect(Page.expandable2.item(0).isVisible()).to.be.false();
 		});
 
 		describe('5-way', function () {
@@ -190,8 +190,8 @@ describe('ExpandableList', function () {
 				browser.pause(250);
 				expect(Page.expandable2.isOpen).to.be.true();
 				expect(Page.expandable2.chevron).to.equal('󯿮');
-				expect(Page.expandable2.item1.isVisible()).to.be.true();
-				expect(Page.expandable2.item1.hasFocus()).to.be.true();
+				expect(Page.expandable2.item(0).isVisible()).to.be.true();
+				expect(Page.expandable2.item(0).hasFocus()).to.be.true();
 			});
 
 			it('should select item when pressing select', function () {
@@ -200,7 +200,7 @@ describe('ExpandableList', function () {
 				Page.spotlightSelect();
 				browser.pause(250);
 				Page.spotlightSelect();
-				expect(Page.expandable2.item1.isExisting(Page.expandable2.selectedClass)).to.be.true();
+				expect(Page.expandable2.item(0).isExisting(Page.expandable2.selectedClass)).to.be.true();
 			});
 
 			it('should update value text on select', function () {
@@ -220,7 +220,7 @@ describe('ExpandableList', function () {
 				browser.pause(250);
 				Page.spotlightSelect();
 				Page.spotlightSelect();
-				expect(Page.expandable2.item1.isExisting(Page.expandable2.selectedClass)).to.be.false();
+				expect(Page.expandable2.item(0).isExisting(Page.expandable2.selectedClass)).to.be.false();
 			});
 
 			it('should allow multiple selected items', function () {
@@ -231,8 +231,8 @@ describe('ExpandableList', function () {
 				Page.spotlightSelect();
 				Page.spotlightDown();
 				Page.spotlightSelect();
-				expect(Page.expandable2.item1.isExisting(Page.expandable2.selectedClass)).to.be.true();
-				expect(Page.expandable2.item2.isExisting(Page.expandable2.selectedClass)).to.be.true();
+				expect(Page.expandable2.item(0).isExisting(Page.expandable2.selectedClass)).to.be.true();
+				expect(Page.expandable2.item(1).isExisting(Page.expandable2.selectedClass)).to.be.true();
 			});
 
 			it('should combine value text with multi-select', function () {
@@ -257,7 +257,7 @@ describe('ExpandableList', function () {
 				browser.pause(250);
 				expect(Page.expandable2.isOpen).to.be.true();
 				expect(Page.expandable2.chevron).to.equal('󯿮');
-				expect(Page.expandable2.item1.isVisible()).to.be.true();
+				expect(Page.expandable2.item(0).isVisible()).to.be.true();
 			});
 
 			it('should close on title click when open', function () {
@@ -274,8 +274,8 @@ describe('ExpandableList', function () {
 				Page.open();
 				Page.expandable2.title.click();
 				browser.pause(250);
-				Page.expandable2.item1.click();
-				expect(Page.expandable2.item1.isExisting(Page.expandable2.selectedClass)).to.be.true();
+				Page.expandable2.item(0).click();
+				expect(Page.expandable2.item(0).isExisting(Page.expandable2.selectedClass)).to.be.true();
 			});
 
 			it('should update value text', function () {
@@ -283,7 +283,7 @@ describe('ExpandableList', function () {
 				Page.open();
 				Page.expandable2.title.click();
 				browser.pause(250);
-				Page.expandable2.item1.click();
+				Page.expandable2.item(0).click();
 				Page.expandable2.title.click();
 				browser.pause(250);
 				expect(Page.expandable2.valueText).to.equal('option1');
@@ -293,19 +293,19 @@ describe('ExpandableList', function () {
 				Page.open();
 				Page.expandable2.title.click();
 				browser.pause(250);
-				Page.expandable2.item1.click();
-				Page.expandable2.item1.click();
-				expect(Page.expandable2.item1.isExisting(Page.expandable2.selectedClass)).to.be.false();
+				Page.expandable2.item(0).click();
+				Page.expandable2.item(0).click();
+				expect(Page.expandable2.item(0).isExisting(Page.expandable2.selectedClass)).to.be.false();
 			});
 
 			it('should allow multiple selected items', function () {
 				Page.open();
 				Page.expandable2.title.click();
 				browser.pause(250);
-				Page.expandable2.item1.click();
-				Page.expandable2.item2.click();
-				expect(Page.expandable2.item1.isExisting(Page.expandable2.selectedClass)).to.be.true();
-				expect(Page.expandable2.item2.isExisting(Page.expandable2.selectedClass)).to.be.true();
+				Page.expandable2.item(0).click();
+				Page.expandable2.item(1).click();
+				expect(Page.expandable2.item(0).isExisting(Page.expandable2.selectedClass)).to.be.true();
+				expect(Page.expandable2.item(1).isExisting(Page.expandable2.selectedClass)).to.be.true();
 			});
 		});
 	});
@@ -325,7 +325,7 @@ describe('ExpandableList', function () {
 			Page.open();
 			expect(Page.expandable3.isOpen).to.be.false();
 			expect(Page.expandable3.chevron).to.equal('󯿭');
-			expect(Page.expandable3.item1.isVisible()).to.be.false();
+			expect(Page.expandable3.item(0).isVisible()).to.be.false();
 		});
 
 		describe('5-way', function () {
@@ -337,8 +337,8 @@ describe('ExpandableList', function () {
 				browser.pause(250);
 				expect(Page.expandable3.isOpen).to.be.true();
 				expect(Page.expandable3.chevron).to.equal('󯿮');
-				expect(Page.expandable3.item1.isVisible()).to.be.true();
-				expect(Page.expandable3.item1.hasFocus()).to.be.true();
+				expect(Page.expandable3.item(0).isVisible()).to.be.true();
+				expect(Page.expandable3.item(0).hasFocus()).to.be.true();
 			});
 
 			it('should select item when pressing select', function () {
@@ -347,7 +347,7 @@ describe('ExpandableList', function () {
 				Page.spotlightSelect();
 				browser.pause(250);
 				Page.spotlightSelect();
-				expect(Page.expandable3.item1.isExisting(Page.expandable3.selectedClass)).to.be.true();
+				expect(Page.expandable3.item(0).isExisting(Page.expandable3.selectedClass)).to.be.true();
 			});
 
 			it('should update value text on select', function () {
@@ -367,7 +367,7 @@ describe('ExpandableList', function () {
 				browser.pause(250);
 				Page.spotlightSelect();
 				Page.spotlightSelect();
-				expect(Page.expandable3.item1.isExisting(Page.expandable3.selectedClass)).to.be.false();
+				expect(Page.expandable3.item(0).isExisting(Page.expandable3.selectedClass)).to.be.false();
 			});
 
 			it('should reset none text if nothing selected', function () {
@@ -389,8 +389,8 @@ describe('ExpandableList', function () {
 				Page.spotlightSelect();
 				Page.spotlightDown();
 				Page.spotlightSelect();
-				expect(Page.expandable3.item1.isExisting(Page.expandable3.selectedClass)).to.be.false();
-				expect(Page.expandable3.item2.isExisting(Page.expandable3.selectedClass)).to.be.true();
+				expect(Page.expandable3.item(0).isExisting(Page.expandable3.selectedClass)).to.be.false();
+				expect(Page.expandable3.item(1).isExisting(Page.expandable3.selectedClass)).to.be.true();
 			});
 		});
 
@@ -402,7 +402,7 @@ describe('ExpandableList', function () {
 				browser.pause(250);
 				expect(Page.expandable3.isOpen).to.be.true();
 				expect(Page.expandable3.chevron).to.equal('󯿮');
-				expect(Page.expandable3.item1.isVisible()).to.be.true();
+				expect(Page.expandable3.item(0).isVisible()).to.be.true();
 			});
 
 			it('should close on title click when open', function () {
@@ -419,8 +419,8 @@ describe('ExpandableList', function () {
 				Page.open();
 				Page.expandable3.title.click();
 				browser.pause(250);
-				Page.expandable3.item1.click();
-				expect(Page.expandable3.item1.isExisting(Page.expandable3.selectedClass)).to.be.true();
+				Page.expandable3.item(0).click();
+				expect(Page.expandable3.item(0).isExisting(Page.expandable3.selectedClass)).to.be.true();
 			});
 
 			it('should update value text', function () {
@@ -428,7 +428,7 @@ describe('ExpandableList', function () {
 				Page.open();
 				Page.expandable3.title.click();
 				browser.pause(250);
-				Page.expandable3.item1.click();
+				Page.expandable3.item(0).click();
 				Page.expandable3.title.click();
 				browser.pause(250);
 				expect(Page.expandable3.valueText).to.equal('option1');
@@ -438,19 +438,19 @@ describe('ExpandableList', function () {
 				Page.open();
 				Page.expandable3.title.click();
 				browser.pause(250);
-				Page.expandable3.item1.click();
-				Page.expandable3.item1.click();
-				expect(Page.expandable3.item1.isExisting(Page.expandable3.selectedClass)).to.be.false();
+				Page.expandable3.item(0).click();
+				Page.expandable3.item(0).click();
+				expect(Page.expandable3.item(0).isExisting(Page.expandable3.selectedClass)).to.be.false();
 			});
 
 			it('should only allow one selected item', function () {
 				Page.open();
 				Page.expandable3.title.click();
 				browser.pause(250);
-				Page.expandable3.item1.click();
-				Page.expandable3.item2.click();
-				expect(Page.expandable3.item1.isExisting(Page.expandable3.selectedClass)).to.be.false();
-				expect(Page.expandable3.item2.isExisting(Page.expandable3.selectedClass)).to.be.true();
+				Page.expandable3.item(0).click();
+				Page.expandable3.item(1).click();
+				expect(Page.expandable3.item(0).isExisting(Page.expandable3.selectedClass)).to.be.false();
+				expect(Page.expandable3.item(1).isExisting(Page.expandable3.selectedClass)).to.be.true();
 			});
 		});
 	});
@@ -465,7 +465,7 @@ describe('ExpandableList', function () {
 				expect(Page.expandable4.isOpen).to.be.true();
 				Page.spotlightDown();
 				Page.spotlightDown();
-				expect(Page.expandable4.item3.hasFocus()).to.be.true();
+				expect(Page.expandable4.item(2).hasFocus()).to.be.true();
 				Page.spotlightDown();
 				expect(Page.expandable5.title.hasFocus()).to.be.true();
 			});
@@ -477,7 +477,7 @@ describe('ExpandableList', function () {
 			Page.open();
 			expect(Page.expandable5.isOpen).to.be.false();
 			expect(Page.expandable5.chevron).to.equal('󯿭');
-			expect(Page.expandable5.item1.isVisible()).to.be.false();
+			expect(Page.expandable5.item(0).isVisible()).to.be.false();
 		});
 
 		describe('5-way', function () {
@@ -488,8 +488,8 @@ describe('ExpandableList', function () {
 				browser.pause(250);
 				expect(Page.expandable5.isOpen).to.be.true();
 				expect(Page.expandable5.chevron).to.equal('󯿮');
-				expect(Page.expandable5.item1.isVisible()).to.be.true();
-				expect(Page.expandable5.item1.hasFocus()).to.be.true();
+				expect(Page.expandable5.item(0).isVisible()).to.be.true();
+				expect(Page.expandable5.item(0).hasFocus()).to.be.true();
 			});
 
 			it('should not close when navigating up to title', function () {
@@ -500,7 +500,7 @@ describe('ExpandableList', function () {
 				Page.spotlightUp();
 				expect(Page.expandable5.isOpen).to.be.true();
 				expect(Page.expandable5.chevron).to.equal('󯿮');
-				expect(Page.expandable5.item1.isVisible()).to.be.true();
+				expect(Page.expandable5.item(0).isVisible()).to.be.true();
 				expect(Page.expandable5.title.hasFocus()).to.be.true();
 			});
 		});
@@ -511,7 +511,7 @@ describe('ExpandableList', function () {
 			Page.open();
 			expect(Page.expandable6.isOpen).to.be.true();
 			expect(Page.expandable6.chevron).to.equal('󯿮');
-			expect(Page.expandable6.item1.isVisible()).to.be.true();
+			expect(Page.expandable6.item(0).isVisible()).to.be.true();
 		});
 
 		describe('5-way', function () {
@@ -522,7 +522,7 @@ describe('ExpandableList', function () {
 				browser.pause(250);
 				expect(Page.expandable6.isOpen).to.be.false();
 				expect(Page.expandable6.chevron).to.equal('󯿭');
-				expect(Page.expandable6.item1.isVisible()).to.be.false();
+				expect(Page.expandable6.item(0).isVisible()).to.be.false();
 				expect(Page.expandable6.title.hasFocus()).to.be.true();
 			});
 
@@ -534,7 +534,7 @@ describe('ExpandableList', function () {
 				browser.pause(250);
 				expect(Page.expandable6.isOpen).to.be.false();
 				expect(Page.expandable6.chevron).to.equal('󯿭');
-				expect(Page.expandable6.item1.isVisible()).to.be.false();
+				expect(Page.expandable6.item(0).isVisible()).to.be.false();
 				expect(Page.expandable6.title.hasFocus()).to.be.true();
 			});
 		});
@@ -547,7 +547,7 @@ describe('ExpandableList', function () {
 				browser.pause(250);
 				expect(Page.expandable6.isOpen).to.be.false();
 				expect(Page.expandable6.chevron).to.equal('󯿭');
-				expect(Page.expandable6.item1.isVisible()).to.be.false();
+				expect(Page.expandable6.item(0).isVisible()).to.be.false();
 			});
 
 			it('should open on title click when closed', function () {
@@ -567,7 +567,7 @@ describe('ExpandableList', function () {
 			Page.open();
 			expect(Page.expandable5.isOpen).to.be.false();
 			expect(Page.expandable5.chevron).to.equal('󯿭');
-			expect(Page.expandable5.item1.isVisible()).to.be.false();
+			expect(Page.expandable5.item(0).isVisible()).to.be.false();
 		});
 
 		describe('5-way', function () {
@@ -588,7 +588,7 @@ describe('ExpandableList', function () {
 				browser.pause(250);
 				expect(Page.expandable7.isOpen).to.be.false();
 				expect(Page.expandable7.chevron).to.equal('󯿭');
-				expect(Page.expandable7.item1.isVisible()).to.be.false();
+				expect(Page.expandable7.item(0).isVisible()).to.be.false();
 			});
 		});
 	});
@@ -626,6 +626,6 @@ function validateTitle (expandable, title) {
 function expectClosed (expandable) {
 	expect(expandable.isOpen).to.be.false();
 	expect(expandable.chevron).to.equal('󯿭');
-	expect(expandable.item1.isVisible()).to.be.false();
+	expect(expandable.item(0).isVisible()).to.be.false();
 }
 
