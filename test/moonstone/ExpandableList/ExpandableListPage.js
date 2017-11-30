@@ -1,5 +1,11 @@
 'use strict';
 const Page = require('../../Page.js');
+const {element, getComponent, getSubComponent, getText} = require('../../utils.js');
+
+const getIcon = getComponent('Icon');
+const getLabeledItem = getComponent('LabeledItem');
+const getLabeledItemTitle = getSubComponent('LabeledItem', 'title');
+const getLabeledItemValue = getSubComponent('LabeledItem', 'label');
 
 class ExpandableInterface {
 	constructor (id) {
@@ -10,15 +16,15 @@ class ExpandableInterface {
 		return browser.selectorExecute(`#${this.id}>div`, (els) => els && !els[0].focus());
 	}
 
-	get title () { return browser.element(`#${this.id}>div`); }
-	get titleText () { return browser.element(`#${this.id}>div .Marquee__text`).getText(); }
-	get chevron () { return browser.element(`#${this.id}>div .Icon__icon`).getText(); }
-	get value () { return browser.element(`#${this.id}>div>div:nth-of-type(2)`); }
-	get valueText () { return browser.element(`#${this.id}>div>div:nth-of-type(2)`).getText(); }
-	get isOpen () { return browser.isExisting(`#${this.id} .Transition__shown`); }
-	get item1 () { return browser.element(`#${this.id} [role="checkbox"]`); }
-	get item2 () { return browser.element(`#${this.id} [role="checkbox"]:nth-of-type(2)`); }
-	get item3 () { return browser.element(`#${this.id} [role="checkbox"]:nth-of-type(3)`); }
+	get      self () { return element(`#${this.id}`, browser); }
+	get   chevron () { return getText(getIcon(this.self)); }
+	get     title () { return getLabeledItem(this.self); }
+	get titleText () { return getText(getLabeledItemTitle(this.self)); }
+	get     value () { return getLabeledItemValue(this.self); }
+	get valueText () { return getText(this.value); }
+	get    isOpen () { return this.self.isExisting('.Transition__shown'); }
+
+	item (n) { return element(`[role="checkbox"]:nth-of-type(${n + 1})`, this.self); }
 }
 
 class SpotlightMultiplePage extends Page {
