@@ -118,4 +118,48 @@ describe('DatePicker', function () {
 		});
 	});
 
+	describe('default open', function () {
+		it('should be initially open', function () {
+			Page.open();
+			expect(Page.datePicker2.isOpen).to.be.true();
+			expect(Page.datePicker2.chevron).to.equal('󯿮');
+			expect(Page.datePicker2.picker1.isVisible()).to.be.true();
+		});
+
+		describe('5-way', function () {
+			it('should close when pressing select', function () {
+				Page.open();
+				Page.datePicker2.focus();
+				Page.spotlightSelect();
+				browser.pause(250);
+				expect(Page.datePicker2.isOpen).to.be.false();
+				expect(Page.datePicker2.chevron).to.equal('󯿭');
+				expect(Page.datePicker2.picker1.isVisible()).to.be.false();
+				expect(Page.datePicker2.title.hasFocus()).to.be.true();
+			});
+		});
+
+		describe('pointer', function () {
+			it('should close on title click when open', function () {
+				Page.open();
+				Page.datePicker2.title.click();
+				// TODO: Perhaps trap `ontransitionend` so we don't have to rely on magic numbers?
+				browser.pause(250);
+				expect(Page.datePicker2.isOpen).to.be.false();
+				expect(Page.datePicker2.chevron).to.equal('󯿭');
+				expect(Page.datePicker2.picker1.isVisible()).to.be.false();
+			});
+
+			it('should open on title click when closed', function () {
+				Page.open();
+				Page.datePicker2.title.click();
+				browser.pause(250);
+				expect(Page.datePicker2.isOpen).to.be.false();
+				Page.datePicker2.title.click();
+				browser.pause(250);
+				expect(Page.datePicker2.isOpen).to.be.true();
+			});
+		});
+	});
+
 });

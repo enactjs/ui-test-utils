@@ -16,6 +16,12 @@ const app = (props) => <div {...props}>
 			noneText="Nothing Selected"
 			title="Date Picker Default"
 		/>
+		<DatePicker
+			id="datePicker2"
+			noneText="Nothing Selected"
+			title="Date Picker Default Open"
+			defaultOpen
+		/>
 	</div>
 </div>;
 

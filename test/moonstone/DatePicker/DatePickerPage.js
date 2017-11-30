@@ -25,6 +25,7 @@ class DatePickerPage extends Page {
 		super();
 		this.title = 'DatePicker Test';
 		this.datePicker1 = new PickerInterface('datePicker1');
+		this.datePicker2 = new PickerInterface('datePicker2');
 	}
 
 	open (urlExtra) {
