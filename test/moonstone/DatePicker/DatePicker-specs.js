@@ -50,6 +50,20 @@ describe('DatePicker', function () {
 				expect(Page.datePicker1.isOpen).to.be.false();
 			});
 
+			it('should focus title when 5-way right from last picker', function () {
+				Page.open();
+				Page.spotlightSelect();
+				browser.pause(250);
+				expect(Page.datePicker1.isOpen).to.be.true();
+				expect(Page.datePicker1.chevron).to.equal('󯿮');
+				expect(Page.datePicker1.picker1.isVisible()).to.be.true();
+				expect(Page.datePicker1.picker1.hasFocus()).to.be.true();
+				Page.spotlightRight();
+				Page.spotlightRight();
+				Page.spotlightRight();
+				expect(Page.datePicker1.title.hasFocus()).to.be.true();
+			});
+
 			it('should update value text when incrementing/decrementing the range picker', function () {
 				Page.open();
 				Page.spotlightSelect();
