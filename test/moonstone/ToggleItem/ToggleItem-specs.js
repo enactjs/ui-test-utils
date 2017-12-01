@@ -1,319 +1,338 @@
 const Page = require('./ToggleItemPage');
-const {toggleNormal, toggleDefaultSelected, toggleIconAfter, toggleInline, toggleInlineAfter, toggledisabled} = Page.toggleItems;
 
 describe('ToggleItem', function () {
 
 	it('should have focus on first item at start', function () {
 		Page.open();
-		expect(toggleNormal.item.hasFocus()).to.be.true();
+		expect(Page.components.toggleDefault.item.hasFocus()).to.be.true();
 	});
 
-	it('should have correct text', function () {
-		Page.open();
-		expect(toggleNormal.valueText).to.equal('Toggle Item1');
-	});
+	describe('default', function () {
+		const toggleItem = Page.components.toggleDefault;
 
-	it('should not display icon', function () {
-		Page.open();
-		expect(toggleNormal.icon.isVisible()).to.be.false();
-	});
-
-	it('should display icon before the text', function () {
-		Page.open();
-		expect(toggleNormal.isBefore).to.be.true();
-	});
-
-	describe('5-way', function () {
-		it('should select item and display the icon on spotlightSelect', function () {
-			Page.open();
-			Page.spotlightSelect();
-			expectSelected(toggleNormal);
-		});
-
-		it('should unselect item and hide the icon on spotlightSelect', function () {
-			Page.open();
-			Page.spotlightSelect();
-			Page.spotlightSelect();
-			expectUnselected(toggleNormal);
-		});
-
-		it('should display correct icon on spotlightSelect', function () {
-			Page.open();
-			Page.spotlightSelect();
-			expect(toggleNormal.iconSymbol).to.equal('󰀭');
-		});
-
-		it('should move focus down on SpotlightDown', function () {
-			Page.open();
-			Page.spotlightDown();
-			expect(toggleDefaultSelected.item.hasFocus()).to.be.true();
-		});
-
-		it('should move focus up on SpotlightUp', function () {
-			Page.open();
-			toggleDefaultSelected.focus();
-			Page.spotlightUp();
-			expect(toggleNormal.item.hasFocus()).to.be.true();
-		});
-	});
-
-	describe('pointer', function () {
-		it('should select item and display the icon on click', function () {
-			Page.open();
-			toggleNormal.item.click();
-			expectSelected(toggleNormal);
-		});
-
-		it('should unselect item and hide the icon on click', function () {
-			Page.open();
-			toggleNormal.item.click();
-			toggleNormal.item.click();
-			expectUnselected(toggleNormal);
-		});
-
-		it('should display correct icon on click', function () {
-			Page.open();
-			toggleNormal.item.click();
-			expect(toggleNormal.iconSymbol).to.equal('󰀭');
-		});
-	});
-
-	describe('default selected', function () {
 		it('should have correct text', function () {
 			Page.open();
-			expect(toggleDefaultSelected.valueText).to.equal('Toggle Item selected');
+			expect(toggleItem.valueText).to.equal('Toggle Item1');
 		});
 
-		it('should display icon', function () {
+		it('should not display icon', function () {
 			Page.open();
-			expect(toggleDefaultSelected.icon.isVisible()).to.be.true();
+			expect(toggleItem.icon.isVisible()).to.be.false();
 		});
 
-		it('should display correct icon', function () {
+		it('should display icon before the text', function () {
 			Page.open();
-			expect(toggleDefaultSelected.iconSymbol).to.equal('󯿶');
+			expect(toggleItem.isBefore).to.be.true();
 		});
 
 		describe('5-way', function () {
-			it('should unselect item and hide the icon on spotlightSelect', function () {
+			it('should select the item when selected', function () {
 				Page.open();
-				toggleDefaultSelected.focus();
 				Page.spotlightSelect();
-				expectUnselected(toggleDefaultSelected);
+				expectSelected(toggleItem);
 			});
 
-			it('should select item and display the icon on spotlightSelect', function () {
+			it('should unselect the item when selected twice', function () {
 				Page.open();
-				toggleDefaultSelected.focus();
 				Page.spotlightSelect();
 				Page.spotlightSelect();
-				expectSelected(toggleDefaultSelected);
+				expectUnselected(toggleItem);
+			});
+
+			it('should display correct icon when selected', function () {
+				Page.open();
+				Page.spotlightSelect();
+				expect(toggleItem.iconSymbol).to.equal('󰀭');
+			});
+
+			it('should move focus down on SpotlightDown', function () {
+				Page.open();
+				Page.spotlightDown();
+				expect(Page.components.toggleDefaultSelected.item.hasFocus()).to.be.true();
+			});
+
+			it('should move focus up on SpotlightUp', function () {
+				Page.open();
+				Page.components.toggleDefaultSelected.focus();
+				Page.spotlightUp();
+				expect(toggleItem.item.hasFocus()).to.be.true();
 			});
 		});
 
 		describe('pointer', function () {
-			it('should unselect item and hide the icon on click', function () {
+			it('should select the item when clicked', function () {
 				Page.open();
-				toggleDefaultSelected.item.click();
-				expectUnselected(toggleDefaultSelected);
+				toggleItem.item.click();
+				expectSelected(toggleItem);
 			});
 
-			it('should select item and display the icon on click', function () {
+			it('should unselect the item when clicked twice', function () {
 				Page.open();
-				toggleDefaultSelected.item.click();
-				toggleDefaultSelected.item.click();
-				expectSelected(toggleDefaultSelected);
+				toggleItem.item.click();
+				toggleItem.item.click();
+				expectUnselected(toggleItem);
+			});
+
+			it('should display correct icon when clicked', function () {
+				Page.open();
+				toggleItem.item.click();
+				expect(toggleItem.iconSymbol).to.equal('󰀭');
+			});
+		});
+	});
+
+	describe('default selected', function () {
+		const toggleItem = Page.components.toggleDefaultSelected;
+
+		it('should have correct text', function () {
+			Page.open();
+			expect(toggleItem.valueText).to.equal('Toggle Item selected');
+		});
+
+		it('should display icon', function () {
+			Page.open();
+			expect(toggleItem.icon.isVisible()).to.be.true();
+		});
+
+		it('should display correct icon', function () {
+			Page.open();
+			expect(toggleItem.iconSymbol).to.equal('󯿶');
+		});
+
+		describe('5-way', function () {
+			it('should unselect the item when selected', function () {
+				Page.open();
+				toggleItem.focus();
+				Page.spotlightSelect();
+				expectUnselected(toggleItem);
+			});
+
+			it('should re-select the item when selected twice', function () {
+				Page.open();
+				toggleItem.focus();
+				Page.spotlightSelect();
+				Page.spotlightSelect();
+				expectSelected(toggleItem);
+			});
+		});
+
+		describe('pointer', function () {
+			it('should unselect the item when clicked', function () {
+				Page.open();
+				toggleItem.item.click();
+				expectUnselected(toggleItem);
+			});
+
+			it('should re-select the item when clicked twice', function () {
+				Page.open();
+				toggleItem.item.click();
+				toggleItem.item.click();
+				expectSelected(toggleItem);
 			});
 		});
 	});
 
 	describe('iconPosition after', function () {
+		const toggleItem = Page.components.toggleIconAfter;
+
 		it('should have correct text', function () {
 			Page.open();
-			expect(toggleIconAfter.valueText).to.equal('Toggle Item after');
+			expect(toggleItem.valueText).to.equal('Toggle Item after');
 		});
 
 		it('should display icon', function () {
 			Page.open();
-			expect(toggleIconAfter.icon.isVisible()).to.be.true();
+			expect(toggleItem.icon.isVisible()).to.be.true();
 		});
 
 		it('should display icon after the text', function () {
 			Page.open();
-			expect(toggleIconAfter.isAfter).to.be.true();
+			expect(toggleItem.isAfter).to.be.true();
 		});
 
 		describe('5-way', function () {
-			it('should unselect item and hide the icon on spotlightSelect', function () {
+			it('should unselect the item when selected', function () {
 				Page.open();
-				toggleIconAfter.focus();
+				toggleItem.focus();
 				Page.spotlightSelect();
-				expectUnselected(toggleIconAfter);
+				expectUnselected(toggleItem);
 			});
 
-			it('should select item and display the icon on spotlightSelect', function () {
+			it('should re-select the item when selected twice', function () {
 				Page.open();
-				toggleIconAfter.focus();
+				toggleItem.focus();
 				Page.spotlightSelect();
 				Page.spotlightSelect();
-				expectSelected(toggleIconAfter);
+				expectSelected(toggleItem);
 			});
 		});
 
 		describe('pointer', function () {
-			it('should unselect item and hide the icon on click', function () {
+			it('should unselect the item when clicked', function () {
 				Page.open();
-				toggleIconAfter.item.click();
-				expectUnselected(toggleIconAfter);
+				toggleItem.item.click();
+				expectUnselected(toggleItem);
 			});
 
-			it('should select item and display the icon on click', function () {
+			it('should re-select the item when clicked twice', function () {
 				Page.open();
-				toggleIconAfter.item.click();
-				toggleIconAfter.item.click();
-				expectSelected(toggleIconAfter);
+				toggleItem.item.click();
+				toggleItem.item.click();
+				expectSelected(toggleItem);
 			});
 		});
 	});
 
 	describe('inline', function () {
+		const toggleItem = Page.components.toggleInline;
+
 		it('should have correct text', function () {
 			Page.open();
-			expect(toggleInline.valueText).to.equal('Toggle Item inline');
+			expect(toggleItem.valueText).to.equal('Toggle Item inline');
 		});
 
 		it('should display icon', function () {
 			Page.open();
-			expect(toggleInline.icon.isVisible()).to.be.true();
+			expect(toggleItem.icon.isVisible()).to.be.true();
 		});
 
 		it('should display icon before the text', function () {
 			Page.open();
-			expect(toggleInline.isBefore).to.be.true();
+			expect(toggleItem.isBefore).to.be.true();
 		});
 
 		it('should display item inline', function () {
 			Page.open();
-			expect(toggleInline.isInline).to.be.true();
+			expect(toggleItem.isInline).to.be.true();
 		});
 
 		describe('5-way', function () {
-			it('should unselect item and hide the icon on spotlightSelect', function () {
+			it('should unselect the item when selected', function () {
 				Page.open();
-				toggleInline.focus();
+				toggleItem.focus();
 				Page.spotlightSelect();
-				expectUnselected(toggleInline);
+				expectUnselected(toggleItem);
 			});
 
-			it('should select item and display the icon on spotlightSelect', function () {
+			it('should re-select the item when selected twice', function () {
 				Page.open();
-				toggleInline.focus();
+				toggleItem.focus();
 				Page.spotlightSelect();
 				Page.spotlightSelect();
-				expectSelected(toggleInline);
+				expectSelected(toggleItem);
 			});
 		});
 
 		describe('pointer', function () {
-			it('should unselect item and hide the icon on click', function () {
+			it('should unselect the item when clicked', function () {
 				Page.open();
-				toggleInline.item.click();
-				expectUnselected(toggleInline);
+				toggleItem.item.click();
+				expectUnselected(toggleItem);
 			});
 
-			it('should select item and display the icon on click', function () {
+			it('should re-select the item when clicked twice', function () {
 				Page.open();
-				toggleInline.item.click();
-				toggleInline.item.click();
-				expectSelected(toggleInline);
+				toggleItem.item.click();
+				toggleItem.item.click();
+				expectSelected(toggleItem);
 			});
 		});
 	});
 
 	describe('inline after', function () {
+		const toggleItem = Page.components.toggleInlineAfter;
+
 		it('should have correct text', function () {
 			Page.open();
-			expect(toggleInlineAfter.valueText).to.equal('Toggle Item inline after');
+			expect(toggleItem.valueText).to.equal('Toggle Item inline after');
 		});
 
 		it('should display icon', function () {
 			Page.open();
-			expect(toggleInlineAfter.icon.isVisible()).to.be.true();
+			expect(toggleItem.icon.isVisible()).to.be.true();
 		});
 
 		it('should display icon after the text', function () {
 			Page.open();
-			expect(toggleInlineAfter.isAfter).to.be.true();
+			expect(toggleItem.isAfter).to.be.true();
 		});
 
 		it('should display item inline', function () {
 			Page.open();
-			expect(toggleInlineAfter.isInline).to.be.true();
+			expect(toggleItem.isInline).to.be.true();
 		});
 
 		describe('5-way', function () {
-			it('should unselect item and hide the icon on spotlightSelect', function () {
+			it('should unselect the item when selected', function () {
 				Page.open();
-				toggleInlineAfter.focus();
+				toggleItem.focus();
 				Page.spotlightSelect();
-				expectUnselected(toggleInlineAfter);
+				expectUnselected(toggleItem);
 			});
 
-			it('should select item and display the icon on spotlightSelect', function () {
+			it('should re-select the item when selected twice', function () {
 				Page.open();
-				toggleInlineAfter.focus();
+				toggleItem.focus();
 				Page.spotlightSelect();
 				Page.spotlightSelect();
-				expectSelected(toggleInlineAfter);
+				expectSelected(toggleItem);
 			});
 		});
 
 		describe('pointer', function () {
-			it('should unselect item and hide the icon on click', function () {
+			it('should unselect the item when clicked', function () {
 				Page.open();
-				toggleInlineAfter.item.click();
-				expectUnselected(toggleInlineAfter);
+				toggleItem.item.click();
+				expectUnselected(toggleItem);
 			});
 
-			it('should select item and display the icon on click', function () {
+			it('should re-select the item when clicked twice', function () {
 				Page.open();
-				toggleInlineAfter.item.click();
-				toggleInlineAfter.item.click();
-				expectSelected(toggleInlineAfter);
+				toggleItem.item.click();
+				toggleItem.item.click();
+				expectSelected(toggleItem);
 			});
 		});
 	});
 
 	describe('disabled', function () {
+		const toggleItem = Page.components.toggleDisabled;
+
 		it('should have correct text', function () {
 			Page.open();
-			expect(toggledisabled.valueText).to.equal('Toggle Item disabled');
+			expect(toggleItem.valueText).to.equal('Toggle Item disabled');
 		});
 
 		it('should display icon', function () {
 			Page.open();
-			expect(toggledisabled.icon.isVisible()).to.be.true();
+			expect(toggleItem.icon.isVisible()).to.be.true();
 		});
 
 		it('should display icon before the text', function () {
 			Page.open();
-			expect(toggledisabled.isBefore).to.be.true();
+			expect(toggleItem.isBefore).to.be.true();
+		});
+
+		it('should not focus the item', function () {
+			Page.open();
+			toggleItem.focus();
+			expect(toggleItem.item.hasFocus()).to.be.false();
 		});
 
 		describe('5-way', function () {
-			it('should not unselect item and hide the icon on spotlightSelect', function () {
+			it('should not unselect the item when selected', function () {
 				Page.open();
-				toggledisabled.focus();
+				toggleItem.focus();
 				Page.spotlightSelect();
-				expectSelected(toggledisabled);
+				expectSelected(toggleItem);
 			});
 		});
 
 		describe('pointer', function () {
-			it('should not unselect item and hide the icon on click', function () {
+			it('should not unselect the item when clicked', function () {
 				Page.open();
-				toggledisabled.item.click();
-				expectSelected(toggledisabled);
+				toggleItem.item.click();
+				expectSelected(toggleItem);
 			});
 		});
 	});

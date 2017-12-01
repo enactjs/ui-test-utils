@@ -24,14 +24,14 @@ class ToggleItemPage extends Page {
 	constructor () {
 		super();
 		this.title = 'ToggleItem Test';
-		const toggleNormal = new ToggleItemInterface('toggleItem1');
+		const toggleDefault = new ToggleItemInterface('toggleItem1');
 		const toggleDefaultSelected = new ToggleItemInterface('toggleItem2');
 		const toggleIconAfter = new ToggleItemInterface('toggleItem3');
 		const toggleInline = new ToggleItemInterface('toggleItem4');
 		const toggleInlineAfter = new ToggleItemInterface('toggleItem5');
-		const toggledisabled = new ToggleItemInterface('toggleItem6');
+		const toggleDisabled = new ToggleItemInterface('toggleItem6');
 
-		this.toggleItems = {toggleNormal, toggleDefaultSelected, toggleIconAfter, toggleInline, toggleInlineAfter, toggledisabled}
+		this.components = {toggleDefault, toggleDefaultSelected, toggleIconAfter, toggleInline, toggleInlineAfter, toggleDisabled}
 	}
 
 	open (urlExtra) {
