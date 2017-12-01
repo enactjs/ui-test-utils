@@ -32,7 +32,7 @@ describe('ToggleItem', function () {
 				expectSelected(toggleItem);
 			});
 
-			it('should unselect the item when selected twice', function () {
+			it('should re-unselect the item when selected twice', function () {
 				Page.open();
 				Page.spotlightSelect();
 				Page.spotlightSelect();
@@ -66,7 +66,7 @@ describe('ToggleItem', function () {
 				expectSelected(toggleItem);
 			});
 
-			it('should unselect the item when clicked twice', function () {
+			it('should re-unselect the item when clicked twice', function () {
 				Page.open();
 				toggleItem.item.click();
 				toggleItem.item.click();
