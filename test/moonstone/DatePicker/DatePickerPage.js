@@ -1,5 +1,11 @@
 'use strict';
 const Page = require('../../Page.js');
+const {element, getComponent, getSubComponent, getText} = require('../../utils.js');
+
+const getIcon = getComponent('Icon');
+const getLabeledItem = getComponent('LabeledItem');
+const getLabeledItemTitle = getSubComponent('LabeledItem', 'title');
+const getLabeledItemValue = getSubComponent('LabeledItem', 'label');
 
 class PickerInterface {
 	constructor (id) {
@@ -10,22 +16,26 @@ class PickerInterface {
 		return browser.selectorExecute(`#${this.id}>div`, (els) => els && !els[0].focus());
 	}
 
-	get title () { return browser.element(`#${this.id}>div`); }
-	get titleText () { return browser.element(`#${this.id} .LabeledItem__title .Marquee__text`).getText(); }
-	get chevron () { return browser.element(`#${this.id}>div .Icon__icon`).getText(); }
-	get valueText () { return browser.element(`#${this.id} .LabeledItem__label`).getText(); }
-	get isOpen () { return browser.isExisting(`#${this.id} .Transition__shown`); }
-	get picker1 () { return browser.element(`#${this.id} .Picker__joined`); }
-	get decrementer () { return browser.element(`#${this.id} .Picker__joined .Picker__decrementer`); }
-	get incrementer () { return browser.element(`#${this.id} .Picker__joined .Picker__incrementer`); }
+	get      self () { return element(`#${this.id}`, browser); }
+	get   chevron () { return getText(getIcon(this.self)); }
+	get     title () { return getLabeledItem(this.self); }
+	get titleText () { return getText(getLabeledItemTitle(this.self)); }
+	get     value () { return getLabeledItemValue(this.self); }
+	get valueText () { return getText(this.value); }
+	get    isOpen () { return this.self.isExisting('.Transition__shown'); }
+
+	get picker1 () { return browser.element(`#${this.id} .Picker__picker`); }
+	get decrementer () { return element('.Picker__decrementer', this.picker1); }
+	get incrementer () { return element('.Picker__incrementer', this.picker1); }
 }
 
 class DatePickerPage extends Page {
 	constructor () {
 		super();
 		this.title = 'DatePicker Test';
-		this.datePicker1 = new PickerInterface('datePicker1');
-		this.datePicker2 = new PickerInterface('datePicker2');
+		this.components = {};
+		this.components.datePicker1 = new PickerInterface('datePicker1');
+		this.components.datePicker2 = new PickerInterface('datePicker2');
 	}
 
 	open (urlExtra) {

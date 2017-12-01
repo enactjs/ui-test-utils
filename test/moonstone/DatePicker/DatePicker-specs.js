@@ -3,25 +3,27 @@ let Page = require('./DatePickerPage');
 describe('DatePicker', function () {
 	it('should have focus on start', function () {
 		Page.open();
-		expect(Page.datePicker1.title.hasFocus()).to.be.true();
+		expect(Page.components.datePicker1.title.hasFocus()).to.be.true();
 	});
 
 	describe('default', function () {
+		const datePicker = Page.components.datePicker1;
+
 		it('should have correct title', function () {
 			Page.open();
-			expect(Page.datePicker1.titleText).to.equal('Date Picker Default');
+			expect(datePicker.titleText).to.equal('Date Picker Default');
 		});
 
 		it('should have correct none text', function () {
 			Page.open();
-			expect(Page.datePicker1.valueText).to.equal('Nothing Selected');
+			expect(datePicker.valueText).to.equal('Nothing Selected');
 		});
 
 		it('should be initially closed', function () {
 			Page.open();
-			expect(Page.datePicker1.isOpen).to.be.false();
-			expect(Page.datePicker1.chevron).to.equal('󯿭');
-			expect(Page.datePicker1.picker1.isVisible()).to.be.false();
+			expect(datePicker.isOpen).to.be.false();
+			expect(datePicker.chevron).to.equal('󯿭');
+			expect(datePicker.picker1.isVisible()).to.be.false();
 		});
 
 		describe('5-way', function () {
@@ -30,11 +32,11 @@ describe('DatePicker', function () {
 				Page.spotlightSelect();
 				// TODO: Perhaps trap `ontransitionend` so we don't have to rely on magic numbers?
 				browser.pause(250);
-				const date = new Date(Page.datePicker1.valueText);
-				expect(Page.datePicker1.isOpen).to.be.true();
-				expect(Page.datePicker1.chevron).to.equal('󯿮');
-				expect(Page.datePicker1.picker1.isVisible()).to.be.true();
-				expect(Page.datePicker1.picker1.hasFocus()).to.be.true();
+				const date = new Date(datePicker.valueText);
+				expect(datePicker.isOpen).to.be.true();
+				expect(datePicker.chevron).to.equal('󯿮');
+				expect(datePicker.picker1.isVisible()).to.be.true();
+				expect(datePicker.picker1.hasFocus()).to.be.true();
 				expect(!isNaN(date.getMonth())).to.be.true();
 			});
 
@@ -42,122 +44,124 @@ describe('DatePicker', function () {
 				Page.open();
 				Page.spotlightSelect();
 				browser.pause(250);
-				expect(Page.datePicker1.isOpen).to.be.true();
-				expect(Page.datePicker1.chevron).to.equal('󯿮');
-				expect(Page.datePicker1.picker1.isVisible()).to.be.true();
-				expect(Page.datePicker1.picker1.hasFocus()).to.be.true();
+				expect(datePicker.isOpen).to.be.true();
+				expect(datePicker.chevron).to.equal('󯿮');
+				expect(datePicker.picker1.isVisible()).to.be.true();
+				expect(datePicker.picker1.hasFocus()).to.be.true();
 				Page.spotlightSelect();
-				expect(Page.datePicker1.isOpen).to.be.false();
+				expect(datePicker.isOpen).to.be.false();
 			});
 
 			it('should focus title when 5-way right from last picker', function () {
 				Page.open();
 				Page.spotlightSelect();
 				browser.pause(250);
-				expect(Page.datePicker1.isOpen).to.be.true();
-				expect(Page.datePicker1.chevron).to.equal('󯿮');
-				expect(Page.datePicker1.picker1.isVisible()).to.be.true();
-				expect(Page.datePicker1.picker1.hasFocus()).to.be.true();
+				expect(datePicker.isOpen).to.be.true();
+				expect(datePicker.chevron).to.equal('󯿮');
+				expect(datePicker.picker1.isVisible()).to.be.true();
+				expect(datePicker.picker1.hasFocus()).to.be.true();
 				Page.spotlightRight();
 				Page.spotlightRight();
 				Page.spotlightRight();
-				expect(Page.datePicker1.title.hasFocus()).to.be.true();
+				expect(datePicker.title.hasFocus()).to.be.true();
 			});
 
 			it('should update value text when incrementing/decrementing the range picker', function () {
 				Page.open();
 				Page.spotlightSelect();
 				browser.pause(250);
-				const value = Page.datePicker1.valueText;
-				expect(Page.datePicker1.isOpen).to.be.true();
+				const value = datePicker.valueText;
+				expect(datePicker.isOpen).to.be.true();
 				Page.spotlightUp();
 				browser.pause(250);
-				expect(value !== Page.datePicker1.valueText).to.be.true();
+				expect(value !== datePicker.valueText).to.be.true();
 			});
 		});
 
 		describe('pointer', function () {
 			it('should open on title click when closed', function () {
 				Page.open();
-				Page.datePicker1.title.click();
+				datePicker.title.click();
 				// TODO: Perhaps trap `ontransitionend` so we don't have to rely on magic numbers?
 				browser.pause(250);
-				expect(Page.datePicker1.isOpen).to.be.true();
-				expect(Page.datePicker1.chevron).to.equal('󯿮');
-				expect(Page.datePicker1.picker1.isVisible()).to.be.true();
+				expect(datePicker.isOpen).to.be.true();
+				expect(datePicker.chevron).to.equal('󯿮');
+				expect(datePicker.picker1.isVisible()).to.be.true();
 			});
 
 			it('should close on title click when open', function () {
 				Page.open();
-				Page.datePicker1.title.click();
+				datePicker.title.click();
 				browser.pause(250);
-				expect(Page.datePicker1.isOpen).to.be.true();
-				Page.datePicker1.title.click();
+				expect(datePicker.isOpen).to.be.true();
+				datePicker.title.click();
 				browser.pause(250);
-				expect(Page.datePicker1.isOpen).to.be.false();
+				expect(datePicker.isOpen).to.be.false();
 			});
 
 			it('should select item', function () {
 				Page.open();
-				Page.datePicker1.title.click();
+				datePicker.title.click();
 				browser.pause(250);
-				Page.datePicker1.picker1.click();
-				expect(Page.datePicker1.picker1.hasFocus()).to.be.true();
+				datePicker.picker1.click();
+				expect(datePicker.picker1.hasFocus()).to.be.true();
 			});
 
 			it('should update value text when incrementing/decrementing the range picker', function () {
 				Page.open();
-				Page.datePicker1.title.click();
+				datePicker.title.click();
 				browser.pause(250);
-				const value = Page.datePicker1.valueText;
-				expect(Page.datePicker1.isOpen).to.be.true();
-				Page.datePicker1.decrementer.click();
+				const value = datePicker.valueText;
+				expect(datePicker.isOpen).to.be.true();
+				datePicker.decrementer.click();
 				browser.pause(250);
-				expect(value !== Page.datePicker1.valueText).to.be.true();
+				expect(value !== datePicker.valueText).to.be.true();
 			});
 		});
 	});
 
 	describe('default open', function () {
+		const datePicker = Page.components.datePicker2;
+
 		it('should be initially open', function () {
 			Page.open();
-			expect(Page.datePicker2.isOpen).to.be.true();
-			expect(Page.datePicker2.chevron).to.equal('󯿮');
-			expect(Page.datePicker2.picker1.isVisible()).to.be.true();
+			expect(datePicker.isOpen).to.be.true();
+			expect(datePicker.chevron).to.equal('󯿮');
+			expect(datePicker.picker1.isVisible()).to.be.true();
 		});
 
 		describe('5-way', function () {
 			it('should close when pressing select', function () {
 				Page.open();
-				Page.datePicker2.focus();
+				datePicker.focus();
 				Page.spotlightSelect();
 				browser.pause(250);
-				expect(Page.datePicker2.isOpen).to.be.false();
-				expect(Page.datePicker2.chevron).to.equal('󯿭');
-				expect(Page.datePicker2.picker1.isVisible()).to.be.false();
-				expect(Page.datePicker2.title.hasFocus()).to.be.true();
+				expect(datePicker.isOpen).to.be.false();
+				expect(datePicker.chevron).to.equal('󯿭');
+				expect(datePicker.picker1.isVisible()).to.be.false();
+				expect(datePicker.title.hasFocus()).to.be.true();
 			});
 		});
 
 		describe('pointer', function () {
 			it('should close on title click when open', function () {
 				Page.open();
-				Page.datePicker2.title.click();
+				datePicker.title.click();
 				// TODO: Perhaps trap `ontransitionend` so we don't have to rely on magic numbers?
 				browser.pause(250);
-				expect(Page.datePicker2.isOpen).to.be.false();
-				expect(Page.datePicker2.chevron).to.equal('󯿭');
-				expect(Page.datePicker2.picker1.isVisible()).to.be.false();
+				expect(datePicker.isOpen).to.be.false();
+				expect(datePicker.chevron).to.equal('󯿭');
+				expect(datePicker.picker1.isVisible()).to.be.false();
 			});
 
 			it('should open on title click when closed', function () {
 				Page.open();
-				Page.datePicker2.title.click();
+				datePicker.title.click();
 				browser.pause(250);
-				expect(Page.datePicker2.isOpen).to.be.false();
-				Page.datePicker2.title.click();
+				expect(datePicker.isOpen).to.be.false();
+				datePicker.title.click();
 				browser.pause(250);
-				expect(Page.datePicker2.isOpen).to.be.true();
+				expect(datePicker.isOpen).to.be.true();
 			});
 		});
 	});
