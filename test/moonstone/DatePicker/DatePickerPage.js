@@ -36,6 +36,8 @@ class DatePickerPage extends Page {
 		this.components = {};
 		this.components.datePicker1 = new PickerInterface('datePicker1');
 		this.components.datePicker2 = new PickerInterface('datePicker2');
+		this.components.datePicker3 = new PickerInterface('datePicker3');
+		this.components.datePicker4 = new PickerInterface('datePicker4');
 	}
 
 	open (urlExtra) {

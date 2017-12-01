@@ -166,4 +166,58 @@ describe('DatePicker', function () {
 		});
 	});
 
+	describe('disabled', function () {
+		const datePicker = Page.components.datePicker3;
+
+		it('should be initially closed', function () {
+			Page.open();
+			expect(datePicker.isOpen).to.be.false();
+			expect(datePicker.chevron).to.equal('󯿭');
+			expect(datePicker.picker1.isVisible()).to.be.false();
+		});
+
+		it('should have correct none text', function () {
+			Page.open();
+			expect(datePicker.valueText).to.equal('Nothing Selected');
+		});
+
+		describe('5-way', function() {
+			it('should not receive focus', function () {
+				Page.open();
+				Page.components.datePicker2.focus();
+				Page.spotlightSelect();
+				Page.spotlightDown();
+				Page.spotlightSelect();
+				expect(datePicker.title.hasFocus()).to.be.false();
+			});
+		});
+
+		describe('pointer', function () {
+			it('should not open when clicked', function () {
+				Page.open();
+				datePicker.title.click();
+				expect(datePicker.isOpen).to.be.false();
+				expect(datePicker.chevron).to.equal('󯿭');
+				expect(datePicker.title.hasFocus()).to.be.false();
+			});
+		});
+	});
+
+	describe('default disabled open', function () {
+		const datePicker = Page.components.datePicker4;
+
+		it('should be initially closed', function () {
+			Page.open();
+			expect(datePicker.isOpen).to.be.false();
+			expect(datePicker.chevron).to.equal('󯿭');
+			expect(datePicker.picker1.isVisible()).to.be.false();
+		});
+
+		it('should have the current date value', function () {
+			Page.open();
+			const date = new Date(datePicker.valueText);
+			expect(!isNaN(date.getMonth())).to.be.true();
+		});
+	});
+
 });
