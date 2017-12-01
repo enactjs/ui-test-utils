@@ -59,7 +59,7 @@ const app = (props) => <div {...props}>
 		</ExpandableList>
 		<ExpandableList
 			id="expandable6"
-			title="ExpandableList defaultOpen"
+			title="ExpandableList Default Open"
 			select="radio"
 			noneText="Nothing Selected"
 			defaultOpen
@@ -68,7 +68,7 @@ const app = (props) => <div {...props}>
 		</ExpandableList>
 		<ExpandableList
 			id="expandable7"
-			title="ExpandableList disabled"
+			title="ExpandableList Disabled"
 			select="radio"
 			noneText="Nothing Selected"
 			disabled
