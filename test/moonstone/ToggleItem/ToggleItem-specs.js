@@ -1,4 +1,5 @@
-const Page = require('./ToggleItemPage');
+const Page = require('./ToggleItemPage'),
+	{expectSelected, expectUnselected} = require('./ToggleItem-utils.js');
 
 describe('ToggleItem', function () {
 
@@ -293,15 +294,3 @@ describe('ToggleItem', function () {
 		});
 	});
 });
-
-
-// Expect blocks
-function expectSelected (toggleItem) {
-	expect(toggleItem.isSelected).to.be.true();
-	expect(toggleItem.icon.isVisible()).to.be.true();
-}
-
-function expectUnselected (toggleItem) {
-	expect(toggleItem.isSelected).to.be.false();
-	expect(toggleItem.icon.isVisible()).to.be.false();
-}
