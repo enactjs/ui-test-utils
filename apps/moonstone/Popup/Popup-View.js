@@ -7,10 +7,10 @@ import SpotlightContainerDecorator from '@enact/spotlight/SpotlightContainerDeco
 
 const Container = SpotlightContainerDecorator('div');
 
-window.spotlight = spotlight;
 spotlight.setPointerMode(false);
 
 class app extends Component {
+
 	constructor (props) {
 		super (props);
 		this.state = {
@@ -47,6 +47,7 @@ class app extends Component {
 					noAutoDismiss={false}
 					showCloseButton
 					spotlightRestrict="self-only"
+					onClose={this.closeHandler}
 				>
 					<div>Hello Popup</div>
 					<br />
