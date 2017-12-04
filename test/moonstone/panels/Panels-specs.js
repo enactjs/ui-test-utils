@@ -44,9 +44,29 @@ describe('Panels', function () {
 			expect(actual).to.be.true();
 		});
 
-		it('should spot last spotted item on back', function () {
+		it('should spot first item on second panel', function () {
 			Page.open();
-			expect(false).to.be.true();
+			Page.spotlightDown();
+			Page.spotlightSelect();
+
+			browser.pause(2000)
+			const actual = Page.item5.hasFocus();
+
+			expect(actual).to.be.true();
+		});
+
+		it('should spot first item on second panel', function () {
+			Page.open();
+			Page.spotlightDown();
+			Page.spotlightSelect();
+			browser.pause(2000)
+			Page.spotlightLeft();
+			Page.spotlightSelect();
+			browser.pause(2000)
+
+			const actual = Page.item1.hasFocus();
+
+			expect(actual).to.be.true();
 		});
 	})
 
