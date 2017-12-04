@@ -24,6 +24,7 @@ class SpotlightMultiplePage extends Page {
 	get button3 () { return browser.element('#button3'); }
 	get button4 () { return browser.element('#button4'); }
 	get breadcrumb () { return browser.element('.Panels__breadcrumb'); }
+	get breadcrumbHeader () { return browser.element('.Panels__breadcrumbHeader'); }
 	get closeButton () { return browser.element('.ApplicationCloseButton__applicationCloseButton'); }
 	get panelTitle () { return browser.getText('.Header__title .Marquee__text'); }
 }
