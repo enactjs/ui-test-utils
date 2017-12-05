@@ -13,7 +13,7 @@ class SpotlightMultiplePage extends Page {
 
 	get input1 () { return browser.element('#input1'); }
 	get input2 () { return browser.element('#input2'); }
-	get input3 () { return browser.element('#input3 input'); }
+	get input3 () { return browser.element('#input3'); }
 	get input4 () { return browser.element('#input4'); }
 }
 
