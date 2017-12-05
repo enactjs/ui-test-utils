@@ -21,6 +21,21 @@ describe('Panels', function () {
 		expect(actual).to.equal(expected);
 	});
 
+	it('should move from first panel to the third', function () {
+		Page.open();
+		Page.button1.moveToObject();
+		Page.spotlightSelect();
+		browser.pause(1000)
+		Page.item8.moveToObject();
+		Page.spotlightSelect();
+		browser.pause(1000)
+
+		const actual = Page.panelTitle;
+		const expected = 'THIRD';
+
+		expect(actual).to.equal(expected);
+	});
+
 	it('should have breadcrumb on second panel', function () {
 		Page.open();
 		Page.button1.click()
@@ -33,6 +48,28 @@ describe('Panels', function () {
 		expect(actual).to.include(expected);
 	});
 
+	it('should move to first panel from the third', function () {
+		Page.open();
+		Page.button1.moveToObject();
+		Page.spotlightSelect();
+		browser.pause(2000)
+		Page.item8.moveToObject();
+		Page.spotlightSelect();
+		browser.pause(2000)
+		Page.breadcrumbHeader.moveToObject();
+		Page.spotlightSelect();
+		browser.pause(2000)
+		Page.item8.moveToObject();
+		Page.breadcrumbHeader.moveToObject();
+		Page.spotlightSelect();
+		browser.pause(2000)
+
+		const actual = Page.panelTitle;
+		const expected = 'FIRST';
+
+		expect(actual).to.equal(expected);
+	});
+
 	describe('Transition', function () {
 		it('should have transitioning class', function () {
 			Page.open();
@@ -42,7 +79,9 @@ describe('Panels', function () {
 			Page.open();
 			expect(false).to.be.true();
 		});
-	})
+	
+	
+	});
 
 	describe('Spotlight', function () {
 		it('should spot close button on render', function () {
@@ -74,7 +113,7 @@ describe('Panels', function () {
 			expect(actual).to.be.true();
 		});
 
-		it.only('should go back to First panel on Back key', function () {
+		it('should go back to First panel on Back key', function () {
 			Page.open();
 			Page.item3.moveToObject();
 			browser.pause(5000)
