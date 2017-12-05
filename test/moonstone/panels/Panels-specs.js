@@ -71,13 +71,17 @@ describe('Panels', function () {
 	});
 
 	describe('Transition', function () {
-		it('should have transitioning class', function () {
-			Page.open();
-			Page.button1.click()
-			const isTransitioning = Page.transitionClass.waitForExist(1000);
 
-			expect(isTransitioning).to.be.true();
+		it('should transition back to First panel with back key', function () {
+			Page.open();
+			Page.button1.click();
+			Page.backKey();
+
+			browser.pause(2000)
+
+			expect(Page.panelTitle).to.equal('FIRST');
 		});
+
 
 
 	});
@@ -100,18 +104,41 @@ describe('Panels', function () {
 			expect(actual).to.be.true();
 		});
 
-		it('should spot second button on first panel when using back key', function () {
+		it('should spot second item on first panel when using back key', function () {
 			Page.open();
 			Page.spotlightDown();
 			Page.spotlightDown();
 			Page.spotlightDown();
 			Page.spotlightSelect();
+			browser.pause(2000)
 			Page.backKey();
 
 			browser.pause(2000)
-			const actual = Page.button2.hasFocus();
+			const actual = Page.item2.hasFocus();
 
 			expect(actual).to.be.true();
+		});
+
+
+		it('should spot button 4 in Third panel', function () {
+			Page.open();
+			Page.spotlightDown();
+			Page.spotlightDown();
+			Page.spotlightDown();
+			Page.spotlightSelect();
+			browser.pause(2000)
+			Page.spotlightSelect();
+			browser.pause(2000)
+			Page.spotlightRight();
+			Page.spotlightDown();
+			browser.pause(2000)
+			Page.spotlightSelect();
+			browser.pause(2000)
+			Page.spotlightSelect();
+
+			browser.pause(2000)
+			
+			expect(Page.button4.hasFocus()).to.be.true();
 		});
 
 		it('should spot item 3 on First panel on Back key', function () {
