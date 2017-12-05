@@ -73,14 +73,13 @@ describe('Panels', function () {
 	describe('Transition', function () {
 		it('should have transitioning class', function () {
 			Page.open();
-			expect(false).to.be.true();
+			Page.button1.click()
+			const isTransitioning = Page.transitionClass.waitForExist(1000);
+
+			expect(isTransitioning).to.be.true();
 		});
-		it('should have have before pseudo-element while transitioning', function () {
-			Page.open();
-			expect(false).to.be.true();
-		});
-	
-	
+
+
 	});
 
 	describe('Spotlight', function () {
@@ -100,9 +99,11 @@ describe('Panels', function () {
 
 			expect(actual).to.be.true();
 		});
-		
-		it('should go back to previous panel on Back key', function () {
+
+		it('should spot second button on first panel when using back key', function () {
 			Page.open();
+			Page.spotlightDown();
+			Page.spotlightDown();
 			Page.spotlightDown();
 			Page.spotlightSelect();
 			Page.backKey();
@@ -113,7 +114,7 @@ describe('Panels', function () {
 			expect(actual).to.be.true();
 		});
 
-		it('should go back to First panel on Back key', function () {
+		it('should spot item 3 on First panel on Back key', function () {
 			Page.open();
 			Page.item3.moveToObject();
 			browser.pause(5000)
@@ -132,7 +133,7 @@ describe('Panels', function () {
 			expect(actual).to.be.true();
 		});
 
-		it('should go back to First panel on Back key', function () {
+		it('should spot button 1 on First panel on Back key', function () {
 			Page.open();
 			Page.spotlightDown();
 			Page.spotlightLeft();
@@ -146,13 +147,13 @@ describe('Panels', function () {
 
 			expect(actual).to.be.true();
 		});
-		
+
 		it('should spot eighth item on second panel', function () {
 			Page.open();
 			Page.spotlightDown();
 			Page.spotlightDown();
 			Page.spotlightDown();
-			Page.spotlightDown();	
+			Page.spotlightDown();
 			Page.spotlightSelect();
 			browser.pause(2000)
 			Page.spotlightLeft();
@@ -174,7 +175,7 @@ describe('Panels', function () {
 			Page.spotlightDown();
 			Page.spotlightDown();
 			Page.spotlightDown();
-			Page.spotlightDown();	
+			Page.spotlightDown();
 			Page.spotlightSelect();
 			browser.pause(2000)
 			Page.spotlightLeft();
