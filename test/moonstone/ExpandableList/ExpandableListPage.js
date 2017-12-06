@@ -1,6 +1,6 @@
 'use strict';
 const Page = require('../../Page.js');
-const {element, getComponent, getSubComponent, getText} = require('../../utils.js');
+const {element, getComponent, getSubComponent, getText} = require('../../utils');
 
 const getIcon = getComponent('Icon');
 const getLabeledItem = getComponent('LabeledItem');

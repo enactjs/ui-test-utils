@@ -6,6 +6,8 @@ const identity = require('ramda/src/identity');
 const toLower = require('ramda/src/toLower');
 const useWith = require('ramda/src/useWith');
 
+const spotlight = require('./spotlight');
+
 // Given a selector and a starting element, returns the first matching descendant Element
 // String => Element => Element
 const element = curry((selector, el) => el.element(selector));
@@ -37,5 +39,6 @@ module.exports = {
 	element,
 	getComponent,
 	getSubComponent,
-	getText
+	getText,
+	spotlight
 };

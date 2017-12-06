@@ -1,5 +1,7 @@
 'use strict';
 
+const {spotlight} = require('./utils');
+
 class Page {
 	constructor () {
 		this.title = 'Untitled Test';
@@ -17,25 +19,20 @@ class Page {
 		browser.url(url);
 	}
 
-	keyDelay (key, delay = 50) {
-		browser.keys(key);
-		browser.pause(delay);
-		return browser;
-	}
 	spotlightLeft () {
-		return this.keyDelay('Left arrow');
+		return spotlight.left();
 	}
 	spotlightRight () {
-		return this.keyDelay('Right arrow');
+		return spotlight.right();
 	}
 	spotlightUp () {
-		return this.keyDelay('Up arrow');
+		return spotlight.up();
 	}
 	spotlightDown () {
-		return this.keyDelay('Down arrow');
+		return spotlight.down();
 	}
 	spotlightSelect () {
-		return this.keyDelay('Enter');
+		return spotlight.select();
 	}
 }
 

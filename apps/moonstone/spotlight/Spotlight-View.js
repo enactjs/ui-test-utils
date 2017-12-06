@@ -3,6 +3,9 @@ import MoonstoneDecorator from '@enact/moonstone/MoonstoneDecorator';
 import React from 'react';
 import spotlight from '@enact/spotlight';
 import SpotlightContainerDecorator from '@enact/spotlight/SpotlightContainerDecorator';
+import {addAll} from '@enact/core/keymap';
+
+import SpotlightStatus from '../../../components/SpotlightStatus.js';
 
 const Container = SpotlightContainerDecorator({enterTo: 'last-focused'}, 'div');
 const style = {
@@ -26,6 +29,11 @@ const style = {
 };
 
 window.spotlight = spotlight;
+
+addAll({
+	pointerHide: 112,
+	pointerShow: 113
+});
 
 // NOTE: Forcing pointer mode off so we can be sure that regardless of webOS pointer mode the app
 // runs the same way
@@ -57,6 +65,7 @@ const app = (props) => <div {...props}>
 			<Item id="itemC">C</Item>
 		</Container>
 	</div>
+	<SpotlightStatus />
 </div>;
 
 export default MoonstoneDecorator(app);
