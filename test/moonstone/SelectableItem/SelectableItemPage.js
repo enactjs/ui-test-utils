@@ -20,7 +20,7 @@ class SelectableItemInterface {
 class SelectableItemPage extends Page {
 	constructor () {
 		super();
-		this.title = 'CheckboxItem Test';
+		this.title = 'SelectableItem Test';
 		const selectableDefault = new SelectableItemInterface('selectableItem1');
 		const selectableDefaultSelected = new SelectableItemInterface('selectableItem2');
 		const selectableInline = new SelectableItemInterface('selectableItem3');

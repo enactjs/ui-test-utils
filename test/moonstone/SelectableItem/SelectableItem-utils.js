@@ -5,12 +5,12 @@ module.exports = {
 };
 
 // Expect blocks
-function expectSelected (checkboxItem) {
-	expect(checkboxItem.isSelected).to.be.true();
-	expect(checkboxItem.isToggled).to.be.true();
+function expectSelected (selectableItem) {
+	expect(selectableItem.isSelected).to.be.true();
+	expect(selectableItem.isToggled).to.be.true();
 }
 
-function expectUnselected (checkboxItem) {
-	expect(checkboxItem.isSelected).to.be.false();
-	expect(checkboxItem.isToggled).to.be.false();
+function expectUnselected (selectableItem) {
+	expect(selectableItem.isSelected).to.be.false();
+	expect(selectableItem.isToggled).to.be.false();
 }
