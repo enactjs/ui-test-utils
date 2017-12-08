@@ -18,17 +18,17 @@ describe('SelectableItem', function () {
 			expect(selectableItem.valueText).to.equal('Selectable Item1');
 		});
 
-		it('should not be checked', function () {
+		it('should not be selected', function () {
 			expectUnselected(selectableItem);
 		});
 
 		describe('5-way', function () {
-			it('should check the item when selected', function () {
+			it('should select the item when selected', function () {
 				Page.spotlightSelect();
 				expectSelected(selectableItem);
 			});
 
-			it('should re-uncheck the item when selected twice', function () {
+			it('should re-unselect the item when selected twice', function () {
 				Page.spotlightSelect();
 				Page.spotlightSelect();
 				expectUnselected(selectableItem);
@@ -47,12 +47,12 @@ describe('SelectableItem', function () {
 		});
 
 		describe('pointer', function () {
-			it('should check the item when clicked', function () {
+			it('should select the item when clicked', function () {
 				selectableItem.item.click();
 				expectSelected(selectableItem);
 			});
 
-			it('should re-uncheck the item when clicked twice', function () {
+			it('should re-unselect the item when clicked twice', function () {
 				selectableItem.item.click();
 				selectableItem.item.click();
 				expectUnselected(selectableItem);
@@ -67,18 +67,18 @@ describe('SelectableItem', function () {
 			expect(selectableItem.valueText).to.equal('Selectable Item selected');
 		});
 
-		it('should be checked', function () {
+		it('should be selected', function () {
 			expectSelected(selectableItem);
 		});
 
 		describe('5-way', function () {
-			it('should uncheck the item when selected', function () {
+			it('should unselect the item when selected', function () {
 				selectableItem.focus();
 				Page.spotlightSelect();
 				expectUnselected(selectableItem);
 			});
 
-			it('should re-check the item when selected twice', function () {
+			it('should re-select the item when selected twice', function () {
 				selectableItem.focus();
 				Page.spotlightSelect();
 				Page.spotlightSelect();
@@ -87,12 +87,12 @@ describe('SelectableItem', function () {
 		});
 
 		describe('pointer', function () {
-			it('should uncheck the item when clicked', function () {
+			it('should unselect the item when clicked', function () {
 				selectableItem.item.click();
 				expectUnselected(selectableItem);
 			});
 
-			it('should re-check the item when clicked twice', function () {
+			it('should re-select the item when clicked twice', function () {
 				selectableItem.item.click();
 				selectableItem.item.click();
 				expectSelected(selectableItem);
@@ -107,7 +107,7 @@ describe('SelectableItem', function () {
 			expect(selectableItem.valueText).to.equal('Selectable Item inline');
 		});
 
-		it('should be checked', function () {
+		it('should be selected', function () {
 			expectSelected(selectableItem);
 		});
 
@@ -116,13 +116,13 @@ describe('SelectableItem', function () {
 		});
 
 		describe('5-way', function () {
-			it('should uncheck the item when selected', function () {
+			it('should unselect the item when selected', function () {
 				selectableItem.focus();
 				Page.spotlightSelect();
 				expectUnselected(selectableItem);
 			});
 
-			it('should re-check the item when selected twice', function () {
+			it('should re-select the item when selected twice', function () {
 				selectableItem.focus();
 				Page.spotlightSelect();
 				Page.spotlightSelect();
@@ -131,12 +131,12 @@ describe('SelectableItem', function () {
 		});
 
 		describe('pointer', function () {
-			it('should uncheck the item when clicked', function () {
+			it('should unselect the item when clicked', function () {
 				selectableItem.item.click();
 				expectUnselected(selectableItem);
 			});
 
-			it('should re-check the item when clicked twice', function () {
+			it('should re-select the item when clicked twice', function () {
 				selectableItem.item.click();
 				selectableItem.item.click();
 				expectSelected(selectableItem);
@@ -151,7 +151,7 @@ describe('SelectableItem', function () {
 			expect(selectableItem.valueText).to.equal('Selectable Item disabled');
 		});
 
-		it('should be checked', function () {
+		it('should be selected', function () {
 			expectSelected(selectableItem);
 		});
 
@@ -161,7 +161,7 @@ describe('SelectableItem', function () {
 		});
 
 		describe('5-way', function () {
-			it('should not uncheck the item when selected', function () {
+			it('should not unselect the item when selected', function () {
 				selectableItem.focus();
 				Page.spotlightSelect();
 				expectSelected(selectableItem);
@@ -169,7 +169,7 @@ describe('SelectableItem', function () {
 		});
 
 		describe('pointer', function () {
-			it('should not uncheck the item when clicked', function () {
+			it('should not unselect the item when clicked', function () {
 				selectableItem.item.click();
 				expectSelected(selectableItem);
 			});
