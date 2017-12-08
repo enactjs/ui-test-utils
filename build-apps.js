@@ -34,7 +34,7 @@ function writeIndex (dest, src) {
 	const index =
 `import React from 'react';
 import {render} from 'react-dom';
-import App from '${src}';
+import App from ${JSON.stringify(src)};
 
 const appElement = (<App />);
 
