@@ -25,8 +25,9 @@ class SelectableItemPage extends Page {
 		const selectableDefaultSelected = new SelectableItemInterface('selectableItem2');
 		const selectableInline = new SelectableItemInterface('selectableItem3');
 		const selectableDisabled = new SelectableItemInterface('selectableItem4');
+		const selectableInlineDisabled = new SelectableItemInterface('selectableItem5');
 
-		this.components = {selectableDefault, selectableDefaultSelected, selectableInline, selectableDisabled}
+		this.components = {selectableDefault, selectableDefaultSelected, selectableInline, selectableDisabled, selectableInlineDisabled}
 	}
 
 	open (urlExtra) {

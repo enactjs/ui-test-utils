@@ -34,6 +34,14 @@ const app = (props) => <div {...props}>
 		>
 			Selectable Item disabled
 		</SelectableItem>
+		<SelectableItem
+			id="selectableItem5"
+			defaultSelected
+			inline
+			disabled
+		>
+			Selectable Item inline disabled
+		</SelectableItem>
 	</div>
 </div>;
 

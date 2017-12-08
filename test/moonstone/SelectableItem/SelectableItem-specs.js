@@ -175,4 +175,40 @@ describe('SelectableItem', function () {
 			});
 		});
 	});
+
+	describe('inline disabled', function () {
+		const selectableItem = Page.components.selectableInlineDisabled;
+
+		it('should have correct text', function () {
+			expect(selectableItem.valueText).to.equal('Selectable Item inline disabled');
+		});
+
+		it('should be selected', function () {
+			expectSelected(selectableItem);
+		});
+
+		it('should display item inline', function () {
+			expect(selectableItem.isInline).to.be.true();
+		});
+
+		it('should not focus the item', function () {
+			selectableItem.focus();
+			expect(selectableItem.item.hasFocus()).to.be.false();
+		});
+
+		describe('5-way', function () {
+			it('should not unselect the item when selected', function () {
+				selectableItem.focus();
+				Page.spotlightSelect();
+				expectSelected(selectableItem);
+			});
+		});
+
+		describe('pointer', function () {
+			it('should not unselect the item when clicked', function () {
+				selectableItem.item.click();
+				expectSelected(selectableItem);
+			});
+		});
+	});
 });
