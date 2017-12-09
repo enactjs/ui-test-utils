@@ -27,6 +27,10 @@ const SpotlightStatusDecorator = (Wrapped) => class extends React.Component {
 		this.state = this.getCurrentStatus();
 	}
 
+	componentDidMount () {
+		window.updateSpotlightStatus = this.updateStatus;
+	}
+
 	getCurrentStatus () {
 		return {
 			paused: spotlight.isPaused(),
@@ -43,7 +47,7 @@ const SpotlightStatusDecorator = (Wrapped) => class extends React.Component {
 		this.updateStatus();
 	}
 
-	pause = () => {
+	resume = () => {
 		spotlight.resume();
 		this.updateStatus();
 	}

@@ -1,6 +1,6 @@
 'use strict';
 
-const {spotlight} = require('./utils');
+const {keyDelay, keyRepeat, spotlight} = require('./utils');
 
 class Page {
 	constructor () {
@@ -19,6 +19,12 @@ class Page {
 		browser.url(url);
 	}
 
+	keyDelay (key, delay) {
+		return keyDelay(key, delay)
+	}
+	keyRepeat (key, count, delay) {
+		return keyRepeat(key, count, delay)
+	}
 	spotlightLeft () {
 		return spotlight.left();
 	}

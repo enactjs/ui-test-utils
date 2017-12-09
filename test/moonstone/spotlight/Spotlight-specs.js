@@ -54,6 +54,15 @@ describe('Spotlight', function () {
 			Page.updateStatus();
 			expect(Page.pointerMode).to.be.false();
 		});
+
+		it('should not enable pointer mode on mouse move when paused', function () {
+			Page.open();
+
+			Page.pause();
+			Page.movePointer();
+			Page.updateStatus();
+			expect(Page.pointerMode).to.be.false();
+		});
 	});
 
 	describe('containers', function () {

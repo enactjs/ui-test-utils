@@ -7,6 +7,7 @@ const toLower = require('ramda/src/toLower');
 const useWith = require('ramda/src/useWith');
 
 const spotlight = require('./spotlight');
+const {keyDelay} = require('./keys');
 
 // Given a selector and a starting element, returns the first matching descendant Element
 // String => Element => Element
@@ -40,5 +41,6 @@ module.exports = {
 	getComponent,
 	getSubComponent,
 	getText,
+	keyDelay,
 	spotlight
 };

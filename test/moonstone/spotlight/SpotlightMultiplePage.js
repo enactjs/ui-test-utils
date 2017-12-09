@@ -15,7 +15,7 @@ class SpotlightMultiplePage extends Page {
 	}
 
 	updateStatus () {
-		browser.click('.spotlight-status-update');
+		browser.execute('updateSpotlightStatus()');
 	}
 
 	movePointer () {
@@ -26,11 +26,11 @@ class SpotlightMultiplePage extends Page {
 	}
 
 	pause () {
-		browser.click('.spotlight-status-pause');
+		browser.execute('spotlight.pause()');
 	}
 
 	resume () {
-		browser.click('.spotlight-status-resume');
+		browser.execute('spotlight.resume()');
 	}
 
 	get pointerMode () { return getText(element('.spotlight-status-pointerMode', browser)) === 'true'; }

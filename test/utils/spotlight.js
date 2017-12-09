@@ -1,8 +1,4 @@
-function keyDelay (key, delay = 50) {
-	browser.keys(key);
-	browser.pause(delay);
-	return browser;
-}
+const {keyDelay} = require('./keys');
 
 function left () {
 	return keyDelay('Left arrow');
