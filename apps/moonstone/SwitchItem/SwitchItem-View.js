@@ -34,6 +34,14 @@ const app = (props) => <div {...props}>
 		>
 			Switch Item disabled
 		</SwitchItem>
+		<SwitchItem
+			id="switchItem5"
+			defaultSelected
+			inline
+			disabled
+		>
+			Switch Item inline disabled
+		</SwitchItem>
 	</div>
 </div>;
 
