@@ -293,4 +293,44 @@ describe('FormCheckboxItem', function () {
 			});
 		});
 	});
+
+	describe('inline disabled', function () {
+		const FormCheckboxItem = Page.components.formCheckboxInlineDisabled;
+
+		it('should have correct text', function () {
+			expect(FormCheckboxItem.valueText).to.equal('FormCheckbox Item inline disabled');
+		});
+
+		it('should be checked', function () {
+			expectChecked(FormCheckboxItem);
+		});
+
+		it('should display item inline', function () {
+			expect(FormCheckboxItem.isInline).to.be.true();
+		});
+
+		it('should display icon before the text', function () {
+			expect(FormCheckboxItem.isBefore).to.be.true();
+		});
+
+		it('should not focus the item', function () {
+			FormCheckboxItem.focus();
+			expect(FormCheckboxItem.item.hasFocus()).to.be.false();
+		});
+
+		describe('5-way', function () {
+			it('should not uncheck the item when selected', function () {
+				FormCheckboxItem.focus();
+				Page.spotlightSelect();
+				expectChecked(FormCheckboxItem);
+			});
+		});
+
+		describe('pointer', function () {
+			it('should not uncheck the item when clicked', function () {
+				FormCheckboxItem.item.click();
+				expectChecked(FormCheckboxItem);
+			});
+		});
+	});
 });

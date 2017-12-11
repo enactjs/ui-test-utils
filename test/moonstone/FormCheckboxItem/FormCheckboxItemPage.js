@@ -30,8 +30,9 @@ class FormCheckboxItemPage extends Page {
 		const formCheckboxInline = new FormCheckboxItemInterface('formCheckboxItem4');
 		const formCheckboxInlineAfter = new FormCheckboxItemInterface('formCheckboxItem5');
 		const formCheckboxDisabled = new FormCheckboxItemInterface('formCheckboxItem6');
+		const formCheckboxInlineDisabled = new FormCheckboxItemInterface('formCheckboxItem7');
 
-		this.components = {formCheckboxDefault, formCheckboxDefaultSelected, formCheckboxIconAfter, formCheckboxInline, formCheckboxInlineAfter, formCheckboxDisabled}
+		this.components = {formCheckboxDefault, formCheckboxDefaultSelected, formCheckboxIconAfter, formCheckboxInline, formCheckboxInlineAfter, formCheckboxDisabled, formCheckboxInlineDisabled}
 	}
 
 	open (urlExtra) {

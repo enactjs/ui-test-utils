@@ -49,6 +49,14 @@ const app = (props) => <div {...props}>
 		>
 			FormCheckbox Item disabled
 		</FormCheckboxItem>
+		<FormCheckboxItem
+			id="formCheckboxItem7"
+			defaultSelected
+			inline
+			disabled
+		>
+			FormCheckbox Item inline disabled
+		</FormCheckboxItem>
 	</div>
 </div>;
 
