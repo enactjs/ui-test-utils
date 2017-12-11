@@ -1,213 +1,213 @@
-const Page = require('./SwitchItemPage'),
-	{expectSelected, expectUnselected} = require('./SwitchItem-utils.js');
+const Page = require('./RadioItemPage'),
+	{expectSelected, expectUnselected} = require('./RadioItem-utils.js');
 
-describe('SwitchItem', function () {
+describe('RadioItem', function () {
 
 	beforeEach(function () {
 		Page.open();
 	});
 
 	it('should have focus on first item at start', function () {
-		expect(Page.components.switchDefault.item.hasFocus()).to.be.true();
+		expect(Page.components.radioDefault.item.hasFocus()).to.be.true();
 	});
 
 	describe('default', function () {
-		const switchItem = Page.components.switchDefault;
+		const radioItem = Page.components.radioDefault;
 
 		it('should have correct text', function () {
-			expect(switchItem.valueText).to.equal('Switch Item1');
+			expect(radioItem.valueText).to.equal('Radio Item1');
 		});
 
 		it('should not be selected', function () {
-			expectUnselected(switchItem);
+			expectUnselected(radioItem);
 		});
 
 		describe('5-way', function () {
 			it('should select the item when selected', function () {
 				Page.spotlightSelect();
-				expectSelected(switchItem);
+				expectSelected(radioItem);
 			});
 
 			it('should re-unselect the item when selected twice', function () {
 				Page.spotlightSelect();
 				Page.spotlightSelect();
-				expectUnselected(switchItem);
+				expectUnselected(radioItem);
 			});
 
 			it('should move focus down on SpotlightDown', function () {
 				Page.spotlightDown();
-				expect(Page.components.switchDefaultSelected.item.hasFocus()).to.be.true();
+				expect(Page.components.radioDefaultSelected.item.hasFocus()).to.be.true();
 			});
 
 			it('should move focus up on SpotlightUp', function () {
-				Page.components.switchDefaultSelected.focus();
+				Page.components.radioDefaultSelected.focus();
 				Page.spotlightUp();
-				expect(switchItem.item.hasFocus()).to.be.true();
+				expect(radioItem.item.hasFocus()).to.be.true();
 			});
 		});
 
 		describe('pointer', function () {
 			it('should select the item when clicked', function () {
-				switchItem.item.click();
-				expectSelected(switchItem);
+				radioItem.item.click();
+				expectSelected(radioItem);
 			});
 
 			it('should re-unselect the item when clicked twice', function () {
-				switchItem.item.click();
-				switchItem.item.click();
-				expectUnselected(switchItem);
+				radioItem.item.click();
+				radioItem.item.click();
+				expectUnselected(radioItem);
 			});
 		});
 	});
 
 	describe('default selected', function () {
-		const switchItem = Page.components.switchDefaultSelected;
+		const radioItem = Page.components.radioDefaultSelected;
 
 		it('should have correct text', function () {
-			expect(switchItem.valueText).to.equal('Switch Item selected');
+			expect(radioItem.valueText).to.equal('Radio Item selected');
 		});
 
 		it('should be selected', function () {
-			expectSelected(switchItem);
+			expectSelected(radioItem);
 		});
 
 		describe('5-way', function () {
 			it('should unselect the item when selected', function () {
-				switchItem.focus();
+				radioItem.focus();
 				Page.spotlightSelect();
-				expectUnselected(switchItem);
+				expectUnselected(radioItem);
 			});
 
 			it('should re-select the item when selected twice', function () {
-				switchItem.focus();
+				radioItem.focus();
 				Page.spotlightSelect();
 				Page.spotlightSelect();
-				expectSelected(switchItem);
+				expectSelected(radioItem);
 			});
 		});
 
 		describe('pointer', function () {
 			it('should unselect the item when clicked', function () {
-				switchItem.item.click();
-				expectUnselected(switchItem);
+				radioItem.item.click();
+				expectUnselected(radioItem);
 			});
 
 			it('should re-select the item when clicked twice', function () {
-				switchItem.item.click();
-				switchItem.item.click();
-				expectSelected(switchItem);
+				radioItem.item.click();
+				radioItem.item.click();
+				expectSelected(radioItem);
 			});
 		});
 	});
 
 	describe('inline', function () {
-		const switchItem = Page.components.switchInline;
+		const radioItem = Page.components.radioInline;
 
 		it('should have correct text', function () {
-			expect(switchItem.valueText).to.equal('Switch Item inline');
+			expect(radioItem.valueText).to.equal('Radio Item inline');
 		});
 
 		it('should be selected', function () {
-			expectSelected(switchItem);
+			expectSelected(radioItem);
 		});
 
 		it('should display item inline', function () {
-			expect(switchItem.isInline).to.be.true();
+			expect(radioItem.isInline).to.be.true();
 		});
 
 		describe('5-way', function () {
 			it('should unselect the item when selected', function () {
-				switchItem.focus();
+				radioItem.focus();
 				Page.spotlightSelect();
-				expectUnselected(switchItem);
+				expectUnselected(radioItem);
 			});
 
 			it('should re-select the item when selected twice', function () {
-				switchItem.focus();
+				radioItem.focus();
 				Page.spotlightSelect();
 				Page.spotlightSelect();
-				expectSelected(switchItem);
+				expectSelected(radioItem);
 			});
 		});
 
 		describe('pointer', function () {
 			it('should unselect the item when clicked', function () {
-				switchItem.item.click();
-				expectUnselected(switchItem);
+				radioItem.item.click();
+				expectUnselected(radioItem);
 			});
 
 			it('should re-select the item when clicked twice', function () {
-				switchItem.item.click();
-				switchItem.item.click();
-				expectSelected(switchItem);
+				radioItem.item.click();
+				radioItem.item.click();
+				expectSelected(radioItem);
 			});
 		});
 	});
 
 	describe('disabled', function () {
-		const switchItem = Page.components.switchDisabled;
+		const radioItem = Page.components.radioDisabled;
 
 		it('should have correct text', function () {
-			expect(switchItem.valueText).to.equal('Switch Item disabled');
+			expect(radioItem.valueText).to.equal('Radio Item disabled');
 		});
 
 		it('should be selected', function () {
-			expectSelected(switchItem);
+			expectSelected(radioItem);
 		});
 
 		it('should not focus the item', function () {
-			switchItem.focus();
-			expect(switchItem.item.hasFocus()).to.be.false();
+			radioItem.focus();
+			expect(radioItem.item.hasFocus()).to.be.false();
 		});
 
 		describe('5-way', function () {
 			it('should not unselect the item when selected', function () {
-				switchItem.focus();
+				radioItem.focus();
 				Page.spotlightSelect();
-				expectSelected(switchItem);
+				expectSelected(radioItem);
 			});
 		});
 
 		describe('pointer', function () {
 			it('should not unselect the item when clicked', function () {
-				switchItem.item.click();
-				expectSelected(switchItem);
+				radioItem.item.click();
+				expectSelected(radioItem);
 			});
 		});
 	});
 
 	describe('inline disabled', function () {
-		const switchItem = Page.components.switchInlineDisabled;
+		const radioItem = Page.components.radioInlineDisabled;
 
 		it('should have correct text', function () {
-			expect(switchItem.valueText).to.equal('Switch Item inline disabled');
+			expect(radioItem.valueText).to.equal('Radio Item inline disabled');
 		});
 
 		it('should be selected', function () {
-			expectSelected(switchItem);
+			expectSelected(radioItem);
 		});
 
 		it('should display item inline', function () {
-			expect(switchItem.isInline).to.be.true();
+			expect(radioItem.isInline).to.be.true();
 		});
 
 		it('should not focus the item', function () {
-			switchItem.focus();
-			expect(switchItem.item.hasFocus()).to.be.false();
+			radioItem.focus();
+			expect(radioItem.item.hasFocus()).to.be.false();
 		});
 
 		describe('5-way', function () {
 			it('should not unselect the item when selected', function () {
-				switchItem.focus();
+				radioItem.focus();
 				Page.spotlightSelect();
-				expectSelected(switchItem);
+				expectSelected(radioItem);
 			});
 		});
 
 		describe('pointer', function () {
 			it('should not unselect the item when clicked', function () {
-				switchItem.item.click();
-				expectSelected(switchItem);
+				radioItem.item.click();
+				expectSelected(radioItem);
 			});
 		});
 	});

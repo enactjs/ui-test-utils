@@ -1,4 +1,4 @@
-import SwitchItem from '@enact/moonstone/SwitchItem';
+import RadioItem from '@enact/moonstone/RadioItem';
 import MoonstoneDecorator from '@enact/moonstone/MoonstoneDecorator';
 import React from 'react';
 import spotlight from '@enact/spotlight';
@@ -9,39 +9,39 @@ spotlight.setPointerMode(false);
 
 const app = (props) => <div {...props}>
 	<div>
-		<SwitchItem
-			id="switchItem1"
+		<RadioItem
+			id="radioItem1"
 		>
-			Switch Item1
-		</SwitchItem>
-		<SwitchItem
-			id="switchItem2"
+			Radio Item1
+		</RadioItem>
+		<RadioItem
+			id="radioItem2"
 			defaultSelected
 		>
-			Switch Item selected
-		</SwitchItem>
-		<SwitchItem
-			id="switchItem3"
+			Radio Item selected
+		</RadioItem>
+		<RadioItem
+			id="radioItem3"
 			defaultSelected
 			inline
 		>
-			Switch Item inline
-		</SwitchItem>
-		<SwitchItem
-			id="switchItem4"
+			Radio Item inline
+		</RadioItem>
+		<RadioItem
+			id="radioItem4"
 			defaultSelected
 			disabled
 		>
-			Switch Item disabled
-		</SwitchItem>
-		<SwitchItem
-			id="switchItem5"
+			Radio Item disabled
+		</RadioItem>
+		<RadioItem
+			id="radioItem5"
 			defaultSelected
 			inline
 			disabled
 		>
-			Switch Item inline disabled
-		</SwitchItem>
+			Radio Item inline disabled
+		</RadioItem>
 	</div>
 </div>;
 
