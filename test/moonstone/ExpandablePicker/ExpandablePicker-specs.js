@@ -52,7 +52,7 @@ describe('ExpandablePicker', function () {
 		
 	});
 
-	it.only('should show new value on collapsed picker', function () {
+	it('should show new value on collapsed picker', function () {
 		Page.open();
 		Page.expandable1.moveToObject();
 		Page.spotlightSelect();
@@ -62,6 +62,30 @@ describe('ExpandablePicker', function () {
 		Page.spotlightRight();
 		Page.spotlightSelect();
 		browser.pause(2000)
+
+		expect(Page.labeledItemText).to.equal('option2');
+		
+		
+	});
+
+	it('should not show unselected value on collapsed picker', function () {
+		Page.open();
+		Page.expandable1.moveToObject();
+		Page.spotlightSelect();
+		browser.pause(1000)
+		Page.spotlightSelect();
+		browser.pause(1000)
+		Page.spotlightRight();
+		Page.spotlightSelect();
+		browser.pause(2000)
+		Page.spotlightSelect();
+		browser.pause(1000)
+		Page.spotlightSelect();
+		browser.pause(1000)
+		Page.spotlightUp();
+		Page.spotlightSelect();
+		browser.pause(1000)
+				
 
 		expect(Page.labeledItemText).to.equal('option2');
 		
