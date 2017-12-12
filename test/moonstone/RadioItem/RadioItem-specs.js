@@ -1,5 +1,4 @@
-const Page = require('./RadioItemPage'),
-	{expectSelected, expectUnselected} = require('./RadioItem-utils.js');
+const Page = require('./RadioItemPage');
 
 describe('RadioItem', function () {
 
@@ -19,19 +18,19 @@ describe('RadioItem', function () {
 		});
 
 		it('should not be selected', function () {
-			expectUnselected(radioItem);
+			expect(radioItem.isSelected).to.be.false();
 		});
 
 		describe('5-way', function () {
 			it('should select the item when selected', function () {
 				Page.spotlightSelect();
-				expectSelected(radioItem);
+				expect(radioItem.isSelected).to.be.true();
 			});
 
 			it('should re-unselect the item when selected twice', function () {
 				Page.spotlightSelect();
 				Page.spotlightSelect();
-				expectUnselected(radioItem);
+				expect(radioItem.isSelected).to.be.false();
 			});
 
 			it('should move focus down on SpotlightDown', function () {
@@ -49,13 +48,13 @@ describe('RadioItem', function () {
 		describe('pointer', function () {
 			it('should select the item when clicked', function () {
 				radioItem.item.click();
-				expectSelected(radioItem);
+				expect(radioItem.isSelected).to.be.true();
 			});
 
 			it('should re-unselect the item when clicked twice', function () {
 				radioItem.item.click();
 				radioItem.item.click();
-				expectUnselected(radioItem);
+				expect(radioItem.isSelected).to.be.false();
 			});
 		});
 	});
@@ -68,34 +67,34 @@ describe('RadioItem', function () {
 		});
 
 		it('should be selected', function () {
-			expectSelected(radioItem);
+			expect(radioItem.isSelected).to.be.true();
 		});
 
 		describe('5-way', function () {
 			it('should unselect the item when selected', function () {
 				radioItem.focus();
 				Page.spotlightSelect();
-				expectUnselected(radioItem);
+				expect(radioItem.isSelected).to.be.false();
 			});
 
 			it('should re-select the item when selected twice', function () {
 				radioItem.focus();
 				Page.spotlightSelect();
 				Page.spotlightSelect();
-				expectSelected(radioItem);
+				expect(radioItem.isSelected).to.be.true();
 			});
 		});
 
 		describe('pointer', function () {
 			it('should unselect the item when clicked', function () {
 				radioItem.item.click();
-				expectUnselected(radioItem);
+				expect(radioItem.isSelected).to.be.false();
 			});
 
 			it('should re-select the item when clicked twice', function () {
 				radioItem.item.click();
 				radioItem.item.click();
-				expectSelected(radioItem);
+				expect(radioItem.isSelected).to.be.true();
 			});
 		});
 	});
@@ -108,7 +107,7 @@ describe('RadioItem', function () {
 		});
 
 		it('should be selected', function () {
-			expectSelected(radioItem);
+			expect(radioItem.isSelected).to.be.true();
 		});
 
 		it('should display item inline', function () {
@@ -119,27 +118,27 @@ describe('RadioItem', function () {
 			it('should unselect the item when selected', function () {
 				radioItem.focus();
 				Page.spotlightSelect();
-				expectUnselected(radioItem);
+				expect(radioItem.isSelected).to.be.false();
 			});
 
 			it('should re-select the item when selected twice', function () {
 				radioItem.focus();
 				Page.spotlightSelect();
 				Page.spotlightSelect();
-				expectSelected(radioItem);
+				expect(radioItem.isSelected).to.be.true();
 			});
 		});
 
 		describe('pointer', function () {
 			it('should unselect the item when clicked', function () {
 				radioItem.item.click();
-				expectUnselected(radioItem);
+				expect(radioItem.isSelected).to.be.false();
 			});
 
 			it('should re-select the item when clicked twice', function () {
 				radioItem.item.click();
 				radioItem.item.click();
-				expectSelected(radioItem);
+				expect(radioItem.isSelected).to.be.true();
 			});
 		});
 	});
@@ -152,7 +151,7 @@ describe('RadioItem', function () {
 		});
 
 		it('should be selected', function () {
-			expectSelected(radioItem);
+			expect(radioItem.isSelected).to.be.true();
 		});
 
 		it('should not focus the item', function () {
@@ -164,14 +163,14 @@ describe('RadioItem', function () {
 			it('should not unselect the item when selected', function () {
 				radioItem.focus();
 				Page.spotlightSelect();
-				expectSelected(radioItem);
+				expect(radioItem.isSelected).to.be.true();
 			});
 		});
 
 		describe('pointer', function () {
 			it('should not unselect the item when clicked', function () {
 				radioItem.item.click();
-				expectSelected(radioItem);
+				expect(radioItem.isSelected).to.be.true();
 			});
 		});
 	});
@@ -184,7 +183,7 @@ describe('RadioItem', function () {
 		});
 
 		it('should be selected', function () {
-			expectSelected(radioItem);
+			expect(radioItem.isSelected).to.be.true();
 		});
 
 		it('should display item inline', function () {
@@ -200,14 +199,14 @@ describe('RadioItem', function () {
 			it('should not unselect the item when selected', function () {
 				radioItem.focus();
 				Page.spotlightSelect();
-				expectSelected(radioItem);
+				expect(radioItem.isSelected).to.be.true();
 			});
 		});
 
 		describe('pointer', function () {
 			it('should not unselect the item when clicked', function () {
 				radioItem.item.click();
-				expectSelected(radioItem);
+				expect(radioItem.isSelected).to.be.true();
 			});
 		});
 	});
