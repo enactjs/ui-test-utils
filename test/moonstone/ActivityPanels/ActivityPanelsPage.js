@@ -8,7 +8,7 @@ class SpotlightMultiplePage extends Page {
 	}
 
 	open (urlExtra) {
-		super.open('Panels-View', urlExtra);
+		super.open('ActivityPanels-View', urlExtra);
 	}
 
 	get item1 () { return browser.element('#item1'); }
@@ -27,6 +27,7 @@ class SpotlightMultiplePage extends Page {
 	get breadcrumbHeader () { return browser.element('.Panels__breadcrumbHeader'); }
 	get closeButton () { return browser.element('.ApplicationCloseButton__applicationCloseButton'); }
 	get panelTitle () { return browser.getText('.Header__title .Marquee__text'); }
+	get body () { return browser.element('body'); }
 }
 
 module.exports = new SpotlightMultiplePage();

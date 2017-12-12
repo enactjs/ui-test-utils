@@ -1,8 +1,6 @@
 import React from 'react';
 import spotlight from '@enact/spotlight';
 
-window.spotlight = spotlight;
-
 // NOTE: Forcing pointer mode off so we can be sure that regardless of webOS pointer mode the app
 // runs the same way
 spotlight.setPointerMode(false);
@@ -38,7 +36,9 @@ class App extends React.Component {
 			<ActivityPanels {...this.props} onSelectBreadcrumb={this.handleSelectBreadcrumb} index={this.state.index}>
 				<MainPanel title="First" onClick={this.handleClick} />
 				<ItemPanel title="Second" onClick={this.handleClick} />
-				<ButtonPanel title="Third" />
+				<ButtonPanel title="Third" onClick={this.handleClick} />
+                <MainPanel title="None" autoFocus="none" onClick={this.handleClick} />
+                <ItemPanel title="Default Element" autoFocus="default-element" />
 			</ActivityPanels>
 		);
 	}
@@ -47,8 +47,8 @@ class App extends React.Component {
 const ButtonPanel = ({title, onClick, ...rest}) => (
     <Panel {...rest}>
         <Header title={title}>
-            <Button id="button3">Button 3</Button>
-            <Button id="button4">Button 4</Button>
+            <Button id="button3" onClick={onClick}>Button 3</Button>
+            <Button id="button4" onClick={onClick}>Button 4</Button>
         </Header>
     </Panel>
 )
