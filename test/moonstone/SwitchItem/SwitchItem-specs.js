@@ -1,5 +1,4 @@
-const Page = require('./SwitchItemPage'),
-	{expectSelected, expectUnselected} = require('./SwitchItem-utils.js');
+const Page = require('./SwitchItemPage');
 
 describe('SwitchItem', function () {
 
@@ -19,19 +18,19 @@ describe('SwitchItem', function () {
 		});
 
 		it('should not be selected', function () {
-			expectUnselected(switchItem);
+			expect(switchItem.isSelected).to.be.false();
 		});
 
 		describe('5-way', function () {
 			it('should select the item when selected', function () {
 				Page.spotlightSelect();
-				expectSelected(switchItem);
+				expect(switchItem.isSelected).to.be.true();
 			});
 
 			it('should re-unselect the item when selected twice', function () {
 				Page.spotlightSelect();
 				Page.spotlightSelect();
-				expectUnselected(switchItem);
+				expect(switchItem.isSelected).to.be.false();
 			});
 
 			it('should move focus down on SpotlightDown', function () {
@@ -49,13 +48,13 @@ describe('SwitchItem', function () {
 		describe('pointer', function () {
 			it('should select the item when clicked', function () {
 				switchItem.item.click();
-				expectSelected(switchItem);
+				expect(switchItem.isSelected).to.be.true();
 			});
 
 			it('should re-unselect the item when clicked twice', function () {
 				switchItem.item.click();
 				switchItem.item.click();
-				expectUnselected(switchItem);
+				expect(switchItem.isSelected).to.be.false();
 			});
 		});
 	});
@@ -68,34 +67,34 @@ describe('SwitchItem', function () {
 		});
 
 		it('should be selected', function () {
-			expectSelected(switchItem);
+			expect(switchItem.isSelected).to.be.true();
 		});
 
 		describe('5-way', function () {
 			it('should unselect the item when selected', function () {
 				switchItem.focus();
 				Page.spotlightSelect();
-				expectUnselected(switchItem);
+				expect(switchItem.isSelected).to.be.false();
 			});
 
 			it('should re-select the item when selected twice', function () {
 				switchItem.focus();
 				Page.spotlightSelect();
 				Page.spotlightSelect();
-				expectSelected(switchItem);
+				expect(switchItem.isSelected).to.be.true();
 			});
 		});
 
 		describe('pointer', function () {
 			it('should unselect the item when clicked', function () {
 				switchItem.item.click();
-				expectUnselected(switchItem);
+				expect(switchItem.isSelected).to.be.false();
 			});
 
 			it('should re-select the item when clicked twice', function () {
 				switchItem.item.click();
 				switchItem.item.click();
-				expectSelected(switchItem);
+				expect(switchItem.isSelected).to.be.true();
 			});
 		});
 	});
@@ -108,7 +107,7 @@ describe('SwitchItem', function () {
 		});
 
 		it('should be selected', function () {
-			expectSelected(switchItem);
+			expect(switchItem.isSelected).to.be.true();
 		});
 
 		it('should display item inline', function () {
@@ -119,27 +118,27 @@ describe('SwitchItem', function () {
 			it('should unselect the item when selected', function () {
 				switchItem.focus();
 				Page.spotlightSelect();
-				expectUnselected(switchItem);
+				expect(switchItem.isSelected).to.be.false();
 			});
 
 			it('should re-select the item when selected twice', function () {
 				switchItem.focus();
 				Page.spotlightSelect();
 				Page.spotlightSelect();
-				expectSelected(switchItem);
+				expect(switchItem.isSelected).to.be.true();
 			});
 		});
 
 		describe('pointer', function () {
 			it('should unselect the item when clicked', function () {
 				switchItem.item.click();
-				expectUnselected(switchItem);
+				expect(switchItem.isSelected).to.be.false();
 			});
 
 			it('should re-select the item when clicked twice', function () {
 				switchItem.item.click();
 				switchItem.item.click();
-				expectSelected(switchItem);
+				expect(switchItem.isSelected).to.be.true();
 			});
 		});
 	});
@@ -152,7 +151,7 @@ describe('SwitchItem', function () {
 		});
 
 		it('should be selected', function () {
-			expectSelected(switchItem);
+			expect(switchItem.isSelected).to.be.true();
 		});
 
 		it('should not focus the item', function () {
@@ -164,14 +163,14 @@ describe('SwitchItem', function () {
 			it('should not unselect the item when selected', function () {
 				switchItem.focus();
 				Page.spotlightSelect();
-				expectSelected(switchItem);
+				expect(switchItem.isSelected).to.be.true();
 			});
 		});
 
 		describe('pointer', function () {
 			it('should not unselect the item when clicked', function () {
 				switchItem.item.click();
-				expectSelected(switchItem);
+				expect(switchItem.isSelected).to.be.true();
 			});
 		});
 	});
@@ -184,7 +183,7 @@ describe('SwitchItem', function () {
 		});
 
 		it('should be selected', function () {
-			expectSelected(switchItem);
+			expect(switchItem.isSelected).to.be.true();
 		});
 
 		it('should display item inline', function () {
@@ -200,14 +199,14 @@ describe('SwitchItem', function () {
 			it('should not unselect the item when selected', function () {
 				switchItem.focus();
 				Page.spotlightSelect();
-				expectSelected(switchItem);
+				expect(switchItem.isSelected).to.be.true();
 			});
 		});
 
 		describe('pointer', function () {
 			it('should not unselect the item when clicked', function () {
 				switchItem.item.click();
-				expectSelected(switchItem);
+				expect(switchItem.isSelected).to.be.true();
 			});
 		});
 	});
