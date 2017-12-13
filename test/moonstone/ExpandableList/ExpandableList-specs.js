@@ -520,6 +520,59 @@ describe('ExpandableList', function () {
 		});
 	});
 
+	describe('no none text', function () {
+		const expandable = Page.components.noNoneText;
+
+		validateTitle(expandable, 'ExpandableList No None Text');
+
+		it('should have no none text', function () {
+			expect(expandable.value.isExisting()).to.be.false();
+		});
+
+		describe('5-way', function () {
+			it('should close and still have no value if nothing selected', function () {
+				expandable.focus();
+				Page.spotlightSelect();
+				browser.pause(250);
+				expect(expandable.isOpen).to.be.true();
+				Page.spotlightUp();
+				browser.pause(250);
+				expect(expandable.isOpen).to.be.false();
+				expect(expandable.value.isExisting()).to.be.false();
+			});
+
+			it('should update value text on select', function () {
+				expandable.focus();
+				Page.spotlightSelect();
+				browser.pause(250);
+				Page.spotlightSelect();
+				Page.spotlightUp();
+				expect(expandable.valueText).to.equal('option1');
+			});
+		});
+
+		describe('pointer', function () {
+			it('should not add value text when close on title click with nothing selected', function () {
+				expandable.title.click();
+				browser.pause(250);
+				expect(expandable.isOpen).to.be.true();
+				expandable.title.click();
+				browser.pause(250);
+				expect(expandable.isOpen).to.be.false();
+				expect(expandable.value.isExisting()).to.be.false();
+			});
+
+			it('should update value text', function () {
+				expandable.title.click();
+				browser.pause(250);
+				expandable.item(0).click();
+				expandable.title.click();
+				browser.pause(250);
+				expect(expandable.valueText).to.equal('option1');
+			});
+		});
+	});
+
 	describe('general 5-way navigation', function () {
 		it('should not stop 5-way down when closed', function () {
 			Page.spotlightDown();

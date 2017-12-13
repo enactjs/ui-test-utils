@@ -47,6 +47,8 @@ class SpotlightMultiplePage extends Page {
 		this.components.defaultOpen.selectedClass = '.RadioItem__selected';
 		this.components.disabled = new ExpandableInterface('expandable7');
 		this.components.disabled.selectedClass = '.RadioItem__selected';
+		this.components.noNoneText = new ExpandableInterface('expandable8');
+		this.components.noNoneText.selectedClass = '.RadioItem__selected';
 	}
 
 	open (urlExtra) {

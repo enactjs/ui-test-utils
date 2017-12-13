@@ -75,6 +75,13 @@ const app = (props) => <div {...props}>
 		>
 			{children}
 		</ExpandableList>
+		<ExpandableList
+			id="expandable8"
+			title="ExpandableList No None Text"
+			select="radio"
+		>
+			{children}
+		</ExpandableList>
 	</div>
 </div>;
 
