@@ -36,7 +36,7 @@ function writeIndex (dest, src) {
 import {render} from 'react-dom';
 import App from '${src}';
 
-const appElement = (<App />);
+const appElement = (<App locale={window.location.hash.replace('#/','')}/>);
 
 if (typeof window !== 'undefined') {
 	render(

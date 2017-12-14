@@ -19,4 +19,8 @@ describe('Input', function () {
 		expect(Page.input2.hasFocus()).to.be.true();
 	});
 
+	it('should have text-align equal to "right" when in ar-SA locale', function () {
+		Page.open('/#/ar-SA');
+		expect(Page.inputElement1.getCssProperty('text-align').value).to.equal('right');
+	});
 });
