@@ -70,7 +70,7 @@ describe('ActivityPanels', function () {
 			});
 
 
-			it('should navigate back to the First panel from clicking on breadcrumb', function () {
+			it('should navigate back to the Third panel from clicking on breadcrumb', function () {
 				Page.open();
 				browser.pause(1000)
 				Page.item1.click();
