@@ -26,10 +26,12 @@ class PickerInterface {
 
 	get day () { return element('.DatePicker__day .Picker__picker', this.self); }
 	get month () { return element('.DatePicker__month .Picker__picker', this.self); }
+	get monthLabel () { return element('.DatePicker__month .DateComponentPicker__label', this.self); }
 	get year () { return element('.DatePicker__year .Picker__picker', this.self); }
 
 	decrementer (picker) { return element('.Picker__decrementer', picker); }
 	incrementer (picker) { return element('.Picker__incrementer', picker); }
+	item (picker) { return element('.Picker__item', picker) }
 }
 
 class DatePickerPage extends Page {
@@ -37,10 +39,12 @@ class DatePickerPage extends Page {
 		super();
 		this.title = 'DatePicker Test';
 		this.components = {};
-		this.components.datePicker1 = new PickerInterface('datePicker1');
-		this.components.datePicker2 = new PickerInterface('datePicker2');
-		this.components.datePicker3 = new PickerInterface('datePicker3');
-		this.components.datePicker4 = new PickerInterface('datePicker4');
+		this.components.datePickerDefaultClosedWithoutNoneText = new PickerInterface('datePickerDefaultClosedWithoutNoneText');
+		this.components.datePickerDefaultClosedWithNoneText = new PickerInterface('datePickerDefaultClosedWithNoneText');
+		this.components.datePickerDefaultOpenWithNoneText = new PickerInterface('datePickerDefaultOpenWithNoneText');
+		this.components.datePickerNoLabels = new PickerInterface('datePickerNoLabels');
+		this.components.datePickerDisabledWithNoneText = new PickerInterface('datePickerDisabledWithNoneText');
+		this.components.datePickerDisabledOpenWithNoneText = new PickerInterface('datePickerDisabledOpenWithNoneText');
 	}
 
 	open (urlExtra) {
