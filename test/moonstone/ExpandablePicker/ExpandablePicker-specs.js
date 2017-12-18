@@ -18,6 +18,22 @@ describe('ExpandablePicker', function () {
 			expect(Page.expandable1.isExisting('.Transition__shown')).to.be.true();
 		});
 
+		it.only('should collapse on click', function () {
+			Page.open();
+			browser.pause(1000)
+			Page.expandable1.click();
+			browser.pause(1000)
+			Page.pickerIncrement.click();
+			browser.pause(1000)
+			Page.pickerIncrement.click();
+			browser.pause(1000)
+			Page.checkMark.click();
+			browser.pause(1000)
+
+			expect(Page.labeledItemText).to.equal('option3');
+
+		});
+
 		describe('5way', function () {
 			it('should spot the right picker button', function () {
 				Page.open();
