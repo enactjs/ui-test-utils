@@ -20,7 +20,7 @@ describe('Input', function () {
 	});
 
 	it('should have text-align equal to "right" when in ar-SA locale', function () {
-		Page.open('/#/ar-SA');
+		Page.open('?locale=ar-SA');
 		expect(Page.inputElement1.getCssProperty('text-align').value).to.equal('right');
 	});
 });
