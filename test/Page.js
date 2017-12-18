@@ -5,7 +5,7 @@ class Page {
 		this.title = 'Untitled Test';
 	}
 
-	open (appPath, urlExtra = '') {
+	open (appPath, urlExtra = '?locale=en-US') {
 		const url = `/${appPath}/${urlExtra}`
 		// Can't resize browser window when connected to remote debugger!
 		if (!browser._options || !browser._options.remote) {
