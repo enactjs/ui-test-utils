@@ -3,8 +3,6 @@ import MoonstoneDecorator from '@enact/moonstone/MoonstoneDecorator';
 import React from 'react';
 import spotlight from '@enact/spotlight';
 
-window.spotlight = spotlight;
-
 // NOTE: Forcing pointer mode off so we can be sure that regardless of webOS pointer mode the app
 // runs the same way
 spotlight.setPointerMode(false);
@@ -12,24 +10,33 @@ spotlight.setPointerMode(false);
 const app = (props) => <div {...props}>
 	<div>
 		<TimePicker
-			id="timePicker1"
-			noneText="Nothing Selected"
+			id="timePickerDefaultClosedWithoutNoneText"
 			title="Time Picker Default"
 		/>
 		<TimePicker
-			id="timePicker2"
+			id="timePickerDefaultClosedWithNoneText"
+			noneText="Nothing Selected"
+			title="Time Picker Default With noneText"
+		/>
+		<TimePicker
+			id="timePickerDefaultOpenWithNoneText"
 			noneText="Nothing Selected"
 			title="Time Picker Default Open"
 			defaultOpen
 		/>
 		<TimePicker
-			id="timePicker3"
+			id="timePickerNoLabels"
+			title="Time Picker noLabels"
+			noLabels
+		/>
+		<TimePicker
+			id="timePickerDisabledWithNoneText"
 			noneText="Nothing Selected"
 			title="Time Picker Disabled"
 			disabled
 		/>
 		<TimePicker
-			id="timePicker4"
+			id="timePickerDisabledOpenWithNoneText"
 			noneText="Nothing Selected"
 			title="Time Picker Disabled Open"
 			defaultOpen

@@ -24,12 +24,14 @@ class PickerInterface {
 	get valueText () { return getText(this.value); }
 	get    isOpen () { return this.self.isExisting('.Transition__shown'); }
 
-	get hours () { return element('.TimePicker__hourComponents .Picker__picker', this.self); }
-	get minutes () { return element('.TimePicker__minuteComponents .Picker__picker', this.self); }
+	get hour () { return element('.TimePicker__hourComponents .Picker__picker', this.self); }
+	get hourLabel () { return element('.TimePicker__hourComponents .DateComponentPicker__label', this.self); }
+	get minute () { return element('.TimePicker__minuteComponents .Picker__picker', this.self); }
 	get meridiem () { return element('.TimePicker__meridiemComponent .Picker__picker', this.self); }
 
 	decrementer (picker) { return element('.Picker__decrementer', picker); }
 	incrementer (picker) { return element('.Picker__incrementer', picker); }
+	item (picker) { return element('.Picker__item', picker) }
 }
 
 class TimePickerPage extends Page {
@@ -37,10 +39,12 @@ class TimePickerPage extends Page {
 		super();
 		this.title = 'TimePicker Test';
 		this.components = {};
-		this.components.timePicker1 = new PickerInterface('timePicker1');
-		this.components.timePicker2 = new PickerInterface('timePicker2');
-		this.components.timePicker3 = new PickerInterface('timePicker3');
-		this.components.timePicker4 = new PickerInterface('timePicker4');
+		this.components.timePickerDefaultClosedWithoutNoneText = new PickerInterface('timePickerDefaultClosedWithoutNoneText');
+		this.components.timePickerDefaultClosedWithNoneText = new PickerInterface('timePickerDefaultClosedWithNoneText');
+		this.components.timePickerDefaultOpenWithNoneText = new PickerInterface('timePickerDefaultOpenWithNoneText');
+		this.components.timePickerNoLabels = new PickerInterface('timePickerNoLabels');
+		this.components.timePickerDisabledWithNoneText = new PickerInterface('timePickerDisabledWithNoneText');
+		this.components.timePickerDisabledOpenWithNoneText = new PickerInterface('timePickerDisabledOpenWithNoneText');
 	}
 
 	open (urlExtra) {
