@@ -99,8 +99,9 @@ describe('ActivityPanels', function () {
 			it('should transition back to First panel with back key', function () {
 				Page.open();
 				Page.button1.click();
+				browser.pause(1000)
+				expect(Page.panelTitle).to.equal('SECOND');
 				Page.backKey();
-
 				browser.pause(1000)
 
 				expect(Page.panelTitle).to.equal('FIRST');
@@ -123,6 +124,7 @@ describe('ActivityPanels', function () {
 				Page.spotlightDown();
 				Page.spotlightSelect();
 				browser.pause(1000)
+				expect(Page.item5.hasFocus()).to.be.true();
 				Page.backKey();
 				browser.pause(1000)
 
@@ -136,13 +138,18 @@ describe('ActivityPanels', function () {
 				Page.spotlightDown();
 				Page.spotlightSelect();
 				browser.pause(1000)
+				expect(Page.item5.hasFocus()).to.be.true();
 				Page.spotlightSelect();
 				browser.pause(1000)
+				expect(Page.button3.hasFocus()).to.be.true();
 				Page.spotlightRight();
+				expect(Page.button4.hasFocus()).to.be.true();
 				Page.spotlightDown();
+				expect(Page.breadcrumb.hasFocus()).to.be.true();
 				browser.pause(1000)
 				Page.spotlightSelect();
 				browser.pause(1000)
+				expect(Page.item5.hasFocus()).to.be.true();
 				Page.spotlightSelect();
 				browser.pause(1000)
 
@@ -155,10 +162,13 @@ describe('ActivityPanels', function () {
 				Page.spotlightLeft();
 				Page.spotlightSelect();
 				browser.pause(1000)
+				expect(Page.item5.hasFocus()).to.be.true();
 				Page.spotlightSelect();
 				browser.pause(1000)
+				expect(Page.button3.hasFocus()).to.be.true();
 				Page.backKey();
 				browser.pause(1000)
+				expect(Page.item5.hasFocus()).to.be.true();
 				Page.backKey();
 				browser.pause(1000)
 
@@ -173,8 +183,11 @@ describe('ActivityPanels', function () {
 				Page.spotlightDown();
 				Page.spotlightSelect();
 				browser.pause(1000)
+				expect(Page.item5.hasFocus()).to.be.true();
 				Page.spotlightLeft();
+				expect(Page.breadcrumb.hasFocus()).to.be.true();
 				Page.spotlightRight();
+				expect(Page.item5.hasFocus()).to.be.true();
 				browser.pause(1000)
 				Page.spotlightDown();
 				Page.spotlightDown();
@@ -194,6 +207,7 @@ describe('ActivityPanels', function () {
 				Page.spotlightDown();
 				Page.spotlightSelect();
 				browser.pause(1000)
+				expect(Page.item5.hasFocus()).to.be.true();
 				Page.spotlightLeft();
 				Page.spotlightSelect();
 				browser.pause(1000);
@@ -208,6 +222,7 @@ describe('ActivityPanels', function () {
 				Page.button1.moveToObject();
 				Page.spotlightSelect();
 				browser.pause(1000)
+				expect(Page.panelTitle).to.equal('SECOND');
 				Page.item8.moveToObject();
 				Page.spotlightSelect();
 				browser.pause(1000)
@@ -221,12 +236,15 @@ describe('ActivityPanels', function () {
 				Page.button1.moveToObject();
 				Page.spotlightSelect();
 				browser.pause(1000)
+				expect(Page.panelTitle).to.equal('SECOND');
 				Page.item8.moveToObject();
 				Page.spotlightSelect();
 				browser.pause(1000)
+				expect(Page.panelTitle).to.equal('THIRD');
 				Page.breadcrumbHeader.moveToObject();
 				Page.spotlightSelect();
 				browser.pause(1000)
+				expect(Page.panelTitle).to.equal('SECOND');
 				Page.item8.moveToObject();
 				Page.breadcrumbHeader.moveToObject();
 				Page.spotlightSelect();
@@ -240,9 +258,11 @@ describe('ActivityPanels', function () {
 				Page.button1.moveToObject();
 				Page.spotlightSelect();
 				browser.pause(1000)
+				expect(Page.panelTitle).to.equal('SECOND');
 				Page.item8.moveToObject();
 				Page.spotlightSelect();
 				browser.pause(1000)
+				expect(Page.button3.hasFocus()).to.be.true();
 				Page.spotlightSelect();
 				browser.pause(1000)
 
@@ -250,46 +270,51 @@ describe('ActivityPanels', function () {
 
 			});
 
-			it('should spot in Default panel', function () {
+			it('should spot default item in Default panel', function () {
 				Page.open();
 				Page.button1.moveToObject();
 				Page.spotlightSelect();
 				browser.pause(1000)
+				expect(Page.panelTitle).to.equal('SECOND');
 				Page.item8.moveToObject();
 				Page.spotlightSelect();
 				browser.pause(1000)
+				expect(Page.panelTitle).to.equal('THIRD');
+				Page.button4.moveToObject();
 				Page.spotlightSelect();
 				browser.pause(1000)
-				Page.spotlightDown();
-				Page.spotlightRight();
+				expect(Page.panelTitle).to.equal('NONE');
+				Page.button2.moveToObject();
 				Page.spotlightSelect();
 				browser.pause(1000)
-
 
 				expect(Page.item5.hasFocus()).to.be.true();
-
 			});
 
-			it('should spot in Default panel', function () {
+			it('should re-spot in Default panel', function () {
 				Page.open();
 				Page.button1.moveToObject();
 				Page.spotlightSelect();
 				browser.pause(1000)
+				expect(Page.item5.hasFocus()).to.be.true();
 				Page.item8.moveToObject();
 				Page.spotlightSelect();
 				browser.pause(1000)
+				expect(Page.button3.hasFocus()).to.be.true();
 				Page.spotlightSelect();
 				browser.pause(1000)
+				expect(Page.body.hasFocus()).to.be.true();
 				Page.spotlightDown();
-				Page.spotlightRight();
+				expect(Page.breadcrumb.hasFocus()).to.be.true();
+				Page.button1.moveToObject();
 				Page.spotlightSelect();
 				browser.pause(1000)
+				expect(Page.item5.hasFocus()).to.be.true();
 				Page.spotlightDown();
 				browser.pause(1000)
 				Page.backKey();
 				browser.pause(1000)
 				Page.spotlightDown();
-				Page.spotlightRight();
 				Page.spotlightSelect();
 				browser.pause(1000)
 
@@ -300,13 +325,15 @@ describe('ActivityPanels', function () {
 			it('should spot item 3 on First panel on Back key', function () {
 				Page.open();
 				Page.item3.moveToObject();
-				browser.pause(1000)
 				Page.spotlightSelect();
 				browser.pause(1000)
+				expect(Page.item5.hasFocus()).to.be.true();
 				Page.spotlightSelect();
 				browser.pause(1000)
+				expect(Page.button3.hasFocus()).to.be.true();
 				Page.backKey();
 				browser.pause(1000)
+				expect(Page.item5.hasFocus()).to.be.true();
 				Page.backKey();
 				browser.pause(1000)
 
