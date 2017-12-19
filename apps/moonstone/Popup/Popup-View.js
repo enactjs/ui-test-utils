@@ -6,75 +6,51 @@ import spotlight from '@enact/spotlight';
 import SpotlightContainerDecorator from '@enact/spotlight/SpotlightContainerDecorator';
 
 const Container = SpotlightContainerDecorator('div');
+
+const style = {
+	main: {
+		display: 'grid',
+		'grid-template-columns': 'repeat(3, 1fr)',
+		'grid-gap': '6px'
+	}
+};
+
 spotlight.setPointerMode(false);
 
 class app extends Component {
 
-	constructor (props) {
-		super(props);
-		this.state = {
-			open1: false,
-			open2: false,
-			open3: false,
-			open4: false
-		};
+	state = {
+		open1: false,
+		open2: false,
+		open3: false,
+		open4: false,
+		open5: false,
+		open6: false,
+		open7: false,
+		open8: false,
+		open9: false
+	};
 
-		this.clickHandler1 = this.clickHandler1.bind(this);
-		this.closeHandler1 = this.closeHandler1.bind(this);
-		this.clickHandler2 = this.clickHandler2.bind(this);
-		this.closeHandler2 = this.closeHandler2.bind(this);
-		this.clickHandler3 = this.clickHandler3.bind(this);
-		this.closeHandler3 = this.closeHandler3.bind(this);
-		this.clickHandler4 = this.clickHandler4.bind(this);
-		this.closeHandler4 = this.closeHandler4.bind(this);
-	}
-
-	clickHandler1 () {
-		this.setState({open1: true});
-	}
-
-	closeHandler1 () {
-		this.setState({open1: false});
-	}
-
-	clickHandler2 () {
-		this.setState({open2: true});
-	}
-
-	closeHandler2 () {
-		this.setState({open2: false});
-	}
-
-	clickHandler3 () {
-		this.setState({open3: true});
-	}
-
-	closeHandler3 () {
-		this.setState({open3: false});
-	}
-
-	clickHandler4 () {
-		this.setState({open4: true});
-	}
-
-	closeHandler4 () {
-		this.setState({open4: false});
-	}
+	clickHandler = (st) =>  this.setState(st);
 
 	render () {
-		return  (
+		return (
 			<div id="popupMain" {...this.props}>
 				<p>
-					The containers below will spot the last-focused element. Keep track of the
-					last-focused element in the container when testing and ensure that the correct
-					element is spotted when re-entering the container with 5-way. If the pointer is
-					inside a container and a 5-way directional key is pressed, the nearest element
-					to the pointer (in the direction specified by the key) will be spotted.
+					UI testing for Popup Component 1. AutoDismiss 2. noAutoDismiss 3. no Components 4. noAnimation
+					5. without Close Button 6. spotlightRestrict none 7. spotlightRestrict self-first 8. scrimType transparent 9. scrimType none
 				</p>
-				<Button id="buttonPopup1" onClick={this.clickHandler1}>Button</Button>
-				<Button id="buttonPopup2" onClick={this.clickHandler2}>Button</Button>
-				<Button id="buttonPopup3" onClick={this.clickHandler3}>Button</Button>
-				<Button id="buttonPopup4" onClick={this.clickHandler4}>Button</Button>
+				<div style={style.main}>
+					<Button id="buttonPopup1" onClick={() => this.clickHandler({open1: true})}>AutoDismiss</Button>
+					<Button id="buttonPopup2" onClick={() => this.clickHandler({open2: true})}>noAutoDismiss</Button>
+					<Button id="buttonPopup3" onClick={() => this.clickHandler({open3: true})}>no Component</Button>
+					<Button id="buttonPopup4" onClick={() => this.clickHandler({open4: true})}>noAnimation</Button>
+					<Button id="buttonPopup5" onClick={() => this.clickHandler({open5: true})}>noCloseButton</Button>
+					<Button id="buttonPopup6" onClick={() => this.clickHandler({open6: true})}>spotlightRestrict none</Button>
+					<Button id="buttonPopup7" onClick={() => this.clickHandler({open7: true})}>spotlightRestrict self-first</Button>
+					<Button id="buttonPopup8" onClick={() => this.clickHandler({open8: true})}>scrimType transparent</Button>
+					<Button id="buttonPopup9" onClick={() => this.clickHandler({open9: true})}>scrimType none</Button>
+				</div>
 				<Popup
 					id="popup1"
 					open={this.state.open1}
@@ -82,13 +58,13 @@ class app extends Component {
 					noAutoDismiss={false}
 					showCloseButton
 					spotlightRestrict="self-only"
-					onClose={this.closeHandler1}
+					onClose={() => this.clickHandler({open1: false})}
 				>
-					<div>Hello Popup1</div>
+					<div>Popup with AutoDismiss</div>
 					<br />
 					<Container>
-						<Button id="buttonOK" onClick={this.closeHandler1}>OK</Button>
-						<Button id="buttonCancel" onClick={this.closeHandler1}>Cancel</Button>
+						<Button id="buttonOK" onClick={() => this.clickHandler({open1: false})}>OK</Button>
+						<Button id="buttonCancel" onClick={() => this.clickHandler({open1: false})}>Cancel</Button>
 					</Container>
 				</Popup>
 				<Popup
@@ -98,13 +74,13 @@ class app extends Component {
 					noAutoDismiss
 					showCloseButton
 					spotlightRestrict="self-only"
-					onClose={this.closeHandler2}
+					onClose={() => this.clickHandler({open2: false})}
 				>
-					<div>Hello Popup2</div>
+					<div>Popup without AutoDismiss</div>
 					<br />
 					<Container>
-						<Button id="buttonOK" onClick={this.closeHandler2}>OK</Button>
-						<Button id="buttonCancel" onClick={this.closeHandler2}>Cancel</Button>
+						<Button id="buttonOK" onClick={() => this.clickHandler({open2: false})}>OK</Button>
+						<Button id="buttonCancel" onClick={() => this.clickHandler({open2: false})}>Cancel</Button>
 					</Container>
 				</Popup>
 				<Popup
@@ -114,29 +90,106 @@ class app extends Component {
 					noAutoDismiss={false}
 					showCloseButton={false}
 					spotlightRestrict="self-only"
-					onClose={this.closeHandler3}
+					onClose={() => this.clickHandler({open3: false})}
 				>
-					<div>Hello Popup3</div>
-					<br />
-					<Container>
-						<Button id="buttonOK" onClick={this.closeHandler3}>OK</Button>
-						<Button id="buttonCancel" onClick={this.closeHandler3}>Cancel</Button>
-					</Container>
+					<div>Popup with no Component</div>
 				</Popup>
 				<Popup
 					id="popup4"
 					open={this.state.open4}
+					noAnimation
+					noAutoDismiss={false}
+					showCloseButton
+					spotlightRestrict="self-only"
+					onClose={() => this.clickHandler({open4: false})}
+				>
+					<div>Popup without Animation</div>
+					<br />
+					<Container>
+						<Button id="buttonOK" onClick={() => this.clickHandler({open4: false})}>OK</Button>
+						<Button id="buttonCancel" onClick={() => this.clickHandler({open4: false})}>Cancel</Button>
+					</Container>
+				</Popup>
+				<Popup
+					id="popup5"
+					open={this.state.open5}
+					noAnimation={false}
+					noAutoDismiss={false}
+					showCloseButton={false}
+					spotlightRestrict="self-only"
+					onClose={() => this.clickHandler({open5: false})}
+				>
+					<div>Popup without Close button</div>
+					<br />
+					<Container>
+						<Button id="buttonOK" onClick={() => this.clickHandler({open5: false})}>OK</Button>
+						<Button id="buttonCancel" onClick={() => this.clickHandler({open5: false})}>Cancel</Button>
+					</Container>
+				</Popup>
+				<Popup
+					id="popup6"
+					open={this.state.open6}
 					noAnimation={false}
 					noAutoDismiss={false}
 					showCloseButton
 					spotlightRestrict="none"
-					onClose={this.closeHandler4}
+					onClose={() => this.clickHandler({open6: false})}
 				>
-					<div>Hello Popup4</div>
+					<div>Popup spotlightRestrict is none</div>
 					<br />
 					<Container>
-						<Button id="buttonOK" onClick={this.closeHandler4}>OK</Button>
-						<Button id="buttonCancel" onClick={this.closeHandler4}>Cancel</Button>
+						<Button id="buttonOK" onClick={() => this.clickHandler({open6: false})}>OK</Button>
+						<Button id="buttonCancel" onClick={() => this.clickHandler({open6: false})}>Cancel</Button>
+					</Container>
+				</Popup>
+				<Popup
+					id="popup7"
+					open={this.state.open7}
+					noAnimation={false}
+					noAutoDismiss={false}
+					showCloseButtonsss
+					spotlightRestrict="self-first"
+					onClose={() => this.clickHandler({open7: false})}
+				>
+					<div>Popup spotlightRestrict is self-first</div>
+					<br />
+					<Container>
+						<Button id="buttonOK" onClick={() => this.clickHandler({open7: false})}>OK</Button>
+						<Button id="buttonCancel" onClick={() => this.clickHandler({open7: false})}>Cancel</Button>
+					</Container>
+				</Popup>
+				<Popup
+					id="popup8"
+					open={this.state.open8}
+					noAnimation={false}
+					noAutoDismiss={false}
+					showCloseButtons
+					spotlightRestrict="self-first"
+					scrimType="transparent"
+					onClose={() => this.clickHandler({open8: false})}
+				>
+					<div>Popup scrimType is transparent</div>
+					<br />
+					<Container>
+						<Button id="buttonOK" onClick={() => this.clickHandler({open8: false})}>OK</Button>
+						<Button id="buttonCancel" onClick={() => this.clickHandler({open8: false})}>Cancel</Button>
+					</Container>
+				</Popup>
+				<Popup
+					id="popup9"
+					open={this.state.open9}
+					noAnimation={false}
+					noAutoDismiss={false}
+					showCloseButtons
+					spotlightRestrict="self-first"
+					scrimType="none"
+					onClose={() => this.clickHandler({open9: false})}
+				>
+					<div>Popup scrimType is none</div>
+					<br />
+					<Container>
+						<Button id="buttonOK" onClick={() => this.clickHandler({open9: false})}>OK</Button>
+						<Button id="buttonCancel" onClick={() => this.clickHandler({open9: false})}>Cancel</Button>
 					</Container>
 				</Popup>
 			</div>
