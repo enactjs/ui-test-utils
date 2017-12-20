@@ -147,7 +147,7 @@ class app extends Component {
 					open={this.state.open7}
 					noAnimation={false}
 					noAutoDismiss={false}
-					showCloseButtonsss
+					showCloseButton
 					spotlightRestrict="self-first"
 					onClose={() => this.clickHandler({open7: false})}
 				>
@@ -163,7 +163,7 @@ class app extends Component {
 					open={this.state.open8}
 					noAnimation={false}
 					noAutoDismiss={false}
-					showCloseButtons
+					showCloseButton
 					spotlightRestrict="self-first"
 					scrimType="transparent"
 					onClose={() => this.clickHandler({open8: false})}
@@ -180,7 +180,7 @@ class app extends Component {
 					open={this.state.open9}
 					noAnimation={false}
 					noAutoDismiss={false}
-					showCloseButtons
+					showCloseButton
 					spotlightRestrict="self-first"
 					scrimType="none"
 					onClose={() => this.clickHandler({open9: false})}
