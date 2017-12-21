@@ -9,7 +9,7 @@ spotlight.setPointerMode(false);
 
 
 // ExpandableInput options:
-// disabled, noneText, title, placeholder, iconBefore, iconAfter, type
+// disabled, noneText, title, type
 // defaultOpen, defaultValue
 
 const app = (props) => <div {...props}>

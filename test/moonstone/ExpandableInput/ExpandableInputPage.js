@@ -29,7 +29,7 @@ class ExpandableInterface {
 
 }
 
-class SpotlightMultiplePage extends Page {
+class ExpandableInputPage extends Page {
 	constructor () {
 		super();
 		this.title = 'ExpandableInput Test';
@@ -47,6 +47,6 @@ class SpotlightMultiplePage extends Page {
 
 }
 
-module.exports = new SpotlightMultiplePage();
+module.exports = new ExpandableInputPage();
 
 
