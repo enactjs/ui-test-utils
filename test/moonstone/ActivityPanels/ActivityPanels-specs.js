@@ -114,6 +114,17 @@ describe('ActivityPanels', function () {
 
 			expect(Page.panelTitle).to.equal('FIRST');
 		});
+
+		it('should transition back to First panel with back key', function () {
+			Page.open();
+			Page.button1.click();
+			browser.pause(1000);
+			expect(Page.panelTitle).to.equal('SECOND');
+			Page.backKey();
+			browser.pause(1000);
+
+			expect(Page.panelTitle).to.equal('FIRST');
+		});
 	});
 
 	describe('Spotlight', function () {
@@ -122,18 +133,31 @@ describe('ActivityPanels', function () {
 			expect(Page.closeButton.hasFocus()).to.be.true();
 		});
 
-		describe('5way', function () {
-			it('should transition back to First panel with back key', function () {
+		describe('pointer', function () {
+			it('should spot second item on second panel', function () {
 				Page.open();
-				Page.button1.click();
+				Page.item2.click();
 				browser.pause(1000);
-				expect(Page.panelTitle).to.equal('SECOND');
 				Page.backKey();
 				browser.pause(1000);
 
-				expect(Page.panelTitle).to.equal('FIRST');
+				expect(Page.item2.hasFocus()).to.be.true();
 			});
 
+			it('should spot second item on second panel after moving pointer', function () {
+				Page.open();
+				Page.item2.click();
+				browser.pause(1000);
+				Page.item8.moveToObject()
+				Page.backKey();
+				browser.pause(1000);
+
+				expect(Page.item2.hasFocus()).to.be.true();
+			});
+		});
+
+
+		describe('5way', function () {
 			it('should spot first item on second panel', function () {
 				Page.open();
 				Page.spotlightDown();
