@@ -48,5 +48,3 @@ class ExpandableInputPage extends Page {
 }
 
 module.exports = new ExpandableInputPage();
-
-

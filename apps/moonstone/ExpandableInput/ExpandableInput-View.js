@@ -48,5 +48,3 @@ const app = (props) => <div {...props}>
 </div>;
 
 export default MoonstoneDecorator(app);
-
-
