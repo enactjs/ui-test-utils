@@ -22,77 +22,104 @@ describe('ActivityPanels', function () {
 
 			expect(Page.panelTitle).to.equal('SECOND');
 		});
+
+		it('should navigate to DEFAULT ELEMENT', function () {
+			Page.open();
+			browser.pause(1000);
+			Page.item1.click();
+			browser.pause(1000);
+			Page.item5.click();
+			browser.pause(1000);
+			Page.button4.click();
+			browser.pause(1000);
+			Page.item2.click();
+			browser.pause(1000);
+
+			expect(Page.panelTitle).to.equal('DEFAULT ELEMENT');
+		});
+
+		it('should navigate back to the First panel from clicking on breadcrumb', function () {
+			Page.open();
+			browser.pause(1000);
+			Page.item1.click();
+			browser.pause(1000);
+			Page.item5.click();
+			browser.pause(1000);
+			Page.button4.click();
+			browser.pause(1000);
+			Page.item2.click();
+			browser.pause(1000);
+			Page.breadcrumbHeader.click();
+			browser.pause(1000);
+			Page.breadcrumbHeader.click();
+			browser.pause(1000);
+			Page.breadcrumbHeader.click();
+			browser.pause(1000);
+			Page.breadcrumbHeader.click();
+			browser.pause(1000);
+
+			expect(Page.panelTitle).to.equal('FIRST');
+		});
+
+		it('should navigate back to the Third panel from clicking on breadcrumb', function () {
+			Page.open();
+			browser.pause(1000);
+			Page.item1.click();
+			browser.pause(1000);
+			Page.item5.click();
+			browser.pause(1000);
+			Page.breadcrumbHeader.click();
+			browser.pause(1000);
+			Page.item8.click();
+			browser.pause(1000);
+			Page.button4.click();
+			browser.pause(1000);
+			Page.breadcrumbHeader.click();
+			browser.pause(1000);
+
+			expect(Page.panelTitle).to.equal('THIRD');
+		});
+
+		it('should move from first panel to the third', function () {
+			Page.open();
+			Page.button1.moveToObject();
+			Page.spotlightSelect();
+			browser.pause(1000);
+			expect(Page.panelTitle).to.equal('SECOND');
+			Page.item8.moveToObject();
+			Page.spotlightSelect();
+			browser.pause(1000);
+
+			expect(Page.panelTitle).to.equal('THIRD');
+		});
+
+		it('should move to first panel from the third', function () {
+			Page.open();
+			Page.button1.moveToObject();
+			Page.spotlightSelect();
+			browser.pause(1000);
+			expect(Page.panelTitle).to.equal('SECOND');
+			Page.item8.moveToObject();
+			Page.spotlightSelect();
+			browser.pause(1000);
+			expect(Page.panelTitle).to.equal('THIRD');
+			Page.breadcrumbHeader.moveToObject();
+			Page.spotlightSelect();
+			browser.pause(1000);
+			expect(Page.panelTitle).to.equal('SECOND');
+			Page.item8.moveToObject();
+			Page.breadcrumbHeader.moveToObject();
+			Page.spotlightSelect();
+			browser.pause(1000);
+
+			expect(Page.panelTitle).to.equal('FIRST');
+		});
 	});
 
 	describe('Spotlight', function () {
 		it('should spot close button on render', function () {
 			Page.open();
 			expect(Page.closeButton.hasFocus()).to.be.true();
-		});
-
-		describe('pointer', function () {
-			it('should navigate to DEFAULT ELEMENT', function () {
-				Page.open();
-				browser.pause(1000);
-				Page.item1.click();
-				browser.pause(1000);
-				Page.item5.click();
-				browser.pause(1000);
-				Page.button4.click();
-				browser.pause(1000);
-				Page.item2.click();
-				browser.pause(1000);
-
-				expect(Page.panelTitle).to.equal('DEFAULT ELEMENT');
-			});
-
-			it('should navigate back to the First panel from clicking on breadcrumb', function () {
-				Page.open();
-				browser.pause(1000);
-				Page.item1.click();
-				browser.pause(1000);
-				Page.item5.click();
-				browser.pause(1000);
-				Page.button4.click();
-				browser.pause(1000);
-				Page.item2.click();
-				browser.pause(1000);
-				Page.breadcrumbHeader.click();
-				browser.pause(1000);
-				Page.breadcrumbHeader.click();
-				browser.pause(1000);
-				Page.breadcrumbHeader.click();
-				browser.pause(1000);
-				Page.breadcrumbHeader.click();
-				browser.pause(1000);
-
-				expect(Page.panelTitle).to.equal('FIRST');
-			});
-
-
-			it('should navigate back to the Third panel from clicking on breadcrumb', function () {
-				Page.open();
-				browser.pause(1000);
-				Page.item1.click();
-				browser.pause(1000);
-				Page.item5.click();
-				browser.pause(1000);
-				Page.breadcrumbHeader.click();
-				browser.pause(1000);
-				Page.item8.click();
-				browser.pause(1000);
-				Page.button4.click();
-				browser.pause(1000);
-				Page.breadcrumbHeader.click();
-				browser.pause(1000);
-
-				expect(Page.panelTitle).to.equal('THIRD');
-
-			});
-
-
-
-
 		});
 
 		describe('5way', function () {
@@ -216,43 +243,7 @@ describe('ActivityPanels', function () {
 			});
 		});
 
-		describe('both', function () {
-			it('should move from first panel to the third', function () {
-				Page.open();
-				Page.button1.moveToObject();
-				Page.spotlightSelect();
-				browser.pause(1000);
-				expect(Page.panelTitle).to.equal('SECOND');
-				Page.item8.moveToObject();
-				Page.spotlightSelect();
-				browser.pause(1000);
-
-				expect(Page.panelTitle).to.equal('THIRD');
-			});
-
-
-			it('should move to first panel from the third', function () {
-				Page.open();
-				Page.button1.moveToObject();
-				Page.spotlightSelect();
-				browser.pause(1000);
-				expect(Page.panelTitle).to.equal('SECOND');
-				Page.item8.moveToObject();
-				Page.spotlightSelect();
-				browser.pause(1000);
-				expect(Page.panelTitle).to.equal('THIRD');
-				Page.breadcrumbHeader.moveToObject();
-				Page.spotlightSelect();
-				browser.pause(1000);
-				expect(Page.panelTitle).to.equal('SECOND');
-				Page.item8.moveToObject();
-				Page.breadcrumbHeader.moveToObject();
-				Page.spotlightSelect();
-				browser.pause(1000);
-
-				expect(Page.panelTitle).to.equal('FIRST');
-			});
-
+		describe('5way and pointer', function () {
 			it('should not spot in None panel', function () {
 				Page.open();
 				Page.button1.moveToObject();
