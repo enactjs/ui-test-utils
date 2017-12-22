@@ -18,15 +18,17 @@ describe('ExpandablePicker', function () {
 			expect(Page.expandable1.isExisting('.Transition__shown')).to.be.true();
 		});
 
-		it.only('should collapse on click', function () {
+		it('should collapse on click', function () {
 			Page.open();
 			browser.pause(1000)
 			Page.expandable1.click();
 			browser.pause(1000)
 			Page.pickerIncrement.click();
 			browser.pause(1000)
+			expect(Page.pickerItemText).to.equal('option2');
 			Page.pickerIncrement.click();
 			browser.pause(1000)
+			expect(Page.pickerItemText).to.equal('option3');
 			Page.checkMark.click();
 			browser.pause(1000)
 
@@ -48,6 +50,7 @@ describe('ExpandablePicker', function () {
 				Page.open();
 				Page.spotlightSelect();
 				browser.pause(1000)
+				expect(Page.pickerIncrement.hasFocus()).to.be.true();
 				Page.spotlightSelect();
 				browser.pause(1000)
 				expect(Page.pickerItemText).to.equal('option2');
@@ -58,9 +61,11 @@ describe('ExpandablePicker', function () {
 					Page.open();
 					browser.pause(100)
 					Page.expandable1.click();
-					browser.pause(100)
+					browser.pause(1000)
+					Page.pickerIncrement.moveToObject();
 					Page.spotlightRight();
 					Page.spotlightSelect();
+					browser.pause(1000)
 					expect(Page.expandable1.isExisting('.Transition__shown')).to.be.false();
 				});
 
@@ -69,8 +74,10 @@ describe('ExpandablePicker', function () {
 					Page.expandable1.moveToObject();
 					Page.spotlightSelect();
 					browser.pause(1000)
+					expect(Page.pickerIncrement.hasFocus()).to.be.true();
 					Page.spotlightSelect();
 					browser.pause(1000)
+					expect(Page.pickerIncrement.hasFocus()).to.be.true();
 					Page.spotlightRight();
 					Page.spotlightSelect();
 					browser.pause(2000)
@@ -88,13 +95,18 @@ describe('ExpandablePicker', function () {
 					Page.spotlightSelect();
 					browser.pause(1000)
 					Page.spotlightRight();
+					browser.pause(1000)
+					expect(Page.checkMark.hasFocus()).to.be.true();
 					Page.spotlightSelect();
 					browser.pause(2000)
+					expect(Page.labeledItemText).to.equal('option2');
 					Page.spotlightSelect();
 					browser.pause(1000)
+					expect(Page.pickerIncrement.hasFocus()).to.be.true();
 					Page.spotlightSelect();
 					browser.pause(1000)
 					Page.spotlightUp();
+					browser.pause(1000)
 					Page.spotlightSelect();
 					browser.pause(1000)
 
