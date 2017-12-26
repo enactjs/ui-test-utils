@@ -20,27 +20,32 @@ const app = (props) => <div {...props}>
 		/>
 		<TimePicker
 			id="timePickerDefaultOpenWithNoneText"
+			defaultOpen
 			noneText="Nothing Selected"
 			title="Time Picker Default Open"
-			defaultOpen
+		/>
+		<TimePicker
+			id="timePickerWithValue"
+			title="Time Picker With Value"
+			value={new Date(2009, 5, 6)}
 		/>
 		<TimePicker
 			id="timePickerNoLabels"
-			title="Time Picker noLabels"
 			noLabels
+			title="Time Picker noLabels"
 		/>
 		<TimePicker
 			id="timePickerDisabledWithNoneText"
+			disabled
 			noneText="Nothing Selected"
 			title="Time Picker Disabled"
-			disabled
 		/>
 		<TimePicker
 			id="timePickerDisabledOpenWithNoneText"
-			noneText="Nothing Selected"
-			title="Time Picker Disabled Open"
 			defaultOpen
 			disabled
+			noneText="Nothing Selected"
+			title="Time Picker Disabled Open"
 		/>
 	</div>
 </div>;

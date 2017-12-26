@@ -26,7 +26,7 @@ class PickerInterface {
 
 	get hour () { return element('.TimePicker__hourComponents .Picker__picker', this.self); }
 	get hourLabel () { return element('.TimePicker__hourComponents .DateComponentPicker__label', this.self); }
-	get minute () { return element('.TimePicker__minuteComponents .Picker__picker', this.self); }
+	get minute () { return element('.TimePicker__minutesComponents .Picker__picker', this.self); }
 	get meridiem () { return element('.TimePicker__meridiemComponent .Picker__picker', this.self); }
 
 	decrementer (picker) { return element('.Picker__decrementer', picker); }
@@ -42,6 +42,8 @@ class TimePickerPage extends Page {
 		this.components.timePickerDefaultClosedWithoutNoneText = new PickerInterface('timePickerDefaultClosedWithoutNoneText');
 		this.components.timePickerDefaultClosedWithNoneText = new PickerInterface('timePickerDefaultClosedWithNoneText');
 		this.components.timePickerDefaultOpenWithNoneText = new PickerInterface('timePickerDefaultOpenWithNoneText');
+		this.components.timePickerWithValue = new PickerInterface('timePickerWithValue');
+		// this.components.timePicker24Hour = new PickerInterface('timePicker24Hour');
 		this.components.timePickerNoLabels = new PickerInterface('timePickerNoLabels');
 		this.components.timePickerDisabledWithNoneText = new PickerInterface('timePickerDisabledWithNoneText');
 		this.components.timePickerDisabledOpenWithNoneText = new PickerInterface('timePickerDisabledOpenWithNoneText');
