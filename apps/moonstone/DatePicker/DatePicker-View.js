@@ -25,6 +25,11 @@ const app = (props) => <div {...props}>
 			defaultOpen
 		/>
 		<DatePicker
+			id="datePickerWithValue"
+			title="Date Picker With Value"
+			value={new Date(2009, 5, 6)}
+		/>
+		<DatePicker
 			id="datePickerNoLabels"
 			title="Date Picker noLabels"
 			noLabels
