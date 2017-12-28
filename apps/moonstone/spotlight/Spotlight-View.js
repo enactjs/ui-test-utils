@@ -1,5 +1,6 @@
 import Item from '@enact/moonstone/Item';
 import MoonstoneDecorator from '@enact/moonstone/MoonstoneDecorator';
+import Button from '@enact/moonstone/Button';
 import React from 'react';
 import spotlight from '@enact/spotlight';
 import SpotlightContainerDecorator from '@enact/spotlight/SpotlightContainerDecorator';
@@ -18,7 +19,8 @@ const style = {
 		padding: '12px'
 	},
 	flexBox: {
-		display: 'flex'
+		display: 'flex',
+		flexWrap: 'wrap'
 	},
 	flexItem: {
 		flex: '1'
@@ -31,14 +33,68 @@ window.spotlight = spotlight;
 // runs the same way
 spotlight.setPointerMode(false);
 
+class DisappearTest extends React.Component {
+	constructor (props) {
+		super(props);
+
+		this.state = {
+			showButton: true
+		};
+	}
+
+	componentWillUnmount () {
+		this.stopTimer();
+	}
+
+	removeButton = () => {
+		this.setState({showButton: false});
+	}
+
+	restoreButton = () => {
+		this.setState({showButton: true});
+	}
+
+	resetFocus = () => {
+		spotlight.focus('[data-component-id="restoreButton"]');
+	}
+
+	startTimer = () => {
+		this.timer = window.setTimeout(this.removeButton, 4000);
+	}
+
+	stopTimer = () => {
+		if (this.timer) {
+			window.clearTimeout(this.timer);
+		}
+	}
+
+	render () {
+		return (
+			<div>
+				<Container style={style.container}>
+					{this.state.showButton ? (
+						<Button
+							id="focusButton"
+							onFocus={this.startTimer}
+							onSpotlightDisappear={this.resetFocus}
+						>
+							Focus me
+						</Button>
+					) : null}
+					<Button
+						id="restoreButton"
+						data-component-id="restoreButton"
+						onClick={this.restoreButton}
+					>
+						Restore Button
+					</Button>
+				</Container>
+			</div>
+		);
+	}
+}
+
 const app = (props) => <div {...props}>
-	<p>
-		The containers below will spot the last-focused element. Keep track of the
-		last-focused element in the container when testing and ensure that the correct
-		element is spotted when re-entering the container with 5-way. If the pointer is
-		inside a container and a 5-way directional key is pressed, the nearest element
-		to the pointer (in the direction specified by the key) will be spotted.
-	</p>
 	<div style={style.flexBox}>
 		<Container style={style.container}>
 			<Item id="item1" className="spottable-default">1</Item>
@@ -56,6 +112,17 @@ const app = (props) => <div {...props}>
 			<Item id="itemB">B</Item>
 			<Item id="itemC">C</Item>
 		</Container>
+		<div style={style.flexBox}>
+			<Container style={style.fittedContainer} >
+				<Item id="itemParent">Item in a container</Item>
+				<Container style={style.fittedContainer} >
+					<Item id="itemChild">Item in a nested container</Item>
+				</Container>
+			</Container>
+		</div>
+		<div style={style.flexBox}>
+			<DisappearTest />
+		</div>
 	</div>
 </div>;
 
