@@ -9,11 +9,11 @@ describe('CheckboxItem', function () {
 			Page.open();
 		});
 
-		it('should have focus on first item at start', function () {
-			expect(Page.components.checkboxDefault.item.hasFocus()).to.be.true();
-		});
-
 		const checkboxItem = Page.components.checkboxDefault;
+
+		it('should have focus on first item at start', function () {
+			expect(checkboxItem.item.hasFocus()).to.be.true();
+		});
 
 		it('should have correct text', function () {
 			expect(checkboxItem.valueText).to.equal('Checkbox Item');
