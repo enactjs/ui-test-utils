@@ -25,9 +25,11 @@ class PickerInterface {
 	get    isOpen () { return this.self.isExisting('.Transition__shown'); }
 
 	get day () { return element('.DatePicker__day .Picker__picker', this.self); }
+	get dayLabel () { return element('.DatePicker__day .DateComponentPicker__label', this.self); }
 	get month () { return element('.DatePicker__month .Picker__picker', this.self); }
 	get monthLabel () { return element('.DatePicker__month .DateComponentPicker__label', this.self); }
 	get year () { return element('.DatePicker__year .Picker__picker', this.self); }
+	get yearLabel () { return element('.DatePicker__year .DateComponentPicker__label', this.self); }
 
 	decrementer (picker) { return element('.Picker__decrementer', picker); }
 	incrementer (picker) { return element('.Picker__incrementer', picker); }

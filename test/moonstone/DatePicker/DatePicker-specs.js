@@ -1,15 +1,16 @@
 const Page = require('./DatePickerPage');
-const {daysInMonth, expectClosed, expectOpen, extractValues, validateTitle} = require('./DatePicker-utils.js');
+const {daysInMonth, expectClosed, expectNoLabels, expectOpen, extractValues, validateTitle} = require('./DatePicker-utils.js');
 
 describe('DatePicker', function () {
+	Page.open();
+
+	it('should have focus on start', function () {
+		expect(Page.components.datePickerDefaultClosedWithoutNoneText.title.hasFocus()).to.be.true();
+	});
 
 	describe('LTR locale', function () {
 		beforeEach(function () {
-			Page.open('?locale=en-US');
-		});
-
-		it('should have focus on start', function () {
-			expect(Page.components.datePickerDefaultClosedWithoutNoneText.title.hasFocus()).to.be.true();
+			Page.open();
 		});
 
 		describe('default', function () {
@@ -23,15 +24,26 @@ describe('DatePicker', function () {
 				expectClosed(datePicker);
 			});
 
+			it('should have month-day-year order', function () {
+				Page.spotlightSelect();
+				browser.pause(250);
+				expectOpen(datePicker);
+				expect(datePicker.month.hasFocus()).to.be.true();
+				Page.spotlightRight();
+				expect(datePicker.day.hasFocus()).to.be.true();
+				Page.spotlightRight();
+				expect(datePicker.year.hasFocus()).to.be.true();
+			});
+
 			describe('5-way', function () {
 				it('should open, spot first item on select, and update value to current date', function () {
 					Page.spotlightSelect();
 					// TODO: Perhaps trap `ontransitionend` so we don't have to rely on magic numbers?
 					browser.pause(250);
-					const date = new Date(datePicker.valueText);
+					const month = new Date(datePicker.valueText).getMonth();
 					expectOpen(datePicker);
 					expect(datePicker.month.hasFocus()).to.be.true();
-					expect(!isNaN(date.getMonth())).to.be.true();
+					expect(month).to.be.within(0, 11);
 				});
 
 				it('should close when pressing select', function () {
@@ -54,76 +66,90 @@ describe('DatePicker', function () {
 					expect(datePicker.title.hasFocus()).to.be.true();
 				});
 
-				it('should update month when incrementing/decrementing the picker', function () {
+				it('should increase the month when incrementing the picker', function () {
 					Page.spotlightSelect();
 					browser.pause(250);
-					const month = parseInt(datePicker.item(datePicker.month).getText());
-					let value;
+					const {month} = extractValues(datePicker);
 					expectOpen(datePicker);
-					while (!datePicker.month.hasFocus()) {
-						Page.spotlightRight();
-					}
-					// increment
+					expect(datePicker.month.hasFocus()).to.be.true();
 					Page.spotlightUp();
 					browser.pause(250);
-					value = parseInt(datePicker.item(datePicker.month).getText());
-					if (month < 12) {
-						expect(value).to.equal(month + 1);
-					} else {
-						expect(value).to.equal(1);
-					}
-					// decrement
-					Page.spotlightDown();
-					browser.pause(250);
-					value = parseInt(datePicker.item(datePicker.month).getText());
-					expect(value).to.equal(month);
+					const {month: value} = extractValues(datePicker);
+					const expected = month < 12 ? month + 1 : 1;
+					expect(value).to.equal(expected);
 				});
 
-				it('should update day when incrementing/decrementing the picker', function () {
+				it('should decrease the month when decrementing the picker', function () {
+					Page.spotlightSelect();
+					browser.pause(250);
+					const {month} = extractValues(datePicker);
+					expectOpen(datePicker);
+					expect(datePicker.month.hasFocus()).to.be.true();
+					Page.spotlightDown();
+					browser.pause(250);
+					const {month: value} = extractValues(datePicker);
+					const expected = month > 1 ? month - 1 : 12;
+					expect(value).to.equal(expected);
+				});
+
+				it('should increase the day when incrementing the picker', function () {
 					Page.spotlightSelect();
 					browser.pause(250);
 					const {day, month, year} = extractValues(datePicker);
 					const numDays = daysInMonth({month, year});
-					let value;
 					expectOpen(datePicker);
-					while (!datePicker.day.hasFocus()) {
-						Page.spotlightRight();
-					}
-					// increment
+					Page.spotlightRight();
+					expect(datePicker.day.hasFocus()).to.be.true();
 					Page.spotlightUp();
 					browser.pause(250);
-					value = parseInt(datePicker.item(datePicker.day).getText());
-					if (day === numDays) {
-						expect(value).to.equal(1);
-					} else {
-						expect(value).to.equal(day + 1);
-					}
-					// decrement
-					Page.spotlightDown();
-					browser.pause(250);
-					value = parseInt(datePicker.item(datePicker.day).getText());
-					expect(value).to.equal(day);
+					const {day: value} = extractValues(datePicker);
+					const expected = day !== numDays ? day + 1 : 1;
+					expect(value).to.equal(expected);
 				});
 
-				it('should update year when incrementing/decrementing the picker', function () {
+				it('should decrease the day when decrementing the picker', function () {
 					Page.spotlightSelect();
 					browser.pause(250);
-					const year = parseInt(datePicker.item(datePicker.year).getText());
-					let value;
+					const {day, month, year} = extractValues(datePicker);
+					const numDays = daysInMonth({month, year});
 					expectOpen(datePicker);
-					while (!datePicker.year.hasFocus()) {
-						Page.spotlightRight();
-					}
-					// increment
-					Page.spotlightUp();
-					browser.pause(250);
-					value = parseInt(datePicker.item(datePicker.year).getText());
-					expect(value).to.equal(year + 1);
-					// decrement
+					Page.spotlightRight();
+					expect(datePicker.day.hasFocus()).to.be.true();
 					Page.spotlightDown();
 					browser.pause(250);
-					value = parseInt(datePicker.item(datePicker.year).getText());
-					expect(value).to.equal(year);
+					const {day: value} = extractValues(datePicker);
+					const expected = day !== 1 ? day - 1 : numDays;
+					expect(value).to.equal(expected);
+				});
+
+				it('should increase the year when incrementing the picker', function () {
+					Page.spotlightSelect();
+					browser.pause(250);
+					const {year} = extractValues(datePicker);
+					expectOpen(datePicker);
+					Page.spotlightRight();
+					Page.spotlightRight();
+					expect(datePicker.year.hasFocus()).to.be.true();
+					Page.spotlightUp();
+					browser.pause(250);
+					const {year: value} = extractValues(datePicker);
+					const expected = year + 1;
+					expect(value).to.equal(expected);
+				});
+
+				it('should decrease the year when decrementing the picker', function () {
+					Page.spotlightSelect();
+					browser.pause(250);
+					const {year} = extractValues(datePicker);
+					expectOpen(datePicker);
+					Page.spotlightRight();
+					Page.spotlightRight();
+					expect(datePicker.year.hasFocus()).to.be.true();
+					Page.spotlightDown();
+					browser.pause(250);
+					const {year: value} = extractValues(datePicker);
+					const expected = year - 1;
+					expect(value).to.equal(expected);
 				});
 			});
 
@@ -151,67 +177,78 @@ describe('DatePicker', function () {
 					expect(datePicker.month.hasFocus()).to.be.true();
 				});
 
-				it('should update month when incrementing/decrementing the picker', function () {
+				it('should increase the month when incrementing the picker', function () {
 					datePicker.title.click();
 					browser.pause(250);
-					const month = parseInt(datePicker.item(datePicker.month).getText());
-					let value;
+					const {month} = extractValues(datePicker);
 					expectOpen(datePicker);
-					// increment
 					datePicker.incrementer(datePicker.month).click();
 					browser.pause(250);
-					value = parseInt(datePicker.item(datePicker.month).getText());
-					if (month < 12) {
-						expect(value).to.equal(month + 1);
-					} else {
-						expect(value).to.equal(1);
-					}
-					// decrement
-					datePicker.decrementer(datePicker.month).click();
-					browser.pause(250);
-					value = parseInt(datePicker.item(datePicker.month).getText());
-					expect(value).to.be.equal(month);
+					const {month: value} = extractValues(datePicker);
+					const expected = month < 12 ? month + 1 : 1;
+					expect(value).to.equal(expected);
 				});
 
-				it('should update day when incrementing/decrementing the picker', function () {
+				it('should decrease the month when decrementing the picker', function () {
+					datePicker.title.click();
+					browser.pause(250);
+					const {month} = extractValues(datePicker);
+					expectOpen(datePicker);
+					datePicker.decrementer(datePicker.month).click();
+					browser.pause(250);
+					const {month: value} = extractValues(datePicker);
+					const expected = month > 1 ? month - 1 : 12;
+					expect(value).to.equal(expected);
+				});
+
+				it('should increase the day when incrementing the picker', function () {
 					datePicker.title.click();
 					browser.pause(250);
 					const {day, month, year} = extractValues(datePicker);
 					const numDays = daysInMonth({month, year});
-					let value;
 					expectOpen(datePicker);
-					// increment
 					datePicker.incrementer(datePicker.day).click();
 					browser.pause(250);
-					value = parseInt(datePicker.item(datePicker.day).getText());
-					if (day === numDays) {
-						expect(value).to.equal(1);
-					} else {
-						expect(value).to.equal(day + 1);
-					}
-					// decrement
-					datePicker.decrementer(datePicker.day).click();
-					browser.pause(250);
-					value = parseInt(datePicker.item(datePicker.day).getText());
-					expect(value).to.equal(day);
+					const {day: value} = extractValues(datePicker);
+					const expected = day !== numDays ? day + 1 : 1;
+					expect(value).to.equal(expected);
 				});
 
-				it('should update year when incrementing/decrementing the picker', function () {
+				it('should decrease the day when decrementing the picker', function () {
 					datePicker.title.click();
 					browser.pause(250);
-					const year = parseInt(datePicker.item(datePicker.year).getText());
-					let value;
+					const {day, month, year} = extractValues(datePicker);
+					const numDays = daysInMonth({month, year});
 					expectOpen(datePicker);
-					// increment
+					datePicker.decrementer(datePicker.day).click();
+					browser.pause(250);
+					const {day: value} = extractValues(datePicker);
+					const expected = day !== 1 ? day - 1 : numDays;
+					expect(value).to.equal(expected);
+				});
+
+				it('should increase the year when incrementing the picker', function () {
+					datePicker.title.click();
+					browser.pause(250);
+					const {year} = extractValues(datePicker);
+					expectOpen(datePicker);
 					datePicker.incrementer(datePicker.year).click();
 					browser.pause(250);
-					value = parseInt(datePicker.item(datePicker.year).getText());
-					expect(value).to.be.equal(year + 1);
-					// decrement
+					const {year: value} = extractValues(datePicker);
+					const expected = year + 1;
+					expect(value).to.equal(expected);
+				});
+
+				it('should decrease the year when decrementing the picker', function () {
+					datePicker.title.click();
+					browser.pause(250);
+					const {year} = extractValues(datePicker);
+					expectOpen(datePicker);
 					datePicker.decrementer(datePicker.year).click();
 					browser.pause(250);
-					value = parseInt(datePicker.item(datePicker.year).getText());
-					expect(value).to.be.equal(year);
+					const {year: value} = extractValues(datePicker);
+					const expected = year - 1;
+					expect(value).to.equal(expected);
 				});
 			});
 		});
@@ -296,7 +333,7 @@ describe('DatePicker', function () {
 
 			it('should not have labeled pickers', function () {
 				datePicker.title.click();
-				expect(datePicker.monthLabel.value).to.be.null();
+				expectNoLabels(datePicker);
 			});
 		});
 
@@ -314,8 +351,6 @@ describe('DatePicker', function () {
 			describe('5-way', function() {
 				it('should not receive focus', function () {
 					Page.components.datePickerNoLabels.focus();
-					Page.spotlightSelect();
-					Page.spotlightSelect();
 					Page.spotlightDown();
 					expect(datePicker.title.hasFocus()).to.be.false();
 				});
@@ -337,8 +372,8 @@ describe('DatePicker', function () {
 			});
 
 			it('should have the current date value', function () {
-				const date = new Date(datePicker.valueText);
-				expect(!isNaN(date.getMonth())).to.be.true();
+				const month = new Date(datePicker.valueText).getMonth();
+				expect(month).to.be.within(0, 11);
 			});
 		});
 	});
@@ -357,7 +392,7 @@ describe('DatePicker', function () {
 			expect(datePicker.day.hasFocus()).to.be.true();
 		});
 
-		it('should have day-month-year order (RTL)', function () {
+		it('should have day-month-year order', function () {
 			Page.spotlightSelect();
 			browser.pause(250);
 			expectOpen(datePicker);

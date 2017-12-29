@@ -25,6 +25,12 @@ function expectClosed (picker) {
 	expect(picker.month.isVisible()).to.be.false();
 }
 
+function expectNoLabels (picker) {
+	expect(picker.monthLabel.value).to.be.null();
+	expect(picker.dayLabel.value).to.be.null();
+	expect(picker.yearLabel.value).to.be.null();
+}
+
 function expectOpen (picker) {
 	expect(picker.isOpen).to.be.true();
 	expect(picker.chevron).to.equal('󯿮');
@@ -34,7 +40,8 @@ function expectOpen (picker) {
 module.exports = {
 	daysInMonth,
 	expectClosed,
+	expectNoLabels,
 	expectOpen,
 	extractValues,
 	validateTitle
-}
+};
