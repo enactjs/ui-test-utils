@@ -26,8 +26,10 @@ class PickerInterface {
 
 	get hour () { return element('.TimePicker__hourComponents .Picker__picker', this.self); }
 	get hourLabel () { return element('.TimePicker__hourComponents .DateComponentPicker__label', this.self); }
-	get minute () { return element('.TimePicker__minutesComponents .Picker__picker', this.self); }
 	get meridiem () { return element('.TimePicker__meridiemComponent .Picker__picker', this.self); }
+	get meridiemLabel () { return element('.TimePicker__meridiemComponents .DateComponentPicker__label', this.self); }
+	get minute () { return element('.TimePicker__minutesComponents .Picker__picker', this.self); }
+	get minuteLabel () { return element('.TimePicker__minuteComponents .DateComponentPicker__label', this.self); }
 
 	decrementer (picker) { return element('.Picker__decrementer', picker); }
 	incrementer (picker) { return element('.Picker__incrementer', picker); }

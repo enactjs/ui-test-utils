@@ -1,15 +1,16 @@
 const Page = require('./TimePickerPage');
-const {expectClosed, expectOpen, extractValues, validateTitle} = require('./TimePicker-utils.js');
+const {expectClosed, expectOpen, expectNoLabels, extractValues, validateTitle} = require('./TimePicker-utils.js');
 
 describe('TimePicker', function () {
+	Page.open();
+
+	it('should have focus on start', function () {
+		expect(Page.components.timePickerDefaultClosedWithoutNoneText.title.hasFocus()).to.be.true();
+	});
 
 	describe('LTR locale', function () {
 		beforeEach(function () {
-			Page.open('?locale=en-US');
-		});
-
-		it('should have focus on start', function () {
-			expect(Page.components.timePickerDefaultClosedWithoutNoneText.title.hasFocus()).to.be.true();
+			Page.open();
 		});
 
 		describe('default', function () {
@@ -23,13 +24,25 @@ describe('TimePicker', function () {
 				expectClosed(timePicker);
 			});
 
+			it('should have hour-minute-meridiem order', function () {
+				Page.spotlightSelect();
+				browser.pause(250);
+				expectOpen(timePicker);
+				expect(timePicker.hour.hasFocus()).to.be.true();
+				Page.spotlightRight();
+				expect(timePicker.minute.hasFocus()).to.be.true();
+				Page.spotlightRight();
+				expect(timePicker.meridiem.hasFocus()).to.be.true();
+			});
+
 			describe('5-way', function () {
 				it('should open, spot hour picker on select, and update value to current time', function () {
 					Page.spotlightSelect();
 					// TODO: Perhaps trap `ontransitionend` so we don't have to rely on magic numbers?
 					browser.pause(250);
 					expectOpen(timePicker);
-					expect(!!timePicker.valueText).to.be.true();
+					const value = /^\d{1,2}:\d{2}\s[A|P]M$/.test(timePicker.valueText);
+					expect(value).to.be.true();
 				});
 
 				it('should close when pressing select', function () {
@@ -52,75 +65,88 @@ describe('TimePicker', function () {
 					expect(timePicker.title.hasFocus()).to.be.true();
 				});
 
-				it('should update hour when incrementing/decrementing the picker', function () {
+				it('should increase the hour when incrementing the picker', function () {
 					Page.spotlightSelect();
 					browser.pause(250);
-					const hour = parseInt(timePicker.item(timePicker.hour).getText());
-					let value;
+					const {hour} = extractValues(timePicker);
 					expectOpen(timePicker);
-					while (!timePicker.hour.hasFocus()) {
-						Page.spotlightRight();
-					}
-					// increment
+					expect(timePicker.hour.hasFocus()).to.be.true();
 					Page.spotlightUp();
 					browser.pause(250);
-					value = parseInt(timePicker.item(timePicker.hour).getText());
-					if (hour === 12) {
-						expect(value).to.equal(1);
-					} else {
-						expect(value).to.equal(hour + 1);
-					}
-					// decrement
-					Page.spotlightDown();
-					browser.pause(250);
-					value = parseInt(timePicker.item(timePicker.hour).getText());
-					expect(value).to.equal(hour);
+					const {hour: value} = extractValues(timePicker);
+					const expected = hour < 12 ? hour + 1 : 1;
+					expect(value).to.equal(expected);
 				});
 
-				it('should update minute when incrementing/decrementing the picker', function () {
+				it('should decrease the hour when decrementing the picker', function () {
 					Page.spotlightSelect();
 					browser.pause(250);
-					const minute = parseInt(timePicker.item(timePicker.minute).getText());
-					let value;
+					const {hour} = extractValues(timePicker);
 					expectOpen(timePicker);
-					while (!timePicker.minute.hasFocus()) {
-						Page.spotlightRight();
-					}
-					// increment
-					Page.spotlightUp();
-					browser.pause(250);
-					value = parseInt(timePicker.item(timePicker.minute).getText());
-					if (minute === 59) {
-						expect(value).to.equal(0);
-					} else {
-						expect(value).to.equal(minute + 1);
-					}
-					// decrement
+					expect(timePicker.hour.hasFocus()).to.be.true();
 					Page.spotlightDown();
 					browser.pause(250);
-					value = parseInt(timePicker.item(timePicker.minute).getText());
-					expect(value).to.equal(minute);
+					const {hour: value} = extractValues(timePicker);
+					const expected = hour > 1 ? hour - 1 : 12;
+					expect(value).to.equal(expected);
 				});
 
-				it('should update value text when incrementing/decrementing the meridiem picker', function () {
+				it('should increase the minute when incrementing the picker', function () {
+					Page.spotlightSelect();
+					browser.pause(250);
+					const {minute} = extractValues(timePicker);
+					expectOpen(timePicker);
+					Page.spotlightRight();
+					expect(timePicker.minute.hasFocus()).to.be.true();
+					Page.spotlightUp();
+					browser.pause(250);
+					const {minute: value} = extractValues(timePicker);
+					const expected = minute !== 59 ? minute + 1 : 0;
+					expect(value).to.equal(expected);
+				});
+
+				it('should decrease the minute when decrementing the picker', function () {
+					Page.spotlightSelect();
+					browser.pause(250);
+					const {minute} = extractValues(timePicker);
+					expectOpen(timePicker);
+					Page.spotlightRight();
+					expect(timePicker.minute.hasFocus()).to.be.true();
+					Page.spotlightDown();
+					browser.pause(250);
+					const {minute: value} = extractValues(timePicker);
+					const expected = minute !== 0 ? minute - 1 : 59;
+					expect(value).to.equal(expected);
+				});
+
+				it('should update value text when incrementing the meridiem picker', function () {
 					Page.spotlightSelect();
 					browser.pause(250);
 					const time = timePicker.valueText;
-					let value;
 					expectOpen(timePicker);
-					while (!timePicker.meridiem.hasFocus()) {
-						Page.spotlightRight();
-					}
-					// increment
+					Page.spotlightRight();
+					Page.spotlightRight();
+					expect(timePicker.meridiem.hasFocus()).to.be.true();
 					Page.spotlightUp();
 					browser.pause(250);
-					value = timePicker.valueText;
-					expect(value).to.not.equal(time);
-					// decrement
+					const newTime = timePicker.valueText;
+					const value = time !== newTime;
+					expect(value).to.equal(true);
+				});
+
+				it('should update value text when decrementing the meridiem picker', function () {
+					Page.spotlightSelect();
+					browser.pause(250);
+					const time = timePicker.valueText;
+					expectOpen(timePicker);
+					Page.spotlightRight();
+					Page.spotlightRight();
+					expect(timePicker.meridiem.hasFocus()).to.be.true();
 					Page.spotlightDown();
 					browser.pause(250);
-					value = timePicker.valueText;
-					expect(value).to.equal(time);
+					const newTime = timePicker.valueText;
+					const value = time !== newTime;
+					expect(value).to.equal(true);
 				});
 
 				it('should change the meridiem on hour boundaries', function () {
@@ -159,66 +185,76 @@ describe('TimePicker', function () {
 					expect(timePicker.hour.hasFocus()).to.be.true();
 				});
 
-				it('should update hour when incrementing/decrementing the picker', function () {
+				it('should increase the hour when incrementing the picker', function () {
 					timePicker.title.click();
 					browser.pause(250);
-					const hour = parseInt(timePicker.item(timePicker.hour).getText());
-					let value;
+					const {hour} = extractValues(timePicker);
 					expectOpen(timePicker);
-					// increment
 					timePicker.incrementer(timePicker.hour).click();
 					browser.pause(250);
-					value = parseInt(timePicker.item(timePicker.hour).getText());
-					if (hour === 12) {
-						expect(value).to.equal(1);
-					} else {
-						expect(value).to.equal(hour + 1);
-					}
-					// decrement
-					timePicker.decrementer(timePicker.hour).click();
-					browser.pause(250);
-					value = parseInt(timePicker.item(timePicker.hour).getText());
-					expect(value).to.equal(hour);
+					const {hour: value} = extractValues(timePicker);
+					const expected = hour < 12 ? hour + 1 : 1;
+					expect(value).to.equal(expected);
 				});
 
-				it('should update minute when incrementing/decrementing the picker', function () {
+				it('should decrease the hour when decrementing the picker', function () {
 					timePicker.title.click();
 					browser.pause(250);
-					const minute = parseInt(timePicker.item(timePicker.minute).getText());
-					let value;
+					const {hour} = extractValues(timePicker);
 					expectOpen(timePicker);
-					// increment
-					timePicker.incrementer(timePicker.minute).click();
+					timePicker.decrementer(timePicker.hour).click();
 					browser.pause(250);
-					value = parseInt(timePicker.item(timePicker.minute).getText());
-					if (minute === 59) {
-						expect(value).to.equal(0);
-					} else {
-						expect(value).to.equal(minute + 1);
-					}
-					// decrement
-					timePicker.decrementer(timePicker.minute).click();
-					browser.pause(250);
-					value = parseInt(timePicker.item(timePicker.minute).getText());
-					expect(value).to.equal(minute);
+					const {hour: value} = extractValues(timePicker);
+					const expected = hour > 1 ? hour - 1 : 12;
+					expect(value).to.equal(expected);
 				});
 
-				it('should update value text when incrementing/decrementing the meridiem picker', function () {
+				it('should increase the minute when incrementing the picker', function () {
+					timePicker.title.click();
+					browser.pause(250);
+					const {minute} = extractValues(timePicker);
+					expectOpen(timePicker);
+					timePicker.incrementer(timePicker.minute).click();
+					browser.pause(250);
+					const {minute: value} = extractValues(timePicker);
+					const expected = minute !== 59 ? minute + 1 : 0;
+					expect(value).to.equal(expected);
+				});
+
+				it('should decrease the minute when decrementing the picker', function () {
+					timePicker.title.click();
+					browser.pause(250);
+					const {minute} = extractValues(timePicker);
+					expectOpen(timePicker);
+					timePicker.decrementer(timePicker.minute).click();
+					browser.pause(250);
+					const {minute: value} = extractValues(timePicker);
+					const expected = minute !== 0 ? minute - 1 : 59;
+					expect(value).to.equal(expected);
+				});
+
+				it('should update value text when incrementing the meridiem picker', function () {
 					timePicker.title.click();
 					browser.pause(250);
 					const time = timePicker.valueText;
-					let value;
 					expectOpen(timePicker);
-					// increment
 					timePicker.incrementer(timePicker.meridiem).click();
 					browser.pause(250);
-					value = timePicker.valueText;
-					expect(value).to.not.equal(time);
-					// decrement
+					const newTime = timePicker.valueText;
+					const value = time !== newTime;
+					expect(value).to.equal(true);
+				});
+
+				it('should update value text when decrementing the meridiem picker', function () {
+					timePicker.title.click();
+					browser.pause(250);
+					const time = timePicker.valueText;
+					expectOpen(timePicker);
 					timePicker.decrementer(timePicker.meridiem).click();
 					browser.pause(250);
-					value = timePicker.valueText;
-					expect(value).to.equal(time);
+					const newTime = timePicker.valueText;
+					const value = time !== newTime;
+					expect(value).to.equal(true);
 				});
 
 				it('should change the meridiem on hour boundaries', function () {
@@ -314,7 +350,7 @@ describe('TimePicker', function () {
 
 			it('should not have labeled pickers', function () {
 				timePicker.title.click();
-				expect(timePicker.hourLabel.value).to.be.null();
+				expectNoLabels(timePicker);
 			});
 		});
 
@@ -332,8 +368,6 @@ describe('TimePicker', function () {
 			describe('5-way', function() {
 				it('should not receive focus', function () {
 					Page.components.timePickerNoLabels.focus();
-					Page.spotlightSelect();
-					Page.spotlightSelect();
 					Page.spotlightDown();
 					expect(timePicker.title.hasFocus()).to.be.false();
 				});
@@ -374,7 +408,7 @@ describe('TimePicker', function () {
 			expect(timePicker.hour.hasFocus()).to.be.true();
 		});
 
-		it('should have minute-hour-meridiem (RTL)', function () {
+		it('should have minute-hour-meridiem order', function () {
 			Page.spotlightSelect();
 			browser.pause(250);
 			expectOpen(timePicker);
@@ -412,6 +446,24 @@ describe('TimePicker', function () {
 		it('should display hours in 24-hour format', function () {
 			timePicker.title.click();
 			expect(extractValues(timePicker).hour).to.equal(0); // midnight hour
+		});
+
+		it('should increment hours from 23 to 0', function () {
+			timePicker.title.click();
+			browser.pause(250);
+			// go to 23 first
+			timePicker.decrementer(timePicker.hour).click();
+			expect(extractValues(timePicker).hour).to.equal(23);
+			// now increment
+			timePicker.incrementer(timePicker.hour).click();
+			expect(extractValues(timePicker).hour).to.equal(0);
+		});
+
+		it('should decrement hours from 0 to 23', function () {
+			timePicker.title.click();
+			browser.pause(250);
+			timePicker.decrementer(timePicker.hour).click();
+			expect(extractValues(timePicker).hour).to.equal(23);
 		});
 	});
 

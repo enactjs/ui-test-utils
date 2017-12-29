@@ -21,6 +21,12 @@ function expectClosed (picker) {
 	expect(picker.hour.isVisible()).to.be.false();
 }
 
+function expectNoLabels (picker) {
+	expect(picker.hourLabel.value).to.be.null();
+	expect(picker.minuteLabel.value).to.be.null();
+	expect(picker.meridiemLabel.value).to.be.null();
+}
+
 function expectOpen (picker) {
 	expect(picker.isOpen).to.be.true();
 	expect(picker.chevron).to.equal('󯿮');
@@ -29,7 +35,8 @@ function expectOpen (picker) {
 
 module.exports = {
 	expectClosed,
+	expectNoLabels,
 	expectOpen,
 	extractValues,
 	validateTitle
-}
+};
