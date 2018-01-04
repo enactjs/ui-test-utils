@@ -26,7 +26,6 @@ class ExpandableInterface {
 	get labelText () { return getText(this.label); }
 	get isLabelExists () { return this.self.isExisting('.LabeledItem__label'); }
 	get isOpen () { return this.self.isExisting('.Transition__shown'); }
-	get icon () { return browser.element(`#${this.id} > div .Input__icon`)}
 	get iconBeforeSymbol () { return getText(element(`#${this.id} > div .Input__iconBefore`, browser)); }
 	get iconAfterSymbol () { return getText(element(`#${this.id} > div .Input__iconAfter`, browser)); }
 	get isIconBefore () { return browser.isExisting(`#${this.id} > div .Input__iconBefore`)}
