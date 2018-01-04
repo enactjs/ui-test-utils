@@ -26,6 +26,12 @@ class ExpandableInterface {
 	get labelText () { return getText(this.label); }
 	get isLabelExists () { return this.self.isExisting('.LabeledItem__label'); }
 	get isOpen () { return this.self.isExisting('.Transition__shown'); }
+	get icon () { return browser.element(`#${this.id} > div .Input__icon`)}
+	get iconBeforeSymbol () { return getText(element(`#${this.id} > div .Input__iconBefore`, browser)); }
+	get iconAfterSymbol () { return getText(element(`#${this.id} > div .Input__iconAfter`, browser)); }
+	get isIconBefore () { return browser.isExisting(`#${this.id} > div .Input__iconBefore`)}
+	get isIconAfter () { return browser.isExisting(`#${this.id} > div .Input__iconAfter`)}
+	get placeHolder () { return browser.getAttribute(`#${this.id} > div .Input__input`, 'placeholder'); }
 
 }
 
@@ -38,11 +44,23 @@ class ExpandableInputPage extends Page {
 		this.components.defaultValue = new ExpandableInterface('expandable2');
 		this.components.defaultOpen = new ExpandableInterface('expandable3');
 		this.components.password = new ExpandableInterface('expandable4');
-		this.components.disabled = new ExpandableInterface('expandable5');
+		this.components.placeholder = new ExpandableInterface('expandable5');
+		this.components.iconBefore = new ExpandableInterface('expandable6');
+		this.components.iconAfter = new ExpandableInterface('expandable7');
+		this.components.iconBeforeAfter = new ExpandableInterface('expandable8');
+		this.components.disabled = new ExpandableInterface('expandable9');
 	}
 
 	open (urlExtra) {
 		super.open('ExpandableInput-View', urlExtra);
+	}
+
+	escape () {
+		super.keyDelay('Escape');
+	}
+
+	hover () {
+		browser.moveToObject('#expandable2');
 	}
 
 }

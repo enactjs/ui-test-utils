@@ -42,7 +42,7 @@ describe('ExpandableInput', function () {
 			it('should close when moving up to title', function () {
 				Page.spotlightSelect();
 				browser.pause(250);
-				expectOpen(expandable)
+				expectOpen(expandable);
 				Page.spotlightUp();
 				browser.pause(250);
 				expectClosed(expandable);
@@ -52,7 +52,7 @@ describe('ExpandableInput', function () {
 			it('should close and move focus down on SpotlightDown', function () {
 				Page.spotlightSelect();
 				browser.pause(250);
-				expectOpen(expandable)
+				expectOpen(expandable);
 				Page.spotlightDown();
 				expectClosed(expandable);
 				expect(Page.components.defaultValue.title.hasFocus()).to.be.true();
@@ -60,11 +60,51 @@ describe('ExpandableInput', function () {
 
 			it('should close on select twice', function () {
 				Page.spotlightSelect();
-				browser.pause(250);
 				Page.spotlightSelect();
 				expectClosed(expandable);
 			});
 
+			it('should close on escape', function () {
+				Page.spotlightSelect();
+				browser.pause(250);
+				expectOpen(expandable);
+				Page.escape();
+				expectClosed(expandable);
+			});
+
+			describe('input value', function () {
+				it('should update value text on input and then closed by moving up to title', function () {
+					Page.spotlightSelect();
+					browser.pause(250);
+					expectOpen(expandable);
+					expandable.input.setValue('New Value');
+					Page.spotlightUp();
+					browser.pause(250);
+					expectClosed(expandable);
+					expect(expandable.labelText).to.equal('New Value');
+				});
+
+				it('should update value text on input and then closed by SpotlightDown', function () {
+					Page.spotlightSelect();
+					browser.pause(250);
+					expectOpen(expandable);
+					expandable.input.setValue('New Value');
+					Page.spotlightDown();
+					browser.pause(250);
+					expectClosed(expandable);
+					expect(expandable.labelText).to.equal('New Value');
+				});
+
+				it('should not update value text on input and then closed by escape key', function () {
+					Page.spotlightSelect();
+					browser.pause(250);
+					expectOpen(expandable);
+					expandable.input.setValue('New Value');
+					Page.escape();
+					expectClosed(expandable);
+					expect(expandable.labelText).to.equal('No Input Text');
+				});
+			});
 		});
 
 		describe('pointer', function () {
@@ -78,7 +118,7 @@ describe('ExpandableInput', function () {
 			it('should close on title click when open', function () {
 				expandable.title.click();
 				browser.pause(250);
-				expectOpen(expandable)
+				expectOpen(expandable);
 				expandable.title.click();
 				browser.pause(250);
 				expectClosed(expandable);
@@ -93,11 +133,30 @@ describe('ExpandableInput', function () {
 
 			it('should close on two title clicks', function () {
 				expandable.title.click();
-				browser.pause(250);
 				expandable.title.click();
 				expectClosed(expandable);
 			});
 
+			it('should retain the focus on input when hovered on other expandable', function () {
+				expandable.title.click();
+				browser.pause(250);
+				expectOpen(expandable);
+				Page.hover();
+				expect(expandable.input.hasFocus()).to.be.true();
+			});
+
+			describe('input value', function () {
+				it('should update value text on input and then closed by title click', function () {
+					expandable.title.click();
+					browser.pause(250);
+					expectOpen(expandable);
+					expandable.input.setValue('New Value');
+					expandable.title.click();
+					browser.pause(250);
+					expectClosed(expandable);
+					expect(expandable.labelText).to.equal('New Value');
+				});
+			});
 		});
 	});
 
@@ -137,7 +196,7 @@ describe('ExpandableInput', function () {
 			it('should close when moving up to title', function () {
 				Page.spotlightSelect();
 				browser.pause(250);
-				expectOpen(expandable)
+				expectOpen(expandable);
 				Page.spotlightUp();
 				browser.pause(250);
 				expectClosed(expandable);
@@ -146,11 +205,9 @@ describe('ExpandableInput', function () {
 
 			it('should close on select twice', function () {
 				Page.spotlightSelect();
-				browser.pause(250);
 				Page.spotlightSelect();
 				expectClosed(expandable);
 			});
-
 		});
 
 		describe('pointer', function () {
@@ -179,11 +236,9 @@ describe('ExpandableInput', function () {
 
 			it('should close on two title clicks', function () {
 				expandable.title.click();
-				browser.pause(250);
 				expandable.title.click();
 				expectClosed(expandable);
 			});
-
 		});
 	});
 
@@ -222,11 +277,9 @@ describe('ExpandableInput', function () {
 
 			it('should open on select twice', function () {
 				Page.spotlightSelect();
-				browser.pause(250);
 				Page.spotlightSelect();
 				expectOpen(expandable);
 			});
-
 		});
 
 		describe('pointer', function () {
@@ -286,6 +339,195 @@ describe('ExpandableInput', function () {
 				browser.pause(250);
 				expectClosed(expandable);
 				expect(expandable.isLabelExists).to.be.false();
+			});
+		});
+	});
+
+	describe('placeholder', function () {
+		const expandable = Page.components.placeholder;
+
+		validateTitle(expandable, 'ExpandableInput Placeholder');
+
+		it('should be initially open', function () {
+			expectOpen(expandable);
+		});
+
+		it('should have correct input placeholder', function () {
+			expect(expandable.placeHolder).to.equal('Placeholder');
+		});
+
+		describe('5-way', function () {
+
+			beforeEach(function () {
+				expandable.focus();
+			});
+
+			it('should close on select', function () {
+				Page.spotlightSelect();
+				browser.pause(250);
+				expectClosed(expandable);
+				expect(expandable.title.hasFocus()).to.be.true();
+			});
+
+			it('should focus input on spotlightDown', function () {
+				Page.spotlightDown();
+				browser.pause(250);
+				expectOpen(expandable);
+				expect(expandable.input.hasFocus()).to.be.true();
+			});
+		});
+
+		describe('pointer', function () {
+			it('should close on title click', function () {
+				expandable.title.click();
+				browser.pause(250);
+				expectClosed(expandable);
+			});
+		});
+	});
+
+	describe('icon before', function () {
+		const expandable = Page.components.iconBefore;
+
+		validateTitle(expandable, 'ExpandableInput Icon Before');
+
+		it('should be initially open', function () {
+			expectOpen(expandable);
+		});
+
+		it('should have icon before the input', function () {
+			expect(expandable.isIconBefore).to.be.true();
+		});
+
+		it('should display correct icon', function () {
+			expect(expandable.iconBeforeSymbol).to.equal('-');
+		});
+
+		describe('5-way', function () {
+
+			beforeEach(function () {
+				expandable.focus();
+			});
+
+			it('should close on select', function () {
+				Page.spotlightSelect();
+				browser.pause(250);
+				expectClosed(expandable);
+				expect(expandable.title.hasFocus()).to.be.true();
+			});
+
+			it('should focus input on spotlightDown', function () {
+				Page.spotlightDown();
+				browser.pause(250);
+				expectOpen(expandable);
+				expect(expandable.input.hasFocus()).to.be.true();
+			});
+		});
+
+		describe('pointer', function () {
+			it('should close on title click', function () {
+				expandable.title.click();
+				browser.pause(250);
+				expectClosed(expandable);
+			});
+		});
+	});
+
+	describe('icon after', function () {
+		const expandable = Page.components.iconAfter;
+
+		validateTitle(expandable, 'ExpandableInput Icon After');
+
+		it('should be initially open', function () {
+			expectOpen(expandable);
+		});
+
+		it('should have icon after the input', function () {
+			expect(expandable.isIconAfter).to.be.true();
+		});
+
+		it('should display correct icon', function () {
+			expect(expandable.iconAfterSymbol).to.equal('+');
+		});
+
+		describe('5-way', function () {
+
+			beforeEach(function () {
+				expandable.focus();
+			});
+
+			it('should close on select', function () {
+				Page.spotlightSelect();
+				browser.pause(250);
+				expectClosed(expandable);
+				expect(expandable.title.hasFocus()).to.be.true();
+			});
+
+			it('should focus input on spotlightDown', function () {
+				Page.spotlightDown();
+				browser.pause(250);
+				expectOpen(expandable);
+				expect(expandable.input.hasFocus()).to.be.true();
+			});
+		});
+
+		describe('pointer', function () {
+			it('should close on title click', function () {
+				expandable.title.click();
+				browser.pause(250);
+				expectClosed(expandable);
+			});
+		});
+	});
+
+	describe('icon before and after', function () {
+		const expandable = Page.components.iconBeforeAfter;
+
+		validateTitle(expandable, 'ExpandableInput Icon Before and After');
+
+		it('should be initially open', function () {
+			expectOpen(expandable);
+		});
+
+		it('should have icon before and after the input', function () {
+			expect(expandable.isIconBefore).to.be.true();
+			expect(expandable.isIconAfter).to.be.true();
+		});
+
+		it('should display correct before icon', function () {
+			expect(expandable.iconBeforeSymbol).to.equal('-');
+		});
+
+		it('should display correct after icon', function () {
+			expect(expandable.iconAfterSymbol).to.equal('+');
+		});
+
+		describe('5-way', function () {
+
+			beforeEach(function () {
+				expandable.focus();
+			});
+
+			it('should close on select', function () {
+				Page.spotlightSelect();
+				browser.pause(250);
+				expectClosed(expandable);
+				expect(expandable.title.hasFocus()).to.be.true();
+			});
+
+			it('should focus input on spotlightDown', function () {
+				Page.spotlightDown();
+				browser.pause(250);
+				expectOpen(expandable);
+				expect(expandable.input.hasFocus()).to.be.true();
+			});
+		});
+
+		describe('pointer', function () {
+			it('should close on title click', function () {
+				expandable.title.click();
+				browser.pause(250);
+				expectClosed(expandable);
 			});
 		});
 	});

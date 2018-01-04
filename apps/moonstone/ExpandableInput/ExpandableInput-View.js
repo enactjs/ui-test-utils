@@ -9,7 +9,7 @@ spotlight.setPointerMode(false);
 
 
 // ExpandableInput options:
-// disabled, noneText, title, type
+// disabled, noneText, title, placeholder, iconBefore, iconAfter, type
 // defaultOpen, defaultValue
 
 const app = (props) => <div {...props}>
@@ -40,6 +40,35 @@ const app = (props) => <div {...props}>
 		/>
 		<ExpandableInput
 			id="expandable5"
+			title="ExpandableInput Placeholder"
+			noneText="No Input Text"
+			placeholder="Placeholder"
+			defaultOpen
+		/>
+		<ExpandableInput
+			id="expandable6"
+			title="ExpandableInput Icon Before"
+			noneText="No Input Text"
+			iconBefore="minus"
+			defaultOpen
+		/>
+		<ExpandableInput
+			id="expandable7"
+			title="ExpandableInput Icon After"
+			noneText="No Input Text"
+			iconAfter="plus"
+			defaultOpen
+		/>
+		<ExpandableInput
+			id="expandable8"
+			title="ExpandableInput Icon Before and After"
+			noneText="No Input Text"
+			iconBefore="minus"
+			iconAfter="plus"
+			defaultOpen
+		/>
+		<ExpandableInput
+			id="expandable9"
 			title="ExpandableInput Disabled"
 			noneText="No Input Text"
 			disabled
