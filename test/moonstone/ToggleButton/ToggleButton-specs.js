@@ -1,5 +1,4 @@
-const Page = require('./ToggleButtonPage'),
-	{expectSelected, expectUnselected} = require('./ToggleButton-utils.js');
+const Page = require('./ToggleButtonPage');
 
 describe('ToggleButton', function () {
 
@@ -52,13 +51,13 @@ describe('ToggleButton', function () {
 		describe('pointer', function () {
 			it('should select the toggleButton when clicked', function () {
 				toggleButton.item.click();
-				expectSelected(toggleButton);
+				expect(toggleButton.isSelected).to.be.true();
 			});
 
 			it('should re-unselect the item when clicked twice', function () {
 				toggleButton.item.click();
 				toggleButton.item.click();
-				expectUnselected(toggleButton);
+				expect(toggleButton.isSelected).to.be.false();
 			});
 		});
 	});
@@ -163,14 +162,14 @@ describe('ToggleButton', function () {
 			it('should not unselect the item when selected', function () {
 				toggleButton.focus();
 				Page.spotlightSelect();
-				expectSelected(toggleButton);
+				expect(toggleButton.isSelected).to.be.true();
 			});
 		});
 
 		describe('pointer', function () {
 			it('should not unselect the item when clicked', function () {
 				toggleButton.item.click();
-				expectSelected(toggleButton);
+				expect(toggleButton.isSelected).to.be.true();
 			});
 		});
 	});
@@ -474,213 +473,6 @@ describe('ToggleButton', function () {
 				toggleButton.item.click();
 				toggleButton.item.click();
 				expect(toggleButton.valueText).to.equal('TOGGLE OFF');
-			});
-		});
-	});
-
-	describe('opaque', function () {
-		const toggleButton = Page.components.toggleOpaque;
-
-		it('should have correct text', function () {
-			expect(toggleButton.valueText).to.equal('OFF');
-		});
-
-		it('should be unselected by default', function () {
-			expect(toggleButton.isSelected).to.be.false();
-		});
-
-		it('should have background by default', function () {
-			expect(toggleButton.isOpaque).to.be.true();
-		});
-
-		describe('5-way', function () {
-			it('should select the toggleButton when selected', function () {
-				toggleButton.focus();
-				Page.spotlightSelect();
-				expect(toggleButton.isSelected).to.be.true();
-			});
-
-			it('should un-select the toggleButton when selected twice', function () {
-				toggleButton.focus();
-				Page.spotlightSelect();
-				Page.spotlightSelect();
-				expect(toggleButton.isSelected).to.be.false();
-			});
-
-			it('should have background when selected', function () {
-				toggleButton.focus();
-				Page.spotlightSelect();
-				expect(toggleButton.isOpaque).to.be.true();
-			});
-
-			it('should have background when unselected', function () {
-				toggleButton.focus();
-				Page.spotlightSelect();
-				Page.spotlightSelect();
-				expect(toggleButton.isOpaque).to.be.true();
-			});
-
-		});
-
-		describe('pointer', function () {
-			it('should select the toggleButton when selected', function () {
-				toggleButton.item.click();
-				expect(toggleButton.isSelected).to.be.true();
-			});
-
-			it('should un-select the toggleButton when selected twice', function () {
-				toggleButton.item.click();
-				toggleButton.item.click();
-				expect(toggleButton.isSelected).to.be.false();
-			});
-
-			it('should have background when selected', function () {
-				toggleButton.item.click();
-				expect(toggleButton.isOpaque).to.be.true();
-			});
-
-			it('should have background when unselected', function () {
-				toggleButton.item.click();
-				toggleButton.item.click();
-				expect(toggleButton.isOpaque).to.be.true();
-			});
-		});
-	});
-
-	describe('translucent', function () {
-		const toggleButton = Page.components.toggleTranslucent;
-
-		it('should have correct text', function () {
-			expect(toggleButton.valueText).to.equal('OFF');
-		});
-
-		it('should be unselected by default', function () {
-			expect(toggleButton.isSelected).to.be.false();
-		});
-
-		it('should have translucent background by default', function () {
-			expect(toggleButton.isTranslucent).to.be.true();
-		});
-
-		describe('5-way', function () {
-			it('should select the toggleButton when selected', function () {
-				toggleButton.focus();
-				Page.spotlightSelect();
-				expect(toggleButton.isSelected).to.be.true();
-			});
-
-			it('should un-select the toggleButton when selected twice', function () {
-				toggleButton.focus();
-				Page.spotlightSelect();
-				Page.spotlightSelect();
-				expect(toggleButton.isSelected).to.be.false();
-			});
-
-			it('should have translucent background when selected', function () {
-				toggleButton.focus();
-				Page.spotlightSelect();
-				expect(toggleButton.isTranslucent).to.be.true();
-			});
-
-			it('should have translucent background when unselected', function () {
-				toggleButton.focus();
-				Page.spotlightSelect();
-				Page.spotlightSelect();
-				expect(toggleButton.isTranslucent).to.be.true();
-			});
-
-		});
-
-		describe('pointer', function () {
-			it('should select the toggleButton when selected', function () {
-				toggleButton.item.click();
-				expect(toggleButton.isSelected).to.be.true();
-			});
-
-			it('should un-select the toggleButton when selected twice', function () {
-				toggleButton.item.click();
-				toggleButton.item.click();
-				expect(toggleButton.isSelected).to.be.false();
-			});
-
-			it('should have translucent background when selected', function () {
-				toggleButton.item.click();
-				expect(toggleButton.isTranslucent).to.be.true();
-			});
-
-			it('should have translucent background when unselected', function () {
-				toggleButton.item.click();
-				toggleButton.item.click();
-				expect(toggleButton.isTranslucent).to.be.true();
-			});
-		});
-	});
-
-	describe('transparent', function () {
-		const toggleButton = Page.components.toggleTransparent;
-
-		it('should have correct text', function () {
-			expect(toggleButton.valueText).to.equal('OFF');
-		});
-
-		it('should be unselected by default', function () {
-			expect(toggleButton.isSelected).to.be.false();
-		});
-
-		it('should have transparent background by default', function () {
-			expect(toggleButton.isTransparent).to.be.true();
-		});
-
-		describe('5-way', function () {
-			it('should select the toggleButton when selected', function () {
-				toggleButton.focus();
-				Page.spotlightSelect();
-				expect(toggleButton.isSelected).to.be.true();
-			});
-
-			it('should un-select the toggleButton when selected twice', function () {
-				toggleButton.focus();
-				Page.spotlightSelect();
-				Page.spotlightSelect();
-				expect(toggleButton.isSelected).to.be.false();
-			});
-
-			it('should have transparent background when selected', function () {
-				toggleButton.focus();
-				Page.spotlightSelect();
-				expect(toggleButton.isTransparent).to.be.true();
-			});
-
-			it('should have transparent background when unselected', function () {
-				toggleButton.focus();
-				Page.spotlightSelect();
-				Page.spotlightSelect();
-				expect(toggleButton.isTransparent).to.be.true();
-			});
-
-		});
-
-		describe('pointer', function () {
-			it('should select the toggleButton when selected', function () {
-				toggleButton.item.click();
-				expect(toggleButton.isSelected).to.be.true();
-			});
-
-			it('should un-select the toggleButton when selected twice', function () {
-				toggleButton.item.click();
-				toggleButton.item.click();
-				expect(toggleButton.isSelected).to.be.false();
-			});
-
-			it('should have transparent background when selected', function () {
-				toggleButton.item.click();
-				expect(toggleButton.isTransparent).to.be.true();
-			});
-
-			it('should have transparent background when unselected', function () {
-				toggleButton.item.click();
-				toggleButton.item.click();
-				expect(toggleButton.isTransparent).to.be.true();
 			});
 		});
 	});

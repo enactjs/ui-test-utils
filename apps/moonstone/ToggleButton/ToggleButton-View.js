@@ -3,8 +3,6 @@ import MoonstoneDecorator from '@enact/moonstone/MoonstoneDecorator';
 import React from 'react';
 import spotlight from '@enact/spotlight';
 
-window.spotlight = spotlight;
-
 // NOTE: Forcing pointer mode off so we can be sure that regardless of webOS pointer mode the app
 // runs the same way
 spotlight.setPointerMode(false);
@@ -22,7 +20,6 @@ const app = (props) => <div {...props}>
 			toggleOnLabel="On"
 			toggleOffLabel="Off"
 		>
-			Missing Toggle Label
 		</ToggleButton>
 
 		<ToggleButton
@@ -31,7 +28,6 @@ const app = (props) => <div {...props}>
 			toggleOffLabel="Off"
 			defaultSelected
 		>
-			Missing Toggle Label
 		</ToggleButton>
 
 		<ToggleButton
@@ -41,7 +37,6 @@ const app = (props) => <div {...props}>
 			defaultSelected
 			disabled
 		>
-			Missing Toggle Label
 		</ToggleButton>
 
 		<ToggleButton
@@ -50,70 +45,38 @@ const app = (props) => <div {...props}>
 			toggleOffLabel="Small Off"
 			small
 		>
-			Missing Toggle Label
 		</ToggleButton>
 
 		<ToggleButton
 			id="toggleButton6"
 			toggleOnLabel="toggle on"
 			toggleOffLabel="toggle off"
-			casing='preserve'
+			casing="preserve"
 		>
-			Missing Toggle Label
 		</ToggleButton>
 
 		<ToggleButton
 			id="toggleButton7"
 			toggleOnLabel="toggle on"
 			toggleOffLabel="toggle off"
-			casing='sentence'
+			casing="sentence"
 		>
-			Missing Toggle Label
 		</ToggleButton>
 
 		<ToggleButton
 			id="toggleButton8"
 			toggleOnLabel="toggle on"
 			toggleOffLabel="toggle off"
-			casing='word'
+			casing="word"
 		>
-			Missing Toggle Label
 		</ToggleButton>
 
 		<ToggleButton
 			id="toggleButton9"
 			toggleOnLabel="toggle on"
 			toggleOffLabel="toggle off"
-			casing='upper'
+			casing="upper"
 		>
-			Missing Toggle Label
-		</ToggleButton>
-
-		<ToggleButton
-			id="toggleButton10"
-			toggleOnLabel="on"
-			toggleOffLabel="off"
-			backgroundOpacity=''
-		>
-			Missing Toggle Label
-		</ToggleButton>
-
-		<ToggleButton
-			id="toggleButton11"
-			toggleOnLabel="on"
-			toggleOffLabel="off"
-			backgroundOpacity='translucent'
-		>
-			Missing Toggle Label
-		</ToggleButton>
-
-		<ToggleButton
-			id="toggleButton12"
-			toggleOnLabel="on"
-			toggleOffLabel="off"
-			backgroundOpacity='transparent'
-		>
-			Missing Toggle Label
 		</ToggleButton>
 	</div>
 </div>;

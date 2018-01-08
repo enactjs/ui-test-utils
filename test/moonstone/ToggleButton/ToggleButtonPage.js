@@ -14,9 +14,6 @@ class ToggleButtonInterface {
 	get valueText () { return browser.element(`#${this.id} > div .Marquee__text`).getText(); }
 	get isSelected () { return browser.isExisting(`#${this.id}.ToggleButton__selected.Button__selected`); }
 	get isSmall () { return browser.isExisting(`#${this.id}.ToggleButton__small`); }
-	get isOpaque () { return browser.isExisting(`#${this.id} .Button__bg`); }
-	get isTranslucent () { return browser.isExisting(`#${this.id}.Button__translucent`); }
-	get isTransparent () { return browser.isExisting(`#${this.id}.Button__transparent`); }
 }
 
 class ToggleButtonPage extends Page {
@@ -32,11 +29,8 @@ class ToggleButtonPage extends Page {
 		const toggleCaseSentence = new ToggleButtonInterface('toggleButton7');
 		const toggleCaseWord = new ToggleButtonInterface('toggleButton8');
 		const toggleCaseUpper = new ToggleButtonInterface('toggleButton9');
-		const toggleOpaque = new ToggleButtonInterface('toggleButton10');
-		const toggleTranslucent = new ToggleButtonInterface('toggleButton11');
-		const toggleTransparent = new ToggleButtonInterface('toggleButton12');
 
-		this.components = {toggleDefault, toggleWithLabels, toggleDefaultSelected, toggleDisabled, toggleSmall, toggleCasePreserve, toggleCaseSentence, toggleCaseWord, toggleCaseUpper, toggleOpaque, toggleTranslucent, toggleTransparent}
+		this.components = {toggleDefault, toggleWithLabels, toggleDefaultSelected, toggleDisabled, toggleSmall, toggleCasePreserve, toggleCaseSentence, toggleCaseWord, toggleCaseUpper}
 	}
 
 	open (urlExtra) {
