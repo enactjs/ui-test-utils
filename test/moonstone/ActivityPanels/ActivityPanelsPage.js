@@ -4,7 +4,7 @@ const Page = require('../../Page.js');
 class SpotlightMultiplePage extends Page {
 	constructor () {
 		super();
-		this.title = 'Panels Test';
+		this.title = 'ActivityPanels Test';
 	}
 
 	open (urlExtra) {
@@ -31,4 +31,3 @@ class SpotlightMultiplePage extends Page {
 }
 
 module.exports = new SpotlightMultiplePage();
-
