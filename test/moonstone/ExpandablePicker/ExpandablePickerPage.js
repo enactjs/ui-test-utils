@@ -16,6 +16,7 @@ class ExpandablePickerPage extends Page {
 	get pickerIncrement () { return browser.element('#expandable1 .Picker__incrementer'); }
 	get pickerDecrement () { return browser.element('#expandable1 .Picker__decrementer'); }
 	get checkMark () { return browser.element('#expandable1 .Button__button.opaque'); }
+	get labeledItem () { return browser.element('#expandable1 .LabeledItem__labeleditem'); }
 	get pickerItemText () { return browser.getText('#expandable1 .Picker__item'); }
 	get labeledItemText () { return browser.getText('#expandable1 .LabeledItem__label'); }
 }
