@@ -20,71 +20,77 @@ const app = (props) => <div {...props}>
 			toggleOnLabel="On"
 			toggleOffLabel="Off"
 		>
-			On/Off Toggle
 		</ToggleButton>
 
 		<ToggleButton
 			id="toggleButton3"
 			toggleOnLabel="On"
-			toggleOffLabel="Off"
-			defaultSelected
 		>
-			Selected Toggle
+			Missing Toggle Off Label
 		</ToggleButton>
 
 		<ToggleButton
 			id="toggleButton4"
+			toggleOffLabel="Off"
+		>
+			Missing Toggle On Label
+		</ToggleButton>
+
+		<ToggleButton
+			id="toggleButton5"
+			toggleOnLabel="On"
+			toggleOffLabel="Off"
+			defaultSelected
+		>
+		</ToggleButton>
+
+		<ToggleButton
+			id="toggleButton6"
 			toggleOnLabel="On"
 			toggleOffLabel="Off"
 			defaultSelected
 			disabled
 		>
-			Disabled Selected Toggle
-		</ToggleButton>
-
-		<ToggleButton
-			id="toggleButton5"
-			toggleOnLabel="Small On"
-			toggleOffLabel="Small Off"
-			small
-		>
-			Small Toggle
-		</ToggleButton>
-
-		<ToggleButton
-			id="toggleButton6"
-			toggleOnLabel="toggle on"
-			toggleOffLabel="toggle off"
-			casing="preserve"
-		>
-			Preserved Casing Toggle
 		</ToggleButton>
 
 		<ToggleButton
 			id="toggleButton7"
-			toggleOnLabel="toggle on"
-			toggleOffLabel="toggle off"
-			casing="sentence"
+			toggleOnLabel="Small On"
+			toggleOffLabel="Small Off"
+			small
 		>
-			Sentence Casing Toggle
 		</ToggleButton>
 
 		<ToggleButton
 			id="toggleButton8"
 			toggleOnLabel="toggle on"
 			toggleOffLabel="toggle off"
-			casing="word"
+			casing="preserve"
 		>
-			Word Casing Toggle
 		</ToggleButton>
 
 		<ToggleButton
 			id="toggleButton9"
 			toggleOnLabel="toggle on"
 			toggleOffLabel="toggle off"
+			casing="sentence"
+		>
+		</ToggleButton>
+
+		<ToggleButton
+			id="toggleButton10"
+			toggleOnLabel="toggle on"
+			toggleOffLabel="toggle off"
+			casing="word"
+		>
+		</ToggleButton>
+
+		<ToggleButton
+			id="toggleButton11"
+			toggleOnLabel="toggle on"
+			toggleOffLabel="toggle off"
 			casing="upper"
 		>
-			Upper Casing Toggle
 		</ToggleButton>
 	</div>
 </div>;

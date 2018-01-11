@@ -22,15 +22,17 @@ class ToggleButtonPage extends Page {
 		this.title = 'ToggleButton Test';
 		const toggleDefault = new ToggleButtonInterface('toggleButton1');
 		const toggleWithLabels = new ToggleButtonInterface('toggleButton2');
-		const toggleDefaultSelected = new ToggleButtonInterface('toggleButton3');
-		const toggleDisabled = new ToggleButtonInterface('toggleButton4');
-		const toggleSmall = new ToggleButtonInterface('toggleButton5');
-		const toggleCasePreserve = new ToggleButtonInterface('toggleButton6');
-		const toggleCaseSentence = new ToggleButtonInterface('toggleButton7');
-		const toggleCaseWord = new ToggleButtonInterface('toggleButton8');
-		const toggleCaseUpper = new ToggleButtonInterface('toggleButton9');
+		const toggleWithOnlyOnLabel = new ToggleButtonInterface('toggleButton3');
+		const toggleWithOnlyOffLabel = new ToggleButtonInterface('toggleButton4');
+		const toggleDefaultSelected = new ToggleButtonInterface('toggleButton5');
+		const toggleDisabled = new ToggleButtonInterface('toggleButton6');
+		const toggleSmall = new ToggleButtonInterface('toggleButton7');
+		const toggleCasePreserve = new ToggleButtonInterface('toggleButton8');
+		const toggleCaseSentence = new ToggleButtonInterface('toggleButton9');
+		const toggleCaseWord = new ToggleButtonInterface('toggleButton10');
+		const toggleCaseUpper = new ToggleButtonInterface('toggleButton11');
 
-		this.components = {toggleDefault, toggleWithLabels, toggleDefaultSelected, toggleDisabled, toggleSmall, toggleCasePreserve, toggleCaseSentence, toggleCaseWord, toggleCaseUpper}
+		this.components = {toggleDefault, toggleWithLabels, toggleWithOnlyOnLabel, toggleWithOnlyOffLabel, toggleDefaultSelected, toggleDisabled, toggleSmall, toggleCasePreserve, toggleCaseSentence, toggleCaseWord, toggleCaseUpper}
 	}
 
 	open (urlExtra) {

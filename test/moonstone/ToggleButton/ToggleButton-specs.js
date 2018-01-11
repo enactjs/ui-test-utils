@@ -102,6 +102,86 @@ describe('ToggleButton', function () {
 		});
 	});
 
+	describe('missed off label', function () {
+		const toggleButton = Page.components.toggleWithOnlyOnLabel;
+
+		it('should have correct text', function () {
+			expect(toggleButton.valueText).to.equal('MISSING TOGGLE OFF LABEL');
+		});
+
+		it('should be unselected', function () {
+			expect(toggleButton.isSelected).to.be.false();
+		});
+
+		describe('5-way', function () {
+			it('should have correct text when selected', function () {
+				toggleButton.focus();
+				Page.spotlightSelect();
+				expect(toggleButton.valueText).to.equal('ON');
+			});
+
+			it('should have correct text when un-selected', function () {
+				toggleButton.focus();
+				Page.spotlightSelect();
+				Page.spotlightSelect();
+				expect(toggleButton.valueText).to.equal('MISSING TOGGLE OFF LABEL');
+			});
+		});
+
+		describe('pointer', function () {
+			it('should have correct text when selected', function () {
+				toggleButton.item.click();
+				expect(toggleButton.valueText).to.equal('ON');
+			});
+
+			it('should have correct text when un-selected', function () {
+				toggleButton.item.click();
+				toggleButton.item.click();
+				expect(toggleButton.valueText).to.equal('MISSING TOGGLE OFF LABEL');
+			});
+		});
+	});
+
+	describe('missed on label', function () {
+		const toggleButton = Page.components.toggleWithOnlyOffLabel;
+
+		it('should have correct text', function () {
+			expect(toggleButton.valueText).to.equal('OFF');
+		});
+
+		it('should be unselected', function () {
+			expect(toggleButton.isSelected).to.be.false();
+		});
+
+		describe('5-way', function () {
+			it('should have correct text when selected', function () {
+				toggleButton.focus();
+				Page.spotlightSelect();
+				expect(toggleButton.valueText).to.equal('MISSING TOGGLE ON LABEL');
+			});
+
+			it('should have correct text when un-selected', function () {
+				toggleButton.focus();
+				Page.spotlightSelect();
+				Page.spotlightSelect();
+				expect(toggleButton.valueText).to.equal('OFF');
+			});
+		});
+
+		describe('pointer', function () {
+			it('should have correct text when selected', function () {
+				toggleButton.item.click();
+				expect(toggleButton.valueText).to.equal('MISSING TOGGLE ON LABEL');
+			});
+
+			it('should have correct text when un-selected', function () {
+				toggleButton.item.click();
+				toggleButton.item.click();
+				expect(toggleButton.valueText).to.equal('OFF');
+			});
+		});
+	});
+
 	describe('default selected', function () {
 		const toggleButton = Page.components.toggleDefaultSelected;
 
