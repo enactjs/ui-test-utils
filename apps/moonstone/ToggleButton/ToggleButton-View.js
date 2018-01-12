@@ -41,8 +41,7 @@ const app = (props) => <div {...props}>
 			toggleOnLabel="On"
 			toggleOffLabel="Off"
 			defaultSelected
-		>
-		</ToggleButton>
+		/>
 
 		<ToggleButton
 			id="toggleButton6"
@@ -50,48 +49,42 @@ const app = (props) => <div {...props}>
 			toggleOffLabel="Off"
 			defaultSelected
 			disabled
-		>
-		</ToggleButton>
+		/>
 
 		<ToggleButton
 			id="toggleButton7"
 			toggleOnLabel="Small On"
 			toggleOffLabel="Small Off"
 			small
-		>
-		</ToggleButton>
+		/>
 
 		<ToggleButton
 			id="toggleButton8"
 			toggleOnLabel="toggle on"
 			toggleOffLabel="toggle off"
 			casing="preserve"
-		>
-		</ToggleButton>
+		/>
 
 		<ToggleButton
 			id="toggleButton9"
 			toggleOnLabel="toggle on"
 			toggleOffLabel="toggle off"
 			casing="sentence"
-		>
-		</ToggleButton>
+		/>
 
 		<ToggleButton
 			id="toggleButton10"
 			toggleOnLabel="toggle on"
 			toggleOffLabel="toggle off"
 			casing="word"
-		>
-		</ToggleButton>
+		/>
 
 		<ToggleButton
 			id="toggleButton11"
 			toggleOnLabel="toggle on"
 			toggleOffLabel="toggle off"
 			casing="upper"
-		>
-		</ToggleButton>
+		/>
 	</div>
 </div>;
 
