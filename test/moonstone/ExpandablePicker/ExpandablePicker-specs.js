@@ -19,6 +19,20 @@ describe('ExpandablePicker', function () {
 			browser.pause(1000)
 
 			expect(Page.pickerIncrement.hasFocus()).to.be.true();
+		});
+
+		it('should spot the left picker button', function () {
+
+			Page.spotlightSelect();
+			browser.pause(1000)
+			expect(Page.pickerIncrement.hasFocus()).to.be.true();
+			Page.spotlightSelect();
+			browser.pause(1000)
+			expect(Page.pickerItemText).to.equal('option2');
+			Page.spotlightSelect();
+			browser.pause(1000)
+			Page.spotlightSelect();
+			expect(Page.pickerDecrement.hasFocus()).to.be.true();
 
 		});
 
@@ -30,6 +44,22 @@ describe('ExpandablePicker', function () {
 			Page.spotlightSelect();
 			browser.pause(1000)
 			expect(Page.pickerItemText).to.equal('option2');
+		});
+
+		it('should display selected value on 5way select', function () {
+
+			Page.spotlightSelect();
+			browser.pause(1000)
+			expect(Page.pickerIncrement.hasFocus()).to.be.true();
+			Page.spotlightSelect();
+			browser.pause(1000)
+			expect(Page.pickerItemText).to.equal('option2');
+			Page.spotlightRight();
+			expect(Page.checkMark.hasFocus()).to.be.true();
+			Page.spotlightSelect();
+
+			expect(Page.labeledItemText).to.equal('option2');
+
 		});
 
 	});
