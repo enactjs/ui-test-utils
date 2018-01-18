@@ -37,6 +37,9 @@ class Page {
 	spotlightSelect () {
 		return this.keyDelay('Enter');
 	}
+	backKey () {
+		return this.keyDelay('Escape');
+	}
 }
 
 module.exports = Page;

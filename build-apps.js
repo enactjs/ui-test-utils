@@ -34,7 +34,7 @@ function writeIndex (dest, src) {
 	const index =
 `import React from 'react';
 import {render} from 'react-dom';
-import App from '${src}';
+import App from ${JSON.stringify(src)};
 	
 const url = new URL(window.location.href);
 const locale = url.searchParams.get('locale');

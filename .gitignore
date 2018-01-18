@@ -15,3 +15,6 @@ dist
 # misc
 .DS_Store
 npm-debug.log
+
+resources
+package-lock.json
