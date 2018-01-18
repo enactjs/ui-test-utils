@@ -3,74 +3,75 @@ const Page = require('./CheckboxItemPage'),
 
 describe('CheckboxItem', function () {
 
-	describe('default', function () {
-
+	describe('LTR locale', function () {
 		beforeEach(function () {
 			Page.open();
 		});
 
-		const checkboxItem = Page.components.checkboxDefault;
+		describe('default', function () {
+			const checkboxItem = Page.components.checkboxDefault;
 
-		it('should have focus on first item at start', function () {
-			expect(checkboxItem.item.hasFocus()).to.be.true();
-		});
-
-		it('should have correct text', function () {
-			expect(checkboxItem.valueText).to.equal('Checkbox Item');
-		});
-
-		it('should not be checked', function () {
-			expectUnchecked(checkboxItem);
-		});
-
-		it('should display icon before the text', function () {
-			expect(checkboxItem.isBefore).to.be.true();
-		});
-
-		describe('5-way', function () {
-			it('should check the item when selected', function () {
-				Page.spotlightSelect();
-				expectChecked(checkboxItem);
-			});
-
-			it('should re-uncheck the item when selected twice', function () {
-				Page.spotlightSelect();
-				Page.spotlightSelect();
-				expectUnchecked(checkboxItem);
-			});
-
-			it('should display check icon when selected', function () {
-				Page.spotlightSelect();
-				expect(checkboxItem.iconSymbol).to.equal('✓');
-			});
-
-			it('should move focus down on SpotlightDown', function () {
-				Page.spotlightDown();
-				expect(Page.components.checkboxDefaultSelected.item.hasFocus()).to.be.true();
-			});
-
-			it('should move focus up on SpotlightUp', function () {
-				Page.components.checkboxDefaultSelected.focus();
-				Page.spotlightUp();
+			it('should have focus on first item at start', function () {
 				expect(checkboxItem.item.hasFocus()).to.be.true();
 			});
-		});
 
-		describe('pointer', function () {
-			it('should check the item when clicked', function () {
-				checkboxItem.item.click();
-				expectChecked(checkboxItem);
+			it('should have correct text', function () {
+				expect(checkboxItem.valueText).to.equal('Checkbox Item');
 			});
 
-			it('should re-uncheck the item when clicked twice', function () {
-				checkboxItem.item.click();
-				checkboxItem.item.click();
+			it('should not be checked', function () {
 				expectUnchecked(checkboxItem);
 			});
 
-			it('should display check icon when clicked', function () {
-				checkboxItem.item.click();
-				expect(checkboxItem.iconSymbol).to.equal('✓');
+			it('should display icon before the text', function () {
+				expect(checkboxItem.isBefore).to.be.true();
+			});
+
+			describe('5-way', function () {
+				it('should check the item when selected', function () {
+					Page.spotlightSelect();
+					expectChecked(checkboxItem);
+				});
+
+				it('should re-uncheck the item when selected twice', function () {
+					Page.spotlightSelect();
+					Page.spotlightSelect();
+					expectUnchecked(checkboxItem);
+				});
+
+				it('should display check icon when selected', function () {
+					Page.spotlightSelect();
+					expect(checkboxItem.iconSymbol).to.equal('✓');
+				});
+
+				it('should move focus down on SpotlightDown', function () {
+					Page.spotlightDown();
+					expect(Page.components.checkboxDefaultSelected.item.hasFocus()).to.be.true();
+				});
+
+				it('should move focus up on SpotlightUp', function () {
+					Page.components.checkboxDefaultSelected.focus();
+					Page.spotlightUp();
+					expect(checkboxItem.item.hasFocus()).to.be.true();
+				});
+			});
+
+			describe('pointer', function () {
+				it('should check the item when clicked', function () {
+					checkboxItem.item.click();
+					expectChecked(checkboxItem);
+				});
+
+				it('should re-uncheck the item when clicked twice', function () {
+					checkboxItem.item.click();
+					checkboxItem.item.click();
+					expectUnchecked(checkboxItem);
+				});
+
+				it('should display check icon when clicked', function () {
+					checkboxItem.item.click();
+					expect(checkboxItem.iconSymbol).to.equal('✓');
+				});
 			});
 		});
 
@@ -295,8 +296,7 @@ describe('CheckboxItem', function () {
 		});
 	});
 
-	describe('RTL ar-SA locale', function () {
-
+	describe('RTL locale', function () {
 		beforeEach(function () {
 			Page.open('?locale=ar-SA');
 		});
