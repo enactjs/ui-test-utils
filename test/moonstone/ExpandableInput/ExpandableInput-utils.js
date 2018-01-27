@@ -20,8 +20,13 @@ function expectOpen (expandable) {
 	expect(expandable.input.isVisible()).to.be.true();
 }
 
+function expectRTL (expandableInput) {
+	expect(expandableInput.getCssProperty('direction').value).to.equal('rtl');
+}
+
 module.exports = {
 	validateTitle,
 	expectClosed,
-	expectOpen
+	expectOpen,
+	expectRTL
 }
