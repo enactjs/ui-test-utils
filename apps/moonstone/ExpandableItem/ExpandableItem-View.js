@@ -1,4 +1,5 @@
 import ExpandableItem from '@enact/moonstone/ExpandableItem';
+import Item from '@enact/moonstone/Item';
 import MoonstoneDecorator from '@enact/moonstone/MoonstoneDecorator';
 import React from 'react';
 import spotlight from '@enact/spotlight';
@@ -7,7 +8,7 @@ import spotlight from '@enact/spotlight';
 // runs the same way
 spotlight.setPointerMode(false);
 
-const children = <div>The Expanded Item</div>;
+const children = <Item>The Expanded Item</Item>;
 
 const app = (props) => <div {...props}>
 	<div>
@@ -25,25 +26,60 @@ const app = (props) => <div {...props}>
 			{children}
 		</ExpandableItem>
 		<ExpandableItem
+			defaultOpen
 			id="expandableItemDefaultOpenWithNoneText"
 			noneText="Nothing Selected"
 			title="ExpandableItem Default Open"
-			defaultOpen
 		>
 			{children}
 		</ExpandableItem>
 		<ExpandableItem
-			id="expandableItemWithLabel"
-			title="ExpandableItem With Label"
+			autoClose
+			id="expandableItemWithAutoClose"
+			title="ExpandableItem With autoClose"
+		>
+			{children}
+		</ExpandableItem>
+		<ExpandableItem
+			id="expandableItemWithLockBottom"
+			lockBottom
+			title="ExpandableItem With lockBottom"
+		>
+			{children}
+		</ExpandableItem>
+		<ExpandableItem
+			id="expandableItemWithoutChildren"
+			title="ExpandableItem Without Children"
+		/>
+		<ExpandableItem
+			id="expandableItemAutoLabel"
 			label="Labeled Item"
+			noneText="Nothing Selected"
+			title="ExpandableItem With Label (auto)"
 		>
 			{children}
 		</ExpandableItem>
 		<ExpandableItem
+			id="expandableItemAlwaysLabel"
+			label="Labeled Item"
+			showLabel="always"
+			title="ExpandableItem With Label (always)"
+		>
+			{children}
+		</ExpandableItem>
+		<ExpandableItem
+			id="expandableItemNeverLabel"
+			label="Labeled Item"
+			showLabel="never"
+			title="ExpandableItem With Label (never)"
+		>
+			{children}
+		</ExpandableItem>
+		<ExpandableItem
+			disabled
 			id="expandableItemDisabledWithNoneText"
 			noneText="Nothing Selected"
 			title="ExpandableItem Disabled"
-			disabled
 		>
 			{children}
 		</ExpandableItem>

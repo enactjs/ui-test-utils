@@ -23,6 +23,9 @@ class ExpandableItemInterface {
 	get     value () { return getLabeledItemValue(this.self); }
 	get valueText () { return getText(this.value); }
 	get    isOpen () { return this.self.isExisting('.Transition__shown'); }
+	get  hasLabel () { return this.self.isExisting('.LabeledItem__label'); }
+
+	get item () { return element('.Transition__transition .Item__item', this.self); }
 }
 
 class ExpandableItemPage extends Page {
@@ -33,7 +36,12 @@ class ExpandableItemPage extends Page {
 		this.components.expandableItemDefaultClosedWithoutNoneText = new ExpandableItemInterface('expandableItemDefaultClosedWithoutNoneText');
 		this.components.expandableItemDefaultClosedWithNoneText = new ExpandableItemInterface('expandableItemDefaultClosedWithNoneText');
 		this.components.expandableItemDefaultOpenWithNoneText = new ExpandableItemInterface('expandableItemDefaultOpenWithNoneText');
-		this.components.expandableItemWithLabel = new ExpandableItemInterface('expandableItemWithLabel');
+		this.components.expandableItemWithAutoClose= new ExpandableItemInterface('expandableItemWithAutoClose');
+		this.components.expandableItemWithLockBottom= new ExpandableItemInterface('expandableItemWithLockBottom');
+		this.components.expandableItemWithoutChildren = new ExpandableItemInterface('expandableItemWithoutChildren');
+		this.components.expandableItemAutoLabel = new ExpandableItemInterface('expandableItemAutoLabel');
+		this.components.expandableItemAlwaysLabel = new ExpandableItemInterface('expandableItemAlwaysLabel');
+		this.components.expandableItemNeverLabel = new ExpandableItemInterface('expandableItemNeverLabel');
 		this.components.expandableItemDisabledWithNoneText = new ExpandableItemInterface('expandableItemDisabledWithNoneText');
 	}
 
