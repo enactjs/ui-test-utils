@@ -26,7 +26,7 @@ describe('DatePicker', function () {
 
 			it('should have month-day-year order', function () {
 				Page.spotlightSelect();
-				browser.pause(250);
+				Page.waitTransitionEnd();
 				expectOpen(datePicker);
 				expect(datePicker.month.hasFocus()).to.be.true();
 				Page.spotlightRight();
@@ -38,8 +38,7 @@ describe('DatePicker', function () {
 			describe('5-way', function () {
 				it('should open, spot first item on select, and update value to current date', function () {
 					Page.spotlightSelect();
-					// TODO: Perhaps trap `ontransitionend` so we don't have to rely on magic numbers?
-					browser.pause(250);
+					Page.waitTransitionEnd();
 					const month = new Date(datePicker.valueText).getMonth();
 					expectOpen(datePicker);
 					expect(datePicker.month.hasFocus()).to.be.true();
@@ -48,7 +47,7 @@ describe('DatePicker', function () {
 
 				it('should close when pressing select', function () {
 					Page.spotlightSelect();
-					browser.pause(250);
+					Page.waitTransitionEnd();
 					expectOpen(datePicker);
 					expect(datePicker.month.hasFocus()).to.be.true();
 					Page.spotlightSelect();
@@ -57,7 +56,7 @@ describe('DatePicker', function () {
 
 				it('should focus title when 5-way right from last picker', function () {
 					Page.spotlightSelect();
-					browser.pause(250);
+					Page.waitTransitionEnd();
 					expectOpen(datePicker);
 					expect(datePicker.month.hasFocus()).to.be.true();
 					Page.spotlightRight();
@@ -68,12 +67,12 @@ describe('DatePicker', function () {
 
 				it('should increase the month when incrementing the picker', function () {
 					Page.spotlightSelect();
-					browser.pause(250);
+					Page.waitTransitionEnd();
 					const {month} = extractValues(datePicker);
 					expectOpen(datePicker);
 					expect(datePicker.month.hasFocus()).to.be.true();
 					Page.spotlightUp();
-					browser.pause(250);
+					Page.waitTransitionEnd();
 					const {month: value} = extractValues(datePicker);
 					const expected = month < 12 ? month + 1 : 1;
 					expect(value).to.equal(expected);
@@ -81,12 +80,12 @@ describe('DatePicker', function () {
 
 				it('should decrease the month when decrementing the picker', function () {
 					Page.spotlightSelect();
-					browser.pause(250);
+					Page.waitTransitionEnd();
 					const {month} = extractValues(datePicker);
 					expectOpen(datePicker);
 					expect(datePicker.month.hasFocus()).to.be.true();
 					Page.spotlightDown();
-					browser.pause(250);
+					Page.waitTransitionEnd();
 					const {month: value} = extractValues(datePicker);
 					const expected = month > 1 ? month - 1 : 12;
 					expect(value).to.equal(expected);
@@ -94,14 +93,14 @@ describe('DatePicker', function () {
 
 				it('should increase the day when incrementing the picker', function () {
 					Page.spotlightSelect();
-					browser.pause(250);
+					Page.waitTransitionEnd();
 					const {day, month, year} = extractValues(datePicker);
 					const numDays = daysInMonth({month, year});
 					expectOpen(datePicker);
 					Page.spotlightRight();
 					expect(datePicker.day.hasFocus()).to.be.true();
 					Page.spotlightUp();
-					browser.pause(250);
+					Page.waitTransitionEnd();
 					const {day: value} = extractValues(datePicker);
 					const expected = day !== numDays ? day + 1 : 1;
 					expect(value).to.equal(expected);
@@ -109,14 +108,14 @@ describe('DatePicker', function () {
 
 				it('should decrease the day when decrementing the picker', function () {
 					Page.spotlightSelect();
-					browser.pause(250);
+					Page.waitTransitionEnd();
 					const {day, month, year} = extractValues(datePicker);
 					const numDays = daysInMonth({month, year});
 					expectOpen(datePicker);
 					Page.spotlightRight();
 					expect(datePicker.day.hasFocus()).to.be.true();
 					Page.spotlightDown();
-					browser.pause(250);
+					Page.waitTransitionEnd();
 					const {day: value} = extractValues(datePicker);
 					const expected = day !== 1 ? day - 1 : numDays;
 					expect(value).to.equal(expected);
@@ -124,14 +123,14 @@ describe('DatePicker', function () {
 
 				it('should increase the year when incrementing the picker', function () {
 					Page.spotlightSelect();
-					browser.pause(250);
+					Page.waitTransitionEnd();
 					const {year} = extractValues(datePicker);
 					expectOpen(datePicker);
 					Page.spotlightRight();
 					Page.spotlightRight();
 					expect(datePicker.year.hasFocus()).to.be.true();
 					Page.spotlightUp();
-					browser.pause(250);
+					Page.waitTransitionEnd();
 					const {year: value} = extractValues(datePicker);
 					const expected = year + 1;
 					expect(value).to.equal(expected);
@@ -139,14 +138,14 @@ describe('DatePicker', function () {
 
 				it('should decrease the year when decrementing the picker', function () {
 					Page.spotlightSelect();
-					browser.pause(250);
+					Page.waitTransitionEnd();
 					const {year} = extractValues(datePicker);
 					expectOpen(datePicker);
 					Page.spotlightRight();
 					Page.spotlightRight();
 					expect(datePicker.year.hasFocus()).to.be.true();
 					Page.spotlightDown();
-					browser.pause(250);
+					Page.waitTransitionEnd();
 					const {year: value} = extractValues(datePicker);
 					const expected = year - 1;
 					expect(value).to.equal(expected);
@@ -156,34 +155,33 @@ describe('DatePicker', function () {
 			describe('pointer', function () {
 				it('should open on title click when closed', function () {
 					datePicker.title.click();
-					// TODO: Perhaps trap `ontransitionend` so we don't have to rely on magic numbers?
-					browser.pause(250);
+					Page.waitTransitionEnd();
 					expectOpen(datePicker);
 				});
 
 				it('should close on title click when open', function () {
 					datePicker.title.click();
-					browser.pause(250);
+					Page.waitTransitionEnd();
 					expectOpen(datePicker);
 					datePicker.title.click();
-					browser.pause(250);
+					Page.waitTransitionEnd();
 					expectClosed(datePicker);
 				});
 
 				it('should select item', function () {
 					datePicker.title.click();
-					browser.pause(250);
+					Page.waitTransitionEnd();
 					datePicker.month.click();
 					expect(datePicker.month.hasFocus()).to.be.true();
 				});
 
 				it('should increase the month when incrementing the picker', function () {
 					datePicker.title.click();
-					browser.pause(250);
+					Page.waitTransitionEnd();
 					const {month} = extractValues(datePicker);
 					expectOpen(datePicker);
 					datePicker.incrementer(datePicker.month).click();
-					browser.pause(250);
+					Page.waitTransitionEnd();
 					const {month: value} = extractValues(datePicker);
 					const expected = month < 12 ? month + 1 : 1;
 					expect(value).to.equal(expected);
@@ -191,11 +189,11 @@ describe('DatePicker', function () {
 
 				it('should decrease the month when decrementing the picker', function () {
 					datePicker.title.click();
-					browser.pause(250);
+					Page.waitTransitionEnd();
 					const {month} = extractValues(datePicker);
 					expectOpen(datePicker);
 					datePicker.decrementer(datePicker.month).click();
-					browser.pause(250);
+					Page.waitTransitionEnd();
 					const {month: value} = extractValues(datePicker);
 					const expected = month > 1 ? month - 1 : 12;
 					expect(value).to.equal(expected);
@@ -203,12 +201,12 @@ describe('DatePicker', function () {
 
 				it('should increase the day when incrementing the picker', function () {
 					datePicker.title.click();
-					browser.pause(250);
+					Page.waitTransitionEnd();
 					const {day, month, year} = extractValues(datePicker);
 					const numDays = daysInMonth({month, year});
 					expectOpen(datePicker);
 					datePicker.incrementer(datePicker.day).click();
-					browser.pause(250);
+					Page.waitTransitionEnd();
 					const {day: value} = extractValues(datePicker);
 					const expected = day !== numDays ? day + 1 : 1;
 					expect(value).to.equal(expected);
@@ -216,12 +214,12 @@ describe('DatePicker', function () {
 
 				it('should decrease the day when decrementing the picker', function () {
 					datePicker.title.click();
-					browser.pause(250);
+					Page.waitTransitionEnd();
 					const {day, month, year} = extractValues(datePicker);
 					const numDays = daysInMonth({month, year});
 					expectOpen(datePicker);
 					datePicker.decrementer(datePicker.day).click();
-					browser.pause(250);
+					Page.waitTransitionEnd();
 					const {day: value} = extractValues(datePicker);
 					const expected = day !== 1 ? day - 1 : numDays;
 					expect(value).to.equal(expected);
@@ -229,11 +227,11 @@ describe('DatePicker', function () {
 
 				it('should increase the year when incrementing the picker', function () {
 					datePicker.title.click();
-					browser.pause(250);
+					Page.waitTransitionEnd();
 					const {year} = extractValues(datePicker);
 					expectOpen(datePicker);
 					datePicker.incrementer(datePicker.year).click();
-					browser.pause(250);
+					Page.waitTransitionEnd();
 					const {year: value} = extractValues(datePicker);
 					const expected = year + 1;
 					expect(value).to.equal(expected);
@@ -241,11 +239,11 @@ describe('DatePicker', function () {
 
 				it('should decrease the year when decrementing the picker', function () {
 					datePicker.title.click();
-					browser.pause(250);
+					Page.waitTransitionEnd();
 					const {year} = extractValues(datePicker);
 					expectOpen(datePicker);
 					datePicker.decrementer(datePicker.year).click();
-					browser.pause(250);
+					Page.waitTransitionEnd();
 					const {year: value} = extractValues(datePicker);
 					const expected = year - 1;
 					expect(value).to.equal(expected);
@@ -272,7 +270,7 @@ describe('DatePicker', function () {
 				it('should close when pressing select', function () {
 					datePicker.focus();
 					Page.spotlightSelect();
-					browser.pause(250);
+					Page.waitTransitionEnd();
 					expectClosed(datePicker);
 					expect(datePicker.title.hasFocus()).to.be.true();
 				});
@@ -281,17 +279,16 @@ describe('DatePicker', function () {
 			describe('pointer', function () {
 				it('should close on title click when open', function () {
 					datePicker.title.click();
-					// TODO: Perhaps trap `ontransitionend` so we don't have to rely on magic numbers?
-					browser.pause(250);
+					Page.waitTransitionEnd();
 					expectClosed(datePicker);
 				});
 
 				it('should open on title click when closed', function () {
 					datePicker.title.click();
-					browser.pause(250);
+					Page.waitTransitionEnd();
 					expectClosed(datePicker);
 					datePicker.title.click();
-					browser.pause(250);
+					Page.waitTransitionEnd();
 					expectOpen(datePicker);
 				});
 			});
@@ -305,7 +302,7 @@ describe('DatePicker', function () {
 				it('should not update on select', function () {
 					datePicker.focus();
 					Page.spotlightSelect();
-					browser.pause(250);
+					Page.waitTransitionEnd();
 					const {day, month, year} = extractValues(datePicker);
 
 					expect(day).to.equal(6);
@@ -317,7 +314,7 @@ describe('DatePicker', function () {
 			describe('pointer', function () {
 				it('should not update on title click', function () {
 					datePicker.title.click();
-					browser.pause(250);
+					Page.waitTransitionEnd();
 					const {day, month, year} = extractValues(datePicker);
 
 					expect(day).to.equal(6);
@@ -359,6 +356,7 @@ describe('DatePicker', function () {
 			describe('pointer', function () {
 				it('should not open when clicked', function () {
 					datePicker.title.click();
+					browser.pause(500);
 					expectClosed(datePicker);
 				});
 			});
@@ -387,14 +385,14 @@ describe('DatePicker', function () {
 
 		it('should focus rightmost picker (day) when selected', function () {
 			Page.spotlightSelect();
-			browser.pause(250);
+			Page.waitTransitionEnd();
 			expectOpen(datePicker);
 			expect(datePicker.day.hasFocus()).to.be.true();
 		});
 
 		it('should have day-month-year order', function () {
 			Page.spotlightSelect();
-			browser.pause(250);
+			Page.waitTransitionEnd();
 			expectOpen(datePicker);
 			expect(datePicker.day.hasFocus()).to.be.true();
 			Page.spotlightLeft();
@@ -405,7 +403,7 @@ describe('DatePicker', function () {
 
 		it('should focus title when 5-way left from last picker', function () {
 			Page.spotlightSelect();
-			browser.pause(250);
+			Page.waitTransitionEnd();
 			expectOpen(datePicker);
 			expect(datePicker.day.hasFocus()).to.be.true();
 			Page.spotlightLeft();

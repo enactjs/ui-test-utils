@@ -26,8 +26,7 @@ describe('ExpandableItem', function () {
 		describe('5-way', function () {
 			it('should open and spot expanded item on select', function () {
 				Page.spotlightSelect();
-				// TODO: Perhaps trap `ontransitionend` so we don't have to rely on magic numbers?
-				browser.pause(250);
+				Page.waitTransitionEnd();
 				expectOpen(expandableItem);
 				expect(expandableItem.item.hasFocus()).to.be.true();
 			});
@@ -35,18 +34,18 @@ describe('ExpandableItem', function () {
 			it('should close when pressing select on label', function () {
 				Page.spotlightUp();
 				Page.spotlightSelect();
-				browser.pause(250);
+				Page.waitTransitionEnd();
 				expectOpen(expandableItem);
 				Page.spotlightUp();
 				Page.spotlightSelect();
-				browser.pause(250);
+				Page.waitTransitionEnd();
 				expectClosed(expandableItem);
 			});
 
 			it('should allow 5-way navigation beyond the last item', function () {
 				expandableItem.focus();
 				Page.spotlightSelect();
-				browser.pause(250);
+				Page.waitTransitionEnd();
 				expectOpen(expandableItem);
 				expect(expandableItem.item.hasFocus()).to.be.true();
 				Page.spotlightDown();
@@ -57,17 +56,16 @@ describe('ExpandableItem', function () {
 		describe('pointer', function () {
 			it('should open on title click when closed', function () {
 				expandableItem.title.click();
-				// TODO: Perhaps trap `ontransitionend` so we don't have to rely on magic numbers?
-				browser.pause(250);
+				Page.waitTransitionEnd();
 				expectOpen(expandableItem);
 			});
 
 			it('should close on title click when open', function () {
 				expandableItem.title.click();
-				browser.pause(250);
+				Page.waitTransitionEnd();
 				expectOpen(expandableItem);
 				expandableItem.title.click();
-				browser.pause(250);
+				Page.waitTransitionEnd();
 				expectClosed(expandableItem);
 			});
 		});
@@ -92,7 +90,7 @@ describe('ExpandableItem', function () {
 			it('should close when pressing select', function () {
 				expandableItem.focus();
 				Page.spotlightSelect();
-				browser.pause(250);
+				Page.waitTransitionEnd();
 				expectClosed(expandableItem);
 				expect(expandableItem.title.hasFocus()).to.be.true();
 			});
@@ -101,17 +99,16 @@ describe('ExpandableItem', function () {
 		describe('pointer', function () {
 			it('should close on title click when open', function () {
 				expandableItem.title.click();
-				// TODO: Perhaps trap `ontransitionend` so we don't have to rely on magic numbers?
-				browser.pause(250);
+				Page.waitTransitionEnd();
 				expectClosed(expandableItem);
 			});
 
 			it('should open on title click when closed', function () {
 				expandableItem.title.click();
-				browser.pause(250);
+				Page.waitTransitionEnd();
 				expectClosed(expandableItem);
 				expandableItem.title.click();
-				browser.pause(250);
+				Page.waitTransitionEnd();
 				expectOpen(expandableItem);
 			});
 		});
@@ -123,11 +120,11 @@ describe('ExpandableItem', function () {
 		it('should close when 5-way focus returns to title', function () {
 			expandableItem.focus();
 			Page.spotlightSelect();
-			browser.pause(250);
+			Page.waitTransitionEnd();
 			expectOpen(expandableItem);
 			expect(expandableItem.item.hasFocus()).to.be.true();
 			Page.spotlightUp();
-			browser.pause(250);
+			Page.waitTransitionEnd();
 			expectClosed(expandableItem);
 		});
 	});
@@ -138,7 +135,7 @@ describe('ExpandableItem', function () {
 		it('should not allow 5-way navigation beyond the last item', function () {
 			expandableItem.focus();
 			Page.spotlightSelect();
-			browser.pause(250);
+			Page.waitTransitionEnd();
 			expectOpen(expandableItem);
 			expect(expandableItem.item.hasFocus()).to.be.true();
 			Page.spotlightDown();
@@ -162,19 +159,20 @@ describe('ExpandableItem', function () {
 		});
 
 		describe('pointer', function () {
+			// Note: We can't use waitTransitionEnd here because the transition does not (currently)
+			// happen when empty
 			it('should open on title click when closed', function () {
 				expandableItem.title.click();
-				// TODO: Perhaps trap `ontransitionend` so we don't have to rely on magic numbers?
-				browser.pause(250);
+				browser.pause(500);
 				expect(expandableItem.chevron).to.equal('󯿮');
 			});
 
 			it('should close on title click when open', function () {
 				expandableItem.title.click();
-				browser.pause(250);
+				browser.pause(500);
 				expect(expandableItem.chevron).to.equal('󯿮');
 				expandableItem.title.click();
-				browser.pause(250);
+				browser.pause(500);
 				expect(expandableItem.chevron).to.equal('󯿭');
 			});
 		});

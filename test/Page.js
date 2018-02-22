@@ -40,6 +40,29 @@ class Page {
 	backKey () {
 		return this.keyDelay('Escape');
 	}
+
+	/* global window */
+	waitTransitionEnd (delay = 1500, msg = 'timed out waiting for transitionend') {
+		browser.execute(
+			function () {
+				window.ontransitionend = function () {
+					window.__transition = true;
+				};
+				window.__transition = false;
+			}
+		);
+		browser.waitUntil(
+			function () {
+				return browser.execute(
+					function () {
+						return window.__transition;
+					}
+				).value;
+			},
+			delay,
+			msg
+		);
+	}
 }
 
 module.exports = Page;

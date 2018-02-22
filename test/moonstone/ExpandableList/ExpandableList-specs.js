@@ -27,25 +27,24 @@ describe('ExpandableList', function () {
 		describe('5-way', function () {
 			it('should open and spot first item on select', function () {
 				Page.spotlightSelect();
-				// TODO: Perhaps trap `ontransitionend` so we don't have to rely on magic numbers?
-				browser.pause(250);
+				Page.waitTransitionEnd();
 				expectOpen(expandable);
 				expect(expandable.item(0).hasFocus()).to.be.true();
 			});
 
 			it('should close when moving up to header', function () {
 				Page.spotlightSelect();
-				browser.pause(250);
+				Page.waitTransitionEnd();
 				expect(expandable.isOpen).to.be.true();
 				Page.spotlightUp();
-				browser.pause(250);
+				Page.waitTransitionEnd();
 				expect(expandable.isOpen).to.be.false();
 				expect(expandable.title.hasFocus()).to.be.true();
 			});
 
 			it('should not allow 5-way exit from bottom', function () {
 				Page.spotlightSelect();
-				browser.pause(250);
+				Page.waitTransitionEnd();
 				expect(expandable.isOpen).to.be.true();
 				Page.spotlightDown();
 				Page.spotlightDown();
@@ -56,14 +55,14 @@ describe('ExpandableList', function () {
 
 			it('should select item when pressing select', function () {
 				Page.spotlightSelect();
-				browser.pause(250);
+				Page.waitTransitionEnd();
 				Page.spotlightSelect();
 				expect(expandable.item(0).isExisting(expandable.selectedClass)).to.be.true();
 			});
 
 			it('should update value text on select', function () {
 				Page.spotlightSelect();
-				browser.pause(250);
+				Page.waitTransitionEnd();
 				Page.spotlightSelect();
 				Page.spotlightUp();
 				expect(expandable.valueText).to.equal('option1');
@@ -71,7 +70,7 @@ describe('ExpandableList', function () {
 
 			it('should not unselect item', function () {
 				Page.spotlightSelect();
-				browser.pause(250);
+				Page.waitTransitionEnd();
 				Page.spotlightSelect();
 				Page.spotlightSelect();
 				expect(expandable.item(0).isExisting(expandable.selectedClass)).to.be.true();
@@ -79,7 +78,7 @@ describe('ExpandableList', function () {
 
 			it('should only allow one selected item', function () {
 				Page.spotlightSelect();
-				browser.pause(250);
+				Page.waitTransitionEnd();
 				Page.spotlightSelect();
 				Page.spotlightDown();
 				Page.spotlightSelect();
@@ -91,39 +90,38 @@ describe('ExpandableList', function () {
 		describe('pointer', function () {
 			it('should open on title click when closed', function () {
 				expandable.title.click();
-				// TODO: Perhaps trap `ontransitionend` so we don't have to rely on magic numbers?
-				browser.pause(250);
+				Page.waitTransitionEnd();
 				expectOpen(expandable);
 			});
 
 			it('should close on title click when open', function () {
 				expandable.title.click();
-				browser.pause(250);
+				Page.waitTransitionEnd();
 				expect(expandable.isOpen).to.be.true();
 				expandable.title.click();
-				browser.pause(250);
+				Page.waitTransitionEnd();
 				expect(expandable.isOpen).to.be.false();
 			});
 
 			it('should select item', function () {
 				expandable.title.click();
-				browser.pause(250);
+				Page.waitTransitionEnd();
 				expandable.item(0).click();
 				expect(expandable.item(0).isExisting(expandable.selectedClass)).to.be.true();
 			});
 
 			it('should update value text', function () {
 				expandable.title.click();
-				browser.pause(250);
+				Page.waitTransitionEnd();
 				expandable.item(0).click();
 				expandable.title.click();
-				browser.pause(250);
+				Page.waitTransitionEnd();
 				expect(expandable.valueText).to.equal('option1');
 			});
 
 			it('should not unselect item', function () {
 				expandable.title.click();
-				browser.pause(250);
+				Page.waitTransitionEnd();
 				expandable.item(0).click();
 				expandable.item(0).click();
 				expect(expandable.item(0).isExisting(expandable.selectedClass)).to.be.true();
@@ -131,7 +129,7 @@ describe('ExpandableList', function () {
 
 			it('should only allow one selected item', function () {
 				expandable.title.click();
-				browser.pause(250);
+				Page.waitTransitionEnd();
 				expandable.item(0).click();
 				expandable.item(1).click();
 				expect(expandable.item(0).isExisting(expandable.selectedClass)).to.be.false();
@@ -157,8 +155,7 @@ describe('ExpandableList', function () {
 			it('should open and spot first item on select', function () {
 				expandable.focus();
 				Page.spotlightSelect();
-				// TODO: Perhaps trap `ontransitionend` so we don't have to rely on magic numbers?
-				browser.pause(250);
+				Page.waitTransitionEnd();
 				expectOpen(expandable);
 				expect(expandable.item(0).hasFocus()).to.be.true();
 			});
@@ -166,7 +163,7 @@ describe('ExpandableList', function () {
 			it('should select item when pressing select', function () {
 				expandable.focus();
 				Page.spotlightSelect();
-				browser.pause(250);
+				Page.waitTransitionEnd();
 				Page.spotlightSelect();
 				expect(expandable.item(0).isExisting(expandable.selectedClass)).to.be.true();
 			});
@@ -174,7 +171,7 @@ describe('ExpandableList', function () {
 			it('should update value text on select', function () {
 				expandable.focus();
 				Page.spotlightSelect();
-				browser.pause(250);
+				Page.waitTransitionEnd();
 				Page.spotlightSelect();
 				Page.spotlightUp();
 				expect(expandable.valueText).to.equal('option1');
@@ -183,7 +180,7 @@ describe('ExpandableList', function () {
 			it('should allow unselecting item', function () {
 				expandable.focus();
 				Page.spotlightSelect();
-				browser.pause(250);
+				Page.waitTransitionEnd();
 				Page.spotlightSelect();
 				Page.spotlightSelect();
 				expect(expandable.item(0).isExisting(expandable.selectedClass)).to.be.false();
@@ -192,7 +189,7 @@ describe('ExpandableList', function () {
 			it('should allow multiple selected items', function () {
 				expandable.focus();
 				Page.spotlightSelect();
-				browser.pause(250);
+				Page.waitTransitionEnd();
 				Page.spotlightSelect();
 				Page.spotlightDown();
 				Page.spotlightSelect();
@@ -203,7 +200,7 @@ describe('ExpandableList', function () {
 			it('should combine value text with multi-select', function () {
 				expandable.focus();
 				Page.spotlightSelect();
-				browser.pause(250);
+				Page.waitTransitionEnd();
 				Page.spotlightSelect();
 				Page.spotlightDown();
 				Page.spotlightSelect();
@@ -216,39 +213,38 @@ describe('ExpandableList', function () {
 		describe('pointer', function () {
 			it('should open on title click when closed', function () {
 				expandable.title.click();
-				// TODO: Perhaps trap `ontransitionend` so we don't have to rely on magic numbers?
-				browser.pause(250);
+				Page.waitTransitionEnd();
 				expectOpen(expandable);
 			});
 
 			it('should close on title click when open', function () {
 				expandable.title.click();
-				browser.pause(250);
+				Page.waitTransitionEnd();
 				expect(expandable.isOpen).to.be.true();
 				expandable.title.click();
-				browser.pause(250);
+				Page.waitTransitionEnd();
 				expect(expandable.isOpen).to.be.false();
 			});
 
 			it('should select item', function () {
 				expandable.title.click();
-				browser.pause(250);
+				Page.waitTransitionEnd();
 				expandable.item(0).click();
 				expect(expandable.item(0).isExisting(expandable.selectedClass)).to.be.true();
 			});
 
 			it('should update value text', function () {
 				expandable.title.click();
-				browser.pause(250);
+				Page.waitTransitionEnd();
 				expandable.item(0).click();
 				expandable.title.click();
-				browser.pause(250);
+				Page.waitTransitionEnd();
 				expect(expandable.valueText).to.equal('option1');
 			});
 
 			it('should allow unselecting item', function () {
 				expandable.title.click();
-				browser.pause(250);
+				Page.waitTransitionEnd();
 				expandable.item(0).click();
 				expandable.item(0).click();
 				expect(expandable.item(0).isExisting(expandable.selectedClass)).to.be.false();
@@ -256,7 +252,7 @@ describe('ExpandableList', function () {
 
 			it('should allow multiple selected items', function () {
 				expandable.title.click();
-				browser.pause(250);
+				Page.waitTransitionEnd();
 				expandable.item(0).click();
 				expandable.item(1).click();
 				expect(expandable.item(0).isExisting(expandable.selectedClass)).to.be.true();
@@ -282,8 +278,7 @@ describe('ExpandableList', function () {
 			it('should open and spot first item on select', function () {
 				expandable.focus();
 				Page.spotlightSelect();
-				// TODO: Perhaps trap `ontransitionend` so we don't have to rely on magic numbers?
-				browser.pause(250);
+				Page.waitTransitionEnd();
 				expectOpen(expandable);
 				expect(expandable.item(0).hasFocus()).to.be.true();
 			});
@@ -291,7 +286,7 @@ describe('ExpandableList', function () {
 			it('should select item when pressing select', function () {
 				expandable.focus();
 				Page.spotlightSelect();
-				browser.pause(250);
+				Page.waitTransitionEnd();
 				Page.spotlightSelect();
 				expect(expandable.item(0).isExisting(expandable.selectedClass)).to.be.true();
 			});
@@ -299,7 +294,7 @@ describe('ExpandableList', function () {
 			it('should update value text on select', function () {
 				expandable.focus();
 				Page.spotlightSelect();
-				browser.pause(250);
+				Page.waitTransitionEnd();
 				Page.spotlightSelect();
 				Page.spotlightUp();
 				expect(expandable.valueText).to.equal('option1');
@@ -308,7 +303,7 @@ describe('ExpandableList', function () {
 			it('should allow unselecting item', function () {
 				expandable.focus();
 				Page.spotlightSelect();
-				browser.pause(250);
+				Page.waitTransitionEnd();
 				Page.spotlightSelect();
 				Page.spotlightSelect();
 				expect(expandable.item(0).isExisting(expandable.selectedClass)).to.be.false();
@@ -317,7 +312,7 @@ describe('ExpandableList', function () {
 			it('should reset none text if nothing selected', function () {
 				expandable.focus();
 				Page.spotlightSelect();
-				browser.pause(250);
+				Page.waitTransitionEnd();
 				Page.spotlightSelect();
 				Page.spotlightSelect();
 				Page.spotlightUp();
@@ -327,7 +322,7 @@ describe('ExpandableList', function () {
 			it('should not allow multiple selected items', function () {
 				expandable.focus();
 				Page.spotlightSelect();
-				browser.pause(250);
+				Page.waitTransitionEnd();
 				Page.spotlightSelect();
 				Page.spotlightDown();
 				Page.spotlightSelect();
@@ -339,39 +334,38 @@ describe('ExpandableList', function () {
 		describe('pointer', function () {
 			it('should open on title click when closed', function () {
 				expandable.title.click();
-				// TODO: Perhaps trap `ontransitionend` so we don't have to rely on magic numbers?
-				browser.pause(250);
+				Page.waitTransitionEnd();
 				expectOpen(expandable);
 			});
 
 			it('should close on title click when open', function () {
 				expandable.title.click();
-				browser.pause(250);
+				Page.waitTransitionEnd();
 				expect(expandable.isOpen).to.be.true();
 				expandable.title.click();
-				browser.pause(250);
+				Page.waitTransitionEnd();
 				expect(expandable.isOpen).to.be.false();
 			});
 
 			it('should select item', function () {
 				expandable.title.click();
-				browser.pause(250);
+				Page.waitTransitionEnd();
 				expandable.item(0).click();
 				expect(expandable.item(0).isExisting(expandable.selectedClass)).to.be.true();
 			});
 
 			it('should update value text', function () {
 				expandable.title.click();
-				browser.pause(250);
+				Page.waitTransitionEnd();
 				expandable.item(0).click();
 				expandable.title.click();
-				browser.pause(250);
+				Page.waitTransitionEnd();
 				expect(expandable.valueText).to.equal('option1');
 			});
 
 			it('should unselect item', function () {
 				expandable.title.click();
-				browser.pause(250);
+				Page.waitTransitionEnd();
 				expandable.item(0).click();
 				expandable.item(0).click();
 				expect(expandable.item(0).isExisting(expandable.selectedClass)).to.be.false();
@@ -379,7 +373,7 @@ describe('ExpandableList', function () {
 
 			it('should only allow one selected item', function () {
 				expandable.title.click();
-				browser.pause(250);
+				Page.waitTransitionEnd();
 				expandable.item(0).click();
 				expandable.item(1).click();
 				expect(expandable.item(0).isExisting(expandable.selectedClass)).to.be.false();
@@ -397,7 +391,7 @@ describe('ExpandableList', function () {
 			it('should allow 5-way out when open', function () {
 				expandable.focus();
 				Page.spotlightSelect();
-				browser.pause(250);
+				Page.waitTransitionEnd();
 				expect(expandable.isOpen).to.be.true();
 				Page.spotlightDown();
 				Page.spotlightDown();
@@ -421,7 +415,7 @@ describe('ExpandableList', function () {
 			it('should open and spot first item on select', function () {
 				expandable.focus();
 				Page.spotlightSelect();
-				browser.pause(250);
+				Page.waitTransitionEnd();
 				expectOpen(expandable);
 				expect(expandable.item(0).hasFocus()).to.be.true();
 			});
@@ -429,7 +423,7 @@ describe('ExpandableList', function () {
 			it('should not close when navigating up to title', function () {
 				expandable.focus();
 				Page.spotlightSelect();
-				browser.pause(250);
+				Page.waitTransitionEnd();
 				Page.spotlightUp();
 				expectOpen(expandable);
 				expect(expandable.title.hasFocus()).to.be.true();
@@ -450,7 +444,7 @@ describe('ExpandableList', function () {
 			it('should close on select', function () {
 				expandable.focus();
 				Page.spotlightSelect();
-				browser.pause(250);
+				Page.waitTransitionEnd();
 				expectClosed(expandable);
 				expect(expandable.title.hasFocus()).to.be.true();
 			});
@@ -459,7 +453,7 @@ describe('ExpandableList', function () {
 				expandable.focus();
 				Page.spotlightDown();
 				Page.spotlightUp();
-				browser.pause(250);
+				Page.waitTransitionEnd();
 				expect(expandable.isOpen).to.be.false();
 				expect(expandable.chevron).to.equal('󯿭');
 				expect(expandable.item(0).isVisible()).to.be.false();
@@ -470,8 +464,7 @@ describe('ExpandableList', function () {
 		describe('pointer', function () {
 			it('should close on title click', function () {
 				expandable.title.click();
-				// TODO: Perhaps trap `ontransitionend` so we don't have to rely on magic numbers?
-				browser.pause(250);
+				Page.waitTransitionEnd();
 				expect(expandable.isOpen).to.be.false();
 				expect(expandable.chevron).to.equal('󯿭');
 				expect(expandable.item(0).isVisible()).to.be.false();
@@ -479,10 +472,10 @@ describe('ExpandableList', function () {
 
 			it('should open on title click when closed', function () {
 				expandable.title.click();
-				browser.pause(250);
+				Page.waitTransitionEnd();
 				expect(expandable.isOpen).to.be.false();
 				expandable.title.click();
-				browser.pause(250);
+				Page.waitTransitionEnd();
 				expect(expandable.isOpen).to.be.true();
 			});
 		});
@@ -510,9 +503,8 @@ describe('ExpandableList', function () {
 		describe('pointer', function () {
 			it('should stay closed on title click', function () {
 				expandable.title.click();
-				// TODO: Perhaps trap `ontransitionend` so we don't have to rely on magic numbers?
-				// Though, in this case, it should never fire, but we need to wait just in case.
-				browser.pause(250);
+				// In this case, it should never fire, but we need to wait just in case.
+				browser.pause(500);
 				expect(expandable.isOpen).to.be.false();
 				expect(expandable.chevron).to.equal('󯿭');
 				expect(expandable.item(0).isVisible()).to.be.false();
@@ -530,9 +522,9 @@ describe('ExpandableList', function () {
 	describe('general pointer operation', function () {
 		it('should not close other expandable when opening', function () {
 			Page.components.radioSelect.title.click();
-			browser.pause(250);
+			Page.waitTransitionEnd();
 			Page.components.multiSelect.title.click();
-			browser.pause(250);
+			Page.waitTransitionEnd();
 			expect(Page.components.radioSelect.isOpen).to.be.true();
 			expect(Page.components.multiSelect.isOpen).to.be.true();
 		});
