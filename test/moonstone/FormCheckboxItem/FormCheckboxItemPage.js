@@ -10,13 +10,13 @@ class FormCheckboxItemInterface {
 		return browser.selectorExecute(`#${this.id}`, (els) => els && !els[0].focus());
 	}
 
-	get item () { return browser.element(`#${this.id}`); }
+	get self () { return browser.element(`#${this.id}`); }
 	get valueText () { return browser.element(`#${this.id} > div .Marquee__text`).getText(); }
 	get icon () { return browser.element(`#${this.id} > div .Icon__icon`)}
 	get iconSymbol () { return browser.element(`#${this.id} > div .Icon__icon`).getText(); }
 	get isChecked () { return browser.isExisting(`#${this.id} .FormCheckbox__selected`); }
-	get isAfter () { return browser.isExisting(`#${this.id} .Overlay__after`); }
-	get isBefore () { return browser.isExisting(`#${this.id} .Overlay__before`); }
+	get isAfter () { return browser.isExisting(`#${this.id} .SlotItem__after`); }
+	get isBefore () { return browser.isExisting(`#${this.id} .SlotItem__before`); }
 	get isInline () { return browser.isExisting(`#${this.id}.Item__inline`); }
 }
 

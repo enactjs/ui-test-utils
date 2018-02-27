@@ -15,8 +15,8 @@ class ToggleItemInterface {
 	get icon () { return browser.element(`#${this.id} > div .Icon__icon`)}
 	get iconSymbol () { return browser.element(`#${this.id} > div .Icon__icon`).getText(); }
 	get isSelected () { return browser.isExisting(`#${this.id} .ToggleItem__selected`); }
-	get isAfter () { return browser.isExisting(`#${this.id} .Overlay__after`); }
-	get isBefore () { return browser.isExisting(`#${this.id} .Overlay__before`); }
+	get isAfter () { return browser.isExisting(`#${this.id} .SlotItem__after`); }
+	get isBefore () { return browser.isExisting(`#${this.id} .SlotItem__before`); }
 	get isInline () { return browser.isExisting(`#${this.id}.Item__inline`); }
 }
 

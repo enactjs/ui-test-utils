@@ -8,7 +8,7 @@ describe('FormCheckboxItem', function () {
 	});
 
 	it('should have focus on first item at start', function () {
-		expect(Page.components.formCheckboxDefault.item.hasFocus()).to.be.true();
+		expect(Page.components.formCheckboxDefault.self.hasFocus()).to.be.true();
 	});
 
 	describe('default', function () {
@@ -45,30 +45,30 @@ describe('FormCheckboxItem', function () {
 
 			it('should move focus down on SpotlightDown', function () {
 				Page.spotlightDown();
-				expect(Page.components.formCheckboxDefaultSelected.item.hasFocus()).to.be.true();
+				expect(Page.components.formCheckboxDefaultSelected.self.hasFocus()).to.be.true();
 			});
 
 			it('should move focus up on SpotlightUp', function () {
 				Page.components.formCheckboxDefaultSelected.focus();
 				Page.spotlightUp();
-				expect(FormCheckboxItem.item.hasFocus()).to.be.true();
+				expect(FormCheckboxItem.self.hasFocus()).to.be.true();
 			});
 		});
 
 		describe('pointer', function () {
 			it('should check the item when clicked', function () {
-				FormCheckboxItem.item.click();
+				FormCheckboxItem.self.click();
 				expectChecked(FormCheckboxItem);
 			});
 
 			it('should re-uncheck the item when clicked twice', function () {
-				FormCheckboxItem.item.click();
-				FormCheckboxItem.item.click();
+				FormCheckboxItem.self.click();
+				FormCheckboxItem.self.click();
 				expectUnchecked(FormCheckboxItem);
 			});
 
 			it('should display check icon when clicked', function () {
-				FormCheckboxItem.item.click();
+				FormCheckboxItem.self.click();
 				expect(FormCheckboxItem.iconSymbol).to.equal('✓');
 			});
 		});
@@ -106,13 +106,13 @@ describe('FormCheckboxItem', function () {
 
 		describe('pointer', function () {
 			it('should uncheck the item when clicked', function () {
-				FormCheckboxItem.item.click();
+				FormCheckboxItem.self.click();
 				expectUnchecked(FormCheckboxItem);
 			});
 
 			it('should re-check the item when clicked twice', function () {
-				FormCheckboxItem.item.click();
-				FormCheckboxItem.item.click();
+				FormCheckboxItem.self.click();
+				FormCheckboxItem.self.click();
 				expectChecked(FormCheckboxItem);
 			});
 		});
@@ -150,13 +150,13 @@ describe('FormCheckboxItem', function () {
 
 		describe('pointer', function () {
 			it('should uncheck the item when clicked', function () {
-				FormCheckboxItem.item.click();
+				FormCheckboxItem.self.click();
 				expectUnchecked(FormCheckboxItem);
 			});
 
 			it('should re-check the item when clicked twice', function () {
-				FormCheckboxItem.item.click();
-				FormCheckboxItem.item.click();
+				FormCheckboxItem.self.click();
+				FormCheckboxItem.self.click();
 				expectChecked(FormCheckboxItem);
 			});
 		});
@@ -198,13 +198,13 @@ describe('FormCheckboxItem', function () {
 
 		describe('pointer', function () {
 			it('should uncheck the item when clicked', function () {
-				FormCheckboxItem.item.click();
+				FormCheckboxItem.self.click();
 				expectUnchecked(FormCheckboxItem);
 			});
 
 			it('should re-check the item when clicked twice', function () {
-				FormCheckboxItem.item.click();
-				FormCheckboxItem.item.click();
+				FormCheckboxItem.self.click();
+				FormCheckboxItem.self.click();
 				expectChecked(FormCheckboxItem);
 			});
 		});
@@ -246,20 +246,24 @@ describe('FormCheckboxItem', function () {
 
 		describe('pointer', function () {
 			it('should uncheck the item when clicked', function () {
-				FormCheckboxItem.item.click();
+				FormCheckboxItem.self.click();
 				expectUnchecked(FormCheckboxItem);
 			});
 
 			it('should re-check the item when clicked twice', function () {
-				FormCheckboxItem.item.click();
-				FormCheckboxItem.item.click();
+				FormCheckboxItem.self.click();
+				FormCheckboxItem.self.click();
 				expectChecked(FormCheckboxItem);
 			});
 		});
 	});
 
+	// Note, the disabled test requires the previous component to be known for 5-way navigation and
+	// assumes there's no next component.  If you add components before or after this test, please
+	// update the links.
 	describe('disabled', function () {
 		const FormCheckboxItem = Page.components.formCheckboxDisabled;
+		const prevFormCheckboxItem = Page.components.formCheckboxInlineAfter;
 
 		it('should have correct text', function () {
 			expect(FormCheckboxItem.valueText).to.equal('FormCheckbox Item disabled');
@@ -273,12 +277,13 @@ describe('FormCheckboxItem', function () {
 			expect(FormCheckboxItem.isBefore).to.be.true();
 		});
 
-		it('should not focus the item', function () {
-			FormCheckboxItem.focus();
-			expect(FormCheckboxItem.item.hasFocus()).to.be.false();
-		});
-
 		describe('5-way', function () {
+			it('should not focus the item', function () {
+				prevFormCheckboxItem.focus();
+				Page.spotlightDown();
+				expect(prevFormCheckboxItem.self.hasFocus()).to.be.true();
+			});
+
 			it('should not uncheck the item when selected', function () {
 				FormCheckboxItem.focus();
 				Page.spotlightSelect();
@@ -288,14 +293,18 @@ describe('FormCheckboxItem', function () {
 
 		describe('pointer', function () {
 			it('should not uncheck the item when clicked', function () {
-				FormCheckboxItem.item.click();
+				FormCheckboxItem.self.click();
 				expectChecked(FormCheckboxItem);
 			});
 		});
 	});
 
+	// Note, the disabled test requires the previous component to be known for 5-way navigation and
+	// assumes there's no next component.  If you add components before or after this test, please
+	// update the links.
 	describe('inline disabled', function () {
 		const FormCheckboxItem = Page.components.formCheckboxInlineDisabled;
+		const prevFormCheckboxItem = Page.components.formCheckboxInlineAfter;
 
 		it('should have correct text', function () {
 			expect(FormCheckboxItem.valueText).to.equal('FormCheckbox Item inline disabled');
@@ -313,12 +322,13 @@ describe('FormCheckboxItem', function () {
 			expect(FormCheckboxItem.isBefore).to.be.true();
 		});
 
-		it('should not focus the item', function () {
-			FormCheckboxItem.focus();
-			expect(FormCheckboxItem.item.hasFocus()).to.be.false();
-		});
-
 		describe('5-way', function () {
+			it('should not focus the item', function () {
+				prevFormCheckboxItem.focus();
+				Page.spotlightDown();
+				expect(prevFormCheckboxItem.self.hasFocus()).to.be.true();
+			});
+
 			it('should not uncheck the item when selected', function () {
 				FormCheckboxItem.focus();
 				Page.spotlightSelect();
@@ -328,9 +338,12 @@ describe('FormCheckboxItem', function () {
 
 		describe('pointer', function () {
 			it('should not uncheck the item when clicked', function () {
-				FormCheckboxItem.item.click();
+				FormCheckboxItem.self.click();
 				expectChecked(FormCheckboxItem);
 			});
 		});
+		// Note, the disabled test above requires the previous component to be known for 5-way
+		// navigation and assumes there's no next component.  If you add components before or after
+		// this test, please update the links.
 	});
 });

@@ -242,17 +242,11 @@ describe('ToggleButton', function () {
 			expect(toggleButton.isSelected).to.be.true();
 		});
 
-		it('should not focus the toggleButton', function () {
-			previousToggle.focus();
-			Page.spotlightDown();
-			expect(nextToggle.self.hasFocus()).to.be.true();
-		});
-
 		describe('5-way', function () {
-			it('should not unselect the item when selected', function () {
-				toggleButton.focus();
-				Page.spotlightSelect();
-				expect(toggleButton.isSelected).to.be.true();
+			it('should not focus the toggleButton', function () {
+				previousToggle.focus();
+				Page.spotlightDown();
+				expect(nextToggle.self.hasFocus()).to.be.true();
 			});
 		});
 
