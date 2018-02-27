@@ -7,11 +7,14 @@ describe('ToggleButton', function () {
 	});
 
 	it('should have focus on first item at start', function () {
-		expect(Page.components.toggleDefault.item.hasFocus()).to.be.true();
+		expect(Page.components.toggleDefault.self.hasFocus()).to.be.true();
 	});
 
+	// Note, the 5-way up/down tests require the next component to be known.  If you add components
+	// before or after this test, please update the links
 	describe('default', function () {
 		const toggleButton = Page.components.toggleDefault;
+		const nextButton = Page.components.toggleWithLabels;
 
 		it('should have correct text', function () {
 			expect(toggleButton.valueText).to.equal('MISSING TOGGLE LABEL');
@@ -35,32 +38,34 @@ describe('ToggleButton', function () {
 				expect(toggleButton.isSelected).to.be.false();
 			});
 
-			it('should move focus right on SpotlightRight', function () {
-				Page.spotlightRight();
-				expect(Page.components.toggleWithLabels.item.hasFocus()).to.be.true();
+			it('should move focus down on SpotlightDown', function () {
+				Page.spotlightDown();
+				expect(nextButton.self.hasFocus()).to.be.true();
 			});
 
-			it('should move focus Left on SpotlightLeft', function () {
-				Page.components.toggleWithLabels.focus();
-				Page.spotlightLeft();
-				expect(toggleButton.item.hasFocus()).to.be.true();
+			it('should move focus Up on SpotlightUp', function () {
+				nextButton.focus();
+				Page.spotlightUp();
+				expect(toggleButton.self.hasFocus()).to.be.true();
 			});
 
 		});
 
 		describe('pointer', function () {
 			it('should select the toggleButton when clicked', function () {
-				toggleButton.item.click();
+				toggleButton.self.click();
 				expect(toggleButton.isSelected).to.be.true();
 			});
 
 			it('should re-unselect the item when clicked twice', function () {
-				toggleButton.item.click();
-				toggleButton.item.click();
+				toggleButton.self.click();
+				toggleButton.self.click();
 				expect(toggleButton.isSelected).to.be.false();
 			});
 		});
 	});
+	// Note, the 5-way up/down tests above require the next component to be known.  If you add
+	// components before or after this test, please update the links
 
 	describe('labelled', function () {
 		const toggleButton = Page.components.toggleWithLabels;
@@ -90,13 +95,13 @@ describe('ToggleButton', function () {
 
 		describe('pointer', function () {
 			it('should have correct text when selected', function () {
-				toggleButton.item.click();
+				toggleButton.self.click();
 				expect(toggleButton.valueText).to.equal('ON');
 			});
 
 			it('should have correct text when un-selected', function () {
-				toggleButton.item.click();
-				toggleButton.item.click();
+				toggleButton.self.click();
+				toggleButton.self.click();
 				expect(toggleButton.valueText).to.equal('OFF');
 			});
 		});
@@ -130,13 +135,13 @@ describe('ToggleButton', function () {
 
 		describe('pointer', function () {
 			it('should have correct text when selected', function () {
-				toggleButton.item.click();
+				toggleButton.self.click();
 				expect(toggleButton.valueText).to.equal('ON');
 			});
 
 			it('should have correct text when un-selected', function () {
-				toggleButton.item.click();
-				toggleButton.item.click();
+				toggleButton.self.click();
+				toggleButton.self.click();
 				expect(toggleButton.valueText).to.equal('MISSING TOGGLE OFF LABEL');
 			});
 		});
@@ -170,13 +175,13 @@ describe('ToggleButton', function () {
 
 		describe('pointer', function () {
 			it('should have correct text when selected', function () {
-				toggleButton.item.click();
+				toggleButton.self.click();
 				expect(toggleButton.valueText).to.equal('MISSING TOGGLE ON LABEL');
 			});
 
 			it('should have correct text when un-selected', function () {
-				toggleButton.item.click();
-				toggleButton.item.click();
+				toggleButton.self.click();
+				toggleButton.self.click();
 				expect(toggleButton.valueText).to.equal('OFF');
 			});
 		});
@@ -210,20 +215,24 @@ describe('ToggleButton', function () {
 
 		describe('pointer', function () {
 			it('should unselect the toggleButton when selected', function () {
-				toggleButton.item.click();
+				toggleButton.self.click();
 				expect(toggleButton.isSelected).to.be.false();
 			});
 
 			it('should re-select the toggleButton when selected twice', function () {
-				toggleButton.item.click();
-				toggleButton.item.click();
+				toggleButton.self.click();
+				toggleButton.self.click();
 				expect(toggleButton.isSelected).to.be.true();
 			});
 		});
 	});
 
+	// Note, the disabled test requires the previous and next component to be known for 5-way
+	// navigation.  If you add components before or after this test, please update the links
 	describe('disabled', function () {
 		const toggleButton = Page.components.toggleDisabled;
+		const previousToggle = Page.components.toggleDefaultSelected;
+		const nextToggle = Page.components.toggleSmall;
 
 		it('should have correct text', function () {
 			expect(toggleButton.valueText).to.equal('ON');
@@ -234,8 +243,9 @@ describe('ToggleButton', function () {
 		});
 
 		it('should not focus the toggleButton', function () {
-			toggleButton.focus();
-			expect(toggleButton.item.hasFocus()).to.be.false();
+			previousToggle.focus();
+			Page.spotlightDown();
+			expect(nextToggle.self.hasFocus()).to.be.true();
 		});
 
 		describe('5-way', function () {
@@ -248,11 +258,13 @@ describe('ToggleButton', function () {
 
 		describe('pointer', function () {
 			it('should not unselect the item when clicked', function () {
-				toggleButton.item.click();
+				toggleButton.self.click();
 				expect(toggleButton.isSelected).to.be.true();
 			});
 		});
 	});
+	// Note, the disabled test above requires the previous and next component to be known for 5-way
+	// navigation.  If you add components before or after this test, please update the links
 
 	describe('small', function () {
 		const toggleButton = Page.components.toggleSmall;
@@ -286,13 +298,13 @@ describe('ToggleButton', function () {
 
 		describe('pointer', function () {
 			it('should select the toggleButton when selected', function () {
-				toggleButton.item.click();
+				toggleButton.self.click();
 				expect(toggleButton.isSelected).to.be.true();
 			});
 
 			it('should un-select the toggleButton when selected twice', function () {
-				toggleButton.item.click();
-				toggleButton.item.click();
+				toggleButton.self.click();
+				toggleButton.self.click();
 				expect(toggleButton.isSelected).to.be.false();
 			});
 		});
@@ -339,24 +351,24 @@ describe('ToggleButton', function () {
 
 		describe('pointer', function () {
 			it('should select the toggleButton when selected', function () {
-				toggleButton.item.click();
+				toggleButton.self.click();
 				expect(toggleButton.isSelected).to.be.true();
 			});
 
 			it('should un-select the toggleButton when selected twice', function () {
-				toggleButton.item.click();
-				toggleButton.item.click();
+				toggleButton.self.click();
+				toggleButton.self.click();
 				expect(toggleButton.isSelected).to.be.false();
 			});
 
 			it('should have correct text when selected', function () {
-				toggleButton.item.click();
+				toggleButton.self.click();
 				expect(toggleButton.valueText).to.equal('toggle on');
 			});
 
 			it('should have correct text when unselected', function () {
-				toggleButton.item.click();
-				toggleButton.item.click();
+				toggleButton.self.click();
+				toggleButton.self.click();
 				expect(toggleButton.valueText).to.equal('toggle off');
 			});
 		});
@@ -404,24 +416,24 @@ describe('ToggleButton', function () {
 
 		describe('pointer', function () {
 			it('should select the toggleButton when selected', function () {
-				toggleButton.item.click();
+				toggleButton.self.click();
 				expect(toggleButton.isSelected).to.be.true();
 			});
 
 			it('should un-select the toggleButton when selected twice', function () {
-				toggleButton.item.click();
-				toggleButton.item.click();
+				toggleButton.self.click();
+				toggleButton.self.click();
 				expect(toggleButton.isSelected).to.be.false();
 			});
 
 			it('should have correct text when selected', function () {
-				toggleButton.item.click();
+				toggleButton.self.click();
 				expect(toggleButton.valueText).to.equal('Toggle on');
 			});
 
 			it('should have correct text when unselected', function () {
-				toggleButton.item.click();
-				toggleButton.item.click();
+				toggleButton.self.click();
+				toggleButton.self.click();
 				expect(toggleButton.valueText).to.equal('Toggle off');
 			});
 		});
@@ -469,24 +481,24 @@ describe('ToggleButton', function () {
 
 		describe('pointer', function () {
 			it('should select the toggleButton when selected', function () {
-				toggleButton.item.click();
+				toggleButton.self.click();
 				expect(toggleButton.isSelected).to.be.true();
 			});
 
 			it('should un-select the toggleButton when selected twice', function () {
-				toggleButton.item.click();
-				toggleButton.item.click();
+				toggleButton.self.click();
+				toggleButton.self.click();
 				expect(toggleButton.isSelected).to.be.false();
 			});
 
 			it('should have correct text when selected', function () {
-				toggleButton.item.click();
+				toggleButton.self.click();
 				expect(toggleButton.valueText).to.equal('Toggle On');
 			});
 
 			it('should have correct text when unselected', function () {
-				toggleButton.item.click();
-				toggleButton.item.click();
+				toggleButton.self.click();
+				toggleButton.self.click();
 				expect(toggleButton.valueText).to.equal('Toggle Off');
 			});
 		});
@@ -534,24 +546,24 @@ describe('ToggleButton', function () {
 
 		describe('pointer', function () {
 			it('should select the toggleButton when selected', function () {
-				toggleButton.item.click();
+				toggleButton.self.click();
 				expect(toggleButton.isSelected).to.be.true();
 			});
 
 			it('should un-select the toggleButton when selected twice', function () {
-				toggleButton.item.click();
-				toggleButton.item.click();
+				toggleButton.self.click();
+				toggleButton.self.click();
 				expect(toggleButton.isSelected).to.be.false();
 			});
 
 			it('should have correct text when selected', function () {
-				toggleButton.item.click();
+				toggleButton.self.click();
 				expect(toggleButton.valueText).to.equal('TOGGLE ON');
 			});
 
 			it('should have correct text when unselected', function () {
-				toggleButton.item.click();
-				toggleButton.item.click();
+				toggleButton.self.click();
+				toggleButton.self.click();
 				expect(toggleButton.valueText).to.equal('TOGGLE OFF');
 			});
 		});

@@ -10,7 +10,7 @@ class ToggleButtonInterface {
 		return browser.selectorExecute(`#${this.id}`, (els) => els && !els[0].focus());
 	}
 
-	get item () { return browser.element(`#${this.id}`); }
+	get self () { return browser.element(`#${this.id}`); }
 	get valueText () { return browser.element(`#${this.id} > div .Marquee__text`).getText(); }
 	get isSelected () { return browser.isExisting(`#${this.id}.ToggleButton__selected.Button__selected`); }
 	get isSmall () { return browser.isExisting(`#${this.id}.ToggleButton__small`); }
