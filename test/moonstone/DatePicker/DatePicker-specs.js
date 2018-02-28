@@ -356,6 +356,7 @@ describe('DatePicker', function () {
 			describe('pointer', function () {
 				it('should not open when clicked', function () {
 					datePicker.title.click();
+					// it should never open, but wait and then check to be sure
 					browser.pause(500);
 					expectClosed(datePicker);
 				});

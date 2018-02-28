@@ -373,6 +373,7 @@ describe('TimePicker', function () {
 			describe('pointer', function () {
 				it('should not open when clicked', function () {
 					timePicker.title.click();
+					// it should never open, but wait and then check to be sure
 					browser.pause(500);
 					expectClosed(timePicker);
 				});
