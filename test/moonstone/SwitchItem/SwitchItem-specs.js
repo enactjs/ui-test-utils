@@ -7,7 +7,7 @@ describe('SwitchItem', function () {
 	});
 
 	it('should have focus on first item at start', function () {
-		expect(Page.components.switchDefault.item.hasFocus()).to.be.true();
+		expect(Page.components.switchDefault.self.hasFocus()).to.be.true();
 	});
 
 	describe('default', function () {
@@ -35,25 +35,25 @@ describe('SwitchItem', function () {
 
 			it('should move focus down on SpotlightDown', function () {
 				Page.spotlightDown();
-				expect(Page.components.switchDefaultSelected.item.hasFocus()).to.be.true();
+				expect(Page.components.switchDefaultSelected.self.hasFocus()).to.be.true();
 			});
 
 			it('should move focus up on SpotlightUp', function () {
 				Page.components.switchDefaultSelected.focus();
 				Page.spotlightUp();
-				expect(switchItem.item.hasFocus()).to.be.true();
+				expect(switchItem.self.hasFocus()).to.be.true();
 			});
 		});
 
 		describe('pointer', function () {
 			it('should select the item when clicked', function () {
-				switchItem.item.click();
+				switchItem.self.click();
 				expect(switchItem.isSelected).to.be.true();
 			});
 
 			it('should re-unselect the item when clicked twice', function () {
-				switchItem.item.click();
-				switchItem.item.click();
+				switchItem.self.click();
+				switchItem.self.click();
 				expect(switchItem.isSelected).to.be.false();
 			});
 		});
@@ -87,13 +87,13 @@ describe('SwitchItem', function () {
 
 		describe('pointer', function () {
 			it('should unselect the item when clicked', function () {
-				switchItem.item.click();
+				switchItem.self.click();
 				expect(switchItem.isSelected).to.be.false();
 			});
 
 			it('should re-select the item when clicked twice', function () {
-				switchItem.item.click();
-				switchItem.item.click();
+				switchItem.self.click();
+				switchItem.self.click();
 				expect(switchItem.isSelected).to.be.true();
 			});
 		});
@@ -131,20 +131,24 @@ describe('SwitchItem', function () {
 
 		describe('pointer', function () {
 			it('should unselect the item when clicked', function () {
-				switchItem.item.click();
+				switchItem.self.click();
 				expect(switchItem.isSelected).to.be.false();
 			});
 
 			it('should re-select the item when clicked twice', function () {
-				switchItem.item.click();
-				switchItem.item.click();
+				switchItem.self.click();
+				switchItem.self.click();
 				expect(switchItem.isSelected).to.be.true();
 			});
 		});
 	});
 
+	// Note, the disabled test below requires the previous component to be known for 5-way
+	// navigation and assumes there's no next component.  If you add components before or after
+	// this test, please update the links.
 	describe('disabled', function () {
 		const switchItem = Page.components.switchDisabled;
+		const prevSwitchItem = Page.components.switchInline;
 
 		it('should have correct text', function () {
 			expect(switchItem.valueText).to.equal('Switch Item disabled');
@@ -154,29 +158,28 @@ describe('SwitchItem', function () {
 			expect(switchItem.isSelected).to.be.true();
 		});
 
-		it('should not focus the item', function () {
-			switchItem.focus();
-			expect(switchItem.item.hasFocus()).to.be.false();
-		});
-
 		describe('5-way', function () {
-			it('should not unselect the item when selected', function () {
-				switchItem.focus();
-				Page.spotlightSelect();
-				expect(switchItem.isSelected).to.be.true();
+			it('should not focus the item', function () {
+				prevSwitchItem.focus();
+				Page.spotlightDown();
+				expect(prevSwitchItem.self.hasFocus()).to.be.true();
 			});
 		});
 
 		describe('pointer', function () {
 			it('should not unselect the item when clicked', function () {
-				switchItem.item.click();
+				switchItem.self.click();
 				expect(switchItem.isSelected).to.be.true();
 			});
 		});
 	});
+	// Note, the disabled test above/below requires the previous component to be known for 5-way
+	// navigation and assumes there's no next component.  If you add components before or after
+	// this test, please update the links.
 
 	describe('inline disabled', function () {
 		const switchItem = Page.components.switchInlineDisabled;
+		const prevSwitchItem = Page.components.switchInline;
 
 		it('should have correct text', function () {
 			expect(switchItem.valueText).to.equal('Switch Item inline disabled');
@@ -190,24 +193,22 @@ describe('SwitchItem', function () {
 			expect(switchItem.isInline).to.be.true();
 		});
 
-		it('should not focus the item', function () {
-			switchItem.focus();
-			expect(switchItem.item.hasFocus()).to.be.false();
-		});
-
 		describe('5-way', function () {
-			it('should not unselect the item when selected', function () {
-				switchItem.focus();
-				Page.spotlightSelect();
-				expect(switchItem.isSelected).to.be.true();
+			it('should not focus the item', function () {
+				prevSwitchItem.focus();
+				Page.spotlightDown();
+				expect(prevSwitchItem.self.hasFocus()).to.be.true();
 			});
 		});
 
 		describe('pointer', function () {
 			it('should not unselect the item when clicked', function () {
-				switchItem.item.click();
+				switchItem.self.click();
 				expect(switchItem.isSelected).to.be.true();
 			});
 		});
 	});
+	// Note, the disabled test above requires the previous component to be known for 5-way
+	// navigation and assumes there's no next component.  If you add components before or after
+	// this test, please update the links.
 });
