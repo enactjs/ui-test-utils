@@ -10,7 +10,7 @@ class SelectableItemInterface {
 		return browser.selectorExecute(`#${this.id}`, (els) => els && !els[0].focus());
 	}
 
-	get item () { return browser.element(`#${this.id}`); }
+	get self () { return browser.element(`#${this.id}`); }
 	get valueText () { return browser.element(`#${this.id} > div .Marquee__text`).getText(); }
 	get isSelected () { return browser.isExisting(`#${this.id} .SelectableItem__selected`); }
 	get isToggled () { return browser.isExisting(`#${this.id} .ToggleItem__selected`); }
