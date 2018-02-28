@@ -258,7 +258,7 @@ describe('ToggleItem', function () {
 		});
 	});
 
-	// Note, the disabled test above requires the previous component to be known for 5-way
+	// Note, the disabled test below requires the previous component to be known for 5-way
 	// navigation and assumes there's no next component.  If you add components before or after
 	// this test, please update the links.
 	describe('disabled', function () {

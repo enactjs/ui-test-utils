@@ -7,7 +7,7 @@ describe('RadioItem', function () {
 	});
 
 	it('should have focus on first item at start', function () {
-		expect(Page.components.radioDefault.item.hasFocus()).to.be.true();
+		expect(Page.components.radioDefault.self.hasFocus()).to.be.true();
 	});
 
 	describe('default', function () {
@@ -35,25 +35,25 @@ describe('RadioItem', function () {
 
 			it('should move focus down on SpotlightDown', function () {
 				Page.spotlightDown();
-				expect(Page.components.radioDefaultSelected.item.hasFocus()).to.be.true();
+				expect(Page.components.radioDefaultSelected.self.hasFocus()).to.be.true();
 			});
 
 			it('should move focus up on SpotlightUp', function () {
 				Page.components.radioDefaultSelected.focus();
 				Page.spotlightUp();
-				expect(radioItem.item.hasFocus()).to.be.true();
+				expect(radioItem.self.hasFocus()).to.be.true();
 			});
 		});
 
 		describe('pointer', function () {
 			it('should select the item when clicked', function () {
-				radioItem.item.click();
+				radioItem.self.click();
 				expect(radioItem.isSelected).to.be.true();
 			});
 
 			it('should re-unselect the item when clicked twice', function () {
-				radioItem.item.click();
-				radioItem.item.click();
+				radioItem.self.click();
+				radioItem.self.click();
 				expect(radioItem.isSelected).to.be.false();
 			});
 		});
@@ -87,13 +87,13 @@ describe('RadioItem', function () {
 
 		describe('pointer', function () {
 			it('should unselect the item when clicked', function () {
-				radioItem.item.click();
+				radioItem.self.click();
 				expect(radioItem.isSelected).to.be.false();
 			});
 
 			it('should re-select the item when clicked twice', function () {
-				radioItem.item.click();
-				radioItem.item.click();
+				radioItem.self.click();
+				radioItem.self.click();
 				expect(radioItem.isSelected).to.be.true();
 			});
 		});
@@ -131,20 +131,24 @@ describe('RadioItem', function () {
 
 		describe('pointer', function () {
 			it('should unselect the item when clicked', function () {
-				radioItem.item.click();
+				radioItem.self.click();
 				expect(radioItem.isSelected).to.be.false();
 			});
 
 			it('should re-select the item when clicked twice', function () {
-				radioItem.item.click();
-				radioItem.item.click();
+				radioItem.self.click();
+				radioItem.self.click();
 				expect(radioItem.isSelected).to.be.true();
 			});
 		});
 	});
 
+	// Note, the disabled test below requires the previous component to be known for 5-way
+	// navigation and assumes there's no next component.  If you add components before or after
+	// this test, please update the links.
 	describe('disabled', function () {
 		const radioItem = Page.components.radioDisabled;
+		const prevRadioItem = Page.components.radioInline;
 
 		it('should have correct text', function () {
 			expect(radioItem.valueText).to.equal('Radio Item disabled');
@@ -154,29 +158,28 @@ describe('RadioItem', function () {
 			expect(radioItem.isSelected).to.be.true();
 		});
 
-		it('should not focus the item', function () {
-			radioItem.focus();
-			expect(radioItem.item.hasFocus()).to.be.false();
-		});
-
 		describe('5-way', function () {
-			it('should not unselect the item when selected', function () {
-				radioItem.focus();
-				Page.spotlightSelect();
-				expect(radioItem.isSelected).to.be.true();
+			it('should not focus the item', function () {
+				prevRadioItem.focus();
+				Page.spotlightDown();
+				expect(prevRadioItem.self.hasFocus()).to.be.true();
 			});
 		});
 
 		describe('pointer', function () {
 			it('should not unselect the item when clicked', function () {
-				radioItem.item.click();
+				radioItem.self.click();
 				expect(radioItem.isSelected).to.be.true();
 			});
 		});
 	});
+	// Note, the disabled test above requires the previous component to be known for 5-way
+	// navigation and assumes there's no next component.  If you add components before or after
+	// this test, please update the links.
 
 	describe('inline disabled', function () {
 		const radioItem = Page.components.radioInlineDisabled;
+		const prevRadioItem = Page.components.radioInline;
 
 		it('should have correct text', function () {
 			expect(radioItem.valueText).to.equal('Radio Item inline disabled');
@@ -190,24 +193,22 @@ describe('RadioItem', function () {
 			expect(radioItem.isInline).to.be.true();
 		});
 
-		it('should not focus the item', function () {
-			radioItem.focus();
-			expect(radioItem.item.hasFocus()).to.be.false();
-		});
-
 		describe('5-way', function () {
-			it('should not unselect the item when selected', function () {
-				radioItem.focus();
-				Page.spotlightSelect();
-				expect(radioItem.isSelected).to.be.true();
+			it('should not focus the item', function () {
+				prevRadioItem.focus();
+				Page.spotlightDown();
+				expect(prevRadioItem.self.hasFocus()).to.be.true();
 			});
 		});
 
 		describe('pointer', function () {
 			it('should not unselect the item when clicked', function () {
-				radioItem.item.click();
+				radioItem.self.click();
 				expect(radioItem.isSelected).to.be.true();
 			});
 		});
 	});
+	// Note, the disabled test above requires the previous component to be known for 5-way
+	// navigation and assumes there's no next component.  If you add components before or after
+	// this test, please update the links.
 });
