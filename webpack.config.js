@@ -11,8 +11,7 @@ const GracefulFsPlugin = require('@enact/dev-utils/plugins/GracefulFsPlugin');
 const ILibPlugin = require('@enact/dev-utils/plugins/ILibPlugin');
 const WebOSMetaPlugin = require('@enact/dev-utils/plugins/WebOSMetaPlugin');
 
-const enactModuleName = /.*@enact\/([^/]+)\/(.*)\/(.*)\.(less|css)/;
-const otherModuleName = /.*\/(.*)\/(.*)\.(less|css)/;
+const cssIdent = /(?:@(enact[/\\].*)|^((?:(?!@enact).)*))\.(?:less|css)/;
 
 module.exports = function (env) {
 	const TARGET_PLATFORM = env.TARGET_PLATFORM || 'Chrome 53';
@@ -127,15 +126,10 @@ module.exports = function (env) {
 									sourceMap: true,
 									localIdentName: '[name]__[local]',
 									getLocalIdent: (context, localIdentName, localName) => {
-										let parts = context.resourcePath.match(enactModuleName);
-										if (!parts) {
-											parts = context.resourcePath.match(otherModuleName);
-											if (!parts) {
-												parts = ['', 'unknown', 'unknown', 'unknown'];
-											}
-										}
-										parts[2] = parts[2].replace(/[/\\]/g, '_');
-										return `${parts[1]}_${parts[2]}_${parts[3]}__${localName}`;
+										const rel = path.relative(app.context, context.resourcePath);
+										const ident = rel.match(cssIdent);
+										return ((ident && (ident[1] || ident[2])) || 'unknown').replace(/[/\\]+/g, '_') +
+												'_' + localName;
 									}
 								}
 							},
