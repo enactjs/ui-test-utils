@@ -11,13 +11,13 @@ class CheckboxItemInterface {
 	}
 
 	get self () { return browser.element(`#${this.id}`); }
-	get valueText () { return browser.element(`#${this.id} > div .Marquee__text`).getText(); }
-	get icon () { return browser.element(`#${this.id} > div .Icon__icon`)}
-	get iconSymbol () { return browser.element(`#${this.id} > div .Icon__icon`).getText(); }
-	get isChecked () { return browser.isExisting(`#${this.id} .Checkbox__selected`); }
-	get isAfter () { return browser.isExisting(`#${this.id} .SlotItem__after`); }
-	get isBefore () { return browser.isExisting(`#${this.id} .SlotItem__before`); }
-	get isInline () { return browser.isExisting(`#${this.id}.Item__inline`); }
+	get valueText () { return browser.element(`#${this.id} > div .enact_moonstone_Marquee_Marquee_text`).getText(); }
+	get icon () { return browser.element(`#${this.id} > div .enact_moonstone_Icon_Icon_icon`)}
+	get iconSymbol () { return browser.element(`#${this.id} > div .enact_moonstone_Icon_Icon_icon`).getText(); }
+	get isChecked () { return browser.isExisting(`#${this.id} .enact_moonstone_Checkbox_Checkbox_selected`); }
+	get isAfter () { return browser.isExisting(`#${this.id} .enact_moonstone_SlotItem_SlotItem_after`); }
+	get isBefore () { return browser.isExisting(`#${this.id} .enact_moonstone_SlotItem_SlotItem_before`); }
+	get isInline () { return browser.isExisting(`#${this.id}.enact_moonstone_Item_Item_inline`); }
 }
 
 class CheckboxItemPage extends Page {
