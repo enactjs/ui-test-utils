@@ -561,7 +561,7 @@ describe('ExpandableInput', function () {
 	});
 
 	describe('general pointer operation', function () {
-		it('should close other expandable when opening', function () {
+		it.skip('should close other expandable when opening', function () {
 			Page.components.default.title.click();
 			Page.waitTransitionEnd();
 			Page.components.defaultValue.title.click();

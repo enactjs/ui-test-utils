@@ -1,5 +1,8 @@
 'use strict';
 const Page = require('../../Page.js');
+const {getSubComponent, getText} = require('../../utils.js');
+
+const getMarqueeText = getSubComponent('moonstone', 'Marquee', 'text');
 
 class ToggleButtonInterface {
 	constructor (id) {
@@ -11,9 +14,9 @@ class ToggleButtonInterface {
 	}
 
 	get self () { return browser.element(`#${this.id}`); }
-	get valueText () { return browser.element(`#${this.id} > div .Marquee__text`).getText(); }
-	get isSelected () { return browser.isExisting(`#${this.id}.ToggleButton__selected.Button__selected`); }
-	get isSmall () { return browser.isExisting(`#${this.id}.ToggleButton__small`); }
+	get valueText () { return getText(getMarqueeText(this.self)); }
+	get isSelected () { return browser.isExisting(`#${this.id}.enact_moonstone_ToggleButton_ToggleButton_selected`); }
+	get isSmall () { return browser.isExisting(`#${this.id}.enact_moonstone_ToggleButton_ToggleButton_small`); }
 }
 
 class ToggleButtonPage extends Page {

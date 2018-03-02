@@ -1,5 +1,9 @@
 'use strict';
 const Page = require('../../Page.js');
+const {element, getSubComponent, getText} = require('../../utils.js');
+
+const getMarqueeText = getSubComponent('moonstone', 'Marquee', 'text');
+
 
 class SwitchItemInterface {
 	constructor (id) {
@@ -11,9 +15,9 @@ class SwitchItemInterface {
 	}
 
 	get self () { return browser.element(`#${this.id}`); }
-	get valueText () { return browser.element(`#${this.id} > div .Marquee__text`).getText(); }
-	get isSelected () { return browser.isExisting(`#${this.id} .Switch__selected`); }
-	get isInline () { return browser.isExisting(`#${this.id}.Item__inline`); }
+	get valueText () { return getText(getMarqueeText(this.self)); }
+	get isSelected () { return !!element('.enact_moonstone_Switch_Switch_selected', this.self).value; }
+	get isInline () { return browser.isExisting(`#${this.id}.enact_moonstone_Item_Item_inline`); }
 }
 
 class SwitchItemPage extends Page {

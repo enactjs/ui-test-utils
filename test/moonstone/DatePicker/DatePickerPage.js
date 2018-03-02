@@ -1,6 +1,11 @@
 'use strict';
 const Page = require('../../Page.js');
-const {element, getText} = require('../../utils.js');
+const {element, getComponent, getSubComponent, getText} = require('../../utils.js');
+
+const getIcon = getComponent('moonstone', 'Icon');
+const getLabeledItem = getComponent('moonstone', 'LabeledItem');
+const getLabeledItemTitle = getSubComponent('moonstone', 'LabeledItem', 'title');
+const getLabeledItemValue = getSubComponent('moonstone', 'LabeledItem', 'label');
 
 class PickerInterface {
 	constructor (id) {
@@ -12,10 +17,10 @@ class PickerInterface {
 	}
 
 	get      self () { return element(`#${this.id}`, browser); }
-	get   chevron () { return getText(element('.enact_moonstone_LabeledItem_LabeledItem_icon', this.self)); }
-	get     title () { return element('.enact_moonstone_LabeledItem_LabeledItem_labeleditem', this.self); }
-	get titleText () { return getText(this.title); }
-	get     value () { return element('.enact_moonstone_LabeledItem_LabeledItem_label', this.self); }
+	get   chevron () { return getText(getIcon(this.self)); }
+	get     title () { return getLabeledItem(this.self); }
+	get titleText () { return getText(getLabeledItemTitle(this.self)); }
+	get     value () { return getLabeledItemValue(this.self); }
 	get valueText () { return getText(this.value); }
 	get    isOpen () { return this.self.isExisting('.enact_ui_Transition_Transition_shown'); }
 
