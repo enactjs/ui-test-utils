@@ -578,26 +578,31 @@ describe('ExpandableInput', function () {
 	});
 
 	describe('RTL locale', function () {
-		const expandable = Page.components.default;
 
 		beforeEach(function () {
 			Page.open('?locale=ar-SA');
 		});
 
-		it('should have focus on first item at start', function () {
-			expect(expandable.title.hasFocus()).to.be.true();
+		describe('default', function () {
+			const expandable = Page.components.default;
+
+			it('should have focus on first item at start', function () {
+				expect(expandable.title.hasFocus()).to.be.true();
+			});
+
+			it('should have title icon be after title label', function () {
+				expectRTL({leftElement: expandable.titleSelector, rightElement: expandable.titleIconSelector});
+			});
+
 		});
 
-		describe('expandableInput title', function () {
-			it('should have direction equal to "rtl"', function () {
-				expectRTL(expandable.title);
-			});
-		});
+		describe('icon before and after', function () {
+			const expandable = Page.components.iconBeforeAfter;
 
-		describe('input', function () {
-			it('should have direction equal to "rtl"', function () {
-				expectRTL(expandable.input);
+			it('should have title icon be after title label', function () {
+				expectRTL({leftElement: expandable.iconBeforeSelector, rightElement: expandable.iconAfterSelector});
 			});
+
 		});
 	});
 });
