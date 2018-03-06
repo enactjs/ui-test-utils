@@ -16,6 +16,6 @@ function expectUnchecked (checkboxItem) {
 	expect(checkboxItem.icon.isVisible()).to.be.false();
 }
 
-function expectRTL (checkboxItem) {
-	expect(checkboxItem.getCssProperty('direction').value).to.equal('rtl');
+function expectRTL ({leftElement, rightElement}) {
+	expect(leftElement > rightElement).to.be.true();
 }
