@@ -1,8 +1,8 @@
 // A set of utility methods for testing
 module.exports = {
 	expectChecked,
-	expectUnchecked,
-	expectRTL
+	expectRTL,
+	expectUnchecked
 };
 
 // Expect blocks
@@ -17,5 +17,5 @@ function expectUnchecked (checkboxItem) {
 }
 
 function expectRTL ({leftElement, rightElement}) {
-	expect(leftElement > rightElement).to.be.true();
+	expect(browser.getLocation(leftElement, 'x') > browser.getLocation(rightElement, 'x')).to.be.true();
 }

@@ -308,13 +308,9 @@ describe('CheckboxItem', function () {
 		describe('checkbox default', function () {
 			it('should have direction equal to "rtl"', function () {
 				const checkboxItem = Page.components.checkboxDefault;
-				const checkboxIcon = checkboxItem.iconSelector;
-				const checkboxText = checkboxItem.textSelector;
-				const iconLocation = browser.getLocation(checkboxIcon, 'x');
-				const textLocation = browser.getLocation(checkboxText, 'x');
 				expectRTL({
-					leftElement: iconLocation,
-					rightElement: textLocation
+					leftElement: checkboxItem.iconSelector,
+					rightElement: checkboxItem.textSelector
 				});
 			});
 		});
@@ -322,13 +318,9 @@ describe('CheckboxItem', function () {
 		describe('checkbox inline', function () {
 			it('should have direction equal to "rtl"', function () {
 				const checkboxInline = Page.components.checkboxInline;
-				const checkboxIcon = checkboxInline.iconSelector;
-				const checkboxText = checkboxInline.textSelector;
-				const iconLocation = browser.getLocation(checkboxIcon, 'x');
-				const textLocation = browser.getLocation(checkboxText, 'x');
 				expectRTL({
-					leftElement: iconLocation,
-					rightElement: textLocation
+					leftElement: checkboxInline.iconSelector,
+					rightElement: checkboxInline.textSelector
 				});
 			});
 		});
@@ -336,13 +328,9 @@ describe('CheckboxItem', function () {
 		describe('checkbox disabled', function () {
 			it('should have direction equal to "rtl"', function () {
 				const checkboxDisabled = Page.components.checkboxDisabled;
-				const checkboxIcon = checkboxDisabled.iconSelector;
-				const checkboxText = checkboxDisabled.textSelector;
-				const iconLocation = browser.getLocation(checkboxIcon, 'x');
-				const textLocation = browser.getLocation(checkboxText, 'x');
 				expectRTL({
-					leftElement: iconLocation,
-					rightElement: textLocation
+					leftElement: checkboxDisabled.iconSelector,
+					rightElement: checkboxDisabled.textSelector
 				});
 			});
 		});
