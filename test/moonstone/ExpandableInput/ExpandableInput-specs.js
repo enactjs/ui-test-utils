@@ -591,7 +591,10 @@ describe('ExpandableInput', function () {
 			});
 
 			it('should have title icon be after title label', function () {
-				expectRTL({leftElement: expandable.titleSelector, rightElement: expandable.titleIconSelector});
+				expectRTL({
+					leftElement: expandable.titleSelector,
+					rightElement: expandable.titleIconSelector
+				});
 			});
 
 		});
@@ -600,7 +603,10 @@ describe('ExpandableInput', function () {
 			const expandable = Page.components.iconBeforeAfter;
 
 			it('should have title icon be after title label', function () {
-				expectRTL({leftElement: expandable.iconBeforeSelector, rightElement: expandable.iconAfterSelector});
+				expectRTL({
+					leftElement: expandable.iconBeforeSelector,
+					rightElement: expandable.iconAfterSelector
+				});
 			});
 
 		});
