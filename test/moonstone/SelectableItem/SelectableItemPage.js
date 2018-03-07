@@ -1,5 +1,8 @@
 'use strict';
 const Page = require('../../Page.js');
+const {element, getSubComponent, getText} = require('../../utils.js');
+
+const getMarqueeText = getSubComponent('moonstone', 'Marquee', 'text');
 
 class SelectableItemInterface {
 	constructor (id) {
@@ -10,11 +13,11 @@ class SelectableItemInterface {
 		return browser.selectorExecute(`#${this.id}`, (els) => els && !els[0].focus());
 	}
 
-	get item () { return browser.element(`#${this.id}`); }
-	get valueText () { return browser.element(`#${this.id} > div .Marquee__text`).getText(); }
-	get isSelected () { return browser.isExisting(`#${this.id} .SelectableItem__selected`); }
-	get isToggled () { return browser.isExisting(`#${this.id} .ToggleItem__selected`); }
-	get isInline () { return browser.isExisting(`#${this.id}.Item__inline`); }
+	get self () { return browser.element(`#${this.id}`); }
+	get valueText () { return getText(getMarqueeText(this.self)); }
+	get isSelected () { return !!element('.enact_moonstone_SelectableItem_SelectableItem_selected', this.self).value; }
+	get isToggled () { return !!element('.enact_moonstone_ToggleItem_ToggleItem_selected', this.self).value; }
+	get isInline () { return browser.isExisting(`#${this.id}.enact_moonstone_Item_Item_inline`); }
 }
 
 class SelectableItemPage extends Page {

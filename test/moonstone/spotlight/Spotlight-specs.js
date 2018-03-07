@@ -71,5 +71,28 @@ describe('Spotlight', function () {
 		expect(Page.itemA.hasFocus()).to.be.true();
 	});
 
+	describe('Nested Containers', function (){
+		it('should spot child item', function () {
+			Page.open();
+			Page.itemParent.moveToObject()
+			Page.spotlightDown();
+			expect(Page.itemChild.hasFocus()).to.be.true();
+		});
 
+		it('should spot parent item', function () {
+			Page.open();
+			Page.itemChild.moveToObject()
+			Page.spotlightUp();
+			expect(Page.itemParent.hasFocus()).to.be.true();
+		});
+	})
+
+	describe('Disappear Test', function (){
+		it('should spot restore button when focus button disappears', function () {
+			Page.open();
+			Page.focusButton.moveToObject();
+			browser.pause(5000);
+			expect(Page.restoreButton.hasFocus()).to.be.true();
+		});
+	})
 });

@@ -21,6 +21,10 @@ class SpotlightMultiplePage extends Page {
 	get nonSpottableItemB () { return browser.element('#itemnsB'); }
 	get itemC () { return browser.element('#itemC'); }
 	get itemD () { return browser.element('#itemD'); }
+	get itemParent () { return browser.element('#itemParent'); }
+	get itemChild () { return browser.element('#itemChild'); }
+	get focusButton () { return browser.element('#focusButton'); }
+	get restoreButton () { return browser.element('#restoreButton'); }
 }
 
 module.exports = new SpotlightMultiplePage();

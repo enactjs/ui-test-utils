@@ -1,5 +1,9 @@
 'use strict';
 const Page = require('../../Page.js');
+const {getComponent, getSubComponent, getText} = require('../../utils.js');
+
+const getIcon = getComponent('moonstone', 'Icon');
+const getMarqueeText = getSubComponent('moonstone', 'Marquee', 'text');
 
 class ToggleItemInterface {
 	constructor (id) {
@@ -10,14 +14,14 @@ class ToggleItemInterface {
 		return browser.selectorExecute(`#${this.id}`, (els) => els && !els[0].focus());
 	}
 
-	get item () { return browser.element(`#${this.id}`); }
-	get valueText () { return browser.element(`#${this.id} > div .Marquee__text`).getText(); }
-	get icon () { return browser.element(`#${this.id} > div .Icon__icon`)}
-	get iconSymbol () { return browser.element(`#${this.id} > div .Icon__icon`).getText(); }
-	get isSelected () { return browser.isExisting(`#${this.id} .ToggleItem__selected`); }
-	get isAfter () { return browser.isExisting(`#${this.id} .Overlay__after`); }
-	get isBefore () { return browser.isExisting(`#${this.id} .Overlay__before`); }
-	get isInline () { return browser.isExisting(`#${this.id}.Item__inline`); }
+	get self () { return browser.element(`#${this.id}`); }
+	get valueText () { return getText(getMarqueeText(this.self)); }
+	get icon () { return getIcon(this.self); }
+	get iconSymbol () { return getText(this.icon); }
+	get isSelected () { return this.self.isExisting('.enact_moonstone_ToggleItem_ToggleItem_selected'); }
+	get isAfter () { return this.self.isExisting('.enact_moonstone_SlotItem_SlotItem_after'); }
+	get isBefore () { return this.self.isExisting('.enact_moonstone_SlotItem_SlotItem_before'); }
+	get isInline () { return browser.isExisting(`#${this.id}.enact_moonstone_Item_Item_inline`); }
 }
 
 class ToggleItemPage extends Page {

@@ -8,7 +8,7 @@ describe('ToggleItem', function () {
 	});
 
 	it('should have focus on first item at start', function () {
-		expect(Page.components.toggleDefault.item.hasFocus()).to.be.true();
+		expect(Page.components.toggleDefault.self.hasFocus()).to.be.true();
 	});
 
 	describe('default', function () {
@@ -45,30 +45,30 @@ describe('ToggleItem', function () {
 
 			it('should move focus down on SpotlightDown', function () {
 				Page.spotlightDown();
-				expect(Page.components.toggleDefaultSelected.item.hasFocus()).to.be.true();
+				expect(Page.components.toggleDefaultSelected.self.hasFocus()).to.be.true();
 			});
 
 			it('should move focus up on SpotlightUp', function () {
 				Page.components.toggleDefaultSelected.focus();
 				Page.spotlightUp();
-				expect(toggleItem.item.hasFocus()).to.be.true();
+				expect(toggleItem.self.hasFocus()).to.be.true();
 			});
 		});
 
 		describe('pointer', function () {
 			it('should select the item when clicked', function () {
-				toggleItem.item.click();
+				toggleItem.self.click();
 				expectSelected(toggleItem);
 			});
 
 			it('should re-unselect the item when clicked twice', function () {
-				toggleItem.item.click();
-				toggleItem.item.click();
+				toggleItem.self.click();
+				toggleItem.self.click();
 				expectUnselected(toggleItem);
 			});
 
 			it('should display correct icon when clicked', function () {
-				toggleItem.item.click();
+				toggleItem.self.click();
 				expect(toggleItem.iconSymbol).to.equal('󰀭');
 			});
 		});
@@ -106,13 +106,13 @@ describe('ToggleItem', function () {
 
 		describe('pointer', function () {
 			it('should unselect the item when clicked', function () {
-				toggleItem.item.click();
+				toggleItem.self.click();
 				expectUnselected(toggleItem);
 			});
 
 			it('should re-select the item when clicked twice', function () {
-				toggleItem.item.click();
-				toggleItem.item.click();
+				toggleItem.self.click();
+				toggleItem.self.click();
 				expectSelected(toggleItem);
 			});
 		});
@@ -150,13 +150,13 @@ describe('ToggleItem', function () {
 
 		describe('pointer', function () {
 			it('should unselect the item when clicked', function () {
-				toggleItem.item.click();
+				toggleItem.self.click();
 				expectUnselected(toggleItem);
 			});
 
 			it('should re-select the item when clicked twice', function () {
-				toggleItem.item.click();
-				toggleItem.item.click();
+				toggleItem.self.click();
+				toggleItem.self.click();
 				expectSelected(toggleItem);
 			});
 		});
@@ -198,13 +198,13 @@ describe('ToggleItem', function () {
 
 		describe('pointer', function () {
 			it('should unselect the item when clicked', function () {
-				toggleItem.item.click();
+				toggleItem.self.click();
 				expectUnselected(toggleItem);
 			});
 
 			it('should re-select the item when clicked twice', function () {
-				toggleItem.item.click();
-				toggleItem.item.click();
+				toggleItem.self.click();
+				toggleItem.self.click();
 				expectSelected(toggleItem);
 			});
 		});
@@ -246,20 +246,24 @@ describe('ToggleItem', function () {
 
 		describe('pointer', function () {
 			it('should unselect the item when clicked', function () {
-				toggleItem.item.click();
+				toggleItem.self.click();
 				expectUnselected(toggleItem);
 			});
 
 			it('should re-select the item when clicked twice', function () {
-				toggleItem.item.click();
-				toggleItem.item.click();
+				toggleItem.self.click();
+				toggleItem.self.click();
 				expectSelected(toggleItem);
 			});
 		});
 	});
 
+	// Note, the disabled test below requires the previous component to be known for 5-way
+	// navigation and assumes there's no next component.  If you add components before or after
+	// this test, please update the links.
 	describe('disabled', function () {
 		const toggleItem = Page.components.toggleDisabled;
+		const prevToggleItem = Page.components.toggleInlineAfter;
 
 		it('should have correct text', function () {
 			expect(toggleItem.valueText).to.equal('Toggle Item disabled');
@@ -273,24 +277,22 @@ describe('ToggleItem', function () {
 			expect(toggleItem.isBefore).to.be.true();
 		});
 
-		it('should not focus the item', function () {
-			toggleItem.focus();
-			expect(toggleItem.item.hasFocus()).to.be.false();
-		});
-
 		describe('5-way', function () {
-			it('should not unselect the item when selected', function () {
-				toggleItem.focus();
-				Page.spotlightSelect();
-				expectSelected(toggleItem);
+			it('should not focus the item', function () {
+				prevToggleItem.focus();
+				Page.spotlightDown();
+				expect(prevToggleItem.self.hasFocus()).to.be.true();
 			});
 		});
 
 		describe('pointer', function () {
 			it('should not unselect the item when clicked', function () {
-				toggleItem.item.click();
+				toggleItem.self.click();
 				expectSelected(toggleItem);
 			});
 		});
 	});
+	// Note, the disabled test above requires the previous component to be known for 5-way
+	// navigation and assumes there's no next component.  If you add components before or after
+	// this test, please update the links.
 });

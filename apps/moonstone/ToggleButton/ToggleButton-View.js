@@ -1,0 +1,113 @@
+import ToggleButton from '@enact/moonstone/ToggleButton';
+import MoonstoneDecorator from '@enact/moonstone/MoonstoneDecorator';
+import React from 'react';
+import spotlight from '@enact/spotlight';
+
+// NOTE: Forcing pointer mode off so we can be sure that regardless of webOS pointer mode the app
+// runs the same way
+spotlight.setPointerMode(false);
+
+const app = (props) => <div {...props}>
+	<div>
+		<div>
+			<ToggleButton
+				id="toggleButton1"
+			>
+				Missing Toggle Label
+			</ToggleButton>
+		</div>
+
+		<div>
+			<ToggleButton
+				id="toggleButton2"
+				toggleOnLabel="On"
+				toggleOffLabel="Off"
+			>
+			</ToggleButton>
+		</div>
+
+		<div>
+			<ToggleButton
+				id="toggleButton3"
+				toggleOnLabel="On"
+			>
+				Missing Toggle Off Label
+			</ToggleButton>
+		</div>
+
+		<div>
+			<ToggleButton
+				id="toggleButton4"
+				toggleOffLabel="Off"
+			>
+				Missing Toggle On Label
+			</ToggleButton>
+		</div>
+
+		<div>
+			<ToggleButton
+				id="toggleButton5"
+				toggleOnLabel="On"
+				toggleOffLabel="Off"
+				defaultSelected
+			/>
+		</div>
+
+		<div>
+			<ToggleButton
+				id="toggleButton6"
+				toggleOnLabel="On"
+				toggleOffLabel="Off"
+				defaultSelected
+				disabled
+			/>
+		</div>
+
+		<div>
+			<ToggleButton
+				id="toggleButton7"
+				toggleOnLabel="Small On"
+				toggleOffLabel="Small Off"
+				small
+			/>
+		</div>
+
+		<div>
+			<ToggleButton
+				id="toggleButton8"
+				toggleOnLabel="toggle on"
+				toggleOffLabel="toggle off"
+				casing="preserve"
+			/>
+		</div>
+
+		<div>
+			<ToggleButton
+				id="toggleButton9"
+				toggleOnLabel="toggle on"
+				toggleOffLabel="toggle off"
+				casing="sentence"
+			/>
+		</div>
+
+		<div>
+			<ToggleButton
+				id="toggleButton10"
+				toggleOnLabel="toggle on"
+				toggleOffLabel="toggle off"
+				casing="word"
+			/>
+		</div>
+
+		<div>
+			<ToggleButton
+				id="toggleButton11"
+				toggleOnLabel="toggle on"
+				toggleOffLabel="toggle off"
+				casing="upper"
+			/>
+		</div>
+	</div>
+</div>;
+
+export default MoonstoneDecorator(app);

@@ -2,10 +2,10 @@
 const Page = require('../../Page.js');
 const {element, getComponent, getSubComponent, getText} = require('../../utils.js');
 
-const getIcon = getComponent('Icon');
-const getLabeledItem = getComponent('LabeledItem');
-const getLabeledItemTitle = getSubComponent('LabeledItem', 'title');
-const getLabeledItemValue = getSubComponent('LabeledItem', 'label');
+const getIcon = getComponent('moonstone', 'Icon');
+const getLabeledItem = getComponent('moonstone', 'LabeledItem');
+const getLabeledItemTitle = getSubComponent('moonstone', 'LabeledItem', 'title');
+const getLabeledItemValue = getSubComponent('moonstone', 'LabeledItem', 'label');
 
 class PickerInterface {
 	constructor (id) {
@@ -22,18 +22,18 @@ class PickerInterface {
 	get titleText () { return getText(getLabeledItemTitle(this.self)); }
 	get     value () { return getLabeledItemValue(this.self); }
 	get valueText () { return getText(this.value); }
-	get    isOpen () { return this.self.isExisting('.Transition__shown'); }
+	get    isOpen () { return this.self.isExisting('.enact_ui_Transition_Transition_shown'); }
 
-	get day () { return element('.DatePicker__day .Picker__picker', this.self); }
-	get dayLabel () { return element('.DatePicker__day .DateComponentPicker__label', this.self); }
-	get month () { return element('.DatePicker__month .Picker__picker', this.self); }
-	get monthLabel () { return element('.DatePicker__month .DateComponentPicker__label', this.self); }
-	get year () { return element('.DatePicker__year .Picker__picker', this.self); }
-	get yearLabel () { return element('.DatePicker__year .DateComponentPicker__label', this.self); }
+	get day () { return element('.enact_moonstone_DatePicker_DatePicker_day .enact_moonstone_internal_Picker_Picker_picker', this.self); }
+	get dayLabel () { return element('.enact_moonstone_DatePicker_DatePicker_day .enact_moonstone_internal_DateComponentPicker_DateComponentPicker_label', this.self); }
+	get month () { return element('.enact_moonstone_DatePicker_DatePicker_month .enact_moonstone_internal_Picker_Picker_picker', this.self); }
+	get monthLabel () { return element('.enact_moonstone_DatePicker_DatePicker_month .enact_moonstone_internal_DateComponentPicker_DateComponentPicker_label', this.self); }
+	get year () { return element('.enact_moonstone_DatePicker_DatePicker_year .enact_moonstone_internal_Picker_Picker_picker', this.self); }
+	get yearLabel () { return element('.enact_moonstone_DatePicker_DatePicker_year .enact_moonstone_internal_DateComponentPicker_DateComponentPicker_label', this.self); }
 
-	decrementer (picker) { return element('.Picker__decrementer', picker); }
-	incrementer (picker) { return element('.Picker__incrementer', picker); }
-	item (picker) { return element('.Picker__item', picker) }
+	decrementer (picker) { return element('.enact_moonstone_internal_Picker_Picker_decrementer', picker); }
+	incrementer (picker) { return element('.enact_moonstone_internal_Picker_Picker_incrementer', picker); }
+	item (picker) { return element('.enact_moonstone_internal_Picker_Picker_item', picker) }
 }
 
 class DatePickerPage extends Page {

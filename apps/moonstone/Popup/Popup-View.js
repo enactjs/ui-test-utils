@@ -10,8 +10,8 @@ const Container = SpotlightContainerDecorator('div');
 const style = {
 	main: {
 		display: 'grid',
-		'grid-template-columns': 'repeat(3, 1fr)',
-		'grid-gap': '6px'
+		'gridTemplateColumns': 'repeat(3, 1fr)',
+		'gridGap': '6px'
 	}
 };
 

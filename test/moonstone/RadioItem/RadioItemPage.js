@@ -1,5 +1,8 @@
 'use strict';
 const Page = require('../../Page.js');
+const {getSubComponent, getText} = require('../../utils.js');
+
+const getMarqueeText = getSubComponent('moonstone', 'Marquee', 'text');
 
 class RadioItemInterface {
 	constructor (id) {
@@ -10,10 +13,10 @@ class RadioItemInterface {
 		return browser.selectorExecute(`#${this.id}`, (els) => els && !els[0].focus());
 	}
 
-	get item () { return browser.element(`#${this.id}`); }
-	get valueText () { return browser.element(`#${this.id} > div .Marquee__text`).getText(); }
-	get isSelected () { return browser.isExisting(`#${this.id} .RadioItem__selected`); }
-	get isInline () { return browser.isExisting(`#${this.id}.Item__inline`); }
+	get self () { return browser.element(`#${this.id}`); }
+	get valueText () { return getText(getMarqueeText(this.self)); }
+	get isSelected () { return this.self.isExisting('.enact_moonstone_RadioItem_RadioItem_selected'); }
+	get isInline () { return browser.isExisting(`#${this.id}.enact_moonstone_Item_Item_inline`); }
 }
 
 class RadioItemPage extends Page {

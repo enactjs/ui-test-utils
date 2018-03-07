@@ -8,7 +8,7 @@ describe('SelectableItem', function () {
 	});
 
 	it('should have focus on first item at start', function () {
-		expect(Page.components.selectableDefault.item.hasFocus()).to.be.true();
+		expect(Page.components.selectableDefault.self.hasFocus()).to.be.true();
 	});
 
 	describe('default', function () {
@@ -36,25 +36,25 @@ describe('SelectableItem', function () {
 
 			it('should move focus down on SpotlightDown', function () {
 				Page.spotlightDown();
-				expect(Page.components.selectableDefaultSelected.item.hasFocus()).to.be.true();
+				expect(Page.components.selectableDefaultSelected.self.hasFocus()).to.be.true();
 			});
 
 			it('should move focus up on SpotlightUp', function () {
 				Page.components.selectableDefaultSelected.focus();
 				Page.spotlightUp();
-				expect(selectableItem.item.hasFocus()).to.be.true();
+				expect(selectableItem.self.hasFocus()).to.be.true();
 			});
 		});
 
 		describe('pointer', function () {
 			it('should select the item when clicked', function () {
-				selectableItem.item.click();
+				selectableItem.self.click();
 				expectSelected(selectableItem);
 			});
 
 			it('should re-unselect the item when clicked twice', function () {
-				selectableItem.item.click();
-				selectableItem.item.click();
+				selectableItem.self.click();
+				selectableItem.self.click();
 				expectUnselected(selectableItem);
 			});
 		});
@@ -88,13 +88,13 @@ describe('SelectableItem', function () {
 
 		describe('pointer', function () {
 			it('should unselect the item when clicked', function () {
-				selectableItem.item.click();
+				selectableItem.self.click();
 				expectUnselected(selectableItem);
 			});
 
 			it('should re-select the item when clicked twice', function () {
-				selectableItem.item.click();
-				selectableItem.item.click();
+				selectableItem.self.click();
+				selectableItem.self.click();
 				expectSelected(selectableItem);
 			});
 		});
@@ -132,20 +132,24 @@ describe('SelectableItem', function () {
 
 		describe('pointer', function () {
 			it('should unselect the item when clicked', function () {
-				selectableItem.item.click();
+				selectableItem.self.click();
 				expectUnselected(selectableItem);
 			});
 
 			it('should re-select the item when clicked twice', function () {
-				selectableItem.item.click();
-				selectableItem.item.click();
+				selectableItem.self.click();
+				selectableItem.self.click();
 				expectSelected(selectableItem);
 			});
 		});
 	});
 
+	// Note, the disabled test below requires the previous component to be known for 5-way
+	// navigation and assumes there's no next component.  If you add components before or after
+	// this test, please update the links.
 	describe('disabled', function () {
 		const selectableItem = Page.components.selectableDisabled;
+		const prevSelectableItem = Page.components.selectableInline;
 
 		it('should have correct text', function () {
 			expect(selectableItem.valueText).to.equal('Selectable Item disabled');
@@ -155,29 +159,28 @@ describe('SelectableItem', function () {
 			expectSelected(selectableItem);
 		});
 
-		it('should not focus the item', function () {
-			selectableItem.focus();
-			expect(selectableItem.item.hasFocus()).to.be.false();
-		});
-
 		describe('5-way', function () {
-			it('should not unselect the item when selected', function () {
-				selectableItem.focus();
-				Page.spotlightSelect();
-				expectSelected(selectableItem);
+			it('should not focus the item', function () {
+				prevSelectableItem.focus();
+				Page.spotlightDown();
+				expect(prevSelectableItem.self.hasFocus()).to.be.true();
 			});
 		});
 
 		describe('pointer', function () {
 			it('should not unselect the item when clicked', function () {
-				selectableItem.item.click();
+				selectableItem.self.click();
 				expectSelected(selectableItem);
 			});
 		});
 	});
+	// Note, the disabled test above/below requires the previous component to be known for 5-way
+	// navigation and assumes there's no next component.  If you add components before or after
+	// this test, please update the links.
 
 	describe('inline disabled', function () {
 		const selectableItem = Page.components.selectableInlineDisabled;
+		const prevSelectableItem = Page.components.selectableInline;
 
 		it('should have correct text', function () {
 			expect(selectableItem.valueText).to.equal('Selectable Item inline disabled');
@@ -191,24 +194,22 @@ describe('SelectableItem', function () {
 			expect(selectableItem.isInline).to.be.true();
 		});
 
-		it('should not focus the item', function () {
-			selectableItem.focus();
-			expect(selectableItem.item.hasFocus()).to.be.false();
-		});
-
 		describe('5-way', function () {
-			it('should not unselect the item when selected', function () {
-				selectableItem.focus();
-				Page.spotlightSelect();
-				expectSelected(selectableItem);
+			it('should not focus the item', function () {
+				prevSelectableItem.focus();
+				Page.spotlightDown();
+				expect(prevSelectableItem.self.hasFocus()).to.be.true();
 			});
 		});
 
 		describe('pointer', function () {
 			it('should not unselect the item when clicked', function () {
-				selectableItem.item.click();
+				selectableItem.self.click();
 				expectSelected(selectableItem);
 			});
 		});
 	});
+	// Note, the disabled test above requires the previous component to be known for 5-way
+	// navigation and assumes there's no next component.  If you add components before or after
+	// this test, please update the links.
 });
