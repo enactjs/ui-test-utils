@@ -1,5 +1,5 @@
 const Page = require('./ExpandableInputPage'),
-	{validateTitle, expectClosed, expectOpen, expectRTL} = require('./ExpandableInput-utils.js');
+	{validateTitle, expectClosed, expectOpen, expectLTR, expectRTL} = require('./ExpandableInput-utils.js');
 
 describe('ExpandableInput', function () {
 	describe('LTR locale', function () {
@@ -22,6 +22,13 @@ describe('ExpandableInput', function () {
 
 			it('should be initially closed', function () {
 				expectClosed(expandable);
+			});
+
+			it('should have title icon be on the left side title label', function () {
+				expectLTR({
+					leftElement: expandable.titleSelector,
+					rightElement: expandable.titleIconSelector
+				});
 			});
 
 			describe('5-way', function () {
@@ -494,6 +501,13 @@ describe('ExpandableInput', function () {
 				expect(expandable.isIconAfter).to.be.true();
 			});
 
+			it('should have beforeIcon on the left side of the afterIcon', function () {
+				expectLTR({
+					leftElement: expandable.iconBeforeSelector,
+					rightElement: expandable.iconAfterSelector
+				});
+			});
+
 			it('should display correct before icon', function () {
 				expect(expandable.iconBeforeSymbol).to.equal('-');
 			});
@@ -590,7 +604,7 @@ describe('ExpandableInput', function () {
 				expect(expandable.title.hasFocus()).to.be.true();
 			});
 
-			it('should have title icon be after title label', function () {
+			it('should have title icon be on the right side title label', function () {
 				expectRTL({
 					leftElement: expandable.titleSelector,
 					rightElement: expandable.titleIconSelector
@@ -602,7 +616,7 @@ describe('ExpandableInput', function () {
 		describe('icon before and after', function () {
 			const expandable = Page.components.iconBeforeAfter;
 
-			it('should have title icon be after title label', function () {
+			it('should have beforeIcon positioned on the right side the afterIcon', function () {
 				expectRTL({
 					leftElement: expandable.iconBeforeSelector,
 					rightElement: expandable.iconAfterSelector
