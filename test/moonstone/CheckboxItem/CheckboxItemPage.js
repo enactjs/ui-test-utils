@@ -13,6 +13,7 @@ class CheckboxItemInterface {
 	}
 
 	get item () { return browser.element(`#${this.id}`); }
+	get itemSelector () { return `#${this.id}`; }
 	get valueText () { return browser.element(this.marqueeTextSelector).getText(); }
 	get textSelector () { return this.marqueeTextSelector; }
 	get icon () { return browser.element(this.iconSeletor); }
@@ -34,8 +35,11 @@ class CheckboxItemPage extends Page {
 		const checkboxInline = new CheckboxItemInterface('checkboxItem4');
 		const checkboxInlineAfter = new CheckboxItemInterface('checkboxItem5');
 		const checkboxDisabled = new CheckboxItemInterface('checkboxItem6');
+		const checkboxInline1 = new CheckboxItemInterface('checkboxItem7');
+		const checkboxInline2 = new CheckboxItemInterface('checkboxItem8');
 
-		this.components = {checkboxDefault, checkboxDefaultSelected, checkboxIconAfter, checkboxInline, checkboxInlineAfter, checkboxDisabled}
+
+		this.components = {checkboxDefault, checkboxDefaultSelected, checkboxIconAfter, checkboxInline, checkboxInlineAfter, checkboxDisabled, checkboxInline1, checkboxInline2}
 	}
 
 	open (urlExtra) {

@@ -1,11 +1,21 @@
 const Page = require('./CheckboxItemPage'),
-	{expectChecked, expectUnchecked, expectRTL} = require('./CheckboxItem-utils.js');
+	{expectChecked, expectInline, expectLTR, expectRTL, expectUnchecked} = require('./CheckboxItem-utils.js');
 
 describe('CheckboxItem', function () {
 
 	describe('LTR locale', function () {
 		beforeEach(function () {
 			Page.open();
+		});
+
+		describe('checkbox', function () {
+			it('should have icon to the left of marquee text', function () {
+				const checkboxItem = Page.components.checkboxDefault;
+				expectLTR({
+					leftElement: checkboxItem.iconSelector,
+					rightElement: checkboxItem.textSelector
+				});
+			});
 		});
 
 		describe('default', function () {
@@ -166,6 +176,12 @@ describe('CheckboxItem', function () {
 		describe('inline', function () {
 			const checkboxItemInline = Page.components.checkboxInline;
 
+			it('should have two inlined checkboxes positioned inlined', function () {
+				const checkboxItem1 = Page.components.checkboxInline1.itemSelector;
+				const checkboxItem2 = Page.components.checkboxInline2.itemSelector;
+				expectInline({checkboxItem1, checkboxItem2});
+			});
+
 			it('should have correct text', function () {
 				expect(checkboxItemInline.valueText).to.equal('Checkbox Item inline');
 			});
@@ -305,34 +321,18 @@ describe('CheckboxItem', function () {
 			expect(Page.components.checkboxDefault.item.hasFocus()).to.be.true();
 		});
 
-		describe('checkbox default', function () {
-			it('should have direction equal to "rtl"', function () {
-				const checkboxItem = Page.components.checkboxDefault;
-				expectRTL({
-					leftElement: checkboxItem.iconSelector,
-					rightElement: checkboxItem.textSelector
-				});
+		it('should have icon to the right of text when default', function () {
+			const checkboxItem = Page.components.checkboxDefault;
+			expectRTL({
+				leftElement: checkboxItem.iconSelector,
+				rightElement: checkboxItem.textSelector
 			});
 		});
 
-		describe('checkbox inline', function () {
-			it('should have direction equal to "rtl"', function () {
-				const checkboxInline = Page.components.checkboxInline;
-				expectRTL({
-					leftElement: checkboxInline.iconSelector,
-					rightElement: checkboxInline.textSelector
-				});
-			});
-		});
-
-		describe('checkbox disabled', function () {
-			it('should have direction equal to "rtl"', function () {
-				const checkboxDisabled = Page.components.checkboxDisabled;
-				expectRTL({
-					leftElement: checkboxDisabled.iconSelector,
-					rightElement: checkboxDisabled.textSelector
-				});
-			});
+		it('should have two inlined checkboxes positioned inlined', function () {
+			const checkboxItem1 = Page.components.checkboxInline1.itemSelector;
+			const checkboxItem2 = Page.components.checkboxInline2.itemSelector;
+			expectInline({checkboxItem1, checkboxItem2});
 		});
 	});
 });
