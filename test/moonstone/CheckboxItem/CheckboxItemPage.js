@@ -4,6 +4,8 @@ const Page = require('../../Page.js');
 class CheckboxItemInterface {
 	constructor (id) {
 		this.id = id;
+		this.marqueeTextSelector = `#${this.id} > div .Marquee__text`;
+		this.iconSeletor = `#${this.id} > div .Icon__icon`;
 	}
 
 	focus () {
@@ -11,8 +13,11 @@ class CheckboxItemInterface {
 	}
 
 	get item () { return browser.element(`#${this.id}`); }
-	get valueText () { return browser.element(`#${this.id} > div .Marquee__text`).getText(); }
-	get icon () { return browser.element(`#${this.id} > div .Icon__icon`)}
+	get itemSelector () { return `#${this.id}`; }
+	get valueText () { return browser.element(this.marqueeTextSelector).getText(); }
+	get textSelector () { return this.marqueeTextSelector; }
+	get icon () { return browser.element(this.iconSeletor); }
+	get iconSelector () { return this.iconSeletor; }
 	get iconSymbol () { return browser.element(`#${this.id} > div .Icon__icon`).getText(); }
 	get isChecked () { return browser.isExisting(`#${this.id} .Checkbox__selected`); }
 	get isAfter () { return browser.isExisting(`#${this.id} .Overlay__after`); }
@@ -30,8 +35,11 @@ class CheckboxItemPage extends Page {
 		const checkboxInline = new CheckboxItemInterface('checkboxItem4');
 		const checkboxInlineAfter = new CheckboxItemInterface('checkboxItem5');
 		const checkboxDisabled = new CheckboxItemInterface('checkboxItem6');
+		const checkboxInline1 = new CheckboxItemInterface('checkboxItem7');
+		const checkboxInline2 = new CheckboxItemInterface('checkboxItem8');
 
-		this.components = {checkboxDefault, checkboxDefaultSelected, checkboxIconAfter, checkboxInline, checkboxInlineAfter, checkboxDisabled}
+
+		this.components = {checkboxDefault, checkboxDefaultSelected, checkboxIconAfter, checkboxInline, checkboxInlineAfter, checkboxDisabled, checkboxInline1, checkboxInline2}
 	}
 
 	open (urlExtra) {
