@@ -503,6 +503,10 @@ describe('ExpandableInput', function () {
 				expect(expandable.iconAfterSymbol).to.equal('+');
 			});
 
+			it('should have beforeIcon positioned on the right side of the afterIcon', function () {
+				expectOrdering(expandable.iconBeforeSelector, expandable.iconAfterSelector);
+			});
+
 			describe('5-way', function () {
 
 				beforeEach(function () {
