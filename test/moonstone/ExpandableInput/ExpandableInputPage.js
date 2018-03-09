@@ -22,12 +22,16 @@ class ExpandableInterface {
 	get chevron () { return getText(getIcon(this.self)); }
 	get title () { return getLabeledItem(this.self); }
 	get titleText () { return getText(getLabeledItemTitle(this.self)); }
+	get titleSelector () { return `#${this.id} > div .Marquee__text`; }
+	get titleIconSelector () { return '.LabeledItem__icon'; }
 	get label () { return getLabeledItemValue(this.self); }
 	get labelText () { return getText(this.label); }
 	get isLabelExists () { return this.self.isExisting('.LabeledItem__label'); }
 	get isOpen () { return this.self.isExisting('.Transition__shown'); }
 	get iconBeforeSymbol () { return getText(element(`#${this.id} > div .Input__iconBefore`, browser)); }
+	get iconBeforeSelector () { return `#${this.id} > div .Input__iconBefore`; }
 	get iconAfterSymbol () { return getText(element(`#${this.id} > div .Input__iconAfter`, browser)); }
+	get iconAfterSelector () { return `#${this.id} > div .Input__iconAfter`; }
 	get isIconBefore () { return browser.isExisting(`#${this.id} > div .Input__iconBefore`)}
 	get isIconAfter () { return browser.isExisting(`#${this.id} > div .Input__iconAfter`)}
 	get placeHolder () { return browser.getAttribute(`#${this.id} > div .Input__input`, 'placeholder'); }
