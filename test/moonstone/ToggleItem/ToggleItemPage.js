@@ -3,7 +3,7 @@ const Page = require('../../Page.js');
 const {getComponent, getSubComponent, getText} = require('../../utils.js');
 
 const getIcon = getComponent('moonstone', 'Icon');
-const getMarqueeText = getSubComponent('moonstone', 'Marquee', 'text');
+const getMarqueeText = getSubComponent('ui', 'Marquee', 'text');
 
 class ToggleItemInterface {
 	constructor (id) {
