@@ -6,12 +6,10 @@ describe('ActivityPanels', function () {
 	});
 
 	it('should load first panel.', function () {
-		Page.waitTransitionEnd();
 		expect(Page.panelTitle).to.equal('FIRST');
 	});
 
 	it('should have breadcrumb on second panel', function () {
-		Page.waitTransitionEnd();
 		Page.button1.click();
 		Page.waitTransitionEnd();
 
@@ -20,7 +18,6 @@ describe('ActivityPanels', function () {
 
 	describe('Transition', function () {
 		it('should move from first panel to the second', function () {
-			Page.waitTransitionEnd();
 			Page.button1.click();
 			Page.waitTransitionEnd();
 
@@ -28,7 +25,6 @@ describe('ActivityPanels', function () {
 		});
 
 		it('should navigate to DEFAULT ELEMENT', function () {
-			Page.waitTransitionEnd();
 			Page.item1.click();
 			Page.waitTransitionEnd();
 			Page.item5.click();
@@ -42,7 +38,6 @@ describe('ActivityPanels', function () {
 		});
 
 		it('should navigate back to the First panel from clicking on breadcrumb', function () {
-			Page.waitTransitionEnd();
 			Page.item1.click();
 			Page.waitTransitionEnd();
 			Page.item5.click();
@@ -64,7 +59,6 @@ describe('ActivityPanels', function () {
 		});
 
 		it('should navigate back to the Third panel from clicking on breadcrumb', function () {
-			Page.waitTransitionEnd();
 			Page.item1.click();
 			Page.waitTransitionEnd();
 			Page.item5.click();
@@ -82,7 +76,6 @@ describe('ActivityPanels', function () {
 		});
 
 		it('should move from first panel to the third', function () {
-			Page.waitTransitionEnd();
 			Page.button1.moveToObject();
 			Page.spotlightSelect();
 			Page.waitTransitionEnd();
@@ -95,7 +88,6 @@ describe('ActivityPanels', function () {
 		});
 
 		it('should move to first panel from the third', function () {
-			Page.waitTransitionEnd();
 			Page.button1.moveToObject();
 			Page.spotlightSelect();
 			Page.waitTransitionEnd();
@@ -117,7 +109,6 @@ describe('ActivityPanels', function () {
 		});
 
 		it('should transition back to First panel with back key', function () {
-			Page.waitTransitionEnd();
 			Page.button1.click();
 			Page.waitTransitionEnd();
 			expect(Page.panelTitle).to.equal('SECOND');
@@ -129,14 +120,12 @@ describe('ActivityPanels', function () {
 	});
 
 	describe('Spotlight', function () {
-		it('should spot close button on render', function () {
-			Page.waitTransitionEnd();
-			expect(Page.closeButton.hasFocus()).to.be.true();
+		it('should spot item 1 on render', function () {
+			expect(Page.item1.hasFocus()).to.be.true();
 		});
 
 		describe('pointer', function () {
 			it('should spot second item on second panel', function () {
-				Page.waitTransitionEnd();
 				Page.item2.click();
 				Page.waitTransitionEnd();
 				Page.backKey();
@@ -146,7 +135,6 @@ describe('ActivityPanels', function () {
 			});
 
 			it('should spot second item on second panel after moving pointer', function () {
-				Page.waitTransitionEnd();
 				Page.item2.click();
 				Page.waitTransitionEnd();
 				Page.item8.moveToObject();
@@ -160,7 +148,6 @@ describe('ActivityPanels', function () {
 
 		describe('5way', function () {
 			it('should spot first item on second panel', function () {
-				Page.waitTransitionEnd();
 				Page.spotlightDown();
 				Page.spotlightSelect();
 				Page.waitTransitionEnd();
@@ -170,7 +157,6 @@ describe('ActivityPanels', function () {
 
 
 			it('should spot second item on first panel when using back key', function () {
-				Page.waitTransitionEnd();
 				Page.spotlightDown();
 				Page.spotlightDown();
 				Page.spotlightDown();
@@ -184,7 +170,6 @@ describe('ActivityPanels', function () {
 			});
 
 			it('should spot button 4 in Third panel', function () {
-				Page.waitTransitionEnd();
 				Page.spotlightDown();
 				Page.spotlightDown();
 				Page.spotlightDown();
@@ -211,7 +196,6 @@ describe('ActivityPanels', function () {
 			});
 
 			it('should spot button 1 on First panel on Back key', function () {
-				Page.waitTransitionEnd();
 				Page.spotlightDown();
 				Page.spotlightLeft();
 				Page.spotlightSelect();
@@ -230,7 +214,6 @@ describe('ActivityPanels', function () {
 			});
 
 			it('should spot eighth item on second panel', function () {
-				Page.waitTransitionEnd();
 				Page.spotlightDown();
 				Page.spotlightDown();
 				Page.spotlightDown();
@@ -253,7 +236,6 @@ describe('ActivityPanels', function () {
 
 
 			it('should spot third item on first panel', function () {
-				Page.waitTransitionEnd();
 				Page.spotlightDown();
 				Page.spotlightDown();
 				Page.spotlightDown();
@@ -271,7 +253,6 @@ describe('ActivityPanels', function () {
 
 		describe('5way and pointer', function () {
 			it('should not spot in None panel', function () {
-				Page.waitTransitionEnd();
 				Page.button1.moveToObject();
 				Page.spotlightSelect();
 				Page.waitTransitionEnd();
@@ -288,7 +269,6 @@ describe('ActivityPanels', function () {
 			});
 
 			it('should spot default item in Default panel', function () {
-				Page.waitTransitionEnd();
 				Page.button1.moveToObject();
 				Page.spotlightSelect();
 				Page.waitTransitionEnd();
@@ -309,7 +289,6 @@ describe('ActivityPanels', function () {
 			});
 
 			it('should re-spot in Default panel', function () {
-				Page.waitTransitionEnd();
 				Page.button1.moveToObject();
 				Page.spotlightSelect();
 				Page.waitTransitionEnd();
@@ -339,7 +318,6 @@ describe('ActivityPanels', function () {
 			});
 
 			it('should spot item 3 on First panel on Back key', function () {
-				Page.waitTransitionEnd();
 				Page.item3.moveToObject();
 				Page.spotlightSelect();
 				Page.waitTransitionEnd();
