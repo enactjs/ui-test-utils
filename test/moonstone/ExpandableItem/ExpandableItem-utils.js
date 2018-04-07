@@ -11,12 +11,10 @@ function validateTitle (item, title) {
 // Expects are blocks of expects or other commands to be embedded in an 'it' statement
 function expectClosed (item) {
 	expect(item.isOpen).to.be.false();
-	expect(item.chevron).to.equal('󯿭');
 }
 
 function expectOpen (item) {
 	expect(item.isOpen).to.be.true();
-	expect(item.chevron).to.equal('󯿮');
 }
 
 module.exports = {
