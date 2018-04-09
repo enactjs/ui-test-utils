@@ -11,14 +11,30 @@ function validateTitle (item, title) {
 // Expects are blocks of expects or other commands to be embedded in an 'it' statement
 function expectClosed (item) {
 	expect(item.isOpen).to.be.false();
+	expect(getChevronRotation(item)).to.equal('down');
 }
 
 function expectOpen (item) {
 	expect(item.isOpen).to.be.true();
+	expect(getChevronRotation(item)).to.equal('up');
+}
+
+// Other utility functions
+function getChevronRotation (item) {
+	const matrix = item.chevron.getCssProperty('transform');
+
+	if (matrix.value === 'matrix(1, 0, 0, -1, 0, 0)') {
+		return 'up';
+	} else if (matrix.value === 'none') {
+		return 'down';
+	} else {
+		return 'unknown';
+	}
 }
 
 module.exports = {
 	expectClosed,
 	expectOpen,
-	validateTitle
+	validateTitle,
+	getChevronRotation
 };
