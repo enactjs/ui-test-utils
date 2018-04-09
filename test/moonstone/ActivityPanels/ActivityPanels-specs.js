@@ -125,7 +125,7 @@ describe('ActivityPanels', function () {
 		});
 
 		describe('pointer', function () {
-			it('should spot second item on second panel', function () {
+			it('should spot last focused item when transitioning back', function () {
 				Page.item2.click();
 				Page.waitTransitionEnd();
 				Page.backKey();
@@ -134,7 +134,7 @@ describe('ActivityPanels', function () {
 				expect(Page.item2.hasFocus()).to.be.true();
 			});
 
-			it('should spot second item on second panel after moving pointer', function () {
+			it('should spot last focused item when transitioning back after moving pointer', function () {
 				Page.item2.click();
 				Page.waitTransitionEnd();
 				Page.item8.moveToObject();
@@ -156,7 +156,7 @@ describe('ActivityPanels', function () {
 			});
 
 
-			it('should spot second item on first panel when using back key', function () {
+			it('should spot last focused item when transitioning back using back key', function () {
 				Page.spotlightDown();
 				Page.spotlightDown();
 				Page.spotlightDown();
@@ -169,7 +169,7 @@ describe('ActivityPanels', function () {
 				expect(Page.item2.hasFocus()).to.be.true();
 			});
 
-			it('should spot button 4 in Third panel', function () {
+			it('should spot last focused item when transitioning back in Third panel', function () {
 				Page.spotlightDown();
 				Page.spotlightDown();
 				Page.spotlightDown();
@@ -195,7 +195,7 @@ describe('ActivityPanels', function () {
 				expect(Page.button4.hasFocus()).to.be.true();
 			});
 
-			it('should spot button 1 on First panel on Back key', function () {
+			it('should spot last focused item in first panel when transitioning after deep navigation', function () {
 				Page.spotlightDown();
 				Page.spotlightLeft();
 				Page.spotlightSelect();
@@ -317,7 +317,7 @@ describe('ActivityPanels', function () {
 
 			});
 
-			it('should spot item 3 on First panel on Back key', function () {
+			it('should spot last focused item when transitioning back with Back key, deep navigation', function () {
 				Page.item3.moveToObject();
 				Page.spotlightSelect();
 				Page.waitTransitionEnd();
