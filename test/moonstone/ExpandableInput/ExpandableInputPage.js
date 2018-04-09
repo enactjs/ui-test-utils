@@ -24,7 +24,7 @@ class ExpandableInterface {
 	get titleText () { return getText(getLabeledItemTitle(this.self)); }
 	get label () { return getLabeledItemValue(this.self); }
 	get labelText () { return getText(this.label); }
-	get isLabelExists () { return this.self.isExisting('.enact_moonstone_LabeledItem_LabeledItem_label'); }
+	get isLabelExists () { return this.self.isVisible('.enact_moonstone_LabeledItem_LabeledItem_label'); }
 	get isOpen () { return this.self.isExisting('.enact_ui_Transition_Transition_shown'); }
 	get iconBeforeSymbol () { return getText(element('.enact_moonstone_Input_Input_iconBefore', this.self)); }
 	get iconAfterSymbol () { return getText(element('.enact_moonstone_Input_Input_iconAfter', this.self)); }
