@@ -1,3 +1,4 @@
+const fs = require('fs');
 const path = require('path');
 const autoprefixer = require('autoprefixer');
 const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
@@ -12,6 +13,21 @@ const ILibPlugin = require('@enact/dev-utils/plugins/ILibPlugin');
 const WebOSMetaPlugin = require('@enact/dev-utils/plugins/WebOSMetaPlugin');
 
 const cssIdent = /(?:@(enact[/\\].*)|^((?:(?!@enact).)*))\.(?:less|css)/;
+
+function resolveModule (ref, rel = '') {
+	const dir = path.dirname(ref);
+	if(dir !== ref) {
+		rel = path.join(path.basename(ref), rel);
+		const possibleMeta = path.join(dir, 'package.json');
+		if(fs.existsSync(possibleMeta)) {
+			const meta = require(possibleMeta);
+			if(meta.name) {
+				return path.join(meta.name, rel).replace(/[/\\]+/g, '/');
+			}
+		}
+		return resolveModule(dir, rel);
+	}
+}
 
 module.exports = function (env) {
 	const TARGET_PLATFORM = env.TARGET_PLATFORM || 'Chrome 53';
@@ -49,6 +65,7 @@ module.exports = function (env) {
 		resolve: {
 			// These are the reasonable defaults supported by the React/ES6 ecosystem.
 			extensions: ['.js', '.jsx', '.json'],
+			modules: [path.resolve('./node_modules'), 'node_modules'],
 			alias: {
 				'UI_TEST_APP_ENTRY': env.APPENTRY,
 				// Support ilib shorthand alias for ilib modules
@@ -126,7 +143,10 @@ module.exports = function (env) {
 									sourceMap: true,
 									localIdentName: '[name]__[local]',
 									getLocalIdent: (context, localIdentName, localName) => {
-										const rel = path.relative(app.context, context.resourcePath);
+										let rel = path.relative(app.context, context.resourcePath);
+										if(rel.startsWith('..')) {
+											rel = resolveModule(fs.realpathSync(rel));
+										}
 										const ident = rel.match(cssIdent);
 										return ((ident && (ident[1] || ident[2])) || 'unknown').replace(/[/\\]+/g, '_') +
 												'_' + localName;
