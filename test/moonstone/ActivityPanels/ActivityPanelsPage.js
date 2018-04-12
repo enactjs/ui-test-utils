@@ -26,7 +26,7 @@ class SpotlightMultiplePage extends Page {
 	get breadcrumb () { return browser.element('.enact_moonstone_Panels_Panels_breadcrumb'); }
 	get breadcrumbHeader () { return browser.element('.enact_moonstone_Panels_Panels_breadcrumbHeader'); }
 	get closeButton () { return browser.element('.enact_moonstone_Panels_ApplicationCloseButton_applicationCloseButton'); }
-	get panelTitle () { return browser.getText('.enact_moonstone_Panels_Header_title .enact_moonstone_Marquee_Marquee_text'); }
+	get panelTitle () { return browser.getText('.enact_moonstone_Panels_Header_title .enact_ui_Marquee_Marquee_text'); }
 	get body () { return browser.element('body'); }
 }
 

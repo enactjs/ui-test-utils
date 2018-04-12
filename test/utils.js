@@ -1,10 +1,8 @@
 'use strict';
 
-const converge = require('ramda/src/converge');
 const curry = require('ramda/src/curry');
-const identity = require('ramda/src/identity');
-const toLower = require('ramda/src/toLower');
-const useWith = require('ramda/src/useWith');
+
+const toLower = (str) => str.replace(/^\w/, (chr) => chr.toLowerCase());
 
 // Given a selector and a starting element, returns the first matching descendant Element
 // String => Element => Element

@@ -54,6 +54,7 @@ describe('ExpandableInput', function () {
 				Page.waitTransitionEnd();
 				expectOpen(expandable);
 				Page.spotlightDown();
+				Page.waitTransitionEnd();
 				expectClosed(expandable);
 				expect(Page.components.defaultValue.title.hasFocus()).to.be.true();
 			});
@@ -69,6 +70,7 @@ describe('ExpandableInput', function () {
 				Page.waitTransitionEnd();
 				expectOpen(expandable);
 				Page.escape();
+				Page.waitTransitionEnd();
 				expectClosed(expandable);
 			});
 
@@ -101,6 +103,7 @@ describe('ExpandableInput', function () {
 					expectOpen(expandable);
 					expandable.input.setValue('New Value');
 					Page.escape();
+					Page.waitTransitionEnd();
 					expectClosed(expandable);
 					expect(expandable.labelText).to.equal('No Input Text');
 				});
@@ -133,7 +136,9 @@ describe('ExpandableInput', function () {
 
 			it('should close on two title clicks', function () {
 				expandable.title.click();
+				Page.waitTransitionEnd();
 				expandable.title.click();
+				Page.waitTransitionEnd();
 				expectClosed(expandable);
 			});
 

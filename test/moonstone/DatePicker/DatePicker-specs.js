@@ -54,7 +54,8 @@ describe('DatePicker', function () {
 					expectClosed(datePicker);
 				});
 
-				it('should focus title when 5-way right from last picker', function () {
+				// ENYO-5151
+				it.skip('should focus title when 5-way right from last picker', function () {
 					Page.spotlightSelect();
 					Page.waitTransitionEnd();
 					expectOpen(datePicker);
@@ -402,7 +403,8 @@ describe('DatePicker', function () {
 			expect(datePicker.year.hasFocus()).to.be.true();
 		});
 
-		it('should focus title when 5-way left from last picker', function () {
+		// ENYO-5151
+		it.skip('should focus title when 5-way left from last picker', function () {
 			Page.spotlightSelect();
 			Page.waitTransitionEnd();
 			expectOpen(datePicker);

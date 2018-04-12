@@ -1,5 +1,5 @@
 const Page = require('./ExpandableItemPage');
-const {expectClosed, expectOpen, validateTitle} = require('./ExpandableItem-utils');
+const {expectClosed, expectOpen, validateTitle, getChevronRotation} = require('./ExpandableItem-utils');
 
 describe('ExpandableItem', function () {
 	beforeEach(function () {
@@ -164,16 +164,16 @@ describe('ExpandableItem', function () {
 			it('should open on title click when closed', function () {
 				expandableItem.title.click();
 				browser.pause(500);
-				expect(expandableItem.chevron).to.equal('󯿮');
+				expect(getChevronRotation(expandableItem)).to.equal('up');
 			});
 
 			it('should close on title click when open', function () {
 				expandableItem.title.click();
 				browser.pause(500);
-				expect(expandableItem.chevron).to.equal('󯿮');
+				expect(getChevronRotation(expandableItem)).to.equal('up');
 				expandableItem.title.click();
 				browser.pause(500);
-				expect(expandableItem.chevron).to.equal('󯿭');
+				expect(getChevronRotation(expandableItem)).to.equal('down');
 			});
 		});
 	});

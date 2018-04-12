@@ -11,7 +11,7 @@ class CheckboxItemInterface {
 	}
 
 	get self () { return browser.element(`#${this.id}`); }
-	get valueText () { return browser.element(`#${this.id} > div .enact_moonstone_Marquee_Marquee_text`).getText(); }
+	get valueText () { return browser.element(`#${this.id} > div .enact_ui_Marquee_Marquee_text`).getText(); }
 	get icon () { return browser.element(`#${this.id} > div .enact_moonstone_Icon_Icon_icon`)}
 	get iconSymbol () { return browser.element(`#${this.id} > div .enact_moonstone_Icon_Icon_icon`).getText(); }
 	get isChecked () { return browser.isExisting(`#${this.id} .enact_moonstone_Checkbox_Checkbox_selected`); }

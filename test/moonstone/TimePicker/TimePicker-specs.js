@@ -53,7 +53,8 @@ describe('TimePicker', function () {
 					expectClosed(timePicker);
 				});
 
-				it('should focus title when 5-way right from last picker', function () {
+				// ENYO-5151
+				it.skip('should focus title when 5-way right from last picker', function () {
 					Page.spotlightSelect();
 					Page.waitTransitionEnd();
 					expectOpen(timePicker);
@@ -419,7 +420,8 @@ describe('TimePicker', function () {
 			expect(timePicker.meridiem.hasFocus()).to.be.true();
 		});
 
-		it('should focus title when 5-way left from last picker', function () {
+		// ENYO-5151
+		it.skip('should focus title when 5-way left from last picker', function () {
 			Page.spotlightSelect();
 			Page.waitTransitionEnd();
 			expectOpen(timePicker);
