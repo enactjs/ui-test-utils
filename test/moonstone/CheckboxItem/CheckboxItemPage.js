@@ -4,6 +4,8 @@ const Page = require('../../Page.js');
 class CheckboxItemInterface {
 	constructor (id) {
 		this.id = id;
+		this.marqueeTextSelector = `#${this.id} > div .enact_ui_Marquee_Marquee_text`;
+		this.iconSeletor = `#${this.id} > div .enact_moonstone_Icon_Icon_icon`;
 	}
 
 	focus () {
@@ -11,9 +13,10 @@ class CheckboxItemInterface {
 	}
 
 	get self () { return browser.element(`#${this.id}`); }
-	get valueText () { return browser.element(`#${this.id} > div .enact_ui_Marquee_Marquee_text`).getText(); }
-	get icon () { return browser.element(`#${this.id} > div .enact_moonstone_Icon_Icon_icon`)}
-	get iconSymbol () { return browser.element(`#${this.id} > div .enact_moonstone_Icon_Icon_icon`).getText(); }
+	get value () { return browser.element(this.marqueeTextSelector); }
+	get valueText () { return this.value.getText(); }
+	get icon () { return browser.element(this.iconSeletor); }
+	get iconSymbol () { return this.icon.getText(); }
 	get isChecked () { return browser.isExisting(`#${this.id} .enact_moonstone_Checkbox_Checkbox_selected`); }
 	get isAfter () { return browser.isExisting(`#${this.id} .enact_moonstone_SlotItem_SlotItem_after`); }
 	get isBefore () { return browser.isExisting(`#${this.id} .enact_moonstone_SlotItem_SlotItem_before`); }
@@ -30,6 +33,7 @@ class CheckboxItemPage extends Page {
 		const checkboxInline = new CheckboxItemInterface('checkboxItem4');
 		const checkboxInlineAfter = new CheckboxItemInterface('checkboxItem5');
 		const checkboxDisabled = new CheckboxItemInterface('checkboxItem6');
+
 
 		this.components = {checkboxDefault, checkboxDefaultSelected, checkboxIconAfter, checkboxInline, checkboxInlineAfter, checkboxDisabled}
 	}
