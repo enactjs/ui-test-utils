@@ -1,5 +1,6 @@
 const Page = require('./CheckboxItemPage'),
-	{expectChecked, expectInline, expectLTR, expectRTL, expectUnchecked} = require('./CheckboxItem-utils.js');
+	{expectChecked, expectInline, expectUnchecked} = require('./CheckboxItem-utils.js'),
+	{expectOrdering} = require('../../utils.js');
 
 describe('CheckboxItem', function () {
 
@@ -11,10 +12,8 @@ describe('CheckboxItem', function () {
 		describe('checkbox', function () {
 			it('should have icon to the left of marquee text', function () {
 				const checkboxItem = Page.components.checkboxDefault;
-				expectLTR({
-					leftElement: checkboxItem.iconSelector,
-					rightElement: checkboxItem.textSelector
-				});
+
+				expectOrdering(checkboxItem.icon, checkboxItem.value);
 			});
 		});
 
@@ -323,16 +322,15 @@ describe('CheckboxItem', function () {
 
 		it('should have icon to the right of text when default', function () {
 			const checkboxItem = Page.components.checkboxDefault;
-			expectRTL({
-				leftElement: checkboxItem.iconSelector,
-				rightElement: checkboxItem.textSelector
-			});
+
+			expectOrdering(checkboxItem.value, checkboxItem.icon);
 		});
 
 		it('should have two inlined checkboxes positioned inlined', function () {
-			const checkboxItem1 = Page.components.checkboxInline1.itemSelector;
-			const checkboxItem2 = Page.components.checkboxInline2.itemSelector;
-			expectInline({checkboxItem1, checkboxItem2});
+			const checkboxItem1 = Page.components.checkboxInline1.item;
+			const checkboxItem2 = Page.components.checkboxInline2.item;
+
+			expectInline(checkboxItem1, checkboxItem2);
 		});
 	});
 });

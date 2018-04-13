@@ -35,9 +35,9 @@ const getSubComponent = curry((lib, component, child, el) => element(
 ));
 
 // Given two elements, determine if the first element is to the left of the second element
-// String => Boolean
+// element, element => Boolean
 function expectOrdering (firstElement, secondElement) {
-	expect(browser.getLocation(firstElement, 'x') < browser.getLocation(secondElement, 'x')).to.be.true();
+	expect(firstElement.getLocation().x < secondElement.getLocation().x).to.be.true();
 }
 
 module.exports = {

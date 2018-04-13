@@ -26,7 +26,7 @@ describe('ExpandableInput', function () {
 			});
 
 			it('should have title icon be on the left side title label', function () {
-				expectOrdering(expandable.titleSelector, expandable.titleIconSelector);
+				expectOrdering(expandable.titleTextMarquee, expandable.titleIcon);
 			});
 
 			describe('5-way', function () {
@@ -504,7 +504,7 @@ describe('ExpandableInput', function () {
 			});
 
 			it('should have beforeIcon positioned on the right side of the afterIcon', function () {
-				expectOrdering(expandable.iconBeforeSelector, expandable.iconAfterSelector);
+				expectOrdering(expandable.iconBefore, expandable.iconAfter);
 			});
 
 			describe('5-way', function () {
@@ -594,7 +594,7 @@ describe('ExpandableInput', function () {
 			});
 
 			it('should have title icon be on the right side title label', function () {
-				expectOrdering(expandable.titleIconSelector, expandable.titleSelector);
+				expectOrdering(expandable.titleIcon, expandable.titleTextMarquee);
 			});
 		});
 
@@ -602,7 +602,7 @@ describe('ExpandableInput', function () {
 			const expandable = Page.components.iconBeforeAfter;
 
 			it('should have beforeIcon positioned on the right side of the afterIcon', function () {
-				expectOrdering(expandable.iconAfterSelector, expandable.iconBeforeSelector);
+				expectOrdering(expandable.iconAfter, expandable.iconBefore);
 			});
 		});
 	});

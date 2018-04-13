@@ -13,11 +13,9 @@ class CheckboxItemInterface {
 	}
 
 	get item () { return browser.element(`#${this.id}`); }
-	get itemSelector () { return `#${this.id}`; }
-	get valueText () { return browser.element(this.marqueeTextSelector).getText(); }
-	get textSelector () { return this.marqueeTextSelector; }
+	get value () { return browser.element(this.marqueeTextSelector); }
+	get valueText () { return this.value.getText(); }
 	get icon () { return browser.element(this.iconSeletor); }
-	get iconSelector () { return this.iconSeletor; }
 	get iconSymbol () { return browser.element(`#${this.id} > div .Icon__icon`).getText(); }
 	get isChecked () { return browser.isExisting(`#${this.id} .Checkbox__selected`); }
 	get isAfter () { return browser.isExisting(`#${this.id} .Overlay__after`); }
