@@ -2,12 +2,12 @@
 const Page = require('../../Page.js');
 const {element, getComponent, getSubComponent, getText} = require('../../utils.js');
 
-const getIcon = getComponent('Icon');
-const getInput = getComponent('Input');
-const getLabeledItem = getComponent('LabeledItem');
-const getLabeledItemTitle = getSubComponent('LabeledItem', 'title');
-const getLabeledItemValue = getSubComponent('LabeledItem', 'label');
-const getLabeledItemIcon = getSubComponent('LabeledItem', 'icon');
+const getIcon = getComponent('moonstone', 'Icon');
+const getInput = getComponent('moonstone', 'Input');
+const getLabeledItem = getComponent('moonstone', 'LabeledItem');
+const getLabeledItemTitle = getSubComponent('moonstone', 'LabeledItem', 'title');
+const getLabeledItemValue = getSubComponent('moonstone', 'LabeledItem', 'label');
+const getLabeledItemIcon = getSubComponent('moonstone', 'LabeledItem', 'icon');
 
 class ExpandableInterface {
 	constructor (id) {
@@ -23,8 +23,7 @@ class ExpandableInterface {
 	get chevron () { return getText(getIcon(this.self)); }
 	get title () { return getLabeledItem(this.self); }
 	get titleText () { return getText(getLabeledItemTitle(this.self)); }
-	get titleTextMarquee () { return getLabeledItemTitle(this.self).element('.Marquee__text'); }
-	get titleSelector () { return `#${this.id} > div .Marquee__text`; }
+	get titleTextMarquee () { return getLabeledItemTitle(this.self).element('.enact_ui_Marquee_Marquee_text'); }
 	get titleIcon () { return getLabeledItemIcon(this.self); }
 	get label () { return getLabeledItemValue(this.self); }
 	get labelText () { return getText(this.label); }

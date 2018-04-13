@@ -8,12 +8,12 @@ describe('ExpandableInput', function () {
 			Page.open();
 		});
 
-		it('should have focus on first expandable at start', function () {
-			expect(Page.components.default.title.hasFocus()).to.be.true();
-		});
-
 		describe('default', function () {
 			const expandable = Page.components.default;
+
+			it('should have focus on first expandable at start', function () {
+				expect(expandable.title.hasFocus()).to.be.true();
+			});
 
 			validateTitle(expandable, 'ExpandableInput Default');
 
@@ -59,6 +59,7 @@ describe('ExpandableInput', function () {
 					Page.waitTransitionEnd();
 					expectOpen(expandable);
 					Page.spotlightDown();
+					Page.waitTransitionEnd();
 					expectClosed(expandable);
 					expect(Page.components.defaultValue.title.hasFocus()).to.be.true();
 				});
@@ -107,6 +108,7 @@ describe('ExpandableInput', function () {
 						expectOpen(expandable);
 						expandable.input.setValue('New Value');
 						Page.escape();
+						Page.waitTransitionEnd();
 						expectClosed(expandable);
 						expect(expandable.labelText).to.equal('No Input Text');
 					});
