@@ -28,15 +28,15 @@ class ExpandableInterface {
 	get titleIcon () { return getLabeledItemIcon(this.self); }
 	get label () { return getLabeledItemValue(this.self); }
 	get labelText () { return getText(this.label); }
-	get isLabelExists () { return this.self.isExisting('.LabeledItem__label'); }
-	get isOpen () { return this.self.isExisting('.Transition__shown'); }
-	get iconBefore () { return element(`#${this.id} > div .Input__iconBefore`, browser); }
+	get isLabelExists () { return this.self.isVisible('.enact_moonstone_LabeledItem_LabeledItem_label'); }
+	get isOpen () { return this.self.isExisting('.enact_ui_Transition_Transition_shown'); }
+	get iconBefore () { return element('.enact_moonstone_Input_Input_iconBefore', this.self); }
 	get iconBeforeSymbol () { return getText(this.iconBefore); }
-	get iconAfter () { return element(`#${this.id} > div .Input__iconAfter`, browser); }
+	get iconAfter () { return element('.enact_moonstone_Input_Input_iconAfter', this.self); }
 	get iconAfterSymbol () { return getText(this.iconAfter); }
-	get isIconBefore () { return browser.isExisting(`#${this.id} > div .Input__iconBefore`)}
-	get isIconAfter () { return browser.isExisting(`#${this.id} > div .Input__iconAfter`)}
-	get placeHolder () { return browser.getAttribute(`#${this.id} > div .Input__input`, 'placeholder'); }
+	get isIconBefore () { return this.self.isExisting('.enact_moonstone_Input_Input_iconBefore')}
+	get isIconAfter () { return this.self.isExisting('.enact_moonstone_Input_Input_iconAfter')}
+	get placeHolder () { return this.self.getAttribute('.enact_moonstone_Input_Input_input', 'placeholder'); }
 
 }
 

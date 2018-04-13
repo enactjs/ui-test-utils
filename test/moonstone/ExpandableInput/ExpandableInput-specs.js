@@ -74,6 +74,7 @@ describe('ExpandableInput', function () {
 					Page.waitTransitionEnd();
 					expectOpen(expandable);
 					Page.escape();
+					Page.waitTransitionEnd();
 					expectClosed(expandable);
 				});
 
