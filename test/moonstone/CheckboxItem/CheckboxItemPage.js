@@ -33,11 +33,9 @@ class CheckboxItemPage extends Page {
 		const checkboxInline = new CheckboxItemInterface('checkboxItem4');
 		const checkboxInlineAfter = new CheckboxItemInterface('checkboxItem5');
 		const checkboxDisabled = new CheckboxItemInterface('checkboxItem6');
-		const checkboxInline1 = new CheckboxItemInterface('checkboxItem7');
-		const checkboxInline2 = new CheckboxItemInterface('checkboxItem8');
 
 
-		this.components = {checkboxDefault, checkboxDefaultSelected, checkboxIconAfter, checkboxInline, checkboxInlineAfter, checkboxDisabled, checkboxInline1, checkboxInline2}
+		this.components = {checkboxDefault, checkboxDefaultSelected, checkboxIconAfter, checkboxInline, checkboxInlineAfter, checkboxDisabled}
 	}
 
 	open (urlExtra) {
