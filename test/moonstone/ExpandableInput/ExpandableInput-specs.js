@@ -573,13 +573,13 @@ describe('ExpandableInput', function () {
 		});
 
 		describe('general pointer operation', function () {
-			it('should close other expandable when opening', function () {
+			it('should prevent selecting other controls when open', function () {
 				Page.components.default.title.click();
 				Page.waitTransitionEnd();
 				Page.components.defaultValue.title.click();
 				Page.waitTransitionEnd();
 				expectClosed(Page.components.default);
-				expectOpen(Page.components.defaultValue);
+				expectClosed(Page.components.defaultValue);
 			});
 		});
 	});
