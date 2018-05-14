@@ -54,14 +54,14 @@ describe('ExpandableInput', function () {
 					expect(expandable.title.hasFocus()).to.be.true();
 				});
 
-				it('should close and move focus down on SpotlightDown', function () {
+				it('should close and move focus to title on SpotlightDown', function () {
 					Page.spotlightSelect();
 					Page.waitTransitionEnd();
 					expectOpen(expandable);
 					Page.spotlightDown();
 					Page.waitTransitionEnd();
 					expectClosed(expandable);
-					expect(Page.components.defaultValue.title.hasFocus()).to.be.true();
+					expect(expandable.title.hasFocus()).to.be.true();
 				});
 
 				it('should close on select twice', function () {
