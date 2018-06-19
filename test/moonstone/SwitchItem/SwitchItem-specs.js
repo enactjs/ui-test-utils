@@ -21,13 +21,13 @@ describe('SwitchItem', function () {
 			expect(switchItem.isSelected).to.be.false();
 		});
 
-		describe('5-way', function () {
+		describe('5-way - [GT-21377]', function () {
 			it('should select the item when selected', function () {
 				Page.spotlightSelect();
 				expect(switchItem.isSelected).to.be.true();
 			});
 
-			it('should re-unselect the item when selected twice', function () {
+			it('[should re-unselect the item when selected twice - GT-21377]', function () {
 				Page.spotlightSelect();
 				Page.spotlightSelect();
 				expect(switchItem.isSelected).to.be.false();
@@ -150,23 +150,23 @@ describe('SwitchItem', function () {
 		const switchItem = Page.components.switchDisabled;
 		const prevSwitchItem = Page.components.switchInline;
 
-		it('should have correct text', function () {
+		it.only('should have correct text', function () {
 			expect(switchItem.valueText).to.equal('Switch Item disabled');
 		});
 
-		it('should be selected', function () {
+		it.only('should be selected', function () {
 			expect(switchItem.isSelected).to.be.true();
 		});
 
 		describe('5-way', function () {
-			it('should not focus the item', function () {
+			it.only('should not focus the item', function () {
 				prevSwitchItem.focus();
 				Page.spotlightDown();
 				expect(prevSwitchItem.self.hasFocus()).to.be.true();
 			});
 		});
 
-		describe('pointer', function () {
+		describe['pointer', function () {
 			it('should not unselect the item when clicked', function () {
 				switchItem.self.click();
 				expect(switchItem.isSelected).to.be.true();
