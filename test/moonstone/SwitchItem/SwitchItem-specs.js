@@ -21,13 +21,13 @@ describe('SwitchItem', function () {
 			expect(switchItem.isSelected).to.be.false();
 		});
 
-		describe('5-way - [GT-21377]', function () {
-			it('should select the item when selected', function () {
+		describe('5-way', function () {
+			it('should select the item when selected - [GT-21377]', function () {
 				Page.spotlightSelect();
 				expect(switchItem.isSelected).to.be.true();
 			});
 
-			it('[should re-unselect the item when selected twice - GT-21377]', function () {
+			it('should re-unselect the item when selected twice - [GT-21377]', function () {
 				Page.spotlightSelect();
 				Page.spotlightSelect();
 				expect(switchItem.isSelected).to.be.false();
