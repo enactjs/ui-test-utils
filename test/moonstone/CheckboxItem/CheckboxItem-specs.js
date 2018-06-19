@@ -33,7 +33,7 @@ describe('CheckboxItem', function () {
 			});
 
 			describe('5-way', function () {
-				it('[GT-21124]-should check the item when selected', function () {
+				it('should check the item when selected - [GT-21124]', function () {
 					Page.spotlightSelect();
 					expectChecked(checkboxItem);
 				});
@@ -91,7 +91,7 @@ describe('CheckboxItem', function () {
 				expectChecked(checkboxItem);
 			});
 
-			it('[GT-21121]-should display correct icon', function () {
+			it('should display correct icon - [GT-21121]', function () {
 				expect(checkboxItem.iconSymbol).to.equal('✓');
 			});
 
