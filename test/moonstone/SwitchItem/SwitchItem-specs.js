@@ -150,23 +150,23 @@ describe('SwitchItem', function () {
 		const switchItem = Page.components.switchDisabled;
 		const prevSwitchItem = Page.components.switchInline;
 
-		it.only('should have correct text', function () {
+		it('should have correct text', function () {
 			expect(switchItem.valueText).to.equal('Switch Item disabled');
 		});
 
-		it.only('should be selected', function () {
+		it('should be selected', function () {
 			expect(switchItem.isSelected).to.be.true();
 		});
 
 		describe('5-way', function () {
-			it.only('should not focus the item', function () {
+			it('should not focus the item', function () {
 				prevSwitchItem.focus();
 				Page.spotlightDown();
 				expect(prevSwitchItem.self.hasFocus()).to.be.true();
 			});
 		});
 
-		describe['pointer', function () {
+		describe('pointer', function () {
 			it('should not unselect the item when clicked', function () {
 				switchItem.self.click();
 				expect(switchItem.isSelected).to.be.true();
