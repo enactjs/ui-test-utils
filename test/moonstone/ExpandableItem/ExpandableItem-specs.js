@@ -143,7 +143,7 @@ describe('ExpandableItem', function () {
 		const expandableItem = Page.components.expandableItemWithoutChildren;
 
 		describe('5-way', function () {
-			// TODO: skip until ENYO-5013 is resolved - leave ticket number
+			// TODO: skip until ENYO-5367 (regression from ENYO-5013) is resolved
 			it.skip('should allow navigation after opening', function () {
 				Page.components.expandableItemWithLockBottom.focus();
 				Page.spotlightDown();
