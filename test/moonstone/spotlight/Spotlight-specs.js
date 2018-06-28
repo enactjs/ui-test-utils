@@ -88,9 +88,10 @@ describe('Spotlight', function () {
 	})
 
 	describe('Disappear Test', function (){
-		it('should spot restore button when focus button disappears', function () {
+		it('should spot restore button when focus button disappears - [GT-22523]', function () {
 			Page.open();
 			Page.focusButton.moveToObject();
+			Page.spotlightSelect();  //activate 5-way
 			browser.pause(5000);
 			expect(Page.restoreButton.hasFocus()).to.be.true();
 		});
