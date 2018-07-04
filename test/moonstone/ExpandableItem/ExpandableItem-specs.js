@@ -10,10 +10,6 @@ describe('ExpandableItem', function () {
 		expect(Page.components.expandableItemDefaultClosedWithoutNoneText.title.hasFocus()).to.be.true();
 	});
 
-	beforeEach(function () {
-		Page.open();
-	});
-
 	describe('default', function () {
 		const expandableItem = Page.components.expandableItemDefaultClosedWithoutNoneText;
 
@@ -24,7 +20,7 @@ describe('ExpandableItem', function () {
 		});
 
 		describe('5-way', function () {
-			it('should open and spot expanded item on select', function () {
+			it('should open and spot expanded item on select - [GT-21494]', function () {
 				Page.spotlightSelect();
 				Page.waitTransitionEnd();
 				expectOpen(expandableItem);
@@ -147,7 +143,7 @@ describe('ExpandableItem', function () {
 		const expandableItem = Page.components.expandableItemWithoutChildren;
 
 		describe('5-way', function () {
-			// TODO: skip until ENYO-5013 is resolved
+			// TODO: skip until ENYO-5367 (regression from ENYO-5013) is resolved
 			it.skip('should allow navigation after opening', function () {
 				Page.components.expandableItemWithLockBottom.focus();
 				Page.spotlightDown();
@@ -209,7 +205,7 @@ describe('ExpandableItem', function () {
 				expect(expandableItem.hasLabel).to.be.true();
 			});
 
-			it('should display label when open', function () {
+			it('should display label when open - [GT-21495]', function () {
 				expandableItem.title.click();
 				expectOpen(expandableItem);
 				expect(expandableItem.hasLabel).to.be.true();
