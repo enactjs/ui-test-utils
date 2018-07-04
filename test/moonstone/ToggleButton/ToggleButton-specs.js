@@ -119,7 +119,7 @@ describe('ToggleButton', function () {
 		});
 
 		describe('5-way', function () {
-			it('should have correct text when selected', function () {
+			it('should have correct text when selected - [GT-21950]', function () {
 				toggleButton.focus();
 				Page.spotlightSelect();
 				expect(toggleButton.valueText).to.equal('ON');
@@ -150,7 +150,7 @@ describe('ToggleButton', function () {
 	describe('missed on label', function () {
 		const toggleButton = Page.components.toggleWithOnlyOffLabel;
 
-		it('should have correct text', function () {
+		it('should have correct text - [GT-21951]', function () {
 			expect(toggleButton.valueText).to.equal('OFF');
 		});
 
@@ -251,7 +251,7 @@ describe('ToggleButton', function () {
 		});
 
 		describe('pointer', function () {
-			it('should not unselect the item when clicked', function () {
+			it('should not unselect the item when clicked - [GT-21952]', function () {
 				toggleButton.self.click();
 				expect(toggleButton.isSelected).to.be.true();
 			});
@@ -271,7 +271,7 @@ describe('ToggleButton', function () {
 			expect(toggleButton.isSelected).to.be.false();
 		});
 
-		it('should be small sized', function () {
+		it('should be small sized - [GT-22374]', function () {
 			expect(toggleButton.isSmall).to.be.true();
 		});
 
@@ -307,7 +307,7 @@ describe('ToggleButton', function () {
 	describe('casing preserve', function () {
 		const toggleButton = Page.components.toggleCasePreserve;
 
-		it('should have correct text', function () {
+		it('should have correct text - [GT-21947]', function () {
 			expect(toggleButton.valueText).to.equal('toggle off');
 		});
 
