@@ -53,8 +53,7 @@ describe('TimePicker', function () {
 					expectClosed(timePicker);
 				});
 
-				// ENYO-5151
-				it.skip('should focus title when 5-way right from last picker', function () {
+				it('should focus title when 5-way right from last picker - [GT-25237]', function () {
 					Page.spotlightSelect();
 					Page.waitTransitionEnd();
 					expectOpen(timePicker);
@@ -145,7 +144,7 @@ describe('TimePicker', function () {
 					Page.spotlightDown();
 					Page.waitTransitionEnd();
 					const newTime = timePicker.valueText;
-					const value = time !== newTime;
+					const value = time !== newTime
 					expect(value).to.equal(true);
 				});
 
@@ -196,7 +195,7 @@ describe('TimePicker', function () {
 					expect(value).to.equal(expected);
 				});
 
-				it('should decrease the hour when decrementing the picker', function () {
+				it('should decrease the hour when decrementing the picker - [GT-21531]', function () {
 					timePicker.title.click();
 					Page.waitTransitionEnd();
 					const {hour} = extractValues(timePicker);
@@ -208,7 +207,7 @@ describe('TimePicker', function () {
 					expect(value).to.equal(expected);
 				});
 
-				it('should increase the minute when incrementing the picker', function () {
+				it('should increase the minute when incrementing the picker - [GT-21531]', function () {
 					timePicker.title.click();
 					Page.waitTransitionEnd();
 					const {minute} = extractValues(timePicker);
@@ -232,7 +231,7 @@ describe('TimePicker', function () {
 					expect(value).to.equal(expected);
 				});
 
-				it('should update value text when incrementing the meridiem picker', function () {
+				it('should update value text when incrementing the meridiem picker - [GT-21531]', function () {
 					timePicker.title.click();
 					Page.waitTransitionEnd();
 					const time = timePicker.valueText;
@@ -256,7 +255,7 @@ describe('TimePicker', function () {
 					expect(value).to.equal(true);
 				});
 
-				it('should change the meridiem on hour boundaries', function () {
+				it('should change the meridiem on hour boundaries - [GT-21563]', function () {
 					timePicker.title.click();
 					Page.waitTransitionEnd();
 					const value = timePicker.valueText;
@@ -356,6 +355,7 @@ describe('TimePicker', function () {
 			const timePicker = Page.components.timePickerDisabledWithNoneText;
 
 			it('should be initially closed', function () {
+			  browser.pause(500); //Needed for test to pass
 				expectClosed(timePicker);
 			});
 
@@ -385,6 +385,7 @@ describe('TimePicker', function () {
 			const timePicker = Page.components.timePickerDisabledOpenWithNoneText;
 
 			it('should be initially closed', function () {
+				browser.pause(500); //Needed for test to pass
 				expectClosed(timePicker);
 			});
 
@@ -420,8 +421,7 @@ describe('TimePicker', function () {
 			expect(timePicker.meridiem.hasFocus()).to.be.true();
 		});
 
-		// ENYO-5151
-		it.skip('should focus title when 5-way left from last picker', function () {
+		it('should focus title when 5-way left from last picker - [GT-25247]', function () {
 			Page.spotlightSelect();
 			Page.waitTransitionEnd();
 			expectOpen(timePicker);
