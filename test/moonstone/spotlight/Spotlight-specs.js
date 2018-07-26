@@ -90,7 +90,8 @@ describe('Spotlight', function () {
 	describe('Disappear Test', function (){
 		it('should spot restore button when focus button disappears', function () {
 			Page.open();
-			Page.focusButton.moveToObject();
+			Page.restoreButton.moveToObject();
+			Page.spotlightUp();
 			browser.pause(5000);
 			expect(Page.restoreButton.hasFocus()).to.be.true();
 		});
