@@ -336,10 +336,11 @@ describe('DatePicker', function () {
 		});
 
 		describe('disabled', function () {
+
 			const datePicker = Page.components.datePickerDisabledWithNoneText;
 
 			it('should be initially closed', function () {
-				browser.pause(500); //Needed for test to pass
+				datePicker.self.waitForExist(500)
 				expectClosed(datePicker);
 			});
 
