@@ -340,7 +340,7 @@ describe('DatePicker', function () {
 			const datePicker = Page.components.datePickerDisabledWithNoneText;
 
 			it('should be initially closed', function () {
-				datePicker.self.waitForExist(500)
+				datePicker.self.waitForExist(500);
 				expectClosed(datePicker);
 			});
 
@@ -369,7 +369,7 @@ describe('DatePicker', function () {
 		describe('default disabled open', function () {
 			const datePicker = Page.components.datePickerDisabledOpenWithNoneText;
 			it('should be initially closed', function () {
-				browser.pause(500); //Needed for test to pass
+				datePicker.self.waitForExist(500);
 				expectClosed(datePicker);
 			});
 
