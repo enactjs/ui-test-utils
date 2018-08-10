@@ -306,7 +306,6 @@ describe('DatePicker', function () {
 					const {day, month, year} = extractValues(datePicker);
 
 					expect(day).to.equal(6);
-
 					expect(month).to.equal(6); // `Date` uses 0-indexed months, picker displays 1-indexed month values
 					expect(year).to.equal(2009);
 				});
@@ -336,7 +335,6 @@ describe('DatePicker', function () {
 		});
 
 		describe('disabled', function () {
-
 			const datePicker = Page.components.datePickerDisabledWithNoneText;
 
 			it('should be initially closed', function () {
@@ -348,7 +346,7 @@ describe('DatePicker', function () {
 				expect(datePicker.valueText).to.equal('Nothing Selected');
 			});
 
-			describe('5-way', function() {
+			describe('5-way', function () {
 				it('should not receive focus', function () {
 					Page.components.datePickerNoLabels.focus();
 					Page.spotlightDown();

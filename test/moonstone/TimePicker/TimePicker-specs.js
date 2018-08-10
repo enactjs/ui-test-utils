@@ -355,7 +355,7 @@ describe('TimePicker', function () {
 			const timePicker = Page.components.timePickerDisabledWithNoneText;
 
 			it('should be initially closed', function () {
-			  datePicker.self.waitForExist(500);
+				timePicker.self.waitForExist(500);
 				expectClosed(timePicker);
 			});
 
@@ -385,7 +385,7 @@ describe('TimePicker', function () {
 			const timePicker = Page.components.timePickerDisabledOpenWithNoneText;
 
 			it('should be initially closed', function () {
-				datePicker.self.waitForExist(500);
+				timePicker.self.waitForExist(500);
 				expectClosed(timePicker);
 			});
 
