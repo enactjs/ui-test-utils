@@ -73,6 +73,7 @@ module.exports = {
 		'no-unneeded-ternary': 1,
 		'operator-linebreak': [1, 'after'],
 		'quotes': [1, 'single', {'avoidEscape':true}],
+		'semi': [1, 'always'],
 		'space-before-function-paren': [1, 'always'],
 		'space-infix-ops': 0,
 		'space-unary-ops': [1, {'words': true, 'nonwords': false}],

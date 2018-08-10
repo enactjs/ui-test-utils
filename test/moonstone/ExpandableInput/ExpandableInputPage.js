@@ -33,8 +33,8 @@ class ExpandableInterface {
 	get iconBeforeSymbol () { return getText(this.iconBefore); }
 	get iconAfter () { return element('.enact_moonstone_Input_Input_iconAfter', this.self); }
 	get iconAfterSymbol () { return getText(this.iconAfter); }
-	get isIconBefore () { return this.self.isExisting('.enact_moonstone_Input_Input_iconBefore')}
-	get isIconAfter () { return this.self.isExisting('.enact_moonstone_Input_Input_iconAfter')}
+	get isIconBefore () { return this.self.isExisting('.enact_moonstone_Input_Input_iconBefore');}
+	get isIconAfter () { return this.self.isExisting('.enact_moonstone_Input_Input_iconAfter');}
 	get placeHolder () { return this.self.getAttribute('.enact_moonstone_Input_Input_input', 'placeholder'); }
 
 }

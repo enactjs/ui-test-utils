@@ -30,7 +30,7 @@ class SelectableItemPage extends Page {
 		const selectableDisabled = new SelectableItemInterface('selectableItem4');
 		const selectableInlineDisabled = new SelectableItemInterface('selectableItem5');
 
-		this.components = {selectableDefault, selectableDefaultSelected, selectableInline, selectableDisabled, selectableInlineDisabled}
+		this.components = {selectableDefault, selectableDefaultSelected, selectableInline, selectableDisabled, selectableInlineDisabled};
 	}
 
 	open (urlExtra) {

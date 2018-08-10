@@ -29,7 +29,7 @@ class RadioItemPage extends Page {
 		const radioDisabled = new RadioItemInterface('radioItem4');
 		const radioInlineDisabled = new RadioItemInterface('radioItem5');
 
-		this.components = {radioDefault, radioDefaultSelected, radioInline, radioDisabled, radioInlineDisabled}
+		this.components = {radioDefault, radioDefaultSelected, radioInline, radioDisabled, radioInlineDisabled};
 	}
 
 	open (urlExtra) {

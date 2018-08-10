@@ -35,7 +35,7 @@ class ToggleButtonPage extends Page {
 		const toggleCaseWord = new ToggleButtonInterface('toggleButton10');
 		const toggleCaseUpper = new ToggleButtonInterface('toggleButton11');
 
-		this.components = {toggleDefault, toggleWithLabels, toggleWithOnlyOnLabel, toggleWithOnlyOffLabel, toggleDefaultSelected, toggleDisabled, toggleSmall, toggleCasePreserve, toggleCaseSentence, toggleCaseWord, toggleCaseUpper}
+		this.components = {toggleDefault, toggleWithLabels, toggleWithOnlyOnLabel, toggleWithOnlyOffLabel, toggleDefaultSelected, toggleDisabled, toggleSmall, toggleCasePreserve, toggleCaseSentence, toggleCaseWord, toggleCaseUpper};
 	}
 
 	open (urlExtra) {

@@ -144,7 +144,7 @@ describe('TimePicker', function () {
 					Page.spotlightDown();
 					Page.waitTransitionEnd();
 					const newTime = timePicker.valueText;
-					const value = time !== newTime
+					const value = time !== newTime;
 					expect(value).to.equal(true);
 				});
 

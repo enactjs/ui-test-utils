@@ -302,7 +302,7 @@ describe('ToggleButton', function () {
 				expect(toggleButton.isSelected).to.be.false();
 			});
 		});
-	})
+	});
 
 	describe('casing preserve', function () {
 		const toggleButton = Page.components.toggleCasePreserve;

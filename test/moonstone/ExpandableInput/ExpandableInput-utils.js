@@ -22,4 +22,4 @@ module.exports = {
 	validateTitle,
 	expectClosed,
 	expectOpen
-}
+};

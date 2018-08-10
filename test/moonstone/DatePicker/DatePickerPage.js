@@ -33,7 +33,7 @@ class PickerInterface {
 
 	decrementer (picker) { return element('.enact_moonstone_internal_Picker_Picker_decrementer', picker); }
 	incrementer (picker) { return element('.enact_moonstone_internal_Picker_Picker_incrementer', picker); }
-	item (picker) { return element('.enact_moonstone_internal_Picker_Picker_item', picker) }
+	item (picker) { return element('.enact_moonstone_internal_Picker_Picker_item', picker); }
 }
 
 class DatePickerPage extends Page {
