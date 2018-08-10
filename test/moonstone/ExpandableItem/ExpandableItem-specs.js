@@ -240,7 +240,7 @@ describe('ExpandableItem', function () {
 			expect(expandableItem.valueText).to.equal('Nothing Selected');
 		});
 
-		describe('5-way', function() {
+		describe('5-way', function () {
 			it('should not receive focus', function () {
 				Page.components.expandableItemNeverLabel.focus();
 				Page.spotlightDown();

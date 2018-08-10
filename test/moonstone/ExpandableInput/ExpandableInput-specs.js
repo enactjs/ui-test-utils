@@ -1,6 +1,6 @@
 const Page = require('./ExpandableInputPage'),
 	{validateTitle, expectClosed, expectOpen} = require('./ExpandableInput-utils.js'),
-	{expectOrdering} = require('../../utils.js');;
+	{expectOrdering} = require('../../utils.js');
 
 describe('ExpandableInput', function () {
 	describe('LTR locale', function () {
@@ -229,7 +229,7 @@ describe('ExpandableInput', function () {
 				it('should close on title click when open', function () {
 					expandable.title.click();
 					Page.waitTransitionEnd();
-					expectOpen(expandable)
+					expectOpen(expandable);
 					expandable.title.click();
 					Page.waitTransitionEnd();
 					expectClosed(expandable);
@@ -302,7 +302,7 @@ describe('ExpandableInput', function () {
 					expectClosed(expandable);
 					expandable.title.click();
 					Page.waitTransitionEnd();
-					expectOpen(expandable)
+					expectOpen(expandable);
 				});
 
 				it('should open on two title clicks', function () {
@@ -328,7 +328,7 @@ describe('ExpandableInput', function () {
 					expandable.focus();
 					Page.spotlightSelect();
 					Page.waitTransitionEnd();
-					expectOpen(expandable)
+					expectOpen(expandable);
 					Page.spotlightUp();
 					Page.waitTransitionEnd();
 					expectClosed(expandable);
@@ -341,7 +341,7 @@ describe('ExpandableInput', function () {
 				it('should not have value text on open and close', function () {
 					expandable.title.click();
 					Page.waitTransitionEnd();
-					expectOpen(expandable)
+					expectOpen(expandable);
 					expandable.title.click();
 					Page.waitTransitionEnd();
 					expectClosed(expandable);

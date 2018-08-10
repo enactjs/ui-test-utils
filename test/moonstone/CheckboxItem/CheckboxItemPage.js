@@ -35,7 +35,7 @@ class CheckboxItemPage extends Page {
 		const checkboxDisabled = new CheckboxItemInterface('checkboxItem6');
 
 
-		this.components = {checkboxDefault, checkboxDefaultSelected, checkboxIconAfter, checkboxInline, checkboxInlineAfter, checkboxDisabled}
+		this.components = {checkboxDefault, checkboxDefaultSelected, checkboxIconAfter, checkboxInline, checkboxInlineAfter, checkboxDisabled};
 	}
 
 	open (urlExtra) {

@@ -54,8 +54,7 @@ describe('DatePicker', function () {
 					expectClosed(datePicker);
 				});
 
-				// ENYO-5151
-				it.skip('should focus title when 5-way right from last picker', function () {
+				it('should focus title when 5-way right from last picker - [GT-24986]', function () {
 					Page.spotlightSelect();
 					Page.waitTransitionEnd();
 					expectOpen(datePicker);
@@ -79,7 +78,7 @@ describe('DatePicker', function () {
 					expect(value).to.equal(expected);
 				});
 
-				it('should decrease the month when decrementing the picker', function () {
+				it('should decrease the month when decrementing the picker - [GT-21247]', function () {
 					Page.spotlightSelect();
 					Page.waitTransitionEnd();
 					const {month} = extractValues(datePicker);
@@ -92,7 +91,7 @@ describe('DatePicker', function () {
 					expect(value).to.equal(expected);
 				});
 
-				it('should increase the day when incrementing the picker', function () {
+				it('should increase the day when incrementing the picker - [GT-21247]', function () {
 					Page.spotlightSelect();
 					Page.waitTransitionEnd();
 					const {day, month, year} = extractValues(datePicker);
@@ -122,7 +121,7 @@ describe('DatePicker', function () {
 					expect(value).to.equal(expected);
 				});
 
-				it('should increase the year when incrementing the picker', function () {
+				it('should increase the year when incrementing the picker - [GT-21247]', function () {
 					Page.spotlightSelect();
 					Page.waitTransitionEnd();
 					const {year} = extractValues(datePicker);
@@ -255,7 +254,7 @@ describe('DatePicker', function () {
 		describe('default with noneText', function () {
 			const datePicker = Page.components.datePickerDefaultClosedWithNoneText;
 
-			it('should have correct none text', function () {
+			it('should have correct none text - [GT-21246]', function () {
 				expect(datePicker.valueText).to.equal('Nothing Selected');
 			});
 		});
@@ -278,7 +277,7 @@ describe('DatePicker', function () {
 			});
 
 			describe('pointer', function () {
-				it('should close on title click when open', function () {
+				it('should close on title click when open - [GT-21246]', function () {
 					datePicker.title.click();
 					Page.waitTransitionEnd();
 					expectClosed(datePicker);
@@ -339,6 +338,7 @@ describe('DatePicker', function () {
 			const datePicker = Page.components.datePickerDisabledWithNoneText;
 
 			it('should be initially closed', function () {
+				datePicker.self.waitForExist(500);
 				expectClosed(datePicker);
 			});
 
@@ -346,7 +346,7 @@ describe('DatePicker', function () {
 				expect(datePicker.valueText).to.equal('Nothing Selected');
 			});
 
-			describe('5-way', function() {
+			describe('5-way', function () {
 				it('should not receive focus', function () {
 					Page.components.datePickerNoLabels.focus();
 					Page.spotlightDown();
@@ -366,8 +366,8 @@ describe('DatePicker', function () {
 
 		describe('default disabled open', function () {
 			const datePicker = Page.components.datePickerDisabledOpenWithNoneText;
-
 			it('should be initially closed', function () {
+				datePicker.self.waitForExist(500);
 				expectClosed(datePicker);
 			});
 
@@ -403,8 +403,7 @@ describe('DatePicker', function () {
 			expect(datePicker.year.hasFocus()).to.be.true();
 		});
 
-		// ENYO-5151
-		it.skip('should focus title when 5-way left from last picker', function () {
+		it('should focus title when 5-way left from last picker - [GT-25238]', function () {
 			Page.spotlightSelect();
 			Page.waitTransitionEnd();
 			expectOpen(datePicker);

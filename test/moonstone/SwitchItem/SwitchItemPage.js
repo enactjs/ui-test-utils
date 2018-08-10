@@ -30,7 +30,7 @@ class SwitchItemPage extends Page {
 		const switchDisabled = new SwitchItemInterface('switchItem4');
 		const switchInlineDisabled = new SwitchItemInterface('switchItem5');
 
-		this.components = {switchDefault, switchDefaultSelected, switchInline, switchDisabled, switchInlineDisabled}
+		this.components = {switchDefault, switchDefaultSelected, switchInline, switchDisabled, switchInlineDisabled};
 	}
 
 	open (urlExtra) {
