@@ -617,7 +617,7 @@ describe('Popup', function () {
 				expect(popup.buttonOK.hasFocus()).to.be.true();
 			});
 
-			it('should spot close button on 5-way right in popup container', function () {
+			it('should spot cancel button on 5-way right in popup container', function () {
 				Page.spotlightRight();
 				Page.spotlightRight();
 				Page.spotlightDown();
@@ -625,7 +625,7 @@ describe('Popup', function () {
 				browser.pause(250);
 				expectOpen(popupCommon);
 				Page.spotlightRight();
-				expect(popup.buttonClose.hasFocus()).to.be.true();
+				expect(popup.buttonCancel.hasFocus()).to.be.true();
 			});
 
 			it('should spot back the ok button on 5-way right then left in popup container', function () {
@@ -751,14 +751,14 @@ describe('Popup', function () {
 				expect(popup.buttonOK.hasFocus()).to.be.true();
 			});
 
-			it('should spot close button on 5-way right in popup container', function () {
+			it('should spot cancel button on 5-way right in popup container', function () {
 				Page.spotlightDown();
 				Page.spotlightDown();
 				Page.spotlightSelect();
 				browser.pause(250);
 				expectOpen(popupCommon);
 				Page.spotlightRight();
-				expect(popup.buttonClose.hasFocus()).to.be.true();
+				expect(popup.buttonCancel.hasFocus()).to.be.true();
 			});
 
 			it('should spot back the ok button on 5-way right then left in popup container', function () {
@@ -879,7 +879,7 @@ describe('Popup', function () {
 				expect(popup.buttonOK.hasFocus()).to.be.true();
 			});
 
-			it('should spot close button on 5-way right in popup container', function () {
+			it('should spot cancel button on 5-way right in popup container', function () {
 				Page.spotlightRight();
 				Page.spotlightDown();
 				Page.spotlightDown();
@@ -887,7 +887,7 @@ describe('Popup', function () {
 				browser.pause(250);
 				expectOpen(popupCommon);
 				Page.spotlightRight();
-				expect(popup.buttonClose.hasFocus()).to.be.true();
+				expect(popup.buttonCancel.hasFocus()).to.be.true();
 			});
 
 			it('should spot back the ok button on 5-way right then left in popup container', function () {
@@ -1051,7 +1051,7 @@ describe('Popup', function () {
 				expect(popup.buttonOK.hasFocus()).to.be.true();
 			});
 
-			it('should spot close button on 5-way right in popup container', function () {
+			it('should spot cancel button on 5-way right in popup container', function () {
 				Page.spotlightRight();
 				Page.spotlightRight();
 				Page.spotlightDown();
@@ -1060,7 +1060,7 @@ describe('Popup', function () {
 				browser.pause(250);
 				expectNoneScrimOpen(popupCommon);
 				Page.spotlightRight();
-				expect(popup.buttonClose.hasFocus()).to.be.true();
+				expect(popup.buttonCancel.hasFocus()).to.be.true();
 			});
 
 			it('should spot back the ok button on 5-way right then left in popup container', function () {
