@@ -281,7 +281,7 @@ describe('ActivityPanels', function () {
 				expect(Page.item5.hasFocus()).to.be.true();
 			});
 
-			it.skip('should re-spot in Default panel', function () {
+			it('should re-spot in Default panel', function () {
 				Page.button1.moveToObject();
 				Page.spotlightSelect();
 				Page.waitTransitionEnd();
@@ -294,7 +294,7 @@ describe('ActivityPanels', function () {
 				Page.waitTransitionEnd();
 				expect(Page.body.hasFocus(), 'body focus').to.be.true();
 				Page.spotlightDown();
-				expect(Page.item1.hasFocus(), 'item 1 focus').to.be.true();
+				expect(Page.breadcrumb.hasFocus(), 'breadcrumb focus').to.be.true();
 				Page.button1.moveToObject();
 				Page.spotlightSelect();
 				Page.waitTransitionEnd();
