@@ -5,7 +5,7 @@ class CheckboxItemInterface {
 	constructor (id) {
 		this.id = id;
 		this.marqueeTextSelector = `#${this.id} > div .enact_ui_Marquee_Marquee_text`;
-		this.iconSeletor = `#${this.id} > div .enact_moonstone_Icon_Icon_icon`;
+		this.iconSelector = `#${this.id} > div .enact_moonstone_Icon_Icon_icon`;
 	}
 
 	focus () {
@@ -15,7 +15,7 @@ class CheckboxItemInterface {
 	get self () { return browser.element(`#${this.id}`); }
 	get value () { return browser.element(this.marqueeTextSelector); }
 	get valueText () { return this.value.getText(); }
-	get icon () { return browser.element(this.iconSeletor); }
+	get icon () { return browser.element(this.iconSelector); }
 	get iconSymbol () { return this.icon.getText(); }
 	get isChecked () { return browser.isExisting(`#${this.id} .enact_moonstone_Checkbox_Checkbox_selected`); }
 	get isAfter () { return browser.isExisting(`#${this.id} .enact_moonstone_SlotItem_SlotItem_after`); }

@@ -28,11 +28,11 @@ describe('DatePicker', function () {
 				Page.spotlightSelect();
 				Page.waitTransitionEnd();
 				expectOpen(datePicker);
-				expect(datePicker.month.hasFocus()).to.be.true();
+				expect(datePicker.month.hasFocus(), 'Month').to.be.true();
 				Page.spotlightRight();
-				expect(datePicker.day.hasFocus()).to.be.true();
+				expect(datePicker.day.hasFocus(), 'Day').to.be.true();
 				Page.spotlightRight();
-				expect(datePicker.year.hasFocus()).to.be.true();
+				expect(datePicker.year.hasFocus(), 'Year').to.be.true();
 			});
 
 			describe('5-way', function () {
