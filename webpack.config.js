@@ -39,7 +39,7 @@ module.exports = function (env) {
 	// The production configuration is different and lives in a separate file.
 	return {
 		// Don't attempt to continue if there are any errors.
-		bail: true,
+		bail: false,
 		// We use sourcemaps to allow devtools to view the original module code data
 		devtool: 'cheap-module-source-map',
 		// Cache during build

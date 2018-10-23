@@ -4,6 +4,7 @@
   "description": "UI Testing for the Enact framework",
   "main": "index.js",
   "scripts": {
+  	"pack": "node build-apps.js",
     "test": "wdio wdio.conf.js",
     "test-tv": "wdio wdio.tv.conf.js"
   },

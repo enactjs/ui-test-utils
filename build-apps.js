@@ -1,7 +1,14 @@
 const path = require('path');
+const externals = require('@enact/dev-utils/mixins/externals');
+const framework = require('@enact/dev-utils/mixins/framework');
 const readdirp = require('readdirp');
 const webpack = require('webpack');
 const generator = require('./webpack.config.js');
+
+const enact = generator({APPENTRY: 'framework', APPOUTPUT: path.join('dist', 'framework')});
+framework.apply(enact);
+enact.entry.enact = enact.entry.enact.filter(e => !e.includes('@enact/dev-utils') && !e.includes('ReactPerf') && !e.includes('node_modules'));
+process.env.ILIB_BASE_PATH = path.join('/framework', 'node_modules', '@enact', 'i18n', 'ilib');
 
 function findViews () {
 	return new Promise((resolve, reject) => {
@@ -19,25 +26,30 @@ function buildApps () {
 	if (process.argv.includes('--skip-build')){
 		return true;
 	} else {
-		return findViews().then(files => (
-			epack(files.map(f => (
-				generator({
-					APPENTRY: f.fullPath,
-					APPOUTPUT: path.join('dist', path.basename(f.fullPath, '.js'))
-				})
-			)))
-		)).catch(err => {
-			console.error('Build failed:');
-			console.error();
-			console.error(err.message)
-			process.exit(1);
-		})
+		console.log('Packing Enact framework...');
+		return epack([enact])
+			.then(() => console.log('Packing views in parallel...'))
+			.then(() => findViews())
+			.then(files => (
+				epack(files.map(f => {
+					let config = generator({
+						APPENTRY: f.fullPath,
+						APPOUTPUT: path.join('dist', path.basename(f.fullPath, '.js'))
+					});
+					externals.apply(config, {externals:'dist/framework', 'externals-inject':'/framework'});
+					return config;
+				})))
+			).catch(err => {
+				console.error('Build failed:');
+				console.error();
+				console.error(err)
+				process.exit(1);
+			});
 	}
 }
 
 function epack (configs) {
 	process.env.NODE_ENV = 'development';
-	console.log('Packing views in parallel...');
 	console.log();
 	return new Promise((resolve, reject) => {
 		const multiCompiler = webpack(configs);
@@ -70,3 +82,4 @@ function epack (configs) {
 }
 
 module.exports = buildApps;
+if (require.main === module) buildApps();
