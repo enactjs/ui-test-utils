@@ -27,7 +27,7 @@ function buildApps () {
 		return true;
 	} else {
 		console.log('Packing Enact framework...');
-		return epack([enact])
+		return Promise.resolve()//epack([enact])
 			.then(() => console.log('Packing views in parallel...'))
 			.then(() => findViews())
 			.then(files => (
@@ -36,13 +36,13 @@ function buildApps () {
 						APPENTRY: f.fullPath,
 						APPOUTPUT: path.join('dist', path.basename(f.fullPath, '.js'))
 					});
-					externals.apply(config, {externals:'dist/framework', 'externals-inject':'/framework'});
+					externals.apply(config, {externalsPublic:'dist/framework'});
 					return config;
 				})))
 			).catch(err => {
 				console.error('Build failed:');
 				console.error();
-				console.error(err)
+				console.error(err);
 				process.exit(1);
 			});
 	}
@@ -54,7 +54,7 @@ function epack (configs) {
 	return new Promise((resolve, reject) => {
 		const multiCompiler = webpack(configs);
 		multiCompiler.compilers.forEach(compiler => {
-			compiler.plugin('done', () => {
+			compiler.hooks.done.tap('UITests', () => {
 				const src = path.relative(process.cwd(), compiler.options.resolve.alias['UI_TEST_APP_ENTRY']);
 				const out = path.relative(process.cwd(), compiler.options.output.path);
 				console.log('Built ' + src + ' to ' + out);
@@ -73,7 +73,7 @@ function epack (configs) {
 						console.log();
 						console.log(statsJSON.warnings.join('\n\n'));
 					}
-					console.log('Build completed successfully.');
+					console.log('Build completed successfully.\n');
 					resolve();
 				}
 			}
