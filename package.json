@@ -5,6 +5,8 @@
   "main": "index.js",
   "scripts": {
     "pack": "node build-apps.js",
+    "pack-enact": "node build-apps.js --skip-tests",
+    "pack-tests": "node build-apps.js --skip-enact",
     "test": "wdio wdio.conf.js",
     "test-tv": "wdio wdio.tv.conf.js"
   },

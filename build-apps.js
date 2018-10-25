@@ -5,9 +5,7 @@ const readdirp = require('readdirp');
 const webpack = require('webpack');
 const generator = require('./webpack.config.js');
 
-const enact = generator({APPENTRY: 'framework', APPOUTPUT: path.join('dist', 'framework')});
-framework.apply(enact);
-enact.entry.enact = enact.entry.enact.filter(e => !e.includes('@enact/dev-utils') && !e.includes('ReactPerf') && !e.includes('node_modules'));
+const enact = framework.apply(generator({APPENTRY: 'framework', APPOUTPUT: path.join('dist', 'framework')}));
 process.env.ILIB_BASE_PATH = path.join('/framework', 'node_modules', '@enact', 'i18n', 'ilib');
 
 function findViews () {
@@ -23,29 +21,34 @@ function findViews () {
 }
 
 function buildApps () {
-	if (process.argv.includes('--skip-build')){
-		return true;
-	} else {
-		console.log('Packing Enact framework...');
-		return epack([enact])
-			.then(() => console.log('Packing views in parallel...'))
-			.then(() => findViews())
-			.then(files => (
-				epack(files.map(f => {
-					let config = generator({
-						APPENTRY: f.fullPath,
-						APPOUTPUT: path.join('dist', path.basename(f.fullPath, '.js'))
-					});
-					externals.apply(config, {externalsPublic:'dist/framework'});
-					return config;
-				})))
-			).catch(err => {
-				console.error('Build failed:');
-				console.error();
-				console.error(err);
-				process.exit(1);
-			});
-	}
+	if (process.argv.includes('--skip-build')) return;
+
+	return Promise.resolve()
+		.then(() => {
+			if(!process.argv.includes('--skip-enact')) {
+				console.log('Packing Enact framework...');
+				return epack([enact]);
+			}
+		})
+		.then(() => {
+			if(!process.argv.includes('--skip-tests')) {
+				console.log('Packing views in parallel...');
+				return findViews().then(files => (
+					epack(files.map(f => (
+						externals.apply(generator({
+							APPENTRY: f.fullPath,
+							APPOUTPUT: path.join('dist', path.basename(f.fullPath, '.js'))
+						}), {externalsPublic:'dist/framework'})
+					)))
+				));
+			}
+		})
+		.catch(err => {
+			console.error('Build failed:');
+			console.error();
+			console.error(err.message);
+			process.exit(1);
+		});
 }
 
 function epack (configs) {
