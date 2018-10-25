@@ -9,8 +9,8 @@ addons:
     sources:
       - ubuntu-toolchain-r-test
     packages:
-      - g++-4.9addons:
-    chrome: stable
+      - g++-4.9
+  chrome: stable
 install:
     - npm install
 before_script:
