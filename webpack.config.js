@@ -8,7 +8,7 @@ const flexbugfixes = require('postcss-flexbugs-fixes');
 const globalImport = require('postcss-global-import');
 const LessPluginRi = require('resolution-independence');
 const {DefinePlugin, EnvironmentPlugin} = require('webpack');
-const {optionParser: app, GracefulFsPlugin, ILibPlugin, WebOSMetaPlugin} = require('@enact/dev-utils');
+const {optionParser: app, GracefulFsPlugin, ILibPlugin} = require('@enact/dev-utils');
 
 const cssIdent = /(?:@(enact[/\\].*)|^((?:(?!@enact).)*))\.(?:less|css)/;
 
@@ -46,12 +46,7 @@ module.exports = function (env) {
 		// This means they will be the "root" imports that are included in JS bundle.
 		// The first two entry points enable "hot" CSS and auto-refreshes for JS.
 		entry: {
-			main: [
-				// Include a few polyfills by default (Promise, Object.assign, and fetch)
-				require.resolve('./polyfills'),
-				// Finally, this is your app's code
-				app.context
-			]
+			main: [app.context]
 		},
 		output: {
 			// The build output directory.

@@ -27,7 +27,7 @@ function buildApps () {
 		return true;
 	} else {
 		console.log('Packing Enact framework...');
-		return Promise.resolve()//epack([enact])
+		return epack([enact])
 			.then(() => console.log('Packing views in parallel...'))
 			.then(() => findViews())
 			.then(files => (
