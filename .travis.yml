@@ -2,7 +2,14 @@ language: node_js
 node_js:
     - "node"
 sudo: required
+env:
+  - CXX=g++-4.9
 addons:
+  apt:
+    sources:
+      - ubuntu-toolchain-r-test
+    packages:
+      - g++-4.9addons:
     chrome: stable
 install:
     - npm install
