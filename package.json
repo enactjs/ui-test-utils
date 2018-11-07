@@ -28,7 +28,7 @@
     "@babel/preset-env": "7.1.0",
     "@babel/preset-react": "7.0.0",
     "@enact/core": "2.2.3",
-    "@enact/dev-utils": "2.0.0",
+    "@enact/dev-utils": "2.0.1",
     "@enact/i18n": "2.2.3",
     "@enact/moonstone": "2.2.3",
     "@enact/spotlight": "2.2.3",
