@@ -1,12 +1,14 @@
 const path = require('path');
+const fs = require('fs-extra');
 const externals = require('@enact/dev-utils/mixins/externals');
 const framework = require('@enact/dev-utils/mixins/framework');
 const readdirp = require('readdirp');
 const webpack = require('webpack');
 const generator = require('./webpack.config.js');
 
+const ilib = path.join('node_modules', '@enact', 'i18n', 'ilib');
+process.env.ILIB_BASE_PATH = path.join('/framework', ilib);
 const enact = framework.apply(generator({APPENTRY: 'framework', APPOUTPUT: path.join('dist', 'framework')}));
-process.env.ILIB_BASE_PATH = path.join('/framework', 'node_modules', '@enact', 'i18n', 'ilib');
 
 function findViews () {
 	return new Promise((resolve, reject) => {
@@ -27,7 +29,10 @@ function buildApps () {
 		.then(() => {
 			if(!process.argv.includes('--skip-enact')) {
 				console.log('Packing Enact framework...');
-				return epack([enact]);
+				const ilibDist = path.join('dist', process.env.ILIB_BASE_PATH);
+				return epack([enact])
+					.then(() => fs.ensureDir(ilibDist))
+					.then(() => fs.existsSync(ilib) && fs.copy(ilib, ilibDist));
 			}
 		})
 		.then(() => {
