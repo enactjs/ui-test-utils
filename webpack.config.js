@@ -2,15 +2,13 @@ const fs = require('fs');
 const path = require('path');
 const autoprefixer = require('autoprefixer');
 const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const flexbugfixes = require('postcss-flexbugs-fixes');
+const globalImport = require('postcss-global-import');
 const LessPluginRi = require('resolution-independence');
-const {DefinePlugin} = require('webpack');
-const app = require('@enact/dev-utils/option-parser');
-const GracefulFsPlugin = require('@enact/dev-utils/plugins/GracefulFsPlugin');
-const ILibPlugin = require('@enact/dev-utils/plugins/ILibPlugin');
-const WebOSMetaPlugin = require('@enact/dev-utils/plugins/WebOSMetaPlugin');
+const {DefinePlugin, EnvironmentPlugin} = require('webpack');
+const {optionParser: app, GracefulFsPlugin, ILibPlugin} = require('@enact/dev-utils');
 
 const cssIdent = /(?:@(enact[/\\].*)|^((?:(?!@enact).)*))\.(?:less|css)/;
 
@@ -29,21 +27,21 @@ function resolveModule (ref, rel = '') {
 	}
 }
 
-module.exports = function (env) {
-	const TARGET_PLATFORM = env.TARGET_PLATFORM || 'Chrome 53';
+app.setEnactTargetsAsDefault();
 
+module.exports = function (env) {
+	process.env.NODE_ENV = 'development';
 	process.chdir(app.context);
 
 	// This is the development configuration.
 	// It is focused on developer experience and fast rebuilds.
 	// The production configuration is different and lives in a separate file.
 	return {
+		mode: 'development',
 		// Don't attempt to continue if there are any errors.
 		bail: true,
 		// We use sourcemaps to allow devtools to view the original module code data
 		devtool: 'cheap-module-source-map',
-		// Cache during build
-		cache: true,
 		// These are the "entry points" to our application.
 		// This means they will be the "root" imports that are included in JS bundle.
 		// The first two entry points enable "hot" CSS and auto-refreshes for JS.
@@ -65,12 +63,18 @@ module.exports = function (env) {
 		resolve: {
 			// These are the reasonable defaults supported by the React/ES6 ecosystem.
 			extensions: ['.js', '.jsx', '.json'],
+			// Allows us to specify paths to check for module resolving.
 			modules: [path.resolve('./node_modules'), 'node_modules'],
 			alias: {
 				'UI_TEST_APP_ENTRY': env.APPENTRY,
 				// Support ilib shorthand alias for ilib modules
 				ilib: '@enact/i18n/ilib/lib'
 			}
+		},
+		// Resolve loaders (webpack plugins for CSS, images, transpilation) from the
+		// directory of `@enact/cli` itself rather than the project directory.
+		resolveLoader: {
+			modules: [path.resolve(__dirname, '../node_modules'), path.resolve('./node_modules')]
 		},
 		module: {
 			rules: [
@@ -96,21 +100,36 @@ module.exports = function (env) {
 									[
 										'@babel/preset-env',
 										{
-											targets: {browsers: [TARGET_PLATFORM]},
-											exclude: ['transform-regenerator', 'web.dom.iterable', 'web.timers', 'web.immediate'],
+											exclude: [
+												'transform-regenerator',
+												'web.dom.iterable',
+												'web.timers',
+												'web.immediate'
+											],
 											useBuiltIns: 'entry',
 											modules: false
 										}
 									],
-									'@babel/preset-stage-0',
-									'@babel/preset-react'
+									[
+										'@babel/preset-react',
+										{
+											// Adds component stack to warning messages
+											// Adds __self attribute to JSX which React will use for some warnings
+											development: true,
+											// Will use the native built-in instead of trying to polyfill
+											// behavior for any plugins that require one.
+											useBuiltIns: true
+										}
+									]
 								],
 								plugins: [
-									'dev-expression',
-									'@babel/plugin-transform-react-jsx-self',
-									'@babel/plugin-transform-react-jsx-source',
-									'@babel/plugin-transform-react-inline-elements'
+									'@babel/plugin-proposal-export-default-from',
+									'@babel/plugin-proposal-export-namespace-from',
+									'@babel/plugin-syntax-dynamic-import',
+									['@babel/plugin-proposal-class-properties', {loose: true}],
+									'dev-expression'
 								],
+								babelrc: false,
 								// This is a feature of `babel-loader` for webpack (not Babel itself).
 								// It enables caching results in ./node_modules/.cache/babel-loader/
 								// directory for faster rebuilds.
@@ -132,60 +151,70 @@ module.exports = function (env) {
 				{
 					test: /\.(c|le)ss$/,
 					// Note: this won't work without `new ExtractTextPlugin()` in `plugins`.
-					loader: ExtractTextPlugin.extract({
-						fallback: require.resolve('style-loader'),
-						use: [
-							{
-								loader: require.resolve('css-loader'),
-								options: {
-									importLoaders: 2,
-									modules: true,
-									sourceMap: true,
-									localIdentName: '[name]__[local]',
-									getLocalIdent: (context, localIdentName, localName) => {
-										let rel = path.relative(app.context, context.resourcePath);
-										if(rel.startsWith('..')) {
-											rel = resolveModule(fs.realpathSync(rel));
-										}
-										const ident = rel.match(cssIdent);
-										return ((ident && (ident[1] || ident[2])) || 'unknown').replace(/[/\\]+/g, '_') +
-												'_' + localName;
+					use: [
+						MiniCssExtractPlugin.loader,
+						{
+							loader: require.resolve('css-loader'),
+							options: {
+								importLoaders: 2,
+								modules: true,
+								sourceMap: true,
+								localIdentName: '[name]__[local]',
+								getLocalIdent: (context, localIdentName, localName) => {
+									let rel = path.relative(app.context, context.resourcePath);
+									if(rel.startsWith('..')) {
+										rel = resolveModule(fs.realpathSync(rel));
 									}
-								}
-							},
-							{
-								loader: require.resolve('postcss-loader'),
-								options: {
-									ident: 'postcss', // https://webpack.js.org/guides/migrating/#complex-options
-									sourceMap: true,
-									plugins: () => [
-										// We use PostCSS for autoprefixing only, but others could be added.
-										autoprefixer({
-											browsers: [TARGET_PLATFORM],
-											flexbox: 'no-2009',
-											remove: false
-										}),
-										// Fix and adjust for known flexbox issues
-										// See https://github.com/philipwalton/flexbugs
-										flexbugfixes
-									]
-								}
-							},
-							{
-								loader: require.resolve('less-loader'),
-								options: {
-									sourceMap: true,
-									// If resolution independence options are specified, use the LESS plugin.
-									plugins: app.ri ? [new LessPluginRi(app.ri)] : []
+									const ident = rel.match(cssIdent);
+									return ((ident && (ident[1] || ident[2])) || 'unknown').replace(/[/\\]+/g, '_') +
+											'_' + localName;
 								}
 							}
-						]
-					})
+						},
+						{
+							loader: require.resolve('postcss-loader'),
+							options: {
+								ident: 'postcss', // https://webpack.js.org/guides/migrating/#complex-options
+								sourceMap: true,
+								plugins: () => [
+									// We use PostCSS for autoprefixing only, but others could be added.
+									autoprefixer({
+										flexbox: 'no-2009',
+										remove: false
+									}),
+									// Fix and adjust for known flexbox issues
+									// See https://github.com/philipwalton/flexbugs
+									flexbugfixes,
+									// Support @global-import syntax to import css in a global context.
+									globalImport
+								]
+							}
+						},
+						{
+							loader: require.resolve('less-loader'),
+							options: {
+								modifyVars: Object.assign({}, app.accent),
+								sourceMap: true,
+								// If resolution independence options are specified, use the LESS plugin.
+								plugins: app.ri ? [new LessPluginRi(app.ri)] : []
+							}
+						}
+					]
 				}
 				// ** STOP ** Are you adding a new loader?
 				// Remember to add the new extension(s) to the "file" loader exclusion regex list.
 			]
 		},
+		// Specific webpack-dev-server options
+		devServer: {
+			// Broadcast http server on the localhost, port 8080
+			host: '0.0.0.0',
+			port: 8080
+		},
+		// Target app to build for a specific environment (default 'web')
+		target: app.environment,
+		// Optional configuration for polyfilling NodeJS built-ins.
+		node: app.nodeBuiltins,
 		performance: {
 			hints: false
 		},
@@ -196,18 +225,19 @@ module.exports = function (env) {
 				// be determined automatically from any appinfo.json files discovered.
 				title: env.APPTITLE || 'UI Test',
 				inject: 'body',
-				template: path.join(__dirname, 'html-template.ejs'),
+				template: app.template || path.join(__dirname, 'html-template.ejs'),
 				xhtml: true
 			}),
 			// Make NODE_ENV environment variable available to the JS code, for example:
 			// if (process.env.NODE_ENV === 'development') { ... }.
-			new DefinePlugin({
-				'process.env': {
-					NODE_ENV: '"development"'
-				}
+			new DefinePlugin({'process.env.NODE_ENV': JSON.stringify('development')}),
+			// Inject prefixed environment variables within code, when used
+			new EnvironmentPlugin(Object.keys(process.env).filter(key => /^REACT_APP_/.test(key))),
+			// Note: this won't work without MiniCssExtractPlugin.loader in `loaders`.
+			new MiniCssExtractPlugin({
+				filename: '[name].css',
+				chunkFilename: 'chunk.[name].css'
 			}),
-			// Note: this won't work without ExtractTextPlugin.extract(..) in `loaders`.
-			new ExtractTextPlugin('[name].css'),
 			// Watcher doesn't work well if you mistype casing in a path so this is
 			// a plugin that prints an error when you attempt to do this.
 			// See https://github.com/facebookincubator/create-react-app/issues/240
@@ -219,11 +249,7 @@ module.exports = function (env) {
 			// Automatically configure iLib library within @enact/i18n. Additionally,
 			// ensure the locale data files and the resource files are copied during
 			// the build to the output directory.
-			new ILibPlugin(),
-			// Automatically detect ./appinfo.json and ./webos-meta/appinfo.json files,
-			// and parses any to copy over any webOS meta assets at build time.
-			new WebOSMetaPlugin()
+			new ILibPlugin()
 		]
 	};
-}
-
+};
