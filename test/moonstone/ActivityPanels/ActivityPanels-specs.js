@@ -168,7 +168,7 @@ describe('ActivityPanels', function () {
 
 			// Revisit this test.  As we can't focus the breadcrumb with 5-way by going down right now
 			// we can't have button 4 have the last focus.  Possibly related to ENYO-5151.
-			it.only('should spot last focused item when transitioning back from Third panel', function () {
+			it('should spot last focused item when transitioning back from Third panel', function () {
 				Page.spotlightDown();
 				Page.spotlightDown();
 				Page.spotlightSelect();
