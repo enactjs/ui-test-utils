@@ -168,27 +168,23 @@ describe('ActivityPanels', function () {
 
 			// Revisit this test.  As we can't focus the breadcrumb with 5-way by going down right now
 			// we can't have button 4 have the last focus.  Possibly related to ENYO-5151.
-			it.skip('should spot last focused item when transitioning back in Third panel', function () {
+			it('should spot last focused item when transitioning back from Third panel', function () {
 				Page.spotlightDown();
 				Page.spotlightDown();
 				Page.spotlightSelect();
 				Page.waitTransitionEnd();
 				expect(Page.item5.hasFocus(), 'Item 5 focus').to.be.true();
 				Page.spotlightSelect();
-				// wait for page transition
 				Page.waitTransitionEnd();
 				expect(Page.button3.hasFocus(), 'Button 3 focus').to.be.true();
 				Page.spotlightRight();
 				expect(Page.button4.hasFocus(), 'Button 4 focus').to.be.true();
-				Page.spotlightDown();	// Here does not focus breadcrumb
+				Page.spotlightLeft();
+				Page.spotlightLeft();
 				expect(Page.breadcrumb.hasFocus(), 'Breadcrumb focus').to.be.true();
 				Page.spotlightSelect();
 				Page.waitTransitionEnd();
 				expect(Page.item5.hasFocus(), 'Item 5 refocus').to.be.true();
-				Page.spotlightSelect();
-				Page.waitTransitionEnd();
-
-				expect(Page.button4.hasFocus(), 'Button 4 refocus').to.be.true();
 			});
 
 			it('should spot last focused item in first panel when transitioning after deep navigation', function () {
