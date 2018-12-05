@@ -15,6 +15,14 @@ exports.config = {
 	specs: [
 		'./test/**/*-specs.js'
 	],
+	suites: {
+		moonstone: [
+			'./test/moonstone/**/*-specs.js'
+		],
+		spotlight: [
+			'./test/spotlight/**/*-specs.js'
+		]
+	},
 	// Patterns to exclude.
 	exclude: [
 		// 'path/to/excluded/files'

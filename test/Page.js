@@ -22,6 +22,12 @@ class Page {
 		browser.pause(delay);
 		return browser;
 	}
+
+	delay (delay = 1000) {
+		browser.pause(delay);
+		return browser;
+	}
+
 	spotlightLeft () {
 		return this.keyDelay('Left arrow');
 	}
@@ -39,6 +45,49 @@ class Page {
 	}
 	backKey () {
 		return this.keyDelay('Escape');
+	}
+
+	// For testing "pointer off" by timeout.
+	hidePointerByKeycode () {
+		browser.execute(function () {
+			const event = document.createEvent('Events');
+			event.initEvent('keydown', true, true);
+			event.keyCode = 1537;
+			document.getElementById('root').dispatchEvent(event);
+		});
+		this.delay();
+		return browser;
+	}
+
+	showPointerByKeycode () {
+		browser.execute(function () {
+			const event = document.createEvent('Events');
+			event.initEvent('keydown', true, true);
+			event.keyCode = 1536;
+			document.getElementById('root').dispatchEvent(event);
+		});
+		this.delay();
+		return browser;
+	}
+
+	windowSpotlightBlur () {
+		browser.execute(
+			function () {
+				const event = document.createEvent('Events');
+				event.initEvent('blur', true, true);
+				document.getElementById('root').dispatchEvent(event);
+			}
+		);
+
+	}
+	windowSpotlightFocus () {
+		browser.execute(
+			function () {
+				const event = document.createEvent('Events');
+				event.initEvent('focus', true, true);
+				document.getElementById('root').dispatchEvent(event);
+			}
+		);
 	}
 
 	/* global window */
