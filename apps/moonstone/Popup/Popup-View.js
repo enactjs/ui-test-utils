@@ -45,6 +45,7 @@ class app extends Component {
 					<Button id="buttonPopup3" onClick={() => this.clickHandler({open3: true})}>no Component</Button>
 					<Button id="buttonPopup4" onClick={() => this.clickHandler({open4: true})}>noAnimation</Button>
 					<Button id="buttonPopup5" onClick={() => this.clickHandler({open5: true})}>noCloseButton</Button>
+					<Button>---</Button> {/* placeholder to avoid reworking all the tests because a button was removed */}
 					<Button id="buttonPopup7" onClick={() => this.clickHandler({open7: true})}>spotlightRestrict self-first</Button>
 					<Button id="buttonPopup8" onClick={() => this.clickHandler({open8: true})}>scrimType transparent</Button>
 					<Button id="buttonPopup9" onClick={() => this.clickHandler({open9: true})}>scrimType none</Button>
