@@ -37,7 +37,7 @@ class app extends Component {
 			<div id="popupMain" {...this.props}>
 				<p>
 					UI testing for Popup Component 1. AutoDismiss 2. noAutoDismiss 3. no Components 4. noAnimation
-					5. without Close Button 6. spotlightRestrict none 7. spotlightRestrict self-first 8. scrimType transparent 9. scrimType none
+					5. without Close Button 7. spotlightRestrict self-first 8. scrimType transparent 9. scrimType none
 				</p>
 				<div style={style.main}>
 					<Button id="buttonPopup1" onClick={() => this.clickHandler({open1: true})}>AutoDismiss</Button>
