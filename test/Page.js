@@ -59,6 +59,7 @@ class Page {
 		return browser;
 	}
 
+	/* global document */
 	showPointerByKeycode () {
 		browser.execute(function () {
 			const event = document.createEvent('Events');
