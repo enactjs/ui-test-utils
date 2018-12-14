@@ -12,12 +12,12 @@ describe('IncrementSlider', () => {
 		expect(firstIncrementSlider.item.hasFocus()).to.be.true();
 	});
 
-	it('3. Verify Increase button has focus by pressing the RIGHT key.', () => {
+	it('2. Verify Increase button has focus by pressing the RIGHT key.', () => {
 		Page.spotlightRight();
 		expect(firstIncrementSlider.incrementer.hasFocus()).to.be.true();
 	});
 
-	it('4. Verify spotlight retains on the next arrow button when value is the last value.', () => {
+	it('3. Verify spotlight retains on the next arrow button when value is the last value.', () => {
 		for (let i = 0; i < 4; i++) {
 			Page.spotlightSelect();
 
@@ -25,13 +25,13 @@ describe('IncrementSlider', () => {
 		expect(firstIncrementSlider.incrementer.hasFocus()).to.be.true();
 	});
 
-	it('5. Move spotlight to the second slider', () => {
+	it('4. Move spotlight to the second slider', () => {
 		Page.spotlightLeft();
 		Page.spotlightDown();
 		expect(secondIncrementSlider.item.hasFocus()).to.be.true();
 	});
 
-	it('6. Verify spotlight on navigation.', () => {
+	it('5. Verify spotlight on navigation.', () => {
 		Page.spotlightSelect();
 		Page.spotlightLeft();
 		Page.spotlightLeft();

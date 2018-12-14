@@ -22,7 +22,7 @@ describe('ToggleButton', () => {
 		expect(secondToggleButton.item.hasFocus()).to.be.true();
 	});
 
-	it('5. Move the spotlight back to the first button, and verify that the focus moves after the click action. (spotlightDisappear)', () => {
+	it('4. Move the spotlight back to the first button, and verify that the focus moves after the click action. (spotlightDisappear)', () => {
 		Page.spotlightLeft();
 		Page.spotlightSelect();
 		expect(firstToggleButton.item.hasFocus()).to.be.true();

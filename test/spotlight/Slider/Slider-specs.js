@@ -12,12 +12,12 @@ describe('Slider', () => {
 		expect(slider.item.hasFocus()).to.be.true();
 	});
 
-	it('3. Verify knob has focus when knob selected.', () => {
+	it('2. Verify knob has focus when knob selected.', () => {
 		Page.spotlightSelect();
 		expect(slider.item.hasFocus()).to.be.true();
 	});
 
-	it('4. Verify spotlight retains on the knob after changing the value.', () => {
+	it('3. Verify spotlight retains on the knob after changing the value.', () => {
 		for (let i = 0; i < 3; i++) {
 			Page.spotlightRight();
 		}

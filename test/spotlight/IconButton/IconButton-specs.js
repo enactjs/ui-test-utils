@@ -12,17 +12,17 @@ describe('IconButton', () => {
 		expect(firstButton.item.hasFocus()).to.be.true();
 	});
 
-	it('3. Move spotlight to the second and veirfy the second button has focus.', () => {
+	it('2. Move spotlight to the second and veirfy the second button has focus.', () => {
 		Page.spotlightRight();
 		expect(secondButton.item.hasFocus()).to.be.true();
 	});
 
-	it('4. Veirfy the second button has focus when click the button.', () => {
+	it('3. Veirfy the second button has focus when click the button.', () => {
 		Page.spotlightSelect();
 		expect(secondButton.item.hasFocus()).to.be.true();
 	});
 
-	it('5. Back spotlight to the first button. Click the button and verify the first button has focus. (it has to retain)', () => {
+	it('4. Back spotlight to the first button. Click the button and verify the first button has focus. (it has to retain)', () => {
 		Page.spotlightLeft();
 		Page.spotlightSelect();
 		expect(firstButton.item.hasFocus()).to.be.true();
