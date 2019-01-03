@@ -66,5 +66,8 @@
     "wdio-selenium-standalone-service": "^0.0.10",
     "wdio-static-server-service": "1.0.1",
     "webpack": "4.22.0"
-  }
+  },
+  "devDependencies": {
+   "wdio-spec-reporter": "^0.1.5"
+ }
 }
