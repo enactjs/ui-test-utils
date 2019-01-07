@@ -9,6 +9,7 @@ class PopupCommon {
 	get buttonPopup3 () { return element('#buttonPopup3', browser); }
 	get buttonPopup4 () { return element('#buttonPopup4', browser); }
 	get buttonPopup5 () { return element('#buttonPopup5', browser); }
+	get buttonPopup6 () { return element('#buttonPopup6', browser); }
 	get buttonPopup7 () { return element('#buttonPopup7', browser); }
 	get buttonPopup8 () { return element('#buttonPopup8', browser); }
 	get buttonPopup9 () { return element('#buttonPopup9', browser); }
@@ -46,6 +47,7 @@ class PopupPage extends Page {
 		this.components.popup3 = new PopupInterface('popup3');
 		this.components.popup4 = new PopupInterface('popup4');
 		this.components.popup5 = new PopupInterface('popup5');
+		this.components.popup6 = new PopupInterface('popup6');
 		this.components.popup7 = new PopupInterface('popup7');
 		this.components.popup8 = new PopupInterface('popup8');
 		this.components.popup9 = new PopupInterface('popup9');
