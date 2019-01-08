@@ -408,7 +408,7 @@ describe('Popup', function () {
 				browser.pause(250);
 				expectClosed(popupCommon);
 			});
-			// Question: what are these scrim reference to here? it is a noanimation popup
+
 			it('should open the popup with scrim on click', function () {
 				popupCommon.buttonPopup4.click();
 				browser.pause(250);
@@ -627,7 +627,7 @@ describe('Popup', function () {
 				expect(popup.buttonCancel.hasFocus()).to.be.true();
 			});
 
-			it('should spot back the ok button on 5-way right then left in popup container', function () {  		// *** NEW
+			it('should spot back the ok button on 5-way right then left in popup container', function () {
 				Page.spotlightRight();
 				Page.spotlightRight();
 				Page.spotlightDown();
@@ -639,8 +639,6 @@ describe('Popup', function () {
 				expect(popup.buttonOK.hasFocus()).to.be.true();
 			});
 
-			// updated test and title
-			// it('should not move spot from close button on 5-way left in popup container', function () {
 			it('should not move spot from close button on 5-way right after 5-way up in popup container', function () {
 				Page.spotlightRight();
 				Page.spotlightRight();
@@ -667,8 +665,7 @@ describe('Popup', function () {
 				expect(popup.buttonClose.hasFocus()).to.be.true();
 			});
 
-			// updated steps to reflect title
-			it('should spot the cancel button on 5-way right then down in popup container', function () {  		// *** NEW
+			it('should spot the cancel button on 5-way right then down in popup container', function () {
 				Page.spotlightRight();
 				Page.spotlightRight();
 				Page.spotlightDown();
@@ -761,7 +758,7 @@ describe('Popup', function () {
 				Page.spotlightDown();
 				// Spotlight is on the button 'spotlightRestrict - self-only' (verify step 3)
 				expect(popupCommon.buttonPopup6.hasFocus()).to.be.true();
-				// open popup (step 4)
+				// Open popup (step 4)
 				popupCommon.buttonPopup6.click();
 				browser.pause(250);
 				// Verify the popup opens (verify step 4) - Spotlight will be on buttonOK by default
@@ -770,7 +767,7 @@ describe('Popup', function () {
 				Page.showPointerByKeycode();
 				// Position the pointer on the right of the Cancel buttion inside popup
 				browser.moveToObject('#buttonCancel', 200, 200);
-				// spotlight on button in popup is blur (verify step 5)
+				// Spotlight on button in popup is blur (verify step 5)
 				expect(popup.buttonOK.hasFocus()).to.be.false();
 				// Change from pointer to 5-way mode (step 6)
 				Page.spotlightLeft();
@@ -785,14 +782,10 @@ describe('Popup', function () {
 				expectOpen(popupCommon);
 				// Hover a button outside Popup (step 4)
 				browser.moveToObject('#buttonPopup9', 200, 200);
-				// question: would need a Close X on main viewport to test part 2 of step 4
 				// Test spotlight cannot leave popup (step 4)
 				Page.spotlightUp();
 				// Check spotlight is NOT on buttons outside popup (verify step 4)
 				expect(popup.buttonOK.hasFocus()).to.be.true();
-				// question: need a step here to hover on a Close button outside the popup
-				// pseudo: moveToObjectto offset of Close X button outside PopupPage
-				// pseudo: check spotlight is still inside the popup
 				// Close Popup (step 5)
 				popup.buttonClose.click();
 				Page.spotlightUp();
@@ -812,9 +805,6 @@ describe('Popup', function () {
 				Page.spotlightUp();
 				// Check spotlight is NOT on buttons outside popup (verify step 8)
 				expect(popup.buttonOK.hasFocus()).to.be.true();
-				// question: need a step here to hover on a Close button outside the popup
-				// pseudo: moveToObjectto offset of Close X button outside PopupPage
-				// pseudo: check spotlight is still inside the popup
 			});
 		});
 	});
@@ -862,7 +852,6 @@ describe('Popup', function () {
 				expect(popup.buttonOK.hasFocus()).to.be.true();
 			});
 
-			// updated test and title
 			it('should not move spot from close button on 5-way right after 5-way up in popup container', function () {
 				Page.spotlightDown();
 				Page.spotlightDown();
@@ -875,7 +864,6 @@ describe('Popup', function () {
 				expect(popup.buttonClose.hasFocus()).to.be.true();
 			});
 
-			// Added one 5-way Right to match similar tests
 			it('should not move spot from close button on 5-way right in popup container', function () {
 				Page.spotlightDown();
 				Page.spotlightDown();
@@ -888,7 +876,6 @@ describe('Popup', function () {
 				expect(popup.buttonClose.hasFocus()).to.be.true();
 			});
 
-			// updated steps to reflect title
 			it('should spot the cancel button on 5-way right then down in popup container', function () {
 				Page.spotlightDown();
 				Page.spotlightDown();
@@ -1017,7 +1004,6 @@ describe('Popup', function () {
 				expect(popup.buttonOK.hasFocus()).to.be.true();
 			});
 
-			// updated test and title
 			it('should not move spot from close button on 5-way right after 5-way up in popup container', function () {
 				Page.spotlightRight();
 				Page.spotlightDown();
@@ -1031,7 +1017,6 @@ describe('Popup', function () {
 				expect(popup.buttonClose.hasFocus()).to.be.true();
 			});
 
-			// Added one 5-way Right to match similar tests
 			it('should not move spot from close button on 5-way right in popup container', function () {
 				Page.spotlightRight();
 				Page.spotlightDown();
@@ -1045,7 +1030,6 @@ describe('Popup', function () {
 				expect(popup.buttonClose.hasFocus()).to.be.true();
 			});
 
-			// updated steps to reflect title
 			it('should spot the cancel button on 5-way right then down in popup container', function () {
 				Page.spotlightRight();
 				Page.spotlightDown();
@@ -1086,7 +1070,6 @@ describe('Popup', function () {
 		});
 
 		describe('pointer', function () {
-			// Added a check for button 8 to have focus
 			it('should dismiss the popup on escape key', function () {
 				popupCommon.buttonPopup8.click();
 				browser.pause(250);
@@ -1197,8 +1180,6 @@ describe('Popup', function () {
 				expect(popup.buttonOK.hasFocus()).to.be.true();
 			});
 
-			// updated test and title
-			// it('should not move spot from close button on 5-way left in popup container', function () {
 			it('should not move spot from close button on 5-way right after 5-way up in popup container', function () {
 				Page.spotlightRight();
 				Page.spotlightRight();
@@ -1213,7 +1194,6 @@ describe('Popup', function () {
 				expect(popup.buttonClose.hasFocus()).to.be.true();
 			});
 
-			// Added one 5-way Right to match similar tests
 			it('should not move spot from close button on 5-way right in popup container', function () {
 				Page.spotlightRight();
 				Page.spotlightRight();
@@ -1228,7 +1208,6 @@ describe('Popup', function () {
 				expect(popup.buttonClose.hasFocus()).to.be.true();
 			});
 
-			// updated steps to reflect title
 			it('should spot the cancel button on 5-way right then down in popup container', function () {
 				Page.spotlightRight();
 				Page.spotlightRight();
