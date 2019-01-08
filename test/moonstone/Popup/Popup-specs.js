@@ -740,18 +740,18 @@ describe('Popup', function () {
 				expectOpen(popupCommon);
 				Page.showPointerByKeycode();
 				// Position the pointer inside popup to the right of the Cancel button (step 4)
-				browser.moveToObject('#root', 1000, 1750);
+				browser.moveToObject('#buttonCancel', 200, 200);
 				// 5-way to the Cancel button
 				Page.spotlightLeft();
-				// Spotight is on Cancel button (verify steo 4)
+				// Spotight is on Cancel button (verify step 4)
 				expect(popup.buttonCancel.hasFocus()).to.be.true();
 				// 5-way Up (step 5)
 				Page.spotlightUp();
-				// Spotight remains on the Close button inside the popup (verfiy step 5)
+				// Spotight remains on the Close button inside the popup (verify step 5)
 				expect(popup.buttonClose.hasFocus()).to.be.true();
 				// 5-way up (step 6)
 				Page.spotlightUp();
-				// Spotlight remains on the close button inside the popup (verfiy step 6)
+				// Spotlight remains on the close button inside the popup (verify step 6)
 				expect(popup.buttonClose.hasFocus()).to.be.true();
 			});
 
@@ -764,13 +764,13 @@ describe('Popup', function () {
 				// open popup (step 4)
 				popupCommon.buttonPopup6.click();
 				browser.pause(250);
-				// Verify the popup opens (verofy step 4)
+				// Verify the popup opens (verify step 4) - Spotlight will be on buttonOK by default
 				expectOpen(popupCommon);
-				// wWve the pointer to change to cursor mode (step 5)
+				// Wave the pointer to change to cursor mode (step 5)
 				Page.showPointerByKeycode();
-				// Position the pointer inside popup
-				browser.moveToObject('#root', 620, 750);
-				// spotlight on button in popup is blur (verfy step 5)
+				// Position the pointer on the right of the Cancel buttion inside popup
+				browser.moveToObject('#buttonCancel', 200, 200);
+				// spotlight on button in popup is blur (verify step 5)
 				expect(popup.buttonOK.hasFocus()).to.be.false();
 				// Change from pointer to 5-way mode (step 6)
 				Page.spotlightLeft();
@@ -783,19 +783,23 @@ describe('Popup', function () {
 				browser.pause(250);
 				// Verify the popup opens
 				expectOpen(popupCommon);
-				// Hover button outside Popup (step 4)
-				browser.moveToObject('#root', 825, 370);
+				// Hover a button outside Popup (step 4)
+				browser.moveToObject('#buttonPopup9', 200, 200);
+				// question: would need a Close X on main viewport to test part 2 of step 4
 				// Test spotlight cannot leave popup (step 4)
 				Page.spotlightUp();
 				// Check spotlight is NOT on buttons outside popup (verify step 4)
 				expect(popup.buttonOK.hasFocus()).to.be.true();
+				// question: need a step here to hover on a Close button outside the popup
+				// pseudo: moveToObjectto offset of Close X button outside PopupPage
+				// pseudo: check spotlight is still inside the popup
 				// Close Popup (step 5)
 				popup.buttonClose.click();
 				Page.spotlightUp();
 				// Hover the button 'spotlightRestrict - self-only' outside of the popup (step 6)
 				Page.spotlightUp();
 				browser.pause(250); // Needed for test to pass
-				// Check spotlight is on the button 'spotlightRestrict - self-only' outside popup (vewrify step 6)
+				// Check spotlight is on the button 'spotlightRestrict - self-only' outside popup (verify step 6)
 				expect(popupCommon.buttonPopup6.hasFocus()).to.be.true();
 				// Open popup (step 7)
 				popupCommon.buttonPopup6.click();
@@ -803,12 +807,14 @@ describe('Popup', function () {
 				// Verify the popup opens (step 7)
 				expectOpen(popupCommon);
 				// Hover outside Popup (step 8)
-				browser.moveToObject('#root', 825, 370);
-				browser.pause(450);
+				browser.moveToObject('#buttonPopup9', 200, 200);
 				// Test spotlight cannot leave popup (step 8)
 				Page.spotlightUp();
-				// Check spotlight is NOT on buttons outside popup (Verify step 8)
+				// Check spotlight is NOT on buttons outside popup (verify step 8)
 				expect(popup.buttonOK.hasFocus()).to.be.true();
+				// question: need a step here to hover on a Close button outside the popup
+				// pseudo: moveToObjectto offset of Close X button outside PopupPage
+				// pseudo: check spotlight is still inside the popup
 			});
 		});
 	});
@@ -857,7 +863,6 @@ describe('Popup', function () {
 			});
 
 			// updated test and title
-			// it('should not move spot from close button on 5-way left in popup container', function () {
 			it('should not move spot from close button on 5-way right after 5-way up in popup container', function () {
 				Page.spotlightDown();
 				Page.spotlightDown();
@@ -953,7 +958,7 @@ describe('Popup', function () {
 				expectOpen(popupCommon);
 				Page.showPointerByKeycode();
 				// Position the pointer inside popup to the right of the Cancel button (step 4)
-				browser.moveToObject('#root', 1000, 1750);
+				browser.moveToObject('#buttonCancel', 200, 200);
 				// 5-way to the OK button (step 5) (How to get it to spot Cancel button?)
 				Page.spotlightLeft();
 				// Spotight is on OK button (verify steo 5)
@@ -1013,7 +1018,6 @@ describe('Popup', function () {
 			});
 
 			// updated test and title
-			// it('should not move spot from close button on 5-way left in popup container', function () {
 			it('should not move spot from close button on 5-way right after 5-way up in popup container', function () {
 				Page.spotlightRight();
 				Page.spotlightDown();
