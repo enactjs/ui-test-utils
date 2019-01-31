@@ -46,7 +46,10 @@ exports.config = {
 		// 5 instances get started at a time.
 		maxInstances: 2,
 		//
-		browserName: 'chrome'
+		browserName: 'chrome',
+		chromeOptions: {
+			args: ['--headless', '--window-size=1920,1280'],
+		}
 	}],
 	//
 	// ===================
