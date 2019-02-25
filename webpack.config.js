@@ -10,7 +10,7 @@ const LessPluginRi = require('resolution-independence');
 const {DefinePlugin, EnvironmentPlugin} = require('webpack');
 const {optionParser: app, GracefulFsPlugin, ILibPlugin} = require('@enact/dev-utils');
 
-const cssIdent = /(?:@(enact[/\\].*)|^((?:(?!@enact).)*))\.(?:less|css)/;
+const cssIdent = /(?:@(enact[/\\].*?)|^((?:(?!@enact).)*?))\.(?:module\.)?(?:less|css)/;
 
 function resolveModule (ref, rel = '') {
 	const dir = path.dirname(ref);
