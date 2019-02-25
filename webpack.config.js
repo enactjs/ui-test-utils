@@ -65,6 +65,7 @@ module.exports = function (env) {
 			extensions: ['.js', '.jsx', '.json'],
 			// Allows us to specify paths to check for module resolving.
 			modules: [path.resolve('./node_modules'), 'node_modules'],
+			symlinks: false,
 			alias: {
 				'UI_TEST_APP_ENTRY': env.APPENTRY,
 				// Support ilib shorthand alias for ilib modules
