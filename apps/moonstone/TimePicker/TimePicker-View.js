@@ -25,9 +25,9 @@ const app = (props) => <div {...props}>
 			title="Time Picker Default Open"
 		/>
 		<TimePicker
-			id="timePickerWithValue"
-			title="Time Picker With Value"
-			value={new Date(2009, 5, 6)}
+			id="timePickerWithDefaultValue"
+			defaultValue={new Date(2009, 5, 6)}
+			title="Time Picker With Default Value"
 		/>
 		<TimePicker
 			id="timePickerNoLabels"

@@ -296,7 +296,7 @@ describe('DatePicker', function () {
 
 		describe('with supplied value', function () {
 			// supplied value is `new Date(2009, 5, 6)`
-			const datePicker = Page.components.datePickerWithValue;
+			const datePicker = Page.components.datePickerWithDefaultValue;
 
 			describe('5-way', function () {
 				it('should not update on select', function () {

@@ -44,7 +44,7 @@ class TimePickerPage extends Page {
 		this.components.timePickerDefaultClosedWithoutNoneText = new PickerInterface('timePickerDefaultClosedWithoutNoneText');
 		this.components.timePickerDefaultClosedWithNoneText = new PickerInterface('timePickerDefaultClosedWithNoneText');
 		this.components.timePickerDefaultOpenWithNoneText = new PickerInterface('timePickerDefaultOpenWithNoneText');
-		this.components.timePickerWithValue = new PickerInterface('timePickerWithValue');
+		this.components.timePickerWithDefaultValue = new PickerInterface('timePickerWithDefaultValue');
 		// this.components.timePicker24Hour = new PickerInterface('timePicker24Hour');
 		this.components.timePickerNoLabels = new PickerInterface('timePickerNoLabels');
 		this.components.timePickerDisabledWithNoneText = new PickerInterface('timePickerDisabledWithNoneText');

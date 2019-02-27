@@ -311,9 +311,9 @@ describe('TimePicker', function () {
 			});
 		});
 
-		describe('with supplied value', function () {
+		describe('with supplied defaultValue', function () {
 			// supplied value is `new Date(2009, 5, 6)` (time will be midnight)
-			const timePicker = Page.components.timePickerWithValue;
+			const timePicker = Page.components.timePickerWithDefaultValue;
 
 			describe('5-way', function () {
 				it('should not update on select', function () {
@@ -433,7 +433,7 @@ describe('TimePicker', function () {
 	});
 
 	describe('24-hour locale', function () {
-		const timePicker = Page.components.timePickerWithValue;
+		const timePicker = Page.components.timePickerWithDefaultValue;
 
 		beforeEach(function () {
 			Page.open('?locale=fr-FR');
