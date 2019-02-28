@@ -48,6 +48,9 @@ class DatePickerPage extends Page {
 		this.components.datePickerNoLabels = new PickerInterface('datePickerNoLabels');
 		this.components.datePickerDisabledWithNoneText = new PickerInterface('datePickerDisabledWithNoneText');
 		this.components.datePickerDisabledOpenWithNoneText = new PickerInterface('datePickerDisabledOpenWithNoneText');
+		this.components.datePickerDisabledOpenWithDefaultValue = new PickerInterface('datePickerDisabledOpenWithDefaultValue');
+		this.components.datePickerDisabledWithDefaultValue = new PickerInterface('datePickerDisabledWithDefaultValue');
+		this.components.datePickerDefaultOpenWithDefaultValue = new PickerInterface('datePickerDefaultOpenWithDefaultValue');
 	}
 
 	open (urlExtra) {
