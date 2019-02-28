@@ -389,8 +389,8 @@ describe('TimePicker', function () {
 				expectClosed(timePicker);
 			});
 
-			it('should have the current time value', function () {
-				expect(timePicker.valueText !== 'Nothing Selected').to.be.true();
+			it('should display the noneText', function () {
+				expect(timePicker.valueText).to.equal('Nothing Selected');
 			});
 		});
 	});

@@ -371,9 +371,8 @@ describe('DatePicker', function () {
 				expectClosed(datePicker);
 			});
 
-			it('should have the current date value', function () {
-				const month = new Date(datePicker.valueText).getMonth();
-				expect(month).to.be.within(0, 11);
+			it('should display the noneText', function () {
+				expect(datePicker.valueText).to.equal('Nothing Selected');
 			});
 		});
 	});
