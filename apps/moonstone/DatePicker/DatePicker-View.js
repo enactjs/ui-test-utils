@@ -20,32 +20,54 @@ const app = (props) => <div {...props}>
 		/>
 		<DatePicker
 			id="datePickerDefaultOpenWithNoneText"
+			defaultOpen
 			noneText="Nothing Selected"
 			title="Date Picker Default Open"
-			defaultOpen
 		/>
 		<DatePicker
-			id="datePickerWithValue"
-			title="Date Picker With Value"
-			value={new Date(2009, 5, 6)}
+			id="datePickerWithDefaultValue"
+			defaultValue={new Date(2009, 5, 6)}
+			title="Date Picker With Default Value"
 		/>
 		<DatePicker
 			id="datePickerNoLabels"
-			title="Date Picker noLabels"
 			noLabels
+			title="Date Picker noLabels"
 		/>
 		<DatePicker
 			id="datePickerDisabledWithNoneText"
+			disabled
 			noneText="Nothing Selected"
 			title="Date Picker Disabled"
-			disabled
 		/>
 		<DatePicker
 			id="datePickerDisabledOpenWithNoneText"
-			noneText="Nothing Selected"
-			title="Date Picker Disabled Open"
 			defaultOpen
 			disabled
+			noneText="Nothing Selected"
+			title="Date Picker Disabled Open"
+		/>
+		<DatePicker
+			id="datePickerDisabledOpenWithDefaultValue"
+			defaultOpen
+			defaultValue={new Date(2009, 5, 6)}
+			disabled
+			noneText="Nothing Selected"
+			title="Time Picker Disabled Open With Default Value"
+		/>
+		<DatePicker
+			id="datePickerDisabledWithDefaultValue"
+			defaultValue={new Date(2009, 5, 6)}
+			disabled
+			noneText="Nothing Selected"
+			title="Time Picker Disabled With Default Value"
+		/>
+		<DatePicker
+			id="datePickerDefaultOpenWithDefaultValue"
+			defaultOpen
+			defaultValue={new Date(2009, 5, 6)}
+			noneText="Nothing Selected"
+			title="Time Picker Default Open With Default Value"
 		/>
 	</div>
 </div>;

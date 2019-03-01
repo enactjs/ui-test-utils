@@ -21,6 +21,7 @@ describe('DatePicker', function () {
 			});
 
 			it('should be initially closed', function () {
+				datePicker.self.waitForExist(500);
 				expectClosed(datePicker);
 			});
 
@@ -254,7 +255,7 @@ describe('DatePicker', function () {
 		describe('default with noneText', function () {
 			const datePicker = Page.components.datePickerDefaultClosedWithNoneText;
 
-			it('should have correct none text - [GT-21246]', function () {
+			it('should display \'noneText\' - [GT-21246]', function () {
 				expect(datePicker.valueText).to.equal('Nothing Selected');
 			});
 		});
@@ -263,6 +264,7 @@ describe('DatePicker', function () {
 			const datePicker = Page.components.datePickerDefaultOpenWithNoneText;
 
 			it('should be initially open', function () {
+				datePicker.self.waitForExist(500);
 				expectOpen(datePicker);
 			});
 
@@ -294,9 +296,23 @@ describe('DatePicker', function () {
 			});
 		});
 
-		describe('with supplied value', function () {
+		describe('\'defaultOpen\' with \'defaultValue\'', function () {
+			// supplied value is `new Date(2009, 5, 6)` (time will be midnight)
+			const datePicker = Page.components.datePickerDefaultOpenWithDefaultValue;
+
+			it('should be initially open', function () {
+				datePicker.self.waitForExist(500);
+				expectOpen(datePicker);
+			});
+
+			it('should not display \'noneText\'', function () {
+				expect(datePicker.valueText).to.not.equal('Nothing Selected');
+			});
+		});
+
+		describe('with \'defaultValue\'', function () {
 			// supplied value is `new Date(2009, 5, 6)`
-			const datePicker = Page.components.datePickerWithValue;
+			const datePicker = Page.components.datePickerWithDefaultValue;
 
 			describe('5-way', function () {
 				it('should not update on select', function () {
@@ -342,7 +358,7 @@ describe('DatePicker', function () {
 				expectClosed(datePicker);
 			});
 
-			it('should have correct none text', function () {
+			it('should display \'noneText\'', function () {
 				expect(datePicker.valueText).to.equal('Nothing Selected');
 			});
 
@@ -364,16 +380,42 @@ describe('DatePicker', function () {
 			});
 		});
 
-		describe('default disabled open', function () {
+		describe('disabled with \'defaultValue\'', function () {
+			const datePicker = Page.components.datePickerDisabledWithDefaultValue;
+
+			it('should be initially closed', function () {
+				datePicker.self.waitForExist(500);
+				expectClosed(datePicker);
+			});
+
+			it('should not display \'noneText\'', function () {
+				expect(datePicker.valueText).to.not.equal('Nothing Selected');
+			});
+		});
+
+		describe('disabled \'defaultOpen\'', function () {
 			const datePicker = Page.components.datePickerDisabledOpenWithNoneText;
 			it('should be initially closed', function () {
 				datePicker.self.waitForExist(500);
 				expectClosed(datePicker);
 			});
 
-			it('should have the current date value', function () {
-				const month = new Date(datePicker.valueText).getMonth();
-				expect(month).to.be.within(0, 11);
+			it('should display \'noneText\'', function () {
+				expect(datePicker.valueText).to.equal('Nothing Selected');
+			});
+		});
+
+		describe('disabled \'defaultOpen\' with \'defaultValue\'', function () {
+			// supplied value is `new Date(2009, 5, 6)` (time will be midnight)
+			const datePicker = Page.components.datePickerDisabledOpenWithDefaultValue;
+
+			it('should be initially closed', function () {
+				datePicker.self.waitForExist(500);
+				expectClosed(datePicker);
+			});
+
+			it('should not display \'noneText\'', function () {
+				expect(datePicker.valueText).to.not.equal('Nothing Selected');
 			});
 		});
 	});
