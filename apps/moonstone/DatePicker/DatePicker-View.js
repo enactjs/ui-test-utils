@@ -53,21 +53,21 @@ const app = (props) => <div {...props}>
 			defaultValue={new Date(2009, 5, 6)}
 			disabled
 			noneText="Nothing Selected"
-			title="Time Picker Disabled Open With Default Value"
+			title="Date Picker Disabled Open With Default Value"
 		/>
 		<DatePicker
 			id="datePickerDisabledWithDefaultValue"
 			defaultValue={new Date(2009, 5, 6)}
 			disabled
 			noneText="Nothing Selected"
-			title="Time Picker Disabled With Default Value"
+			title="Date Picker Disabled With Default Value"
 		/>
 		<DatePicker
 			id="datePickerDefaultOpenWithDefaultValue"
 			defaultOpen
 			defaultValue={new Date(2009, 5, 6)}
 			noneText="Nothing Selected"
-			title="Time Picker Default Open With Default Value"
+			title="Date Picker Default Open With Default Value"
 		/>
 	</div>
 </div>;
