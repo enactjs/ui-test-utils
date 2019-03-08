@@ -201,10 +201,11 @@ describe('ActivityPanels', function () {
 				expect(Page.item6.hasFocus(), 'Item 6 refocus').to.be.true();
 				Page.backKey();
 				Page.waitTransitionEnd();
-				browser.pause(3000);
 				expect(Page.item2.hasFocus(), 'Item 2 refocus').to.be.true();
 			});
 
+			// Panel does not remember last focused item when moving forward to already visited panel
+			// from 2.4.0, panel no longer remembers the children when going forward. It will land on the default item - first item - on the panel
 			it('should spot the fifth item on second panel', function () {
 				Page.spotlightDown();
 				Page.spotlightDown();
@@ -222,7 +223,6 @@ describe('ActivityPanels', function () {
 				Page.spotlightLeft();
 				Page.spotlightRight();
 				expect(Page.item5.hasFocus()).to.be.true(); // only from 2.4.0
-				// from 2.4.0, panel no longer remembers the children when going forward. It will land on the default item on the panel
 				// expect(Page.item8.hasFocus()).to.be.true(); // on 2.3.0 and prior
 			});
 
