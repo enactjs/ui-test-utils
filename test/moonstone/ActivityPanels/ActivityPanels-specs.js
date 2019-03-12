@@ -125,23 +125,25 @@ describe('ActivityPanels', function () {
 		});
 
 		describe('pointer', function () {
-			it('should spot last focused item when transitioning back', function () {
+			// The ESC button (Back Key) does _not_ unset the pointer mode and does _not_ focus [ENYO-5865] [ENYO-5882]
+			it('should Not spot last focused item when transitioning back', function () {
 				Page.item2.click();
 				Page.waitTransitionEnd();
 				Page.backKey();
 				Page.waitTransitionEnd();
 
-				expect(Page.item2.hasFocus()).to.be.true();
+				expect(Page.item2.hasFocus()).to.be.false();
 			});
 
-			it('should spot last focused item when transitioning back after moving pointer', function () {
+			// The ESC button (Back Key) does _not_ unset the pointer mode and does _not_ focus [ENYO-5865] [ENYO-5882]
+			it('should Not spot last focused item when transitioning back after moving pointer', function () {
 				Page.item2.click();
 				Page.waitTransitionEnd();
 				Page.item8.moveToObject();
 				Page.backKey();
 				Page.waitTransitionEnd();
 
-				expect(Page.item2.hasFocus()).to.be.true();
+				expect(Page.item2.hasFocus()).to.be.false();
 			});
 		});
 
@@ -153,7 +155,6 @@ describe('ActivityPanels', function () {
 
 				expect(Page.item5.hasFocus()).to.be.true();
 			});
-
 
 			it('should spot last focused item when transitioning back using back key', function () {
 				Page.spotlightDown();

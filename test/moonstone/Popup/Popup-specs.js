@@ -1070,6 +1070,7 @@ describe('Popup', function () {
 		});
 
 		describe('pointer', function () {
+
 			it('should dismiss the popup on escape key', function () {
 				popupCommon.buttonPopup8.click();
 				Page.waitTransitionEnd();
@@ -1077,7 +1078,8 @@ describe('Popup', function () {
 				Page.escButton();
 				Page.waitTransitionEnd();
 				expectClosed(popupCommon);
-				expect(popupCommon.buttonPopup8.hasFocus()).to.be.true();
+				// The ESC button (Back Key) does not switch out of pointer mode [ENYO-5865] [ENYO-5882]
+				expect(popupCommon.buttonPopup8.hasFocus()).to.be.false();
 			});
 
 			it('should dismiss the popup on click on outside the popup', function () {
