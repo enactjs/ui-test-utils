@@ -97,7 +97,7 @@ describe('Popup', function () {
 				Page.spotlightSelect();
 				Page.waitTransitionEnd();
 				expectOpen(popupCommon);
-				Page.escButton();
+				Page.backKey();
 				Page.waitTransitionEnd();
 				expectClosed(popupCommon);
 				expect(popupCommon.buttonPopup1.hasFocus()).to.be.true();
@@ -109,7 +109,7 @@ describe('Popup', function () {
 				popupCommon.buttonPopup1.click();
 				Page.waitTransitionEnd();
 				expectOpen(popupCommon);
-				Page.escButton();
+				Page.backKey();
 				Page.waitTransitionEnd();
 				expectClosed(popupCommon);
 			});
@@ -191,7 +191,7 @@ describe('Popup', function () {
 				Page.spotlightSelect();
 				Page.waitTransitionEnd();
 				expectOpen(popupCommon);
-				Page.escButton();
+				Page.backKey();
 				browser.pause(300);  // needed to pass instead of waitTransitionEnd
 				expectOpen(popupCommon);
 				expect(popup.buttonOK.hasFocus()).to.be.true();
@@ -260,7 +260,7 @@ describe('Popup', function () {
 				Page.spotlightSelect();
 				Page.waitTransitionEnd();
 				expectOpen(popupCommon);
-				Page.escButton();
+				Page.backKey();
 				Page.waitTransitionEnd();
 				expectClosed(popupCommon);
 				expect(popupCommon.buttonPopup3.hasFocus()).to.be.true();
@@ -273,7 +273,7 @@ describe('Popup', function () {
 				popupCommon.buttonPopup3.click();
 				Page.waitTransitionEnd();
 				expectOpen(popupCommon);
-				Page.escButton();
+				Page.backKey();
 				Page.waitTransitionEnd();
 				expectClosed(popupCommon);
 			});
@@ -383,7 +383,7 @@ describe('Popup', function () {
 				Page.spotlightSelect();
 				browser.pause(300); // needed to pass instead of waitTransitionEnd
 				expectOpen(popupCommon);
-				Page.escButton();
+				Page.backKey();
 				browser.pause(300); // needed to pass instead of waitTransitionEnd
 				expectClosed(popupCommon);
 				expect(popupCommon.buttonPopup4.hasFocus()).to.be.true();
@@ -395,7 +395,7 @@ describe('Popup', function () {
 				popupCommon.buttonPopup4.click();
 				browser.pause(300); // needed to pass instead of waitTransitionEnd
 				expectOpen(popupCommon);
-				Page.escButton();
+				Page.backKey();
 				browser.pause(300); // needed to pass instead of waitTransitionEnd
 				expectClosed(popupCommon);
 			});
@@ -561,7 +561,7 @@ describe('Popup', function () {
 				Page.spotlightSelect();
 				Page.waitTransitionEnd();
 				expectOpen(popupCommon);
-				Page.escButton();
+				Page.backKey();
 				Page.waitTransitionEnd();
 				expectClosed(popupCommon);
 				expect(popupCommon.buttonPopup5.hasFocus()).to.be.true();
@@ -697,7 +697,7 @@ describe('Popup', function () {
 				Page.spotlightSelect();
 				Page.waitTransitionEnd();
 				expectOpen(popupCommon);
-				Page.escButton();
+				Page.backKey();
 				Page.waitTransitionEnd();
 				expectClosed(popupCommon);
 				expect(popupCommon.buttonPopup6.hasFocus()).to.be.true();
@@ -905,7 +905,7 @@ describe('Popup', function () {
 				Page.spotlightSelect();
 				Page.waitTransitionEnd();
 				expectOpen(popupCommon);
-				Page.escButton();
+				Page.backKey();
 				Page.waitTransitionEnd();
 				expectClosed(popupCommon);
 				expect(popupCommon.buttonPopup7.hasFocus()).to.be.true();
@@ -1062,7 +1062,7 @@ describe('Popup', function () {
 				Page.spotlightSelect();
 				Page.waitTransitionEnd();
 				expectOpen(popupCommon);
-				Page.escButton();
+				Page.backKey();
 				Page.waitTransitionEnd();
 				expectClosed(popupCommon);
 				expect(popupCommon.buttonPopup8.hasFocus()).to.be.true();
@@ -1075,7 +1075,7 @@ describe('Popup', function () {
 				popupCommon.buttonPopup8.click();
 				Page.waitTransitionEnd();
 				expectOpen(popupCommon);
-				Page.escButton();
+				Page.backKey();
 				Page.waitTransitionEnd();
 				expectClosed(popupCommon);
 				// The ESC button (Back Key) does not switch out of pointer mode [ENYO-5865] [ENYO-5882]
@@ -1245,7 +1245,7 @@ describe('Popup', function () {
 				Page.spotlightSelect();
 				Page.waitTransitionEnd();
 				expectNoneScrimOpen(popupCommon);
-				Page.escButton();
+				Page.backKey();
 				Page.waitTransitionEnd();
 				expectClosed(popupCommon);
 				expect(popupCommon.buttonPopup9.hasFocus()).to.be.true();
@@ -1258,7 +1258,7 @@ describe('Popup', function () {
 				popupCommon.buttonPopup9.click();
 				Page.waitTransitionEnd();
 				expectNoneScrimOpen(popupCommon);
-				Page.escButton();
+				Page.backKey();
 				Page.waitTransitionEnd();
 				expectClosed(popupCommon);
 			});
