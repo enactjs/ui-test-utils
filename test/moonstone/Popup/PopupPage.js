@@ -57,10 +57,6 @@ class PopupPage extends Page {
 		super.open('Popup-View', urlExtra);
 	}
 
-	escButton () {
-		super.keyDelay('Escape');
-	}
-
 	clickPopupFloatLayer () {
 		browser.click('#floatLayer');
 	}
