@@ -567,6 +567,7 @@ describe('ExpandableInput', function () {
 
 		describe('general 5-way navigation', function () {
 			it('should not stop 5-way down when closed', function () {
+				Page.components.default.focus();
 				Page.spotlightDown();
 				expect(Page.components.defaultValue.title.hasFocus()).to.be.true();
 			});
