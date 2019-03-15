@@ -567,6 +567,8 @@ describe('ExpandableInput', function () {
 
 		describe('general 5-way navigation', function () {
 			it('should not stop 5-way down when closed', function () {
+				// FIXME: Necessary to ensure 5-way mode and that focus is in expected location for test
+				// Additional follow up required to sort out why.
 				Page.components.default.focus();
 				Page.spotlightDown();
 				expect(Page.components.defaultValue.title.hasFocus()).to.be.true();
