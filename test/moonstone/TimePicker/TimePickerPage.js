@@ -44,11 +44,13 @@ class TimePickerPage extends Page {
 		this.components.timePickerDefaultClosedWithoutNoneText = new PickerInterface('timePickerDefaultClosedWithoutNoneText');
 		this.components.timePickerDefaultClosedWithNoneText = new PickerInterface('timePickerDefaultClosedWithNoneText');
 		this.components.timePickerDefaultOpenWithNoneText = new PickerInterface('timePickerDefaultOpenWithNoneText');
-		this.components.timePickerWithValue = new PickerInterface('timePickerWithValue');
-		// this.components.timePicker24Hour = new PickerInterface('timePicker24Hour');
+		this.components.timePickerWithDefaultValue = new PickerInterface('timePickerWithDefaultValue');
 		this.components.timePickerNoLabels = new PickerInterface('timePickerNoLabels');
 		this.components.timePickerDisabledWithNoneText = new PickerInterface('timePickerDisabledWithNoneText');
 		this.components.timePickerDisabledOpenWithNoneText = new PickerInterface('timePickerDisabledOpenWithNoneText');
+		this.components.timePickerDisabledOpenWithDefaultValue = new PickerInterface('timePickerDisabledOpenWithDefaultValue');
+		this.components.timePickerDisabledWithDefaultValue = new PickerInterface('timePickerDisabledWithDefaultValue');
+		this.components.timePickerDefaultOpenWithDefaultValue = new PickerInterface('timePickerDefaultOpenWithDefaultValue');
 	}
 
 	open (urlExtra) {

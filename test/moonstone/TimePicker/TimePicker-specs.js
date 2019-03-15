@@ -21,6 +21,7 @@ describe('TimePicker', function () {
 			});
 
 			it('should be initially closed', function () {
+				timePicker.self.waitForExist(500);
 				expectClosed(timePicker);
 			});
 
@@ -271,7 +272,7 @@ describe('TimePicker', function () {
 		describe('default with noneText', function () {
 			const timePicker = Page.components.timePickerDefaultClosedWithNoneText;
 
-			it('should have correct none text', function () {
+			it('should display \'noneText\'', function () {
 				expect(timePicker.valueText).to.equal('Nothing Selected');
 			});
 		});
@@ -280,6 +281,7 @@ describe('TimePicker', function () {
 			const timePicker = Page.components.timePickerDefaultOpenWithNoneText;
 
 			it('should be initially open', function () {
+				timePicker.self.waitForExist(500);
 				expectOpen(timePicker);
 			});
 
@@ -311,9 +313,23 @@ describe('TimePicker', function () {
 			});
 		});
 
-		describe('with supplied value', function () {
+		describe('\'defaultOpen\' with \'defaultValue\'', function () {
 			// supplied value is `new Date(2009, 5, 6)` (time will be midnight)
-			const timePicker = Page.components.timePickerWithValue;
+			const timePicker = Page.components.timePickerDefaultOpenWithDefaultValue;
+
+			it('should be initially open', function () {
+				timePicker.self.waitForExist(500);
+				expectOpen(timePicker);
+			});
+
+			it('should not display \'noneText\'', function () {
+				expect(timePicker.valueText).to.not.equal('Nothing Selected');
+			});
+		});
+
+		describe('with \'defaultValue\'', function () {
+			// supplied value is `new Date(2009, 5, 6)` (time will be midnight)
+			const timePicker = Page.components.timePickerWithDefaultValue;
 
 			describe('5-way', function () {
 				it('should not update on select', function () {
@@ -359,7 +375,7 @@ describe('TimePicker', function () {
 				expectClosed(timePicker);
 			});
 
-			it('should have correct none text', function () {
+			it('should display \'noneText\'', function () {
 				expect(timePicker.valueText).to.equal('Nothing Selected');
 			});
 
@@ -381,7 +397,20 @@ describe('TimePicker', function () {
 			});
 		});
 
-		describe('default disabled open', function () {
+		describe('disabled with \'defaultValue\'', function () {
+			const timePicker = Page.components.timePickerDisabledWithDefaultValue;
+
+			it('should be initially closed', function () {
+				timePicker.self.waitForExist(500);
+				expectClosed(timePicker);
+			});
+
+			it('should not display \'noneText\'', function () {
+				expect(timePicker.valueText).to.not.equal('Nothing Selected');
+			});
+		});
+
+		describe('disabled \'defaultOpen\'', function () {
 			const timePicker = Page.components.timePickerDisabledOpenWithNoneText;
 
 			it('should be initially closed', function () {
@@ -389,8 +418,22 @@ describe('TimePicker', function () {
 				expectClosed(timePicker);
 			});
 
-			it('should have the current time value', function () {
-				expect(timePicker.valueText !== 'Nothing Selected').to.be.true();
+			it('should display \'noneText\'', function () {
+				expect(timePicker.valueText).to.equal('Nothing Selected');
+			});
+		});
+
+		describe('disabled \'defaultOpen\' with \'defaultValue\'', function () {
+			// supplied value is `new Date(2009, 5, 6)` (time will be midnight)
+			const timePicker = Page.components.timePickerDisabledOpenWithDefaultValue;
+
+			it('should be initially closed', function () {
+				timePicker.self.waitForExist(500);
+				expectClosed(timePicker);
+			});
+
+			it('should not display \'noneText\'', function () {
+				expect(timePicker.valueText).to.not.equal('Nothing Selected');
 			});
 		});
 	});
@@ -433,7 +476,7 @@ describe('TimePicker', function () {
 	});
 
 	describe('24-hour locale', function () {
-		const timePicker = Page.components.timePickerWithValue;
+		const timePicker = Page.components.timePickerWithDefaultValue;
 
 		beforeEach(function () {
 			Page.open('?locale=fr-FR');

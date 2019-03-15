@@ -125,23 +125,25 @@ describe('ActivityPanels', function () {
 		});
 
 		describe('pointer', function () {
-			it('should spot last focused item when transitioning back', function () {
+			// The ESC button (Back Key) does _not_ unset the pointer mode and does _not_ focus [ENYO-5865] [ENYO-5882]
+			it('should Not spot last focused item when transitioning back', function () {
 				Page.item2.click();
 				Page.waitTransitionEnd();
 				Page.backKey();
 				Page.waitTransitionEnd();
 
-				expect(Page.item2.hasFocus()).to.be.true();
+				expect(Page.item2.hasFocus()).to.be.false();
 			});
 
-			it('should spot last focused item when transitioning back after moving pointer', function () {
+			// The ESC button (Back Key) does _not_ unset the pointer mode and does _not_ focus [ENYO-5865] [ENYO-5882]
+			it('should Not spot last focused item when transitioning back after moving pointer', function () {
 				Page.item2.click();
 				Page.waitTransitionEnd();
 				Page.item8.moveToObject();
 				Page.backKey();
 				Page.waitTransitionEnd();
 
-				expect(Page.item2.hasFocus()).to.be.true();
+				expect(Page.item2.hasFocus()).to.be.false();
 			});
 		});
 
@@ -153,7 +155,6 @@ describe('ActivityPanels', function () {
 
 				expect(Page.item5.hasFocus()).to.be.true();
 			});
-
 
 			it('should spot last focused item when transitioning back using back key', function () {
 				Page.spotlightDown();
@@ -168,27 +169,23 @@ describe('ActivityPanels', function () {
 
 			// Revisit this test.  As we can't focus the breadcrumb with 5-way by going down right now
 			// we can't have button 4 have the last focus.  Possibly related to ENYO-5151.
-			it.skip('should spot last focused item when transitioning back in Third panel', function () {
+			it('should spot last focused item when transitioning back from Third panel', function () {
 				Page.spotlightDown();
 				Page.spotlightDown();
 				Page.spotlightSelect();
 				Page.waitTransitionEnd();
 				expect(Page.item5.hasFocus(), 'Item 5 focus').to.be.true();
 				Page.spotlightSelect();
-				// wait for page transition
 				Page.waitTransitionEnd();
 				expect(Page.button3.hasFocus(), 'Button 3 focus').to.be.true();
 				Page.spotlightRight();
 				expect(Page.button4.hasFocus(), 'Button 4 focus').to.be.true();
-				Page.spotlightDown();	// Here does not focus breadcrumb
+				Page.spotlightLeft();
+				Page.spotlightLeft();
 				expect(Page.breadcrumb.hasFocus(), 'Breadcrumb focus').to.be.true();
 				Page.spotlightSelect();
 				Page.waitTransitionEnd();
 				expect(Page.item5.hasFocus(), 'Item 5 refocus').to.be.true();
-				Page.spotlightSelect();
-				Page.waitTransitionEnd();
-
-				expect(Page.button4.hasFocus(), 'Button 4 refocus').to.be.true();
 			});
 
 			it('should spot last focused item in first panel when transitioning after deep navigation', function () {
@@ -205,11 +202,12 @@ describe('ActivityPanels', function () {
 				expect(Page.item6.hasFocus(), 'Item 6 refocus').to.be.true();
 				Page.backKey();
 				Page.waitTransitionEnd();
-
 				expect(Page.item2.hasFocus(), 'Item 2 refocus').to.be.true();
 			});
 
-			it('should spot eighth item on second panel', function () {
+			// Panel does not remember last focused item when moving forward to already visited panel
+			// from 2.4.0, panel no longer remembers the children when going forward. It will land on the default item - first item - on the panel
+			it('should spot the fifth item on second panel', function () {
 				Page.spotlightDown();
 				Page.spotlightDown();
 				Page.spotlightDown();
@@ -225,8 +223,8 @@ describe('ActivityPanels', function () {
 				Page.spotlightDown();
 				Page.spotlightLeft();
 				Page.spotlightRight();
-
-				expect(Page.item8.hasFocus()).to.be.true();
+				expect(Page.item5.hasFocus()).to.be.true(); // only from 2.4.0
+				// expect(Page.item8.hasFocus()).to.be.true(); // on 2.3.0 and prior
 			});
 
 
