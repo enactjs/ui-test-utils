@@ -22,7 +22,11 @@ class PickerInterface {
 	get titleText () { return getText(getLabeledItemTitle(this.self)); }
 	get     value () { return getLabeledItemValue(this.self); }
 	get valueText () { return getText(this.value); }
-	get    isOpen () { return this.self.isExisting('.enact_ui_Transition_Transition_shown'); }
+	//get    isOpen () { return this.self.isExisting('.enact_ui_Transition_Transition_shown'); }
+	get    isOpen () {
+		return !(!this.self.isExisting('.enact_ui_Transition_Transition_transition') ||
+		!this.self.isExisting('.enact_ui_Transition_Transition_shown') && this.self.isExisting('.enact_ui_Transition_Transition_hidden'));
+	}
 
 	get hour () { return element('.enact_moonstone_TimePicker_TimePicker_hourComponents .enact_moonstone_internal_Picker_Picker_picker', this.self); }
 	get hourLabel () { return element('.enact_moonstone_TimePicker_TimePicker_hourComponents .enact_moonstone_internal_DateComponentPicker_DateComponentPicker_label', this.self); }

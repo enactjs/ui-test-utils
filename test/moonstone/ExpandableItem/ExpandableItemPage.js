@@ -22,7 +22,10 @@ class ExpandableItemInterface {
 	get titleText () { return getText(getLabeledItemTitle(this.self)); }
 	get     value () { return getLabeledItemValue(this.self); }
 	get valueText () { return getText(this.value); }
-	get    isOpen () { return this.self.isExisting('.enact_ui_Transition_Transition_shown'); }
+	get    isOpen () {
+		return !(!this.self.isExisting('.enact_ui_Transition_Transition_transition') ||
+		!this.self.isExisting('.enact_ui_Transition_Transition_shown') && this.self.isExisting('.enact_ui_Transition_Transition_hidden'));
+	}
 	get  hasLabel () { return this.self.isVisible('.enact_moonstone_LabeledItem_LabeledItem_label'); }
 
 	get item () { return element('.enact_ui_Transition_Transition_transition .enact_moonstone_Item_Item_item', this.self); }
