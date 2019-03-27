@@ -489,7 +489,6 @@ describe('ExpandableList', function () {
 		it('should be initially closed', function () {
 			expect(expandable.isOpen).to.be.false();
 			expect(expandable.chevron).to.equal('󯿭');
-			expect(expandable.item(0).isVisible()).to.be.false();
 		});
 
 		describe('5-way', function () {
@@ -507,7 +506,6 @@ describe('ExpandableList', function () {
 				browser.pause(500);
 				expect(expandable.isOpen).to.be.false();
 				expect(expandable.chevron).to.equal('󯿭');
-				expect(expandable.item(0).isVisible()).to.be.false();
 			});
 		});
 	});
