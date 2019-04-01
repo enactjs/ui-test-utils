@@ -90,7 +90,7 @@ class Page {
 	}
 
 	/* global window */
-	waitTransitionEnd (delay = 1500, msg = 'timed out waiting for transitionend') {
+	waitTransitionEnd (delay = 3000, msg = 'timed out waiting for transitionend') {
 		browser.execute(
 			function () {
 				window.ontransitionend = function () {
