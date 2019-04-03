@@ -1,3 +1,4 @@
+const os = require('os');
 const buildApps = require('./build-apps');
 
 exports.config = {
@@ -77,7 +78,7 @@ exports.config = {
 	//
 	// Set a base URL in order to shorten url command calls. If your url parameter starts
 	// with "/", then the base url gets prepended.
-	baseUrl: 'http://localhost:4567',
+	baseUrl: 'http://dockerhost:4567',
 	//
 	// Default timeout for all waitFor* commands.
 	waitforTimeout: 10000,
@@ -143,6 +144,7 @@ exports.config = {
 		healthCheck: 'http://localhost:4444',
 		options: {
 			p: ['4444:4444'],
+			addHost: [`dockerhost:${os.hostname()}`],
 			shmSize: '2g'
 		}
 	},
