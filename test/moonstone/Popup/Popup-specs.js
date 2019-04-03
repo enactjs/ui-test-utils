@@ -2,6 +2,7 @@ let Page = require('./PopupPage'),
 	{validateTitle, expectClosed, expectOpen, expectNoneScrimOpen, expectCloseButton} = require('./Popup-utils.js');
 
 describe('Popup', function () {
+	this.retries(3);
 
 	const popupCommon = Page.popupCommon;
 
