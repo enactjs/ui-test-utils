@@ -1,7 +1,6 @@
 let Page = require('./ActivityPanelsPage');
 
 describe('ActivityPanels', function () {
-	this.retries(3);
 
 	beforeEach(function () {
 		Page.open();
