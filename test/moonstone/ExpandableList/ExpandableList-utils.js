@@ -10,19 +10,15 @@ function validateTitle (expandable, title) {
 // Expects are blocks of expects or other commands to be embedded in an 'it' statement
 function expectClosed (expandable) {
 	expect(expandable.isOpen).to.be.false();
-	expect(expandable.chevron).to.equal('󯿭');
-	expect(expandable.item(0).isVisible()).to.be.false();
 }
 
 function expectOpen (expandable) {
 	expect(expandable.isOpen).to.be.true();
-	expect(expandable.chevron).to.equal('󯿮');
-	expect(expandable.item(0).isVisible()).to.be.true();
 }
 
 module.exports = {
 	validateTitle,
 	expectClosed,
 	expectOpen
-}
+};
 

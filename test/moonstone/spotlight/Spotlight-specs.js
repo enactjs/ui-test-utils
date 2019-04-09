@@ -44,7 +44,7 @@ describe('Spotlight', function () {
 	it('should spot nearest control in container when leaving pointer mode with a target in direction', function () {
 		Page.open();
 		// Hovering non-focusable item with pointer
-		Page.item2.moveToObject()
+		Page.item2.moveToObject();
 		// move down (no more spotted controls)
 		Page.spotlightDown();
 		// Should re-spot item 1
@@ -54,7 +54,7 @@ describe('Spotlight', function () {
 	it('should spot next container when leaving pointer mode with focus on spottable item', function () {
 		Page.open();
 		// Hovering non-focusable item with pointer
-		Page.item2.moveToObject()
+		Page.item2.moveToObject();
 		// move down (no more spotted controls)
 		Page.spotlightRight();
 		// Should re-spot item 1
@@ -64,7 +64,7 @@ describe('Spotlight', function () {
 	it('should spot closest control in container when leaving pointer in new container', function () {
 		Page.open();
 		// Hovering non-focusable item in different container with pointer
-		Page.nonSpottableItemB.moveToObject()
+		Page.nonSpottableItemB.moveToObject();
 		// move down
 		Page.spotlightDown();
 		// Should spot item A
@@ -74,25 +74,26 @@ describe('Spotlight', function () {
 	describe('Nested Containers', function (){
 		it('should spot child item', function () {
 			Page.open();
-			Page.itemParent.moveToObject()
+			Page.itemParent.moveToObject();
 			Page.spotlightDown();
 			expect(Page.itemChild.hasFocus()).to.be.true();
 		});
 
 		it('should spot parent item', function () {
 			Page.open();
-			Page.itemChild.moveToObject()
+			Page.itemChild.moveToObject();
 			Page.spotlightUp();
 			expect(Page.itemParent.hasFocus()).to.be.true();
 		});
-	})
+	});
 
 	describe('Disappear Test', function (){
-		it('should spot restore button when focus button disappears', function () {
+		it('should spot restore button when focus button disappears - [GT-22523]', function () {
 			Page.open();
-			Page.focusButton.moveToObject();
+			Page.restoreButton.moveToObject();
+			Page.spotlightUp();
 			browser.pause(5000);
 			expect(Page.restoreButton.hasFocus()).to.be.true();
 		});
-	})
+	});
 });

@@ -2,8 +2,6 @@
 module.exports = {
 	expectChecked,
 	expectInline,
-	expectLTR,
-	expectRTL,
 	expectUnchecked
 };
 
@@ -18,14 +16,7 @@ function expectUnchecked (checkboxItem) {
 	expect(checkboxItem.icon.isVisible()).to.be.false();
 }
 
-function expectInline ({checkboxItem1, checkboxItem2}) {
-	expect(browser.getLocation(checkboxItem1, 'x') === browser.getLocation(checkboxItem2, 'x')).to.be.false();
+function expectInline (checkboxItem1, checkboxItem2) {
+	expect(checkboxItem1.getLocation().x === checkboxItem2.getLocation().x).to.be.false();
 }
 
-function expectLTR ({leftElement, rightElement}) {
-	expect(browser.getLocation(leftElement, 'x') < browser.getLocation(rightElement, 'x')).to.be.true();
-}
-
-function expectRTL ({leftElement, rightElement}) {
-	expect(browser.getLocation(leftElement, 'x') > browser.getLocation(rightElement, 'x')).to.be.true();
-}

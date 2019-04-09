@@ -21,6 +21,7 @@ describe('TimePicker', function () {
 			});
 
 			it('should be initially closed', function () {
+				timePicker.self.waitForExist(500);
 				expectClosed(timePicker);
 			});
 
@@ -53,7 +54,7 @@ describe('TimePicker', function () {
 					expectClosed(timePicker);
 				});
 
-				it('should focus title when 5-way right from last picker', function () {
+				it('should focus title when 5-way right from last picker - [GT-25237]', function () {
 					Page.spotlightSelect();
 					Page.waitTransitionEnd();
 					expectOpen(timePicker);
@@ -195,7 +196,7 @@ describe('TimePicker', function () {
 					expect(value).to.equal(expected);
 				});
 
-				it('should decrease the hour when decrementing the picker', function () {
+				it('should decrease the hour when decrementing the picker - [GT-21531]', function () {
 					timePicker.title.click();
 					Page.waitTransitionEnd();
 					const {hour} = extractValues(timePicker);
@@ -207,7 +208,7 @@ describe('TimePicker', function () {
 					expect(value).to.equal(expected);
 				});
 
-				it('should increase the minute when incrementing the picker', function () {
+				it('should increase the minute when incrementing the picker - [GT-21531]', function () {
 					timePicker.title.click();
 					Page.waitTransitionEnd();
 					const {minute} = extractValues(timePicker);
@@ -231,7 +232,7 @@ describe('TimePicker', function () {
 					expect(value).to.equal(expected);
 				});
 
-				it('should update value text when incrementing the meridiem picker', function () {
+				it('should update value text when incrementing the meridiem picker - [GT-21531]', function () {
 					timePicker.title.click();
 					Page.waitTransitionEnd();
 					const time = timePicker.valueText;
@@ -255,7 +256,7 @@ describe('TimePicker', function () {
 					expect(value).to.equal(true);
 				});
 
-				it('should change the meridiem on hour boundaries', function () {
+				it('should change the meridiem on hour boundaries - [GT-21563]', function () {
 					timePicker.title.click();
 					Page.waitTransitionEnd();
 					const value = timePicker.valueText;
@@ -271,7 +272,7 @@ describe('TimePicker', function () {
 		describe('default with noneText', function () {
 			const timePicker = Page.components.timePickerDefaultClosedWithNoneText;
 
-			it('should have correct none text', function () {
+			it('should display \'noneText\'', function () {
 				expect(timePicker.valueText).to.equal('Nothing Selected');
 			});
 		});
@@ -280,6 +281,7 @@ describe('TimePicker', function () {
 			const timePicker = Page.components.timePickerDefaultOpenWithNoneText;
 
 			it('should be initially open', function () {
+				timePicker.self.waitForExist(500);
 				expectOpen(timePicker);
 			});
 
@@ -311,9 +313,23 @@ describe('TimePicker', function () {
 			});
 		});
 
-		describe('with supplied value', function () {
+		describe('\'defaultOpen\' with \'defaultValue\'', function () {
 			// supplied value is `new Date(2009, 5, 6)` (time will be midnight)
-			const timePicker = Page.components.timePickerWithValue;
+			const timePicker = Page.components.timePickerDefaultOpenWithDefaultValue;
+
+			it('should be initially open', function () {
+				timePicker.self.waitForExist(500);
+				expectOpen(timePicker);
+			});
+
+			it('should not display \'noneText\'', function () {
+				expect(timePicker.valueText).to.not.equal('Nothing Selected');
+			});
+		});
+
+		describe('with \'defaultValue\'', function () {
+			// supplied value is `new Date(2009, 5, 6)` (time will be midnight)
+			const timePicker = Page.components.timePickerWithDefaultValue;
 
 			describe('5-way', function () {
 				it('should not update on select', function () {
@@ -355,10 +371,11 @@ describe('TimePicker', function () {
 			const timePicker = Page.components.timePickerDisabledWithNoneText;
 
 			it('should be initially closed', function () {
+				timePicker.self.waitForExist(500);
 				expectClosed(timePicker);
 			});
 
-			it('should have correct none text', function () {
+			it('should display \'noneText\'', function () {
 				expect(timePicker.valueText).to.equal('Nothing Selected');
 			});
 
@@ -380,15 +397,43 @@ describe('TimePicker', function () {
 			});
 		});
 
-		describe('default disabled open', function () {
-			const timePicker = Page.components.timePickerDisabledOpenWithNoneText;
+		describe('disabled with \'defaultValue\'', function () {
+			const timePicker = Page.components.timePickerDisabledWithDefaultValue;
 
 			it('should be initially closed', function () {
+				timePicker.self.waitForExist(500);
 				expectClosed(timePicker);
 			});
 
-			it('should have the current time value', function () {
-				expect(timePicker.valueText !== 'Nothing Selected').to.be.true();
+			it('should not display \'noneText\'', function () {
+				expect(timePicker.valueText).to.not.equal('Nothing Selected');
+			});
+		});
+
+		describe('disabled \'defaultOpen\'', function () {
+			const timePicker = Page.components.timePickerDisabledOpenWithNoneText;
+
+			it('should be initially closed', function () {
+				timePicker.self.waitForExist(500);
+				expectClosed(timePicker);
+			});
+
+			it('should display \'noneText\'', function () {
+				expect(timePicker.valueText).to.equal('Nothing Selected');
+			});
+		});
+
+		describe('disabled \'defaultOpen\' with \'defaultValue\'', function () {
+			// supplied value is `new Date(2009, 5, 6)` (time will be midnight)
+			const timePicker = Page.components.timePickerDisabledOpenWithDefaultValue;
+
+			it('should be initially closed', function () {
+				timePicker.self.waitForExist(500);
+				expectClosed(timePicker);
+			});
+
+			it('should not display \'noneText\'', function () {
+				expect(timePicker.valueText).to.not.equal('Nothing Selected');
 			});
 		});
 	});
@@ -419,7 +464,7 @@ describe('TimePicker', function () {
 			expect(timePicker.meridiem.hasFocus()).to.be.true();
 		});
 
-		it('should focus title when 5-way left from last picker', function () {
+		it('should focus title when 5-way left from last picker - [GT-25247]', function () {
 			Page.spotlightSelect();
 			Page.waitTransitionEnd();
 			expectOpen(timePicker);
@@ -431,7 +476,7 @@ describe('TimePicker', function () {
 	});
 
 	describe('24-hour locale', function () {
-		const timePicker = Page.components.timePickerWithValue;
+		const timePicker = Page.components.timePickerWithDefaultValue;
 
 		beforeEach(function () {
 			Page.open('?locale=fr-FR');

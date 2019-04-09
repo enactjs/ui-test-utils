@@ -2,11 +2,12 @@
 const Page = require('../../Page.js');
 const {element, getComponent, getSubComponent, getText} = require('../../utils.js');
 
-const getIcon = getComponent('Icon');
-const getInput = getComponent('Input');
-const getLabeledItem = getComponent('LabeledItem');
-const getLabeledItemTitle = getSubComponent('LabeledItem', 'title');
-const getLabeledItemValue = getSubComponent('LabeledItem', 'label');
+const getIcon = getComponent('moonstone', 'Icon');
+const getInput = getComponent('moonstone', 'Input');
+const getLabeledItem = getComponent('moonstone', 'LabeledItem');
+const getLabeledItemTitle = getSubComponent('moonstone', 'LabeledItem', 'title');
+const getLabeledItemValue = getSubComponent('moonstone', 'LabeledItem', 'label');
+const getLabeledItemIcon = getSubComponent('moonstone', 'LabeledItem', 'icon');
 
 class ExpandableInterface {
 	constructor (id) {
@@ -22,19 +23,22 @@ class ExpandableInterface {
 	get chevron () { return getText(getIcon(this.self)); }
 	get title () { return getLabeledItem(this.self); }
 	get titleText () { return getText(getLabeledItemTitle(this.self)); }
-	get titleSelector () { return `#${this.id} > div .Marquee__text`; }
-	get titleIconSelector () { return '.LabeledItem__icon'; }
+	get titleTextMarquee () { return getLabeledItemTitle(this.self).element('.enact_ui_Marquee_Marquee_text'); }
+	get titleIcon () { return getLabeledItemIcon(this.self); }
 	get label () { return getLabeledItemValue(this.self); }
 	get labelText () { return getText(this.label); }
-	get isLabelExists () { return this.self.isExisting('.LabeledItem__label'); }
-	get isOpen () { return this.self.isExisting('.Transition__shown'); }
-	get iconBeforeSymbol () { return getText(element(`#${this.id} > div .Input__iconBefore`, browser)); }
-	get iconBeforeSelector () { return `#${this.id} > div .Input__iconBefore`; }
-	get iconAfterSymbol () { return getText(element(`#${this.id} > div .Input__iconAfter`, browser)); }
-	get iconAfterSelector () { return `#${this.id} > div .Input__iconAfter`; }
-	get isIconBefore () { return browser.isExisting(`#${this.id} > div .Input__iconBefore`)}
-	get isIconAfter () { return browser.isExisting(`#${this.id} > div .Input__iconAfter`)}
-	get placeHolder () { return browser.getAttribute(`#${this.id} > div .Input__input`, 'placeholder'); }
+	get isLabelExists () { return this.self.isVisible('.enact_moonstone_LabeledItem_LabeledItem_label'); }
+	get isOpen () {
+		return !(!this.self.isExisting('.enact_ui_Transition_Transition_transition') ||
+		!this.self.isExisting('.enact_ui_Transition_Transition_shown') && this.self.isExisting('.enact_ui_Transition_Transition_hidden'));
+	}
+	get iconBefore () { return element('.enact_moonstone_Input_Input_iconBefore', this.self); }
+	get iconBeforeSymbol () { return getText(this.iconBefore); }
+	get iconAfter () { return element('.enact_moonstone_Input_Input_iconAfter', this.self); }
+	get iconAfterSymbol () { return getText(this.iconAfter); }
+	get isIconBefore () { return this.self.isExisting('.enact_moonstone_Input_Input_iconBefore');}
+	get isIconAfter () { return this.self.isExisting('.enact_moonstone_Input_Input_iconAfter');}
+	get placeHolder () { return this.self.getAttribute('.enact_moonstone_Input_Input_input', 'placeholder'); }
 
 }
 

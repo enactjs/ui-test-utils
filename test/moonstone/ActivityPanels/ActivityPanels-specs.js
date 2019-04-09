@@ -1,17 +1,16 @@
 let Page = require('./ActivityPanelsPage');
 
 describe('ActivityPanels', function () {
+
 	beforeEach(function () {
 		Page.open();
 	});
 
 	it('should load first panel.', function () {
-		Page.waitTransitionEnd();
 		expect(Page.panelTitle).to.equal('FIRST');
 	});
 
 	it('should have breadcrumb on second panel', function () {
-		Page.waitTransitionEnd();
 		Page.button1.click();
 		Page.waitTransitionEnd();
 
@@ -20,7 +19,6 @@ describe('ActivityPanels', function () {
 
 	describe('Transition', function () {
 		it('should move from first panel to the second', function () {
-			Page.waitTransitionEnd();
 			Page.button1.click();
 			Page.waitTransitionEnd();
 
@@ -28,7 +26,6 @@ describe('ActivityPanels', function () {
 		});
 
 		it('should navigate to DEFAULT ELEMENT', function () {
-			Page.waitTransitionEnd();
 			Page.item1.click();
 			Page.waitTransitionEnd();
 			Page.item5.click();
@@ -42,7 +39,6 @@ describe('ActivityPanels', function () {
 		});
 
 		it('should navigate back to the First panel from clicking on breadcrumb', function () {
-			Page.waitTransitionEnd();
 			Page.item1.click();
 			Page.waitTransitionEnd();
 			Page.item5.click();
@@ -64,7 +60,6 @@ describe('ActivityPanels', function () {
 		});
 
 		it('should navigate back to the Third panel from clicking on breadcrumb', function () {
-			Page.waitTransitionEnd();
 			Page.item1.click();
 			Page.waitTransitionEnd();
 			Page.item5.click();
@@ -82,7 +77,6 @@ describe('ActivityPanels', function () {
 		});
 
 		it('should move from first panel to the third', function () {
-			Page.waitTransitionEnd();
 			Page.button1.moveToObject();
 			Page.spotlightSelect();
 			Page.waitTransitionEnd();
@@ -95,7 +89,6 @@ describe('ActivityPanels', function () {
 		});
 
 		it('should move to first panel from the third', function () {
-			Page.waitTransitionEnd();
 			Page.button1.moveToObject();
 			Page.spotlightSelect();
 			Page.waitTransitionEnd();
@@ -117,7 +110,6 @@ describe('ActivityPanels', function () {
 		});
 
 		it('should transition back to First panel with back key', function () {
-			Page.waitTransitionEnd();
 			Page.button1.click();
 			Page.waitTransitionEnd();
 			expect(Page.panelTitle).to.equal('SECOND');
@@ -129,50 +121,43 @@ describe('ActivityPanels', function () {
 	});
 
 	describe('Spotlight', function () {
-		it('should spot close button on render', function () {
-			Page.waitTransitionEnd();
-			expect(Page.closeButton.hasFocus()).to.be.true();
+		it('should spot item 1 on render', function () {
+			expect(Page.item1.hasFocus()).to.be.true();
 		});
 
 		describe('pointer', function () {
-			it('should spot second item on second panel', function () {
-				Page.waitTransitionEnd();
+			// The ESC button (Back Key) does _not_ unset the pointer mode and does _not_ focus [ENYO-5865] [ENYO-5882]
+			it('should Not spot last focused item when transitioning back', function () {
 				Page.item2.click();
 				Page.waitTransitionEnd();
 				Page.backKey();
 				Page.waitTransitionEnd();
 
-				expect(Page.item2.hasFocus()).to.be.true();
+				expect(Page.item2.hasFocus()).to.be.false();
 			});
 
-			it('should spot second item on second panel after moving pointer', function () {
-				Page.waitTransitionEnd();
+			// The ESC button (Back Key) does _not_ unset the pointer mode and does _not_ focus [ENYO-5865] [ENYO-5882]
+			it('should Not spot last focused item when transitioning back after moving pointer', function () {
 				Page.item2.click();
 				Page.waitTransitionEnd();
 				Page.item8.moveToObject();
 				Page.backKey();
 				Page.waitTransitionEnd();
 
-				expect(Page.item2.hasFocus()).to.be.true();
+				expect(Page.item2.hasFocus()).to.be.false();
 			});
 		});
 
 
 		describe('5way', function () {
 			it('should spot first item on second panel', function () {
-				Page.waitTransitionEnd();
-				Page.spotlightDown();
 				Page.spotlightSelect();
 				Page.waitTransitionEnd();
 
 				expect(Page.item5.hasFocus()).to.be.true();
 			});
 
-
-			it('should spot second item on first panel when using back key', function () {
-				Page.waitTransitionEnd();
-				Page.spotlightDown();
-				Page.spotlightDown();
+			it('should spot last focused item when transitioning back using back key', function () {
 				Page.spotlightDown();
 				Page.spotlightSelect();
 				Page.waitTransitionEnd();
@@ -183,55 +168,47 @@ describe('ActivityPanels', function () {
 				expect(Page.item2.hasFocus()).to.be.true();
 			});
 
-			it('should spot button 4 in Third panel', function () {
-				Page.waitTransitionEnd();
-				Page.spotlightDown();
+			// Revisit this test.  As we can't focus the breadcrumb with 5-way by going down right now
+			// we can't have button 4 have the last focus.  Possibly related to ENYO-5151.
+			it('should spot last focused item when transitioning back from Third panel', function () {
 				Page.spotlightDown();
 				Page.spotlightDown();
 				Page.spotlightSelect();
 				Page.waitTransitionEnd();
-				expect(Page.item5.hasFocus()).to.be.true();
+				expect(Page.item5.hasFocus(), 'Item 5 focus').to.be.true();
 				Page.spotlightSelect();
-				// wait for page transition
 				Page.waitTransitionEnd();
-				// wait for Spotlight to focus
-				browser.pause(500);
-				expect(Page.button3.hasFocus()).to.be.true();
+				expect(Page.button3.hasFocus(), 'Button 3 focus').to.be.true();
 				Page.spotlightRight();
-				expect(Page.button4.hasFocus()).to.be.true();
-				Page.spotlightDown();
-				expect(Page.breadcrumb.hasFocus()).to.be.true();
-				Page.spotlightSelect();
-				Page.waitTransitionEnd();
-				expect(Page.item5.hasFocus()).to.be.true();
-				Page.spotlightSelect();
-				Page.waitTransitionEnd();
-
-				expect(Page.button4.hasFocus()).to.be.true();
-			});
-
-			it('should spot button 1 on First panel on Back key', function () {
-				Page.waitTransitionEnd();
-				Page.spotlightDown();
+				expect(Page.button4.hasFocus(), 'Button 4 focus').to.be.true();
 				Page.spotlightLeft();
+				Page.spotlightLeft();
+				expect(Page.breadcrumb.hasFocus(), 'Breadcrumb focus').to.be.true();
 				Page.spotlightSelect();
 				Page.waitTransitionEnd();
-				expect(Page.item5.hasFocus()).to.be.true();
-				Page.spotlightSelect();
-				Page.waitTransitionEnd();
-				expect(Page.button3.hasFocus()).to.be.true();
-				Page.backKey();
-				Page.waitTransitionEnd();
-				expect(Page.item5.hasFocus()).to.be.true();
-				Page.backKey();
-				Page.waitTransitionEnd();
-
-				expect(Page.button1.hasFocus()).to.be.true();
+				expect(Page.item5.hasFocus(), 'Item 5 refocus').to.be.true();
 			});
 
-			it('should spot eighth item on second panel', function () {
+			it('should spot last focused item in first panel when transitioning after deep navigation', function () {
+				Page.spotlightDown();
+				Page.spotlightSelect();
 				Page.waitTransitionEnd();
 				Page.spotlightDown();
+				expect(Page.item6.hasFocus(), 'Item 6 focus').to.be.true();
+				Page.spotlightSelect();
+				Page.waitTransitionEnd();
+				expect(Page.button3.hasFocus(), 'Button 3 focus').to.be.true();
+				Page.backKey();
+				Page.waitTransitionEnd();
+				expect(Page.item6.hasFocus(), 'Item 6 refocus').to.be.true();
+				Page.backKey();
+				Page.waitTransitionEnd();
+				expect(Page.item2.hasFocus(), 'Item 2 refocus').to.be.true();
+			});
+
+			// Panel does not remember last focused item when moving forward to already visited panel
+			// from 2.4.0, panel no longer remembers the children when going forward. It will land on the default item - first item - on the panel
+			it('should spot the fifth item on second panel', function () {
 				Page.spotlightDown();
 				Page.spotlightDown();
 				Page.spotlightDown();
@@ -247,15 +224,12 @@ describe('ActivityPanels', function () {
 				Page.spotlightDown();
 				Page.spotlightLeft();
 				Page.spotlightRight();
-
-				expect(Page.item8.hasFocus()).to.be.true();
+				expect(Page.item5.hasFocus()).to.be.true(); // only from 2.4.0
+				// expect(Page.item8.hasFocus()).to.be.true(); // on 2.3.0 and prior
 			});
 
 
 			it('should spot third item on first panel', function () {
-				Page.waitTransitionEnd();
-				Page.spotlightDown();
-				Page.spotlightDown();
 				Page.spotlightDown();
 				Page.spotlightDown();
 				Page.spotlightSelect();
@@ -271,7 +245,6 @@ describe('ActivityPanels', function () {
 
 		describe('5way and pointer', function () {
 			it('should not spot in None panel', function () {
-				Page.waitTransitionEnd();
 				Page.button1.moveToObject();
 				Page.spotlightSelect();
 				Page.waitTransitionEnd();
@@ -288,7 +261,6 @@ describe('ActivityPanels', function () {
 			});
 
 			it('should spot default item in Default panel', function () {
-				Page.waitTransitionEnd();
 				Page.button1.moveToObject();
 				Page.spotlightSelect();
 				Page.waitTransitionEnd();
@@ -309,24 +281,23 @@ describe('ActivityPanels', function () {
 			});
 
 			it('should re-spot in Default panel', function () {
-				Page.waitTransitionEnd();
 				Page.button1.moveToObject();
 				Page.spotlightSelect();
 				Page.waitTransitionEnd();
-				expect(Page.item5.hasFocus()).to.be.true();
+				expect(Page.item5.hasFocus(), 'item 5 focus 1').to.be.true();
 				Page.item8.moveToObject();
 				Page.spotlightSelect();
 				Page.waitTransitionEnd();
-				expect(Page.button3.hasFocus()).to.be.true();
+				expect(Page.button3.hasFocus(), 'button 3 focus').to.be.true();
 				Page.spotlightSelect();
 				Page.waitTransitionEnd();
-				expect(Page.body.hasFocus()).to.be.true();
+				expect(Page.body.hasFocus(), 'body focus').to.be.true();
 				Page.spotlightDown();
-				expect(Page.item1.hasFocus()).to.be.true();
+				expect(Page.breadcrumb.hasFocus(), 'breadcrumb focus').to.be.true();
 				Page.button1.moveToObject();
 				Page.spotlightSelect();
 				Page.waitTransitionEnd();
-				expect(Page.item5.hasFocus()).to.be.true();
+				expect(Page.item5.hasFocus(), 'item 5 focus 2').to.be.true();
 				Page.spotlightDown();
 				Page.backKey();
 				Page.waitTransitionEnd();
@@ -334,12 +305,11 @@ describe('ActivityPanels', function () {
 				Page.spotlightSelect();
 				Page.waitTransitionEnd();
 
-				expect(Page.item5.hasFocus()).to.be.true();
+				expect(Page.item5.hasFocus(), 'item 5 focus 3').to.be.true();
 
 			});
 
-			it('should spot item 3 on First panel on Back key', function () {
-				Page.waitTransitionEnd();
+			it('should spot last focused item when transitioning back with Back key, deep navigation', function () {
 				Page.item3.moveToObject();
 				Page.spotlightSelect();
 				Page.waitTransitionEnd();

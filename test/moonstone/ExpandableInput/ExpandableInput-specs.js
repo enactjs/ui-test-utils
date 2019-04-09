@@ -1,6 +1,6 @@
 const Page = require('./ExpandableInputPage'),
 	{validateTitle, expectClosed, expectOpen} = require('./ExpandableInput-utils.js'),
-	{expectOrdering} = require('../../utils.js');;
+	{expectOrdering} = require('../../utils.js');
 
 describe('ExpandableInput', function () {
 	describe('LTR locale', function () {
@@ -8,12 +8,12 @@ describe('ExpandableInput', function () {
 			Page.open();
 		});
 
-		it('should have focus on first expandable at start', function () {
-			expect(Page.components.default.title.hasFocus()).to.be.true();
-		});
-
 		describe('default', function () {
 			const expandable = Page.components.default;
+
+			it('should have focus on first expandable at start', function () {
+				expect(expandable.title.hasFocus()).to.be.true();
+			});
 
 			validateTitle(expandable, 'ExpandableInput Default');
 
@@ -26,7 +26,7 @@ describe('ExpandableInput', function () {
 			});
 
 			it('should have title icon be on the left side title label', function () {
-				expectOrdering(expandable.titleSelector, expandable.titleIconSelector);
+				expectOrdering(expandable.titleTextMarquee, expandable.titleIcon);
 			});
 
 			describe('5-way', function () {
@@ -54,13 +54,14 @@ describe('ExpandableInput', function () {
 					expect(expandable.title.hasFocus()).to.be.true();
 				});
 
-				it('should close and move focus down on SpotlightDown', function () {
+				it('should close and move focus to title on SpotlightDown', function () {
 					Page.spotlightSelect();
 					Page.waitTransitionEnd();
 					expectOpen(expandable);
 					Page.spotlightDown();
+					Page.waitTransitionEnd();
 					expectClosed(expandable);
-					expect(Page.components.defaultValue.title.hasFocus()).to.be.true();
+					expect(expandable.title.hasFocus()).to.be.true();
 				});
 
 				it('should close on select twice', function () {
@@ -74,6 +75,7 @@ describe('ExpandableInput', function () {
 					Page.waitTransitionEnd();
 					expectOpen(expandable);
 					Page.escape();
+					Page.waitTransitionEnd();
 					expectClosed(expandable);
 				});
 
@@ -106,6 +108,7 @@ describe('ExpandableInput', function () {
 						expectOpen(expandable);
 						expandable.input.setValue('New Value');
 						Page.escape();
+						Page.waitTransitionEnd();
 						expectClosed(expandable);
 						expect(expandable.labelText).to.equal('No Input Text');
 					});
@@ -226,7 +229,7 @@ describe('ExpandableInput', function () {
 				it('should close on title click when open', function () {
 					expandable.title.click();
 					Page.waitTransitionEnd();
-					expectOpen(expandable)
+					expectOpen(expandable);
 					expandable.title.click();
 					Page.waitTransitionEnd();
 					expectClosed(expandable);
@@ -299,7 +302,7 @@ describe('ExpandableInput', function () {
 					expectClosed(expandable);
 					expandable.title.click();
 					Page.waitTransitionEnd();
-					expectOpen(expandable)
+					expectOpen(expandable);
 				});
 
 				it('should open on two title clicks', function () {
@@ -325,7 +328,7 @@ describe('ExpandableInput', function () {
 					expandable.focus();
 					Page.spotlightSelect();
 					Page.waitTransitionEnd();
-					expectOpen(expandable)
+					expectOpen(expandable);
 					Page.spotlightUp();
 					Page.waitTransitionEnd();
 					expectClosed(expandable);
@@ -338,7 +341,7 @@ describe('ExpandableInput', function () {
 				it('should not have value text on open and close', function () {
 					expandable.title.click();
 					Page.waitTransitionEnd();
-					expectOpen(expandable)
+					expectOpen(expandable);
 					expandable.title.click();
 					Page.waitTransitionEnd();
 					expectClosed(expandable);
@@ -504,7 +507,7 @@ describe('ExpandableInput', function () {
 			});
 
 			it('should have beforeIcon positioned on the right side of the afterIcon', function () {
-				expectOrdering(expandable.iconBeforeSelector, expandable.iconAfterSelector);
+				expectOrdering(expandable.iconBefore, expandable.iconAfter);
 			});
 
 			describe('5-way', function () {
@@ -564,19 +567,22 @@ describe('ExpandableInput', function () {
 
 		describe('general 5-way navigation', function () {
 			it('should not stop 5-way down when closed', function () {
+				// FIXME: Necessary to ensure 5-way mode and that focus is in expected location for test
+				// Additional follow up required to sort out why.
+				Page.components.default.focus();
 				Page.spotlightDown();
 				expect(Page.components.defaultValue.title.hasFocus()).to.be.true();
 			});
 		});
 
 		describe('general pointer operation', function () {
-			it('should close other expandable when opening', function () {
+			it('should prevent selecting other controls when open', function () {
 				Page.components.default.title.click();
 				Page.waitTransitionEnd();
 				Page.components.defaultValue.title.click();
 				Page.waitTransitionEnd();
 				expectClosed(Page.components.default);
-				expectOpen(Page.components.defaultValue);
+				expectClosed(Page.components.defaultValue);
 			});
 		});
 	});
@@ -594,7 +600,7 @@ describe('ExpandableInput', function () {
 			});
 
 			it('should have title icon be on the right side title label', function () {
-				expectOrdering(expandable.titleIconSelector, expandable.titleSelector);
+				expectOrdering(expandable.titleIcon, expandable.titleTextMarquee);
 			});
 		});
 
@@ -602,7 +608,7 @@ describe('ExpandableInput', function () {
 			const expandable = Page.components.iconBeforeAfter;
 
 			it('should have beforeIcon positioned on the right side of the afterIcon', function () {
-				expectOrdering(expandable.iconAfterSelector, expandable.iconBeforeSelector);
+				expectOrdering(expandable.iconAfter, expandable.iconBefore);
 			});
 		});
 	});

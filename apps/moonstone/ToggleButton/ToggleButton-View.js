@@ -9,82 +9,104 @@ spotlight.setPointerMode(false);
 
 const app = (props) => <div {...props}>
 	<div>
-		<ToggleButton
-			id="toggleButton1"
-		>
-			Missing Toggle Label
-		</ToggleButton>
+		<div>
+			<ToggleButton
+				id="toggleButton1"
+			>
+				Missing Toggle Label
+			</ToggleButton>
+		</div>
 
-		<ToggleButton
-			id="toggleButton2"
-			toggleOnLabel="On"
-			toggleOffLabel="Off"
-		>
-		</ToggleButton>
+		<div>
+			<ToggleButton
+				id="toggleButton2"
+				toggleOnLabel="On"
+				toggleOffLabel="Off"
+			>
+			</ToggleButton>
+		</div>
 
-		<ToggleButton
-			id="toggleButton3"
-			toggleOnLabel="On"
-		>
-			Missing Toggle Off Label
-		</ToggleButton>
+		<div>
+			<ToggleButton
+				id="toggleButton3"
+				toggleOnLabel="On"
+			>
+				Missing Toggle Off Label
+			</ToggleButton>
+		</div>
 
-		<ToggleButton
-			id="toggleButton4"
-			toggleOffLabel="Off"
-		>
-			Missing Toggle On Label
-		</ToggleButton>
+		<div>
+			<ToggleButton
+				id="toggleButton4"
+				toggleOffLabel="Off"
+			>
+				Missing Toggle On Label
+			</ToggleButton>
+		</div>
 
-		<ToggleButton
-			id="toggleButton5"
-			toggleOnLabel="On"
-			toggleOffLabel="Off"
-			defaultSelected
-		/>
+		<div>
+			<ToggleButton
+				id="toggleButton5"
+				toggleOnLabel="On"
+				toggleOffLabel="Off"
+				defaultSelected
+			/>
+		</div>
 
-		<ToggleButton
-			id="toggleButton6"
-			toggleOnLabel="On"
-			toggleOffLabel="Off"
-			defaultSelected
-			disabled
-		/>
+		<div>
+			<ToggleButton
+				id="toggleButton6"
+				toggleOnLabel="On"
+				toggleOffLabel="Off"
+				defaultSelected
+				disabled
+			/>
+		</div>
 
-		<ToggleButton
-			id="toggleButton7"
-			toggleOnLabel="Small On"
-			toggleOffLabel="Small Off"
-			small
-		/>
+		<div>
+			<ToggleButton
+				id="toggleButton7"
+				toggleOnLabel="Small On"
+				toggleOffLabel="Small Off"
+				small
+			/>
+		</div>
 
-		<ToggleButton
-			id="toggleButton8"
-			toggleOnLabel="toggle on"
-			toggleOffLabel="toggle off"
-			casing="preserve"
-		/>
+		<div>
+			<ToggleButton
+				id="toggleButton8"
+				toggleOnLabel="toggle on"
+				toggleOffLabel="toggle off"
+				casing="preserve"
+			/>
+		</div>
 
-		<ToggleButton
-			id="toggleButton9"
-			toggleOnLabel="toggle on"
-			toggleOffLabel="toggle off"
-			casing="sentence"
-		/>
+		<div>
+			<ToggleButton
+				id="toggleButton9"
+				toggleOnLabel="toggle on"
+				toggleOffLabel="toggle off"
+				casing="sentence"
+			/>
+		</div>
 
-		<ToggleButton
-			id="toggleButton10"
-			toggleOnLabel="toggle on"
-			toggleOffLabel="toggle off"
-			casing="word"
-		/>
+		<div>
+			<ToggleButton
+				id="toggleButton10"
+				toggleOnLabel="toggle on"
+				toggleOffLabel="toggle off"
+				casing="word"
+			/>
+		</div>
 
-		<ToggleButton
-			id="toggleButton11"
-			toggleOnLabel="toggle on"
-			toggleOffLabel="toggle off"
-			casing="upper"
-		/>
+		<div>
+			<ToggleButton
+				id="toggleButton11"
+				toggleOnLabel="toggle on"
+				toggleOffLabel="toggle off"
+				casing="upper"
+			/>
+		</div>
 	</div>
 </div>;
 

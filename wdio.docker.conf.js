@@ -1,3 +1,4 @@
+const os = require('os');
 const buildApps = require('./build-apps');
 
 exports.config = {
@@ -44,7 +45,7 @@ exports.config = {
 		// maxInstances can get overwritten per capability. So if you have an in-house Selenium
 		// grid with only 5 firefox instances available you can make sure that not more than
 		// 5 instances get started at a time.
-		maxInstances: 2,
+		maxInstances: 1,
 		//
 		browserName: 'chrome',
 		chromeOptions: {
@@ -77,7 +78,7 @@ exports.config = {
 	//
 	// Set a base URL in order to shorten url command calls. If your url parameter starts
 	// with "/", then the base url gets prepended.
-	baseUrl: 'http://localhost:4567',
+	baseUrl: `http://${os.hostname()}:4567`,
 	//
 	// Default timeout for all waitFor* commands.
 	waitforTimeout: 10000,
@@ -113,7 +114,7 @@ exports.config = {
 	// Services take over a specific job you don't want to take care of. They enhance
 	// your test setup with almost no effort. Unlike plugins, they don't add new
 	// commands. Instead, they hook themselves up into the test process.
-	services: ['sauce', 'selenium-standalone', 'static-server'],
+	services: ['docker', 'static-server'],
 	//
 	// Framework you want to run your specs with.
 	// The following are supported: Mocha, Jasmine, and Cucumber
@@ -138,6 +139,14 @@ exports.config = {
 	staticServerFolders: [
 		{ mount: '/', path: './dist' }
 	],
+	dockerOptions: {
+		image: 'selenium/standalone-chrome',
+		healthCheck: 'http://localhost:4444',
+		options: {
+			p: ['4444:4444'],
+			shmSize: '2g'
+		}
+	},
 	//
 	// =====
 	// Hooks

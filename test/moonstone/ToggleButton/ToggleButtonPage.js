@@ -1,5 +1,8 @@
 'use strict';
 const Page = require('../../Page.js');
+const {getSubComponent, getText} = require('../../utils.js');
+
+const getMarqueeText = getSubComponent('ui', 'Marquee', 'text');
 
 class ToggleButtonInterface {
 	constructor (id) {
@@ -10,10 +13,10 @@ class ToggleButtonInterface {
 		return browser.selectorExecute(`#${this.id}`, (els) => els && !els[0].focus());
 	}
 
-	get item () { return browser.element(`#${this.id}`); }
-	get valueText () { return browser.element(`#${this.id} > div .Marquee__text`).getText(); }
-	get isSelected () { return browser.isExisting(`#${this.id}.ToggleButton__selected.Button__selected`); }
-	get isSmall () { return browser.isExisting(`#${this.id}.ToggleButton__small`); }
+	get self () { return browser.element(`#${this.id}`); }
+	get valueText () { return getText(getMarqueeText(this.self)); }
+	get isSelected () { return browser.isExisting(`#${this.id}.enact_moonstone_ToggleButton_ToggleButton_selected`); }
+	get isSmall () { return browser.isExisting(`#${this.id}.enact_moonstone_ToggleButton_ToggleButton_small`); }
 }
 
 class ToggleButtonPage extends Page {
@@ -32,7 +35,7 @@ class ToggleButtonPage extends Page {
 		const toggleCaseWord = new ToggleButtonInterface('toggleButton10');
 		const toggleCaseUpper = new ToggleButtonInterface('toggleButton11');
 
-		this.components = {toggleDefault, toggleWithLabels, toggleWithOnlyOnLabel, toggleWithOnlyOffLabel, toggleDefaultSelected, toggleDisabled, toggleSmall, toggleCasePreserve, toggleCaseSentence, toggleCaseWord, toggleCaseUpper}
+		this.components = {toggleDefault, toggleWithLabels, toggleWithOnlyOnLabel, toggleWithOnlyOffLabel, toggleDefaultSelected, toggleDisabled, toggleSmall, toggleCasePreserve, toggleCaseSentence, toggleCaseWord, toggleCaseUpper};
 	}
 
 	open (urlExtra) {

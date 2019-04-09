@@ -4,25 +4,23 @@ const Page = require('../../Page.js');
 class CheckboxItemInterface {
 	constructor (id) {
 		this.id = id;
-		this.marqueeTextSelector = `#${this.id} > div .Marquee__text`;
-		this.iconSeletor = `#${this.id} > div .Icon__icon`;
+		this.marqueeTextSelector = `#${this.id} > div .enact_ui_Marquee_Marquee_text`;
+		this.iconSelector = `#${this.id} > div .enact_moonstone_Icon_Icon_icon`;
 	}
 
 	focus () {
 		return browser.selectorExecute(`#${this.id}`, (els) => els && !els[0].focus());
 	}
 
-	get item () { return browser.element(`#${this.id}`); }
-	get itemSelector () { return `#${this.id}`; }
-	get valueText () { return browser.element(this.marqueeTextSelector).getText(); }
-	get textSelector () { return this.marqueeTextSelector; }
-	get icon () { return browser.element(this.iconSeletor); }
-	get iconSelector () { return this.iconSeletor; }
-	get iconSymbol () { return browser.element(`#${this.id} > div .Icon__icon`).getText(); }
-	get isChecked () { return browser.isExisting(`#${this.id} .Checkbox__selected`); }
-	get isAfter () { return browser.isExisting(`#${this.id} .Overlay__after`); }
-	get isBefore () { return browser.isExisting(`#${this.id} .Overlay__before`); }
-	get isInline () { return browser.isExisting(`#${this.id}.Item__inline`); }
+	get self () { return browser.element(`#${this.id}`); }
+	get value () { return browser.element(this.marqueeTextSelector); }
+	get valueText () { return this.value.getText(); }
+	get icon () { return browser.element(this.iconSelector); }
+	get iconSymbol () { return this.icon.getText(); }
+	get isChecked () { return browser.isExisting(`#${this.id} .enact_moonstone_Checkbox_Checkbox_selected`); }
+	get isAfter () { return browser.isExisting(`#${this.id} .enact_moonstone_SlotItem_SlotItem_after`); }
+	get isBefore () { return browser.isExisting(`#${this.id} .enact_moonstone_SlotItem_SlotItem_before`); }
+	get isInline () { return browser.isExisting(`#${this.id}.enact_moonstone_Item_Item_inline`); }
 }
 
 class CheckboxItemPage extends Page {
@@ -35,11 +33,9 @@ class CheckboxItemPage extends Page {
 		const checkboxInline = new CheckboxItemInterface('checkboxItem4');
 		const checkboxInlineAfter = new CheckboxItemInterface('checkboxItem5');
 		const checkboxDisabled = new CheckboxItemInterface('checkboxItem6');
-		const checkboxInline1 = new CheckboxItemInterface('checkboxItem7');
-		const checkboxInline2 = new CheckboxItemInterface('checkboxItem8');
 
 
-		this.components = {checkboxDefault, checkboxDefaultSelected, checkboxIconAfter, checkboxInline, checkboxInlineAfter, checkboxDisabled, checkboxInline1, checkboxInline2}
+		this.components = {checkboxDefault, checkboxDefaultSelected, checkboxIconAfter, checkboxInline, checkboxInlineAfter, checkboxDisabled};
 	}
 
 	open (urlExtra) {

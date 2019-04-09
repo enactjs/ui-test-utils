@@ -21,6 +21,7 @@ describe('DatePicker', function () {
 			});
 
 			it('should be initially closed', function () {
+				datePicker.self.waitForExist(500);
 				expectClosed(datePicker);
 			});
 
@@ -28,11 +29,11 @@ describe('DatePicker', function () {
 				Page.spotlightSelect();
 				Page.waitTransitionEnd();
 				expectOpen(datePicker);
-				expect(datePicker.month.hasFocus()).to.be.true();
+				expect(datePicker.month.hasFocus(), 'Month').to.be.true();
 				Page.spotlightRight();
-				expect(datePicker.day.hasFocus()).to.be.true();
+				expect(datePicker.day.hasFocus(), 'Day').to.be.true();
 				Page.spotlightRight();
-				expect(datePicker.year.hasFocus()).to.be.true();
+				expect(datePicker.year.hasFocus(), 'Year').to.be.true();
 			});
 
 			describe('5-way', function () {
@@ -54,7 +55,7 @@ describe('DatePicker', function () {
 					expectClosed(datePicker);
 				});
 
-				it('should focus title when 5-way right from last picker', function () {
+				it('should focus title when 5-way right from last picker - [GT-24986]', function () {
 					Page.spotlightSelect();
 					Page.waitTransitionEnd();
 					expectOpen(datePicker);
@@ -78,7 +79,7 @@ describe('DatePicker', function () {
 					expect(value).to.equal(expected);
 				});
 
-				it('should decrease the month when decrementing the picker', function () {
+				it('should decrease the month when decrementing the picker - [GT-21247]', function () {
 					Page.spotlightSelect();
 					Page.waitTransitionEnd();
 					const {month} = extractValues(datePicker);
@@ -91,7 +92,7 @@ describe('DatePicker', function () {
 					expect(value).to.equal(expected);
 				});
 
-				it('should increase the day when incrementing the picker', function () {
+				it('should increase the day when incrementing the picker - [GT-21247]', function () {
 					Page.spotlightSelect();
 					Page.waitTransitionEnd();
 					const {day, month, year} = extractValues(datePicker);
@@ -121,7 +122,7 @@ describe('DatePicker', function () {
 					expect(value).to.equal(expected);
 				});
 
-				it('should increase the year when incrementing the picker', function () {
+				it('should increase the year when incrementing the picker - [GT-21247]', function () {
 					Page.spotlightSelect();
 					Page.waitTransitionEnd();
 					const {year} = extractValues(datePicker);
@@ -254,7 +255,7 @@ describe('DatePicker', function () {
 		describe('default with noneText', function () {
 			const datePicker = Page.components.datePickerDefaultClosedWithNoneText;
 
-			it('should have correct none text', function () {
+			it('should display \'noneText\' - [GT-21246]', function () {
 				expect(datePicker.valueText).to.equal('Nothing Selected');
 			});
 		});
@@ -263,6 +264,7 @@ describe('DatePicker', function () {
 			const datePicker = Page.components.datePickerDefaultOpenWithNoneText;
 
 			it('should be initially open', function () {
+				datePicker.self.waitForExist(500);
 				expectOpen(datePicker);
 			});
 
@@ -277,7 +279,7 @@ describe('DatePicker', function () {
 			});
 
 			describe('pointer', function () {
-				it('should close on title click when open', function () {
+				it('should close on title click when open - [GT-21246]', function () {
 					datePicker.title.click();
 					Page.waitTransitionEnd();
 					expectClosed(datePicker);
@@ -294,9 +296,23 @@ describe('DatePicker', function () {
 			});
 		});
 
-		describe('with supplied value', function () {
+		describe('\'defaultOpen\' with \'defaultValue\'', function () {
+			// supplied value is `new Date(2009, 5, 6)` (time will be midnight)
+			const datePicker = Page.components.datePickerDefaultOpenWithDefaultValue;
+
+			it('should be initially open', function () {
+				datePicker.self.waitForExist(500);
+				expectOpen(datePicker);
+			});
+
+			it('should not display \'noneText\'', function () {
+				expect(datePicker.valueText).to.not.equal('Nothing Selected');
+			});
+		});
+
+		describe('with \'defaultValue\'', function () {
 			// supplied value is `new Date(2009, 5, 6)`
-			const datePicker = Page.components.datePickerWithValue;
+			const datePicker = Page.components.datePickerWithDefaultValue;
 
 			describe('5-way', function () {
 				it('should not update on select', function () {
@@ -338,14 +354,15 @@ describe('DatePicker', function () {
 			const datePicker = Page.components.datePickerDisabledWithNoneText;
 
 			it('should be initially closed', function () {
+				datePicker.self.waitForExist(500);
 				expectClosed(datePicker);
 			});
 
-			it('should have correct none text', function () {
+			it('should display \'noneText\'', function () {
 				expect(datePicker.valueText).to.equal('Nothing Selected');
 			});
 
-			describe('5-way', function() {
+			describe('5-way', function () {
 				it('should not receive focus', function () {
 					Page.components.datePickerNoLabels.focus();
 					Page.spotlightDown();
@@ -363,16 +380,42 @@ describe('DatePicker', function () {
 			});
 		});
 
-		describe('default disabled open', function () {
-			const datePicker = Page.components.datePickerDisabledOpenWithNoneText;
+		describe('disabled with \'defaultValue\'', function () {
+			const datePicker = Page.components.datePickerDisabledWithDefaultValue;
 
 			it('should be initially closed', function () {
+				datePicker.self.waitForExist(500);
 				expectClosed(datePicker);
 			});
 
-			it('should have the current date value', function () {
-				const month = new Date(datePicker.valueText).getMonth();
-				expect(month).to.be.within(0, 11);
+			it('should not display \'noneText\'', function () {
+				expect(datePicker.valueText).to.not.equal('Nothing Selected');
+			});
+		});
+
+		describe('disabled \'defaultOpen\'', function () {
+			const datePicker = Page.components.datePickerDisabledOpenWithNoneText;
+			it('should be initially closed', function () {
+				datePicker.self.waitForExist(500);
+				expectClosed(datePicker);
+			});
+
+			it('should display \'noneText\'', function () {
+				expect(datePicker.valueText).to.equal('Nothing Selected');
+			});
+		});
+
+		describe('disabled \'defaultOpen\' with \'defaultValue\'', function () {
+			// supplied value is `new Date(2009, 5, 6)` (time will be midnight)
+			const datePicker = Page.components.datePickerDisabledOpenWithDefaultValue;
+
+			it('should be initially closed', function () {
+				datePicker.self.waitForExist(500);
+				expectClosed(datePicker);
+			});
+
+			it('should not display \'noneText\'', function () {
+				expect(datePicker.valueText).to.not.equal('Nothing Selected');
 			});
 		});
 	});
@@ -402,7 +445,7 @@ describe('DatePicker', function () {
 			expect(datePicker.year.hasFocus()).to.be.true();
 		});
 
-		it('should focus title when 5-way left from last picker', function () {
+		it('should focus title when 5-way left from last picker - [GT-25238]', function () {
 			Page.spotlightSelect();
 			Page.waitTransitionEnd();
 			expectOpen(datePicker);

@@ -1,5 +1,6 @@
 const Page = require('./CheckboxItemPage'),
-	{expectChecked, expectInline, expectLTR, expectRTL, expectUnchecked} = require('./CheckboxItem-utils.js');
+	{expectChecked, expectInline, expectUnchecked} = require('./CheckboxItem-utils.js'),
+	{expectOrdering} = require('../../utils.js');
 
 describe('CheckboxItem', function () {
 
@@ -8,21 +9,11 @@ describe('CheckboxItem', function () {
 			Page.open();
 		});
 
-		describe('checkbox', function () {
-			it('should have icon to the left of marquee text', function () {
-				const checkboxItem = Page.components.checkboxDefault;
-				expectLTR({
-					leftElement: checkboxItem.iconSelector,
-					rightElement: checkboxItem.textSelector
-				});
-			});
-		});
-
 		describe('default', function () {
 			const checkboxItem = Page.components.checkboxDefault;
 
 			it('should have focus on first item at start', function () {
-				expect(checkboxItem.item.hasFocus()).to.be.true();
+				expect(checkboxItem.self.hasFocus()).to.be.true();
 			});
 
 			it('should have correct text', function () {
@@ -37,8 +28,12 @@ describe('CheckboxItem', function () {
 				expect(checkboxItem.isBefore).to.be.true();
 			});
 
+			it('should have icon to the left of marquee text', function () {
+				expectOrdering(checkboxItem.icon, checkboxItem.value);
+			});
+
 			describe('5-way', function () {
-				it('should check the item when selected', function () {
+				it('should check the item when selected - [GT-21124]', function () {
 					Page.spotlightSelect();
 					expectChecked(checkboxItem);
 				});
@@ -56,75 +51,75 @@ describe('CheckboxItem', function () {
 
 				it('should move focus down on SpotlightDown', function () {
 					Page.spotlightDown();
-					expect(Page.components.checkboxDefaultSelected.item.hasFocus()).to.be.true();
+					expect(Page.components.checkboxDefaultSelected.self.hasFocus()).to.be.true();
 				});
 
 				it('should move focus up on SpotlightUp', function () {
 					Page.components.checkboxDefaultSelected.focus();
 					Page.spotlightUp();
-					expect(checkboxItem.item.hasFocus()).to.be.true();
+					expect(checkboxItem.self.hasFocus()).to.be.true();
 				});
 			});
 
 			describe('pointer', function () {
 				it('should check the item when clicked', function () {
-					checkboxItem.item.click();
+					checkboxItem.self.click();
 					expectChecked(checkboxItem);
 				});
 
 				it('should re-uncheck the item when clicked twice', function () {
-					checkboxItem.item.click();
-					checkboxItem.item.click();
+					checkboxItem.self.click();
+					checkboxItem.self.click();
 					expectUnchecked(checkboxItem);
 				});
 
 				it('should display check icon when clicked', function () {
-					checkboxItem.item.click();
+					checkboxItem.self.click();
 					expect(checkboxItem.iconSymbol).to.equal('✓');
 				});
 			});
 		});
 
 		describe('selected', function () {
-			const checkboxItemSelected = Page.components.checkboxDefaultSelected;
+			const checkboxItem = Page.components.checkboxDefaultSelected;
 
 			it('should have correct text', function () {
-				expect(checkboxItemSelected.valueText).to.equal('Checkbox Item selected');
+				expect(checkboxItem.valueText).to.equal('Checkbox Item selected');
 			});
 
 			it('should be checked', function () {
-				expectChecked(checkboxItemSelected);
+				expectChecked(checkboxItem);
 			});
 
-			it('should display correct icon', function () {
-				expect(checkboxItemSelected.iconSymbol).to.equal('✓');
+			it('should display correct icon - [GT-21121]', function () {
+				expect(checkboxItem.iconSymbol).to.equal('✓');
 			});
 
 			describe('5-way', function () {
 				it('should uncheck the item when selected', function () {
-					checkboxItemSelected.focus();
+					checkboxItem.focus();
 					Page.spotlightSelect();
-					expectUnchecked(checkboxItemSelected);
+					expectUnchecked(checkboxItem);
 				});
 
 				it('should re-check the item when selected twice', function () {
-					checkboxItemSelected.focus();
+					checkboxItem.focus();
 					Page.spotlightSelect();
 					Page.spotlightSelect();
-					expectChecked(checkboxItemSelected);
+					expectChecked(checkboxItem);
 				});
 			});
 
 			describe('pointer', function () {
 				it('should uncheck the item when clicked', function () {
-					checkboxItemSelected.item.click();
-					expectUnchecked(checkboxItemSelected);
+					checkboxItem.self.click();
+					expectUnchecked(checkboxItem);
 				});
 
 				it('should re-check the item when clicked twice', function () {
-					checkboxItemSelected.item.click();
-					checkboxItemSelected.item.click();
-					expectChecked(checkboxItemSelected);
+					checkboxItem.self.click();
+					checkboxItem.self.click();
+					expectChecked(checkboxItem);
 				});
 			});
 		});
@@ -161,155 +156,157 @@ describe('CheckboxItem', function () {
 
 			describe('pointer', function () {
 				it('should uncheck the item when clicked', function () {
-					checkboxItemIconAfter.item.click();
+					checkboxItemIconAfter.self.click();
 					expectUnchecked(checkboxItemIconAfter);
 				});
 
 				it('should re-check the item when clicked twice', function () {
-					checkboxItemIconAfter.item.click();
-					checkboxItemIconAfter.item.click();
+					checkboxItemIconAfter.self.click();
+					checkboxItemIconAfter.self.click();
 					expectChecked(checkboxItemIconAfter);
 				});
 			});
 		});
 
 		describe('inline', function () {
-			const checkboxItemInline = Page.components.checkboxInline;
+			const checkboxItem = Page.components.checkboxInline;
 
 			it('should have two inlined checkboxes positioned inlined', function () {
-				const checkboxItem1 = Page.components.checkboxInline1.itemSelector;
-				const checkboxItem2 = Page.components.checkboxInline2.itemSelector;
-				expectInline({checkboxItem1, checkboxItem2});
+				const checkboxItem2 = Page.components.checkboxInlineAfter.self;
+
+				expectInline(checkboxItem.self, checkboxItem2);
 			});
 
 			it('should have correct text', function () {
-				expect(checkboxItemInline.valueText).to.equal('Checkbox Item inline');
+				expect(checkboxItem.valueText).to.equal('Checkbox Item inline');
 			});
 
 			it('should be checked', function () {
-				expectChecked(checkboxItemInline);
+				expectChecked(checkboxItem);
 			});
 
 			it('should display icon before the text', function () {
-				expect(checkboxItemInline.isBefore).to.be.true();
+				expect(checkboxItem.isBefore).to.be.true();
 			});
 
 			it('should display item inline', function () {
-				expect(checkboxItemInline.isInline).to.be.true();
+				expect(checkboxItem.isInline).to.be.true();
 			});
 
 			describe('5-way', function () {
 				it('should uncheck the item when selected', function () {
-					checkboxItemInline.focus();
+					checkboxItem.focus();
 					Page.spotlightSelect();
-					expectUnchecked(checkboxItemInline);
+					expectUnchecked(checkboxItem);
 				});
 
 				it('should re-check the item when selected twice', function () {
-					checkboxItemInline.focus();
+					checkboxItem.focus();
 					Page.spotlightSelect();
 					Page.spotlightSelect();
-					expectChecked(checkboxItemInline);
+					expectChecked(checkboxItem);
 				});
 			});
 
 			describe('pointer', function () {
 				it('should uncheck the item when clicked', function () {
-					checkboxItemInline.item.click();
-					expectUnchecked(checkboxItemInline);
+					checkboxItem.self.click();
+					expectUnchecked(checkboxItem);
 				});
 
 				it('should re-check the item when clicked twice', function () {
-					checkboxItemInline.item.click();
-					checkboxItemInline.item.click();
-					expectChecked(checkboxItemInline);
+					checkboxItem.self.click();
+					checkboxItem.self.click();
+					expectChecked(checkboxItem);
 				});
 			});
 		});
 
 		describe('inline after', function () {
-			const checkboxItemInlineAfter = Page.components.checkboxInlineAfter;
+			const checkboxItem = Page.components.checkboxInlineAfter;
 
 			it('should have correct text', function () {
-				expect(checkboxItemInlineAfter.valueText).to.equal('Checkbox Item inline after');
+				expect(checkboxItem.valueText).to.equal('Checkbox Item inline after');
 			});
 
 			it('should be checked', function () {
-				expectChecked(checkboxItemInlineAfter);
+				expectChecked(checkboxItem);
 			});
 
 			it('should display icon after the text', function () {
-				expect(checkboxItemInlineAfter.isAfter).to.be.true();
+				expect(checkboxItem.isAfter).to.be.true();
 			});
 
 			it('should display item inline', function () {
-				expect(checkboxItemInlineAfter.isInline).to.be.true();
+				expect(checkboxItem.isInline).to.be.true();
 			});
 
 			describe('5-way', function () {
 				it('should uncheck the item when selected', function () {
-					checkboxItemInlineAfter.focus();
+					checkboxItem.focus();
 					Page.spotlightSelect();
-					expectUnchecked(checkboxItemInlineAfter);
+					expectUnchecked(checkboxItem);
 				});
 
 				it('should re-check the item when selected twice', function () {
-					checkboxItemInlineAfter.focus();
+					checkboxItem.focus();
 					Page.spotlightSelect();
 					Page.spotlightSelect();
-					expectChecked(checkboxItemInlineAfter);
+					expectChecked(checkboxItem);
 				});
 			});
 
 			describe('pointer', function () {
 				it('should uncheck the item when clicked', function () {
-					checkboxItemInlineAfter.item.click();
-					expectUnchecked(checkboxItemInlineAfter);
+					checkboxItem.self.click();
+					expectUnchecked(checkboxItem);
 				});
 
 				it('should re-check the item when clicked twice', function () {
-					checkboxItemInlineAfter.item.click();
-					checkboxItemInlineAfter.item.click();
-					expectChecked(checkboxItemInlineAfter);
+					checkboxItem.self.click();
+					checkboxItem.self.click();
+					expectChecked(checkboxItem);
 				});
 			});
 		});
 
+		// Note, the disabled test below requires the previous component to be known for 5-way
+		// navigation and assumes there's no next component.  If you add components before or after
+		// this test, please update the links.
 		describe('disabled', function () {
-			const checkboxItemDisabled = Page.components.checkboxDisabled;
+			const checkboxItem = Page.components.checkboxDisabled;
+			const prevCheckboxItem = Page.components.checkboxInlineAfter;
 
 			it('should have correct text', function () {
-				expect(checkboxItemDisabled.valueText).to.equal('Checkbox Item disabled');
+				expect(checkboxItem.valueText).to.equal('Checkbox Item disabled');
 			});
 
 			it('should be checked', function () {
-				expectChecked(checkboxItemDisabled);
+				expectChecked(checkboxItem);
 			});
 
 			it('should display icon before the text', function () {
-				expect(checkboxItemDisabled.isBefore).to.be.true();
-			});
-
-			it('should not focus the item', function () {
-				checkboxItemDisabled.focus();
-				expect(checkboxItemDisabled.item.hasFocus()).to.be.false();
+				expect(checkboxItem.isBefore).to.be.true();
 			});
 
 			describe('5-way', function () {
-				it('should not uncheck the item when selected', function () {
-					checkboxItemDisabled.focus();
-					Page.spotlightSelect();
-					expectChecked(checkboxItemDisabled);
+				it('should not focus the item', function () {
+					prevCheckboxItem.focus();
+					Page.spotlightDown();
+					expect(prevCheckboxItem.self.hasFocus()).to.be.true();
 				});
 			});
 
 			describe('pointer', function () {
 				it('should not uncheck the item when clicked', function () {
-					checkboxItemDisabled.item.click();
-					expectChecked(checkboxItemDisabled);
+					checkboxItem.self.click();
+					expectChecked(checkboxItem);
 				});
 			});
 		});
+		// Note, the disabled test above requires the previous component to be known for 5-way
+		// navigation and assumes there's no next component.  If you add components before or after
+		// this test, please update the links.
 	});
 
 	describe('RTL locale', function () {
@@ -318,21 +315,20 @@ describe('CheckboxItem', function () {
 		});
 
 		it('should have focus on first item at start', function () {
-			expect(Page.components.checkboxDefault.item.hasFocus()).to.be.true();
+			expect(Page.components.checkboxDefault.self.hasFocus()).to.be.true();
 		});
 
 		it('should have icon to the right of text when default', function () {
 			const checkboxItem = Page.components.checkboxDefault;
-			expectRTL({
-				leftElement: checkboxItem.iconSelector,
-				rightElement: checkboxItem.textSelector
-			});
+
+			expectOrdering(checkboxItem.value, checkboxItem.icon);
 		});
 
 		it('should have two inlined checkboxes positioned inlined', function () {
-			const checkboxItem1 = Page.components.checkboxInline1.itemSelector;
-			const checkboxItem2 = Page.components.checkboxInline2.itemSelector;
-			expectInline({checkboxItem1, checkboxItem2});
+			const checkboxItem1 = Page.components.checkboxInline.self;
+			const checkboxItem2 = Page.components.checkboxInlineAfter.self;
+
+			expectInline(checkboxItem1, checkboxItem2);
 		});
 	});
 });
