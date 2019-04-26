@@ -90,7 +90,9 @@ class Page {
 	}
 
 	/* global window */
-	waitTransitionEnd (delay = 3000, msg = 'timed out waiting for transitionend') {
+	waitTransitionEnd (delay = 7000, msg = 'timed out waiting for transitionend') {
+		const startTime = Date.now();
+
 		browser.execute(
 			function () {
 				window.ontransitionend = function () {
@@ -110,6 +112,7 @@ class Page {
 			delay,
 			msg
 		);
+		console.log(`Transition Elapsed: ${Date.now() - startTime}`);
 	}
 }
 
