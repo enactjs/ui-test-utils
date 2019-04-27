@@ -90,7 +90,7 @@ class Page {
 	}
 
 	/* global window */
-	waitTransitionEnd (delay = 7000, msg = 'timed out waiting for transitionend') {
+	waitTransitionEnd (delay = 7000, msg = 'timed out waiting for transitionend', callback) {
 		const startTime = Date.now();
 
 		browser.execute(
@@ -101,6 +101,9 @@ class Page {
 				window.__transition = false;
 			}
 		);
+		if (callback) {
+			callback();
+		}
 		browser.waitUntil(
 			function () {
 				return browser.execute(

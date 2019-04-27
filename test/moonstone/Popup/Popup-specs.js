@@ -192,7 +192,7 @@ describe('Popup', function () {
 				Page.waitTransitionEnd();
 				expectOpen(popupCommon);
 				Page.backKey();
-				browser.pause(300);  // needed to pass instead of waitTransitionEnd
+				browser.pause(300);  // Wait for delay in case of transition (shouldn't happen)
 				expectOpen(popupCommon);
 				expect(popup.buttonOK.hasFocus()).to.be.true();
 			});
@@ -777,7 +777,7 @@ describe('Popup', function () {
 
 			it('should not spot Buttons Outside of Popup - [GT-21630]', function (){
 				popupCommon.buttonPopup6.click();
-				browser.pause(250);
+				Page.waitTransitionEnd();
 				// Verify the popup opens
 				expectOpen(popupCommon);
 				// Hover a button outside Popup (step 4)
@@ -788,10 +788,10 @@ describe('Popup', function () {
 				expect(popup.buttonOK.hasFocus()).to.be.true();
 				// Close Popup (step 5)
 				popup.buttonClose.click();
+				Page.waitTransitionEnd();
 				Page.spotlightUp();
 				// Hover the button 'spotlightRestrict - self-only' outside of the popup (step 6)
 				Page.spotlightUp();
-				Page.waitTransitionEnd(); // Needed for test to pass
 				// Check spotlight is on the button 'spotlightRestrict - self-only' outside popup (verify step 6)
 				expect(popupCommon.buttonPopup6.hasFocus()).to.be.true();
 				// Open popup (step 7)
@@ -1174,8 +1174,9 @@ describe('Popup', function () {
 				Page.spotlightRight();
 				Page.spotlightDown();
 				Page.spotlightDown();
-				Page.spotlightSelect();
-				Page.waitTransitionEnd();
+				Page.waitTransitionEnd(3000, 'popup open', () => {
+					Page.spotlightSelect();
+				});
 				expectNoneScrimOpen(popupCommon);
 				Page.spotlightRight();
 				Page.spotlightLeft();
