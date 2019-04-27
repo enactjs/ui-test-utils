@@ -159,11 +159,13 @@ describe('ActivityPanels', function () {
 
 			it('should spot last focused item when transitioning back using back key', function () {
 				Page.spotlightDown();
-				Page.spotlightSelect();
-				Page.waitTransitionEnd();
+				Page.waitTransitionEnd(3000, 'panel open', () => {
+					Page.spotlightSelect();
+				});
 				expect(Page.item5.hasFocus()).to.be.true();
-				Page.backKey();
-				Page.waitTransitionEnd();
+				Page.waitTransitionEnd(3000, 'panel back', () => {
+					Page.backKey();
+				});
 
 				expect(Page.item2.hasFocus()).to.be.true();
 			});

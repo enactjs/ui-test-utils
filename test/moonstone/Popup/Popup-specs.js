@@ -681,11 +681,13 @@ describe('Popup', function () {
 				Page.spotlightRight();
 				Page.spotlightRight();
 				Page.spotlightDown();
-				Page.spotlightSelect();
-				Page.waitTransitionEnd();
+				Page.waitTransitionEnd(3000, 'popup open', () => {
+					Page.spotlightSelect();
+				});
 				expectOpen(popupCommon);
-				Page.spotlightSelect();
-				Page.waitTransitionEnd();
+				Page.waitTransitionEnd(3000, 'popup close', () => {
+					Page.spotlightSelect();
+				});
 				expectClosed(popupCommon);
 				expect(popupCommon.buttonPopup6.hasFocus()).to.be.true();
 			});
