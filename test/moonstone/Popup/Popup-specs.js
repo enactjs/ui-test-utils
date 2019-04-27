@@ -31,23 +31,26 @@ describe('Popup', function () {
 		describe('5-way', function () {
 
 			it('should spot default button in popup container', function () {
-				Page.spotlightSelect();
-				Page.waitTransitionEnd();
+				Page.waitTransitionEnd(3000, 'popup open', () => {
+					Page.spotlightSelect();
+				});
 				expectOpen(popupCommon);
 				expect(popup.buttonOK.hasFocus()).to.be.true();
 			});
 
 			it('should spot cancel button on 5-way right in popup container', function () {
-				Page.spotlightSelect();
-				Page.waitTransitionEnd();
+				Page.waitTransitionEnd(3000, 'popup open', () => {
+					Page.spotlightSelect();
+				});
 				expectOpen(popupCommon);
 				Page.spotlightRight();
 				expect(popup.buttonCancel.hasFocus()).to.be.true();
 			});
 
 			it('should spot close button on two 5-way right in popup container', function () {
-				Page.spotlightSelect();
-				Page.waitTransitionEnd();
+				Page.waitTransitionEnd(3000, 'popup open', () => {
+					Page.spotlightSelect();
+				});
 				expectOpen(popupCommon);
 				Page.spotlightRight();
 				Page.spotlightRight();
@@ -55,8 +58,9 @@ describe('Popup', function () {
 			});
 
 			it('should not move spot from close button on 5-way up in popup container', function () {
-				Page.spotlightSelect();
-				Page.waitTransitionEnd();
+				Page.waitTransitionEnd(3000, 'popup open', () => {
+					Page.spotlightSelect();
+				});
 				expectOpen(popupCommon);
 				Page.spotlightRight();
 				Page.spotlightRight();
@@ -65,8 +69,9 @@ describe('Popup', function () {
 			});
 
 			it('should not move spot from close button on 5-way right in popup container', function () {
-				Page.spotlightSelect();
-				Page.waitTransitionEnd();
+				Page.waitTransitionEnd(3000, 'popup open', () => {
+					Page.spotlightSelect();
+				});
 				expectOpen(popupCommon);
 				Page.spotlightRight();
 				Page.spotlightRight();
@@ -75,8 +80,9 @@ describe('Popup', function () {
 			});
 
 			it('should spot back the ok button on 5-way right then left in popup container', function () {
-				Page.spotlightSelect();
-				Page.waitTransitionEnd();
+				Page.waitTransitionEnd(3000, 'popup open', () => {
+					Page.spotlightSelect();
+				});
 				expectOpen(popupCommon);
 				Page.spotlightRight();
 				Page.spotlightLeft();
@@ -84,21 +90,25 @@ describe('Popup', function () {
 			});
 
 			it('should spot back the popup button on closing the popup', function () {
-				Page.spotlightSelect();
-				Page.waitTransitionEnd();
+				Page.waitTransitionEnd(3000, 'popup open', () => {
+					Page.spotlightSelect();
+				});
 				expectOpen(popupCommon);
-				Page.spotlightSelect();
-				Page.waitTransitionEnd();
+				Page.waitTransitionEnd(3000, 'popup close', () => {
+					Page.spotlightSelect();
+				});
 				expectClosed(popupCommon);
 				expect(popupCommon.buttonPopup1.hasFocus()).to.be.true();
 			});
 
 			it('should spot back the popup button on auto dismiss the popup', function () {
-				Page.spotlightSelect();
-				Page.waitTransitionEnd();
+				Page.waitTransitionEnd(3000, 'popup open', () => {
+					Page.spotlightSelect();
+				});
 				expectOpen(popupCommon);
-				Page.backKey();
-				Page.waitTransitionEnd();
+				Page.waitTransitionEnd(3000, 'popup close', () => {
+					Page.backKey();
+				});
 				expectClosed(popupCommon);
 				expect(popupCommon.buttonPopup1.hasFocus()).to.be.true();
 			});
@@ -109,8 +119,9 @@ describe('Popup', function () {
 				popupCommon.buttonPopup1.click();
 				Page.waitTransitionEnd();
 				expectOpen(popupCommon);
-				Page.backKey();
-				Page.waitTransitionEnd();
+				Page.waitTransitionEnd(3000, 'popup close', () => {
+					Page.backKey();
+				});
 				expectClosed(popupCommon);
 			});
 
@@ -180,16 +191,18 @@ describe('Popup', function () {
 
 			it('should spot default button in popup container', function () {
 				Page.spotlightRight();
-				Page.spotlightSelect();
-				Page.waitTransitionEnd();
+				Page.waitTransitionEnd(3000, 'popup open', () => {
+					Page.spotlightSelect();
+				});
 				expectOpen(popupCommon);
 				expect(popup.buttonOK.hasFocus()).to.be.true();
 			});
 
 			it('should not dismiss the popup and should not move spotlight from the popup container', function () {
 				Page.spotlightRight();
-				Page.spotlightSelect();
-				Page.waitTransitionEnd();
+				Page.waitTransitionEnd(3000, 'popup open', () => {
+					Page.spotlightSelect();
+				});
 				expectOpen(popupCommon);
 				Page.backKey();
 				browser.pause(300);  // Wait for delay in case of transition (shouldn't happen)
@@ -249,8 +262,9 @@ describe('Popup', function () {
 			it('should open the popup in no Component button select', function () {
 				Page.spotlightRight();
 				Page.spotlightRight();
-				Page.spotlightSelect();
-				Page.waitTransitionEnd();
+				Page.waitTransitionEnd(3000, 'popup open', () => {
+					Page.spotlightSelect();
+				});
 				expectOpen(popupCommon);
 			});
 
@@ -260,8 +274,9 @@ describe('Popup', function () {
 				Page.spotlightSelect();
 				Page.waitTransitionEnd();
 				expectOpen(popupCommon);
-				Page.backKey();
-				Page.waitTransitionEnd();
+				Page.waitTransitionEnd(3000, 'popup close', () => {
+					Page.backKey();
+				});
 				expectClosed(popupCommon);
 				expect(popupCommon.buttonPopup3.hasFocus()).to.be.true();
 			});
@@ -273,8 +288,9 @@ describe('Popup', function () {
 				popupCommon.buttonPopup3.click();
 				Page.waitTransitionEnd();
 				expectOpen(popupCommon);
-				Page.backKey();
-				Page.waitTransitionEnd();
+				Page.waitTransitionEnd(3000, 'popup close', () => {
+					Page.backKey();
+				});
 				expectClosed(popupCommon);
 			});
 
@@ -301,7 +317,7 @@ describe('Popup', function () {
 
 		it('should have correct title', function () {
 			popupCommon.buttonPopup4.click();
-			browser.pause(300); // needed to pass instead of waitTransitionEnd
+			browser.pause(100); // needed to pass instead of waitTransitionEnd
 			expectOpen(popupCommon);
 			validateTitle(popup, 'Popup without Animation');
 		});
@@ -311,7 +327,7 @@ describe('Popup', function () {
 			it('should spot default button in popup container', function () {
 				Page.spotlightDown();
 				Page.spotlightSelect();
-				browser.pause(300); // needed to pass instead of waitTransitionEnd
+				browser.pause(100); // needed to pass instead of waitTransitionEnd
 				expectOpen(popupCommon);
 				expect(popup.buttonOK.hasFocus()).to.be.true();
 			});
@@ -319,7 +335,7 @@ describe('Popup', function () {
 			it('should spot cancel button on 5-way right in popup container', function () {
 				Page.spotlightDown();
 				Page.spotlightSelect();
-				browser.pause(300); // needed to pass instead of waitTransitionEnd
+				browser.pause(100); // needed to pass instead of waitTransitionEnd
 				expectOpen(popupCommon);
 				Page.spotlightRight();
 				expect(popup.buttonCancel.hasFocus()).to.be.true();
@@ -328,7 +344,7 @@ describe('Popup', function () {
 			it('should spot close button on two 5-way right in popup container', function () {
 				Page.spotlightDown();
 				Page.spotlightSelect();
-				browser.pause(300); // needed to pass instead of waitTransitionEnd
+				browser.pause(100); // needed to pass instead of waitTransitionEnd
 				expectOpen(popupCommon);
 				Page.spotlightRight();
 				Page.spotlightRight();
@@ -338,7 +354,7 @@ describe('Popup', function () {
 			it('should not move spot from close button on 5-way up in popup container', function () {
 				Page.spotlightDown();
 				Page.spotlightSelect();
-				browser.pause(300); // needed to pass instead of waitTransitionEnd
+				browser.pause(100); // needed to pass instead of waitTransitionEnd
 				expectOpen(popupCommon);
 				Page.spotlightRight();
 				Page.spotlightRight();
@@ -349,7 +365,7 @@ describe('Popup', function () {
 			it('should not move spot from close button on 5-way right in popup container', function () {
 				Page.spotlightDown();
 				Page.spotlightSelect();
-				browser.pause(300); // needed to pass instead of waitTransitionEnd
+				browser.pause(100); // needed to pass instead of waitTransitionEnd
 				expectOpen(popupCommon);
 				Page.spotlightRight();
 				Page.spotlightRight();
@@ -360,7 +376,7 @@ describe('Popup', function () {
 			it('should spot back the ok button on 5-way right then left in popup container', function () {
 				Page.spotlightDown();
 				Page.spotlightSelect();
-				browser.pause(300); // needed to pass instead of waitTransitionEnd
+				browser.pause(100); // needed to pass instead of waitTransitionEnd
 				expectOpen(popupCommon);
 				Page.spotlightRight();
 				Page.spotlightLeft();
@@ -370,10 +386,10 @@ describe('Popup', function () {
 			it('should spot back the popup button on closing the popup', function () {
 				Page.spotlightDown();
 				Page.spotlightSelect();
-				browser.pause(300); // needed to pass instead of waitTransitionEnd
+				browser.pause(100); // needed to pass instead of waitTransitionEnd
 				expectOpen(popupCommon);
 				Page.spotlightSelect();
-				browser.pause(300); // needed to pass instead of waitTransitionEnd
+				browser.pause(100); // needed to pass instead of waitTransitionEnd
 				expectClosed(popupCommon);
 				expect(popupCommon.buttonPopup4.hasFocus()).to.be.true();
 			});
@@ -381,10 +397,10 @@ describe('Popup', function () {
 			it('should spot back the popup button on auto dismiss the popup', function () {
 				Page.spotlightDown();
 				Page.spotlightSelect();
-				browser.pause(300); // needed to pass instead of waitTransitionEnd
+				browser.pause(100); // needed to pass instead of waitTransitionEnd
 				expectOpen(popupCommon);
 				Page.backKey();
-				browser.pause(300); // needed to pass instead of waitTransitionEnd
+				browser.pause(100); // needed to pass instead of waitTransitionEnd
 				expectClosed(popupCommon);
 				expect(popupCommon.buttonPopup4.hasFocus()).to.be.true();
 			});
@@ -393,59 +409,59 @@ describe('Popup', function () {
 		describe('pointer', function () {
 			it('should dismiss the popup on escape key', function () {
 				popupCommon.buttonPopup4.click();
-				browser.pause(300); // needed to pass instead of waitTransitionEnd
+				browser.pause(100); // needed to pass instead of waitTransitionEnd
 				expectOpen(popupCommon);
 				Page.backKey();
-				browser.pause(300); // needed to pass instead of waitTransitionEnd
+				browser.pause(100); // needed to pass instead of waitTransitionEnd
 				expectClosed(popupCommon);
 			});
 
 			it('should dismiss the popup on click on outside the popup', function () {
 				popupCommon.buttonPopup4.click();
-				browser.pause(300); // needed to pass instead of waitTransitionEnd
+				browser.pause(100); // needed to pass instead of waitTransitionEnd
 				expectOpen(popupCommon);
 				Page.clickPopupFloatLayer();
-				browser.pause(300); // needed to pass instead of waitTransitionEnd
+				browser.pause(100); // needed to pass instead of waitTransitionEnd
 				expectClosed(popupCommon);
 			});
 
 			it('should open the popup with scrim on click', function () {
 				popupCommon.buttonPopup4.click();
-				browser.pause(300); // needed to pass instead of waitTransitionEnd
+				browser.pause(100); // needed to pass instead of waitTransitionEnd
 				expectOpen(popupCommon);
 			});
 
 			it('should show close button in the popup container on display', function () {
 				popupCommon.buttonPopup4.click();
-				browser.pause(300); // needed to pass instead of waitTransitionEnd
+				browser.pause(100); // needed to pass instead of waitTransitionEnd
 				expectOpen(popupCommon);
 				expectCloseButton(popup);
 			});
 
 			it('should close the popup and scrim on click in popup container', function () {
 				popupCommon.buttonPopup4.click();
-				browser.pause(300); // needed to pass instead of waitTransitionEnd
+				browser.pause(100); // needed to pass instead of waitTransitionEnd
 				expectOpen(popupCommon);
 				popup.buttonOK.click();
-				browser.pause(300); // needed to pass instead of waitTransitionEnd
+				browser.pause(100); // needed to pass instead of waitTransitionEnd
 				expectClosed(popupCommon);
 			});
 
 			it('should close the popup and scrim on cancel click in popup container', function () {
 				popupCommon.buttonPopup4.click();
-				browser.pause(300); // needed to pass instead of waitTransitionEnd
+				browser.pause(100); // needed to pass instead of waitTransitionEnd
 				expectOpen(popupCommon);
 				popup.buttonCancel.click();
-				browser.pause(300); // needed to pass instead of waitTransitionEnd
+				browser.pause(100); // needed to pass instead of waitTransitionEnd
 				expectClosed(popupCommon);
 			});
 
 			it('should close the popup and scrim on close click in popup container', function () {
 				popupCommon.buttonPopup4.click();
-				browser.pause(300); // needed to pass instead of waitTransitionEnd
+				browser.pause(100); // needed to pass instead of waitTransitionEnd
 				expectOpen(popupCommon);
 				popup.buttonClose.click();
-				browser.pause(300); // needed to pass instead of waitTransitionEnd
+				browser.pause(100); // needed to pass instead of waitTransitionEnd
 				expectClosed(popupCommon);
 			});
 		});
@@ -467,8 +483,9 @@ describe('Popup', function () {
 			it('should spot default button in popup container', function () {
 				Page.spotlightRight();
 				Page.spotlightDown();
-				Page.spotlightSelect();
-				Page.waitTransitionEnd();
+				Page.waitTransitionEnd(3000, 'popup open', () => {
+					Page.spotlightSelect();
+				});
 				expectOpen(popupCommon);
 				expect(popup.buttonOK.hasFocus()).to.be.true();
 			});
@@ -476,8 +493,9 @@ describe('Popup', function () {
 			it('should spot cancel button on 5-way right in popup container', function () {
 				Page.spotlightRight();
 				Page.spotlightDown();
-				Page.spotlightSelect();
-				Page.waitTransitionEnd();
+				Page.waitTransitionEnd(3000, 'popup open', () => {
+					Page.spotlightSelect();
+				});
 				expectOpen(popupCommon);
 				Page.spotlightRight();
 				expect(popup.buttonCancel.hasFocus()).to.be.true();
@@ -486,8 +504,9 @@ describe('Popup', function () {
 			it('should not move spot from cancel button on 5-way left in popup container', function () {
 				Page.spotlightRight();
 				Page.spotlightDown();
-				Page.spotlightSelect();
-				Page.waitTransitionEnd();
+				Page.waitTransitionEnd(3000, 'popup open', () => {
+					Page.spotlightSelect();
+				});
 				expectOpen(popupCommon);
 				Page.spotlightRight();
 				Page.spotlightUp();
@@ -497,8 +516,9 @@ describe('Popup', function () {
 			it('should not move spot from cancel button on 5-way right in popup container', function () {
 				Page.spotlightRight();
 				Page.spotlightDown();
-				Page.spotlightSelect();
-				Page.waitTransitionEnd();
+				Page.waitTransitionEnd(3000, 'popup open', () => {
+					Page.spotlightSelect();
+				});
 				expectOpen(popupCommon);
 				Page.spotlightRight();
 				Page.spotlightRight();
@@ -508,8 +528,9 @@ describe('Popup', function () {
 			it('should spot back the ok button on 5-way right then left in popup container', function () {
 				Page.spotlightRight();
 				Page.spotlightDown();
-				Page.spotlightSelect();
-				Page.waitTransitionEnd();
+				Page.waitTransitionEnd(3000, 'popup open', () => {
+					Page.spotlightSelect();
+				});
 				expectOpen(popupCommon);
 				Page.spotlightRight();
 				Page.spotlightLeft();
@@ -519,8 +540,9 @@ describe('Popup', function () {
 			it('should spot back the popup button on closing the popup', function () {
 				Page.spotlightRight();
 				Page.spotlightDown();
-				Page.spotlightSelect();
-				Page.waitTransitionEnd();
+				Page.waitTransitionEnd(3000, 'popup open', () => {
+					Page.spotlightSelect();
+				});
 				expectOpen(popupCommon);
 				Page.spotlightSelect();
 				Page.waitTransitionEnd();
@@ -531,12 +553,14 @@ describe('Popup', function () {
 			it('should close the popup on spotlight select on cancel in the popup', function () {
 				Page.spotlightRight();
 				Page.spotlightDown();
-				Page.spotlightSelect();
-				Page.waitTransitionEnd();
+				Page.waitTransitionEnd(3000, 'popup open', () => {
+					Page.spotlightSelect();
+				});
 				expectOpen(popupCommon);
 				Page.spotlightRight();
-				Page.spotlightSelect();
-				Page.waitTransitionEnd();
+				Page.waitTransitionEnd(3000, 'popup close', () => {
+					Page.spotlightSelect();
+				});
 				expectClosed(popupCommon);
 				expect(popupCommon.buttonPopup5.hasFocus()).to.be.true();
 			});
@@ -544,13 +568,15 @@ describe('Popup', function () {
 			it('should close the popup on spotlight select on close in the popup', function () {
 				Page.spotlightRight();
 				Page.spotlightDown();
-				Page.spotlightSelect();
-				Page.waitTransitionEnd();
+				Page.waitTransitionEnd(3000, 'popup open', () => {
+					Page.spotlightSelect();
+				});
 				expectOpen(popupCommon);
 				Page.spotlightRight();
 				Page.spotlightRight();
-				Page.spotlightSelect();
-				Page.waitTransitionEnd();
+				Page.waitTransitionEnd(3000, 'popup close', () => {
+					Page.spotlightSelect();
+				});
 				expectClosed(popupCommon);
 				expect(popupCommon.buttonPopup5.hasFocus()).to.be.true();
 			});
@@ -558,11 +584,13 @@ describe('Popup', function () {
 			it('should spot back the popup button on auto dismiss the popup', function () {
 				Page.spotlightRight();
 				Page.spotlightDown();
-				Page.spotlightSelect();
-				Page.waitTransitionEnd();
+				Page.waitTransitionEnd(3000, 'popup open', () => {
+					Page.spotlightSelect();
+				});
 				expectOpen(popupCommon);
-				Page.backKey();
-				Page.waitTransitionEnd();
+				Page.waitTransitionEnd(3000, 'popup close', () => {
+					Page.backKey();
+				});
 				expectClosed(popupCommon);
 				expect(popupCommon.buttonPopup5.hasFocus()).to.be.true();
 			});
@@ -610,8 +638,9 @@ describe('Popup', function () {
 				Page.spotlightRight();
 				Page.spotlightRight();
 				Page.spotlightDown();
-				Page.spotlightSelect();
-				Page.waitTransitionEnd();
+				Page.waitTransitionEnd(3000, 'popup open', () => {
+					Page.spotlightSelect();
+				});
 				expectOpen(popupCommon);
 				expect(popup.buttonOK.hasFocus()).to.be.true();
 			});
@@ -620,8 +649,9 @@ describe('Popup', function () {
 				Page.spotlightRight();
 				Page.spotlightRight();
 				Page.spotlightDown();
-				Page.spotlightSelect();
-				Page.waitTransitionEnd();
+				Page.waitTransitionEnd(3000, 'popup open', () => {
+					Page.spotlightSelect();
+				});
 				expectOpen(popupCommon);
 				Page.spotlightRight();
 				expect(popup.buttonCancel.hasFocus()).to.be.true();
@@ -631,8 +661,9 @@ describe('Popup', function () {
 				Page.spotlightRight();
 				Page.spotlightRight();
 				Page.spotlightDown();
-				Page.spotlightSelect();
-				Page.waitTransitionEnd();
+				Page.waitTransitionEnd(3000, 'popup open', () => {
+					Page.spotlightSelect();
+				});
 				expectOpen(popupCommon);
 				Page.spotlightRight();
 				Page.spotlightLeft();
@@ -643,8 +674,9 @@ describe('Popup', function () {
 				Page.spotlightRight();
 				Page.spotlightRight();
 				Page.spotlightDown();
-				Page.spotlightSelect();
-				Page.waitTransitionEnd();
+				Page.waitTransitionEnd(3000, 'popup open', () => {
+					Page.spotlightSelect();
+				});
 				expectOpen(popupCommon);
 				Page.spotlightRight();
 				Page.spotlightUp();
@@ -656,8 +688,9 @@ describe('Popup', function () {
 				Page.spotlightRight();
 				Page.spotlightRight();
 				Page.spotlightDown();
-				Page.spotlightSelect();
-				Page.waitTransitionEnd();
+				Page.waitTransitionEnd(3000, 'popup open', () => {
+					Page.spotlightSelect();
+				});
 				expectOpen(popupCommon);
 				Page.spotlightRight();
 				Page.spotlightRight();
@@ -669,8 +702,9 @@ describe('Popup', function () {
 				Page.spotlightRight();
 				Page.spotlightRight();
 				Page.spotlightDown();
-				Page.spotlightSelect();
-				Page.waitTransitionEnd();
+				Page.waitTransitionEnd(3000, 'popup open', () => {
+					Page.spotlightSelect();
+				});
 				expectOpen(popupCommon);
 				Page.spotlightRight();
 				Page.spotlightDown();
@@ -829,8 +863,9 @@ describe('Popup', function () {
 			it('should spot default button in popup container', function () {
 				Page.spotlightDown();
 				Page.spotlightDown();
-				Page.spotlightSelect();
-				Page.waitTransitionEnd();
+				Page.waitTransitionEnd(3000, 'popup open', () => {
+					Page.spotlightSelect();
+				});
 				expectOpen(popupCommon);
 				expect(popup.buttonOK.hasFocus()).to.be.true();
 			});
@@ -838,8 +873,9 @@ describe('Popup', function () {
 			it('should spot cancel button on 5-way right in popup container', function () {
 				Page.spotlightDown();
 				Page.spotlightDown();
-				Page.spotlightSelect();
-				Page.waitTransitionEnd();
+				Page.waitTransitionEnd(3000, 'popup open', () => {
+					Page.spotlightSelect();
+				});
 				expectOpen(popupCommon);
 				Page.spotlightRight();
 				expect(popup.buttonCancel.hasFocus()).to.be.true();
@@ -848,8 +884,9 @@ describe('Popup', function () {
 			it('should spot back the ok button on 5-way right then left in popup container', function () {
 				Page.spotlightDown();
 				Page.spotlightDown();
-				Page.spotlightSelect();
-				Page.waitTransitionEnd();
+				Page.waitTransitionEnd(3000, 'popup open', () => {
+					Page.spotlightSelect();
+				});
 				expectOpen(popupCommon);
 				Page.spotlightRight();
 				Page.spotlightLeft();
@@ -859,8 +896,9 @@ describe('Popup', function () {
 			it('should not move spot from close button on 5-way right after 5-way up in popup container', function () {
 				Page.spotlightDown();
 				Page.spotlightDown();
-				Page.spotlightSelect();
-				Page.waitTransitionEnd();
+				Page.waitTransitionEnd(3000, 'popup open', () => {
+					Page.spotlightSelect();
+				});
 				expectOpen(popupCommon);
 				Page.spotlightRight();
 				Page.spotlightUp();
@@ -871,8 +909,9 @@ describe('Popup', function () {
 			it('should not move spot from close button on 5-way right in popup container', function () {
 				Page.spotlightDown();
 				Page.spotlightDown();
-				Page.spotlightSelect();
-				Page.waitTransitionEnd();
+				Page.waitTransitionEnd(3000, 'popup open', () => {
+					Page.spotlightSelect();
+				});
 				expectOpen(popupCommon);
 				Page.spotlightRight();
 				Page.spotlightRight();
@@ -883,8 +922,9 @@ describe('Popup', function () {
 			it('should spot the cancel button on 5-way right then down in popup container', function () {
 				Page.spotlightDown();
 				Page.spotlightDown();
-				Page.spotlightSelect();
-				Page.waitTransitionEnd();
+				Page.waitTransitionEnd(3000, 'popup open', () => {
+					Page.spotlightSelect();
+				});
 				expectOpen(popupCommon);
 				Page.spotlightRight();
 				Page.spotlightDown();
@@ -894,11 +934,13 @@ describe('Popup', function () {
 			it('should spot back the popup button on closing the popup', function () {
 				Page.spotlightDown();
 				Page.spotlightDown();
-				Page.spotlightSelect();
-				Page.waitTransitionEnd();
+				Page.waitTransitionEnd(3000, 'popup open', () => {
+					Page.spotlightSelect();
+				});
 				expectOpen(popupCommon);
-				Page.spotlightSelect();
-				Page.waitTransitionEnd();
+				Page.waitTransitionEnd(3000, 'popup close', () => {
+					Page.spotlightSelect();
+				});
 				expectClosed(popupCommon);
 				expect(popupCommon.buttonPopup7.hasFocus()).to.be.true();
 			});
@@ -906,11 +948,13 @@ describe('Popup', function () {
 			it('should spot back the popup button on auto dismiss the popup', function () {
 				Page.spotlightDown();
 				Page.spotlightDown();
-				Page.spotlightSelect();
-				Page.waitTransitionEnd();
+				Page.waitTransitionEnd(3000, 'popup open', () => {
+					Page.spotlightSelect();
+				});
 				expectOpen(popupCommon);
-				Page.backKey();
-				Page.waitTransitionEnd();
+				Page.waitTransitionEnd(3000, 'popup close', () => {
+					Page.backKey();
+				});
 				expectClosed(popupCommon);
 				expect(popupCommon.buttonPopup7.hasFocus()).to.be.true();
 			});
@@ -979,8 +1023,9 @@ describe('Popup', function () {
 				Page.spotlightRight();
 				Page.spotlightDown();
 				Page.spotlightDown();
-				Page.spotlightSelect();
-				Page.waitTransitionEnd();
+				Page.waitTransitionEnd(3000, 'popup open', () => {
+					Page.spotlightSelect();
+				});
 				expectOpen(popupCommon);
 				expect(popup.buttonOK.hasFocus()).to.be.true();
 			});
@@ -989,8 +1034,9 @@ describe('Popup', function () {
 				Page.spotlightRight();
 				Page.spotlightDown();
 				Page.spotlightDown();
-				Page.spotlightSelect();
-				Page.waitTransitionEnd();
+				Page.waitTransitionEnd(3000, 'popup open', () => {
+					Page.spotlightSelect();
+				});
 				expectOpen(popupCommon);
 				Page.spotlightRight();
 				expect(popup.buttonCancel.hasFocus()).to.be.true();
@@ -1000,8 +1046,9 @@ describe('Popup', function () {
 				Page.spotlightRight();
 				Page.spotlightDown();
 				Page.spotlightDown();
-				Page.spotlightSelect();
-				Page.waitTransitionEnd();
+				Page.waitTransitionEnd(3000, 'popup open', () => {
+					Page.spotlightSelect();
+				});
 				expectOpen(popupCommon);
 				Page.spotlightRight();
 				Page.spotlightLeft();
@@ -1012,8 +1059,9 @@ describe('Popup', function () {
 				Page.spotlightRight();
 				Page.spotlightDown();
 				Page.spotlightDown();
-				Page.spotlightSelect();
-				Page.waitTransitionEnd();
+				Page.waitTransitionEnd(3000, 'popup open', () => {
+					Page.spotlightSelect();
+				});
 				expectOpen(popupCommon);
 				Page.spotlightRight();
 				Page.spotlightUp();
@@ -1025,8 +1073,9 @@ describe('Popup', function () {
 				Page.spotlightRight();
 				Page.spotlightDown();
 				Page.spotlightDown();
-				Page.spotlightSelect();
-				Page.waitTransitionEnd();
+				Page.waitTransitionEnd(3000, 'popup open', () => {
+					Page.spotlightSelect();
+				});
 				expectOpen(popupCommon);
 				Page.spotlightRight();
 				Page.spotlightRight();
@@ -1038,8 +1087,9 @@ describe('Popup', function () {
 				Page.spotlightRight();
 				Page.spotlightDown();
 				Page.spotlightDown();
-				Page.spotlightSelect();
-				Page.waitTransitionEnd();
+				Page.waitTransitionEnd(3000, 'popup open', () => {
+					Page.spotlightSelect();
+				});
 				expectOpen(popupCommon);
 				Page.spotlightRight();
 				Page.spotlightDown();
@@ -1050,11 +1100,13 @@ describe('Popup', function () {
 				Page.spotlightRight();
 				Page.spotlightDown();
 				Page.spotlightDown();
-				Page.spotlightSelect();
-				Page.waitTransitionEnd();
+				Page.waitTransitionEnd(3000, 'popup open', () => {
+					Page.spotlightSelect();
+				});
 				expectOpen(popupCommon);
-				Page.spotlightSelect();
-				Page.waitTransitionEnd();
+				Page.waitTransitionEnd(3000, 'popup close', () => {
+					Page.spotlightSelect();
+				});
 				expectClosed(popupCommon);
 				expect(popupCommon.buttonPopup8.hasFocus()).to.be.true();
 			});
@@ -1063,11 +1115,13 @@ describe('Popup', function () {
 				Page.spotlightRight();
 				Page.spotlightDown();
 				Page.spotlightDown();
-				Page.spotlightSelect();
-				Page.waitTransitionEnd();
+				Page.waitTransitionEnd(3000, 'popup open', () => {
+					Page.spotlightSelect();
+				});
 				expectOpen(popupCommon);
-				Page.backKey();
-				Page.waitTransitionEnd();
+				Page.waitTransitionEnd(3000, 'popup close', () => {
+					Page.backKey();
+				});
 				expectClosed(popupCommon);
 				expect(popupCommon.buttonPopup8.hasFocus()).to.be.true();
 			});
@@ -1079,8 +1133,9 @@ describe('Popup', function () {
 				popupCommon.buttonPopup8.click();
 				Page.waitTransitionEnd();
 				expectOpen(popupCommon);
-				Page.backKey();
-				Page.waitTransitionEnd();
+				Page.waitTransitionEnd(3000, 'popup close', () => {
+					Page.backKey();
+				});
 				expectClosed(popupCommon);
 				// The ESC button (Back Key) does not switch out of pointer mode [ENYO-5865] [ENYO-5882]
 				expect(popupCommon.buttonPopup8.hasFocus()).to.be.false();
@@ -1155,8 +1210,9 @@ describe('Popup', function () {
 				Page.spotlightRight();
 				Page.spotlightDown();
 				Page.spotlightDown();
-				Page.spotlightSelect();
-				Page.waitTransitionEnd();
+				Page.waitTransitionEnd(3000, 'popup open', () => {
+					Page.spotlightSelect();
+				});
 				expectNoneScrimOpen(popupCommon);
 				expect(popup.buttonOK.hasFocus()).to.be.true();
 			});
@@ -1166,8 +1222,9 @@ describe('Popup', function () {
 				Page.spotlightRight();
 				Page.spotlightDown();
 				Page.spotlightDown();
-				Page.spotlightSelect();
-				Page.waitTransitionEnd();
+				Page.waitTransitionEnd(3000, 'popup open', () => {
+					Page.spotlightSelect();
+				});
 				expectNoneScrimOpen(popupCommon);
 				Page.spotlightRight();
 				expect(popup.buttonCancel.hasFocus()).to.be.true();
@@ -1192,8 +1249,9 @@ describe('Popup', function () {
 				Page.spotlightRight();
 				Page.spotlightDown();
 				Page.spotlightDown();
-				Page.spotlightSelect();
-				Page.waitTransitionEnd();
+				Page.waitTransitionEnd(3000, 'popup open', () => {
+					Page.spotlightSelect();
+				});
 				expectNoneScrimOpen(popupCommon);
 				Page.spotlightRight();
 				Page.spotlightUp();
@@ -1206,8 +1264,9 @@ describe('Popup', function () {
 				Page.spotlightRight();
 				Page.spotlightDown();
 				Page.spotlightDown();
-				Page.spotlightSelect();
-				Page.waitTransitionEnd();
+				Page.waitTransitionEnd(3000, 'popup open', () => {
+					Page.spotlightSelect();
+				});
 				expectNoneScrimOpen(popupCommon);
 				Page.spotlightRight();
 				Page.spotlightRight();
@@ -1220,8 +1279,9 @@ describe('Popup', function () {
 				Page.spotlightRight();
 				Page.spotlightDown();
 				Page.spotlightDown();
-				Page.spotlightSelect();
-				Page.waitTransitionEnd();
+				Page.waitTransitionEnd(3000, 'popup open', () => {
+					Page.spotlightSelect();
+				});
 				expectNoneScrimOpen(popupCommon);
 				Page.spotlightRight();
 				Page.spotlightDown();
@@ -1233,11 +1293,13 @@ describe('Popup', function () {
 				Page.spotlightRight();
 				Page.spotlightDown();
 				Page.spotlightDown();
-				Page.spotlightSelect();
-				Page.waitTransitionEnd();
+				Page.waitTransitionEnd(3000, 'popup open', () => {
+					Page.spotlightSelect();
+				});
 				expectNoneScrimOpen(popupCommon);
-				Page.spotlightSelect();
-				Page.waitTransitionEnd();
+				Page.waitTransitionEnd(3000, 'popup close', () => {
+					Page.spotlightSelect();
+				});
 				expectClosed(popupCommon);
 				expect(popupCommon.buttonPopup9.hasFocus()).to.be.true();
 			});
@@ -1247,11 +1309,13 @@ describe('Popup', function () {
 				Page.spotlightRight();
 				Page.spotlightDown();
 				Page.spotlightDown();
-				Page.spotlightSelect();
-				Page.waitTransitionEnd();
+				Page.waitTransitionEnd(3000, 'popup open', () => {
+					Page.spotlightSelect();
+				});
 				expectNoneScrimOpen(popupCommon);
-				Page.backKey();
-				Page.waitTransitionEnd();
+				Page.waitTransitionEnd(3000, 'popup close', () => {
+					Page.backKey();
+				});
 				expectClosed(popupCommon);
 				expect(popupCommon.buttonPopup9.hasFocus()).to.be.true();
 			});
@@ -1263,8 +1327,9 @@ describe('Popup', function () {
 				popupCommon.buttonPopup9.click();
 				Page.waitTransitionEnd();
 				expectNoneScrimOpen(popupCommon);
-				Page.backKey();
-				Page.waitTransitionEnd();
+				Page.waitTransitionEnd(3000, 'popup close', () => {
+					Page.backKey();
+				});
 				expectClosed(popupCommon);
 			});
 
