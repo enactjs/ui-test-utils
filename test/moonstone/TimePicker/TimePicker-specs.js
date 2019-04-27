@@ -26,8 +26,10 @@ describe('TimePicker', function () {
 			});
 
 			it('should have hour-minute-meridiem order', function () {
-				Page.spotlightSelect();
-				Page.waitTransitionEnd();
+				Page.waitTransitionEnd(3000, undefined, () => {
+					Page.spotlightSelect();
+				});
+
 				expectOpen(timePicker);
 				expect(timePicker.hour.hasFocus()).to.be.true();
 				Page.spotlightRight();
@@ -38,25 +40,33 @@ describe('TimePicker', function () {
 
 			describe('5-way', function () {
 				it('should open, spot hour picker on select, and update value to current time', function () {
-					Page.spotlightSelect();
-					Page.waitTransitionEnd();
+					Page.waitTransitionEnd(3000, undefined, () => {
+						Page.spotlightSelect();
+					});
+
 					expectOpen(timePicker);
 					const value = /^\d{1,2}:\d{2}\s[A|P]M$/.test(timePicker.valueText);
 					expect(value).to.be.true();
 				});
 
 				it('should close when pressing select', function () {
-					Page.spotlightSelect();
-					Page.waitTransitionEnd();
+					Page.waitTransitionEnd(3000, undefined, () => {
+						Page.spotlightSelect();
+					});
+
 					expectOpen(timePicker);
-					Page.spotlightSelect();
-					Page.waitTransitionEnd();
+					Page.waitTransitionEnd(3000, undefined, () => {
+						Page.spotlightSelect();
+					});
+
 					expectClosed(timePicker);
 				});
 
 				it('should focus title when 5-way right from last picker - [GT-25237]', function () {
-					Page.spotlightSelect();
-					Page.waitTransitionEnd();
+					Page.waitTransitionEnd(3000, undefined, () => {
+						Page.spotlightSelect();
+					});
+
 					expectOpen(timePicker);
 					expect(timePicker.hour.hasFocus()).to.be.true();
 					Page.spotlightRight();
@@ -66,8 +76,10 @@ describe('TimePicker', function () {
 				});
 
 				it('should increase the hour when incrementing the picker', function () {
-					Page.spotlightSelect();
-					Page.waitTransitionEnd();
+					Page.waitTransitionEnd(3000, undefined, () => {
+						Page.spotlightSelect();
+					});
+
 					const {hour} = extractValues(timePicker);
 					expectOpen(timePicker);
 					expect(timePicker.hour.hasFocus()).to.be.true();
@@ -79,8 +91,10 @@ describe('TimePicker', function () {
 				});
 
 				it('should decrease the hour when decrementing the picker', function () {
-					Page.spotlightSelect();
-					Page.waitTransitionEnd();
+					Page.waitTransitionEnd(3000, undefined, () => {
+						Page.spotlightSelect();
+					});
+
 					const {hour} = extractValues(timePicker);
 					expectOpen(timePicker);
 					expect(timePicker.hour.hasFocus()).to.be.true();
@@ -92,8 +106,10 @@ describe('TimePicker', function () {
 				});
 
 				it('should increase the minute when incrementing the picker', function () {
-					Page.spotlightSelect();
-					Page.waitTransitionEnd();
+					Page.waitTransitionEnd(3000, undefined, () => {
+						Page.spotlightSelect();
+					});
+
 					const {minute} = extractValues(timePicker);
 					expectOpen(timePicker);
 					Page.spotlightRight();
@@ -106,8 +122,10 @@ describe('TimePicker', function () {
 				});
 
 				it('should decrease the minute when decrementing the picker', function () {
-					Page.spotlightSelect();
-					Page.waitTransitionEnd();
+					Page.waitTransitionEnd(3000, undefined, () => {
+						Page.spotlightSelect();
+					});
+
 					const {minute} = extractValues(timePicker);
 					expectOpen(timePicker);
 					Page.spotlightRight();
@@ -120,8 +138,10 @@ describe('TimePicker', function () {
 				});
 
 				it('should update value text when incrementing the meridiem picker', function () {
-					Page.spotlightSelect();
-					Page.waitTransitionEnd();
+					Page.waitTransitionEnd(3000, undefined, () => {
+						Page.spotlightSelect();
+					});
+
 					const time = timePicker.valueText;
 					expectOpen(timePicker);
 					Page.spotlightRight();
@@ -135,8 +155,10 @@ describe('TimePicker', function () {
 				});
 
 				it('should update value text when decrementing the meridiem picker', function () {
-					Page.spotlightSelect();
-					Page.waitTransitionEnd();
+					Page.waitTransitionEnd(3000, undefined, () => {
+						Page.spotlightSelect();
+					});
+
 					const time = timePicker.valueText;
 					expectOpen(timePicker);
 					Page.spotlightRight();
@@ -150,8 +172,10 @@ describe('TimePicker', function () {
 				});
 
 				it('should change the meridiem on hour boundaries', function () {
-					Page.spotlightSelect();
-					Page.waitTransitionEnd();
+					Page.waitTransitionEnd(3000, undefined, () => {
+						Page.spotlightSelect();
+					});
+
 					const value = timePicker.item(timePicker.meridiem).getText();
 					// 12 hours ought to change the value text if meridiem changes
 					for (let i = 12; i; i -= 1) {
@@ -288,8 +312,10 @@ describe('TimePicker', function () {
 			describe('5-way', function () {
 				it('should close when pressing select', function () {
 					timePicker.focus();
-					Page.spotlightSelect();
-					Page.waitTransitionEnd();
+					Page.waitTransitionEnd(3000, undefined, () => {
+						Page.spotlightSelect();
+					});
+
 					expectClosed(timePicker);
 					expect(timePicker.title.hasFocus()).to.be.true();
 				});
@@ -334,8 +360,10 @@ describe('TimePicker', function () {
 			describe('5-way', function () {
 				it('should not update on select', function () {
 					timePicker.focus();
-					Page.spotlightSelect();
-					Page.waitTransitionEnd();
+					Page.waitTransitionEnd(3000, undefined, () => {
+						Page.spotlightSelect();
+					});
+
 					const {hour, minute, meridiem} = extractValues(timePicker);
 
 					expect(hour).to.equal(12);
@@ -446,15 +474,19 @@ describe('TimePicker', function () {
 		});
 
 		it('should focus middle picker (hour) when selected', function () {
-			Page.spotlightSelect();
-			Page.waitTransitionEnd();
+			Page.waitTransitionEnd(3000, undefined, () => {
+				Page.spotlightSelect();
+			});
+
 			expectOpen(timePicker);
 			expect(timePicker.hour.hasFocus()).to.be.true();
 		});
 
 		it('should have minute-hour-meridiem order', function () {
-			Page.spotlightSelect();
-			Page.waitTransitionEnd();
+			Page.waitTransitionEnd(3000, undefined, () => {
+				Page.spotlightSelect();
+			});
+
 			expectOpen(timePicker);
 			Page.spotlightRight();
 			expect(timePicker.minute.hasFocus()).to.be.true();
@@ -465,8 +497,10 @@ describe('TimePicker', function () {
 		});
 
 		it('should focus title when 5-way left from last picker - [GT-25247]', function () {
-			Page.spotlightSelect();
-			Page.waitTransitionEnd();
+			Page.waitTransitionEnd(3000, undefined, () => {
+				Page.spotlightSelect();
+			});
+
 			expectOpen(timePicker);
 			expect(timePicker.hour.hasFocus()).to.be.true();
 			Page.spotlightLeft();

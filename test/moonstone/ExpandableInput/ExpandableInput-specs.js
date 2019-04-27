@@ -31,22 +31,28 @@ describe('ExpandableInput', function () {
 
 			describe('5-way', function () {
 				it('should open and spot input on select', function () {
-					Page.spotlightSelect();
-					Page.waitTransitionEnd();
+					Page.waitTransitionEnd(3000, undefined, () => {
+						Page.spotlightSelect();
+					});
+
 					expectOpen(expandable);
 					expect(expandable.input.hasFocus()).to.be.true();
 				});
 
 				it('should have correct input value', function () {
-					Page.spotlightSelect();
-					Page.waitTransitionEnd();
+					Page.waitTransitionEnd(3000, undefined, () => {
+						Page.spotlightSelect();
+					});
+
 					expectOpen(expandable);
 					expect(expandable.input.getValue()).to.equal('');
 				});
 
 				it('should close when moving up to title', function () {
-					Page.spotlightSelect();
-					Page.waitTransitionEnd();
+					Page.waitTransitionEnd(3000, undefined, () => {
+						Page.spotlightSelect();
+					});
+
 					expectOpen(expandable);
 					Page.spotlightUp();
 					Page.waitTransitionEnd();
@@ -55,8 +61,10 @@ describe('ExpandableInput', function () {
 				});
 
 				it('should close and move focus to title on SpotlightDown', function () {
-					Page.spotlightSelect();
-					Page.waitTransitionEnd();
+					Page.waitTransitionEnd(3000, undefined, () => {
+						Page.spotlightSelect();
+					});
+
 					expectOpen(expandable);
 					Page.spotlightDown();
 					Page.waitTransitionEnd();
@@ -71,8 +79,10 @@ describe('ExpandableInput', function () {
 				});
 
 				it('should close on escape', function () {
-					Page.spotlightSelect();
-					Page.waitTransitionEnd();
+					Page.waitTransitionEnd(3000, undefined, () => {
+						Page.spotlightSelect();
+					});
+
 					expectOpen(expandable);
 					Page.escape();
 					Page.waitTransitionEnd();
@@ -81,8 +91,10 @@ describe('ExpandableInput', function () {
 
 				describe('input value', function () {
 					it('should update value text on input and then closed by moving up to title', function () {
-						Page.spotlightSelect();
-						Page.waitTransitionEnd();
+						Page.waitTransitionEnd(3000, undefined, () => {
+							Page.spotlightSelect();
+						});
+
 						expectOpen(expandable);
 						expandable.input.setValue('New Value');
 						Page.spotlightUp();
@@ -92,8 +104,10 @@ describe('ExpandableInput', function () {
 					});
 
 					it('should update value text on input and then closed by SpotlightDown', function () {
-						Page.spotlightSelect();
-						Page.waitTransitionEnd();
+						Page.waitTransitionEnd(3000, undefined, () => {
+							Page.spotlightSelect();
+						});
+
 						expectOpen(expandable);
 						expandable.input.setValue('New Value');
 						Page.spotlightDown();
@@ -103,8 +117,10 @@ describe('ExpandableInput', function () {
 					});
 
 					it('should not update value text on input and then closed by escape key', function () {
-						Page.spotlightSelect();
-						Page.waitTransitionEnd();
+						Page.waitTransitionEnd(3000, undefined, () => {
+							Page.spotlightSelect();
+						});
+
 						expectOpen(expandable);
 						expandable.input.setValue('New Value');
 						Page.escape();
@@ -188,22 +204,28 @@ describe('ExpandableInput', function () {
 				});
 
 				it('should open and spot input on select', function () {
-					Page.spotlightSelect();
-					Page.waitTransitionEnd();
+					Page.waitTransitionEnd(3000, undefined, () => {
+						Page.spotlightSelect();
+					});
+
 					expectOpen(expandable);
 					expect(expandable.input.hasFocus()).to.be.true();
 				});
 
 				it('should have correct input value', function () {
-					Page.spotlightSelect();
-					Page.waitTransitionEnd();
+					Page.waitTransitionEnd(3000, undefined, () => {
+						Page.spotlightSelect();
+					});
+
 					expectOpen(expandable);
 					expect(expandable.input.getValue()).to.equal('Default Value');
 				});
 
 				it('should close when moving up to title', function () {
-					Page.spotlightSelect();
-					Page.waitTransitionEnd();
+					Page.waitTransitionEnd(3000, undefined, () => {
+						Page.spotlightSelect();
+					});
+
 					expectOpen(expandable);
 					Page.spotlightUp();
 					Page.waitTransitionEnd();
@@ -270,8 +292,10 @@ describe('ExpandableInput', function () {
 				});
 
 				it('should close on select', function () {
-					Page.spotlightSelect();
-					Page.waitTransitionEnd();
+					Page.waitTransitionEnd(3000, undefined, () => {
+						Page.spotlightSelect();
+					});
+
 					expectClosed(expandable);
 					expect(expandable.title.hasFocus()).to.be.true();
 				});
@@ -326,8 +350,10 @@ describe('ExpandableInput', function () {
 			describe('5-way', function () {
 				it('should not have value text on open and close', function () {
 					expandable.focus();
-					Page.spotlightSelect();
-					Page.waitTransitionEnd();
+					Page.waitTransitionEnd(3000, undefined, () => {
+						Page.spotlightSelect();
+					});
+
 					expectOpen(expandable);
 					Page.spotlightUp();
 					Page.waitTransitionEnd();
@@ -370,8 +396,10 @@ describe('ExpandableInput', function () {
 				});
 
 				it('should close on select', function () {
-					Page.spotlightSelect();
-					Page.waitTransitionEnd();
+					Page.waitTransitionEnd(3000, undefined, () => {
+						Page.spotlightSelect();
+					});
+
 					expectClosed(expandable);
 					expect(expandable.title.hasFocus()).to.be.true();
 				});
@@ -416,8 +444,10 @@ describe('ExpandableInput', function () {
 				});
 
 				it('should close on select', function () {
-					Page.spotlightSelect();
-					Page.waitTransitionEnd();
+					Page.waitTransitionEnd(3000, undefined, () => {
+						Page.spotlightSelect();
+					});
+
 					expectClosed(expandable);
 					expect(expandable.title.hasFocus()).to.be.true();
 				});
@@ -462,8 +492,10 @@ describe('ExpandableInput', function () {
 				});
 
 				it('should close on select', function () {
-					Page.spotlightSelect();
-					Page.waitTransitionEnd();
+					Page.waitTransitionEnd(3000, undefined, () => {
+						Page.spotlightSelect();
+					});
+
 					expectClosed(expandable);
 					expect(expandable.title.hasFocus()).to.be.true();
 				});
@@ -517,8 +549,10 @@ describe('ExpandableInput', function () {
 				});
 
 				it('should close on select', function () {
-					Page.spotlightSelect();
-					Page.waitTransitionEnd();
+					Page.waitTransitionEnd(3000, undefined, () => {
+						Page.spotlightSelect();
+					});
+
 					expectClosed(expandable);
 					expect(expandable.title.hasFocus()).to.be.true();
 				});

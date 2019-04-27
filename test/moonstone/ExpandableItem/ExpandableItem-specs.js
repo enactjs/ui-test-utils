@@ -21,27 +21,35 @@ describe('ExpandableItem', function () {
 
 		describe('5-way', function () {
 			it('should open and spot expanded item on select - [GT-21494]', function () {
-				Page.spotlightSelect();
-				Page.waitTransitionEnd();
+				Page.waitTransitionEnd(3000, undefined, () => {
+					Page.spotlightSelect();
+				});
+
 				expectOpen(expandableItem);
 				expect(expandableItem.item.hasFocus()).to.be.true();
 			});
 
 			it('should close when pressing select on label', function () {
 				Page.spotlightUp();
-				Page.spotlightSelect();
-				Page.waitTransitionEnd();
+				Page.waitTransitionEnd(3000, undefined, () => {
+					Page.spotlightSelect();
+				});
+
 				expectOpen(expandableItem);
 				Page.spotlightUp();
-				Page.spotlightSelect();
-				Page.waitTransitionEnd();
+				Page.waitTransitionEnd(3000, undefined, () => {
+					Page.spotlightSelect();
+				});
+
 				expectClosed(expandableItem);
 			});
 
 			it('should allow 5-way navigation beyond the last item', function () {
 				expandableItem.focus();
-				Page.spotlightSelect();
-				Page.waitTransitionEnd();
+				Page.waitTransitionEnd(3000, undefined, () => {
+					Page.spotlightSelect();
+				});
+
 				expectOpen(expandableItem);
 				expect(expandableItem.item.hasFocus()).to.be.true();
 				Page.spotlightDown();
@@ -85,8 +93,10 @@ describe('ExpandableItem', function () {
 		describe('5-way', function () {
 			it('should close when pressing select', function () {
 				expandableItem.focus();
-				Page.spotlightSelect();
-				Page.waitTransitionEnd();
+				Page.waitTransitionEnd(3000, undefined, () => {
+					Page.spotlightSelect();
+				});
+
 				expectClosed(expandableItem);
 				expect(expandableItem.title.hasFocus()).to.be.true();
 			});
@@ -115,8 +125,10 @@ describe('ExpandableItem', function () {
 
 		it('should close when 5-way focus returns to title', function () {
 			expandableItem.focus();
-			Page.spotlightSelect();
-			Page.waitTransitionEnd();
+			Page.waitTransitionEnd(3000, undefined, () => {
+				Page.spotlightSelect();
+			});
+
 			expectOpen(expandableItem);
 			expect(expandableItem.item.hasFocus()).to.be.true();
 			Page.spotlightUp();
@@ -130,8 +142,10 @@ describe('ExpandableItem', function () {
 
 		it('should not allow 5-way navigation beyond the last item', function () {
 			expandableItem.focus();
-			Page.spotlightSelect();
-			Page.waitTransitionEnd();
+			Page.waitTransitionEnd(3000, undefined, () => {
+				Page.spotlightSelect();
+			});
+
 			expectOpen(expandableItem);
 			expect(expandableItem.item.hasFocus()).to.be.true();
 			Page.spotlightDown();

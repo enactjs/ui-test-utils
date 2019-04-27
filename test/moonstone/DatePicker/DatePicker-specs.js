@@ -26,8 +26,10 @@ describe('DatePicker', function () {
 			});
 
 			it('should have month-day-year order', function () {
-				Page.spotlightSelect();
-				Page.waitTransitionEnd();
+				Page.waitTransitionEnd(3000, undefined, () => {
+					Page.spotlightSelect();
+				});
+
 				expectOpen(datePicker);
 				expect(datePicker.month.hasFocus(), 'Month').to.be.true();
 				Page.spotlightRight();
@@ -38,8 +40,10 @@ describe('DatePicker', function () {
 
 			describe('5-way', function () {
 				it('should open, spot first item on select, and update value to current date', function () {
-					Page.spotlightSelect();
-					Page.waitTransitionEnd();
+					Page.waitTransitionEnd(3000, undefined, () => {
+						Page.spotlightSelect();
+					});
+
 					const month = new Date(datePicker.valueText).getMonth();
 					expectOpen(datePicker);
 					expect(datePicker.month.hasFocus()).to.be.true();
@@ -47,8 +51,10 @@ describe('DatePicker', function () {
 				});
 
 				it('should close when pressing select', function () {
-					Page.spotlightSelect();
-					Page.waitTransitionEnd();
+					Page.waitTransitionEnd(3000, undefined, () => {
+						Page.spotlightSelect();
+					});
+
 					expectOpen(datePicker);
 					expect(datePicker.month.hasFocus()).to.be.true();
 					Page.spotlightSelect();
@@ -56,8 +62,10 @@ describe('DatePicker', function () {
 				});
 
 				it('should focus title when 5-way right from last picker - [GT-24986]', function () {
-					Page.spotlightSelect();
-					Page.waitTransitionEnd();
+					Page.waitTransitionEnd(3000, undefined, () => {
+						Page.spotlightSelect();
+					});
+
 					expectOpen(datePicker);
 					expect(datePicker.month.hasFocus()).to.be.true();
 					Page.spotlightRight();
@@ -67,8 +75,10 @@ describe('DatePicker', function () {
 				});
 
 				it('should increase the month when incrementing the picker', function () {
-					Page.spotlightSelect();
-					Page.waitTransitionEnd();
+					Page.waitTransitionEnd(3000, undefined, () => {
+						Page.spotlightSelect();
+					});
+
 					const {month} = extractValues(datePicker);
 					expectOpen(datePicker);
 					expect(datePicker.month.hasFocus()).to.be.true();
@@ -80,8 +90,10 @@ describe('DatePicker', function () {
 				});
 
 				it('should decrease the month when decrementing the picker - [GT-21247]', function () {
-					Page.spotlightSelect();
-					Page.waitTransitionEnd();
+					Page.waitTransitionEnd(3000, undefined, () => {
+						Page.spotlightSelect();
+					});
+
 					const {month} = extractValues(datePicker);
 					expectOpen(datePicker);
 					expect(datePicker.month.hasFocus()).to.be.true();
@@ -93,8 +105,10 @@ describe('DatePicker', function () {
 				});
 
 				it('should increase the day when incrementing the picker - [GT-21247]', function () {
-					Page.spotlightSelect();
-					Page.waitTransitionEnd();
+					Page.waitTransitionEnd(3000, undefined, () => {
+						Page.spotlightSelect();
+					});
+
 					const {day, month, year} = extractValues(datePicker);
 					const numDays = daysInMonth({month, year});
 					expectOpen(datePicker);
@@ -108,8 +122,10 @@ describe('DatePicker', function () {
 				});
 
 				it('should decrease the day when decrementing the picker', function () {
-					Page.spotlightSelect();
-					Page.waitTransitionEnd();
+					Page.waitTransitionEnd(3000, undefined, () => {
+						Page.spotlightSelect();
+					});
+
 					const {day, month, year} = extractValues(datePicker);
 					const numDays = daysInMonth({month, year});
 					expectOpen(datePicker);
@@ -123,8 +139,10 @@ describe('DatePicker', function () {
 				});
 
 				it('should increase the year when incrementing the picker - [GT-21247]', function () {
-					Page.spotlightSelect();
-					Page.waitTransitionEnd();
+					Page.waitTransitionEnd(3000, undefined, () => {
+						Page.spotlightSelect();
+					});
+
 					const {year} = extractValues(datePicker);
 					expectOpen(datePicker);
 					Page.spotlightRight();
@@ -138,8 +156,10 @@ describe('DatePicker', function () {
 				});
 
 				it('should decrease the year when decrementing the picker', function () {
-					Page.spotlightSelect();
-					Page.waitTransitionEnd();
+					Page.waitTransitionEnd(3000, undefined, () => {
+						Page.spotlightSelect();
+					});
+
 					const {year} = extractValues(datePicker);
 					expectOpen(datePicker);
 					Page.spotlightRight();
@@ -271,8 +291,10 @@ describe('DatePicker', function () {
 			describe('5-way', function () {
 				it('should close when pressing select', function () {
 					datePicker.focus();
-					Page.spotlightSelect();
-					Page.waitTransitionEnd();
+					Page.waitTransitionEnd(3000, undefined, () => {
+						Page.spotlightSelect();
+					});
+
 					expectClosed(datePicker);
 					expect(datePicker.title.hasFocus()).to.be.true();
 				});
@@ -317,8 +339,10 @@ describe('DatePicker', function () {
 			describe('5-way', function () {
 				it('should not update on select', function () {
 					datePicker.focus();
-					Page.spotlightSelect();
-					Page.waitTransitionEnd();
+					Page.waitTransitionEnd(3000, undefined, () => {
+						Page.spotlightSelect();
+					});
+
 					const {day, month, year} = extractValues(datePicker);
 
 					expect(day).to.equal(6);
@@ -428,15 +452,19 @@ describe('DatePicker', function () {
 		});
 
 		it('should focus rightmost picker (day) when selected', function () {
-			Page.spotlightSelect();
-			Page.waitTransitionEnd();
+			Page.waitTransitionEnd(3000, undefined, () => {
+				Page.spotlightSelect();
+			});
+
 			expectOpen(datePicker);
 			expect(datePicker.day.hasFocus()).to.be.true();
 		});
 
 		it('should have day-month-year order', function () {
-			Page.spotlightSelect();
-			Page.waitTransitionEnd();
+			Page.waitTransitionEnd(3000, undefined, () => {
+				Page.spotlightSelect();
+			});
+
 			expectOpen(datePicker);
 			expect(datePicker.day.hasFocus()).to.be.true();
 			Page.spotlightLeft();
@@ -446,8 +474,10 @@ describe('DatePicker', function () {
 		});
 
 		it('should focus title when 5-way left from last picker - [GT-25238]', function () {
-			Page.spotlightSelect();
-			Page.waitTransitionEnd();
+			Page.waitTransitionEnd(3000, undefined, () => {
+				Page.spotlightSelect();
+			});
+
 			expectOpen(datePicker);
 			expect(datePicker.day.hasFocus()).to.be.true();
 			Page.spotlightLeft();

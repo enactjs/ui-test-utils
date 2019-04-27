@@ -26,15 +26,19 @@ describe('ExpandableList', function () {
 
 		describe('5-way', function () {
 			it('should open and spot first item on select', function () {
-				Page.spotlightSelect();
-				Page.waitTransitionEnd();
+				Page.waitTransitionEnd(3000, undefined, () => {
+					Page.spotlightSelect();
+				});
+
 				expectOpen(expandable);
 				expect(expandable.item(0).hasFocus()).to.be.true();
 			});
 
 			it('should close when moving up to header', function () {
-				Page.spotlightSelect();
-				Page.waitTransitionEnd();
+				Page.waitTransitionEnd(3000, undefined, () => {
+					Page.spotlightSelect();
+				});
+
 				expect(expandable.isOpen).to.be.true();
 				Page.spotlightUp();
 				Page.waitTransitionEnd();
@@ -43,8 +47,10 @@ describe('ExpandableList', function () {
 			});
 
 			it('should not allow 5-way exit from bottom', function () {
-				Page.spotlightSelect();
-				Page.waitTransitionEnd();
+				Page.waitTransitionEnd(3000, undefined, () => {
+					Page.spotlightSelect();
+				});
+
 				expect(expandable.isOpen).to.be.true();
 				Page.spotlightDown();
 				Page.spotlightDown();
@@ -54,31 +60,39 @@ describe('ExpandableList', function () {
 			});
 
 			it('should select item when pressing select', function () {
-				Page.spotlightSelect();
-				Page.waitTransitionEnd();
+				Page.waitTransitionEnd(3000, undefined, () => {
+					Page.spotlightSelect();
+				});
+
 				Page.spotlightSelect();
 				expect(expandable.item(0).isExisting(expandable.selectedClass)).to.be.true();
 			});
 
 			it('should update value text on select', function () {
-				Page.spotlightSelect();
-				Page.waitTransitionEnd();
+				Page.waitTransitionEnd(3000, undefined, () => {
+					Page.spotlightSelect();
+				});
+
 				Page.spotlightSelect();
 				Page.spotlightUp();
 				expect(expandable.valueText).to.equal('option1');
 			});
 
 			it('should not unselect item', function () {
-				Page.spotlightSelect();
-				Page.waitTransitionEnd();
+				Page.waitTransitionEnd(3000, undefined, () => {
+					Page.spotlightSelect();
+				});
+
 				Page.spotlightSelect();
 				Page.spotlightSelect();
 				expect(expandable.item(0).isExisting(expandable.selectedClass)).to.be.true();
 			});
 
 			it('should only allow one selected item', function () {
-				Page.spotlightSelect();
-				Page.waitTransitionEnd();
+				Page.waitTransitionEnd(3000, undefined, () => {
+					Page.spotlightSelect();
+				});
+
 				Page.spotlightSelect();
 				Page.spotlightDown();
 				Page.spotlightSelect();
@@ -154,24 +168,30 @@ describe('ExpandableList', function () {
 		describe('5-way', function () {
 			it('should open and spot first item on select', function () {
 				expandable.focus();
-				Page.spotlightSelect();
-				Page.waitTransitionEnd();
+				Page.waitTransitionEnd(3000, undefined, () => {
+					Page.spotlightSelect();
+				});
+
 				expectOpen(expandable);
 				expect(expandable.item(0).hasFocus()).to.be.true();
 			});
 
 			it('should select item when pressing select', function () {
 				expandable.focus();
-				Page.spotlightSelect();
-				Page.waitTransitionEnd();
+				Page.waitTransitionEnd(3000, undefined, () => {
+					Page.spotlightSelect();
+				});
+
 				Page.spotlightSelect();
 				expect(expandable.item(0).isExisting(expandable.selectedClass)).to.be.true();
 			});
 
 			it('should update value text on select', function () {
 				expandable.focus();
-				Page.spotlightSelect();
-				Page.waitTransitionEnd();
+				Page.waitTransitionEnd(3000, undefined, () => {
+					Page.spotlightSelect();
+				});
+
 				Page.spotlightSelect();
 				Page.spotlightUp();
 				expect(expandable.valueText).to.equal('option1');
@@ -179,8 +199,10 @@ describe('ExpandableList', function () {
 
 			it('should allow unselecting item', function () {
 				expandable.focus();
-				Page.spotlightSelect();
-				Page.waitTransitionEnd();
+				Page.waitTransitionEnd(3000, undefined, () => {
+					Page.spotlightSelect();
+				});
+
 				Page.spotlightSelect();
 				Page.spotlightSelect();
 				expect(expandable.item(0).isExisting(expandable.selectedClass)).to.be.false();
@@ -188,8 +210,10 @@ describe('ExpandableList', function () {
 
 			it('should allow multiple selected items', function () {
 				expandable.focus();
-				Page.spotlightSelect();
-				Page.waitTransitionEnd();
+				Page.waitTransitionEnd(3000, undefined, () => {
+					Page.spotlightSelect();
+				});
+
 				Page.spotlightSelect();
 				Page.spotlightDown();
 				Page.spotlightSelect();
@@ -199,8 +223,10 @@ describe('ExpandableList', function () {
 
 			it('should combine value text with multi-select', function () {
 				expandable.focus();
-				Page.spotlightSelect();
-				Page.waitTransitionEnd();
+				Page.waitTransitionEnd(3000, undefined, () => {
+					Page.spotlightSelect();
+				});
+
 				Page.spotlightSelect();
 				Page.spotlightDown();
 				Page.spotlightSelect();
@@ -277,24 +303,30 @@ describe('ExpandableList', function () {
 		describe('5-way', function () {
 			it('should open and spot first item on select', function () {
 				expandable.focus();
-				Page.spotlightSelect();
-				Page.waitTransitionEnd();
+				Page.waitTransitionEnd(3000, undefined, () => {
+					Page.spotlightSelect();
+				});
+
 				expectOpen(expandable);
 				expect(expandable.item(0).hasFocus()).to.be.true();
 			});
 
 			it('should select item when pressing select', function () {
 				expandable.focus();
-				Page.spotlightSelect();
-				Page.waitTransitionEnd();
+				Page.waitTransitionEnd(3000, undefined, () => {
+					Page.spotlightSelect();
+				});
+
 				Page.spotlightSelect();
 				expect(expandable.item(0).isExisting(expandable.selectedClass)).to.be.true();
 			});
 
 			it('should update value text on select', function () {
 				expandable.focus();
-				Page.spotlightSelect();
-				Page.waitTransitionEnd();
+				Page.waitTransitionEnd(3000, undefined, () => {
+					Page.spotlightSelect();
+				});
+
 				Page.spotlightSelect();
 				Page.spotlightUp();
 				expect(expandable.valueText).to.equal('option1');
@@ -302,8 +334,10 @@ describe('ExpandableList', function () {
 
 			it('should allow unselecting item', function () {
 				expandable.focus();
-				Page.spotlightSelect();
-				Page.waitTransitionEnd();
+				Page.waitTransitionEnd(3000, undefined, () => {
+					Page.spotlightSelect();
+				});
+
 				Page.spotlightSelect();
 				Page.spotlightSelect();
 				expect(expandable.item(0).isExisting(expandable.selectedClass)).to.be.false();
@@ -311,8 +345,10 @@ describe('ExpandableList', function () {
 
 			it('should reset none text if nothing selected', function () {
 				expandable.focus();
-				Page.spotlightSelect();
-				Page.waitTransitionEnd();
+				Page.waitTransitionEnd(3000, undefined, () => {
+					Page.spotlightSelect();
+				});
+
 				Page.spotlightSelect();
 				Page.spotlightSelect();
 				Page.spotlightUp();
@@ -321,8 +357,10 @@ describe('ExpandableList', function () {
 
 			it('should not allow multiple selected items', function () {
 				expandable.focus();
-				Page.spotlightSelect();
-				Page.waitTransitionEnd();
+				Page.waitTransitionEnd(3000, undefined, () => {
+					Page.spotlightSelect();
+				});
+
 				Page.spotlightSelect();
 				Page.spotlightDown();
 				Page.spotlightSelect();
@@ -390,8 +428,10 @@ describe('ExpandableList', function () {
 		describe('5-way', function () {
 			it('should allow 5-way out when open', function () {
 				expandable.focus();
-				Page.spotlightSelect();
-				Page.waitTransitionEnd();
+				Page.waitTransitionEnd(3000, undefined, () => {
+					Page.spotlightSelect();
+				});
+
 				expect(expandable.isOpen).to.be.true();
 				Page.spotlightDown();
 				Page.spotlightDown();
@@ -414,16 +454,20 @@ describe('ExpandableList', function () {
 		describe('5-way', function () {
 			it('should open and spot first item on select', function () {
 				expandable.focus();
-				Page.spotlightSelect();
-				Page.waitTransitionEnd();
+				Page.waitTransitionEnd(3000, undefined, () => {
+					Page.spotlightSelect();
+				});
+
 				expectOpen(expandable);
 				expect(expandable.item(0).hasFocus()).to.be.true();
 			});
 
 			it('should not close when navigating up to title', function () {
 				expandable.focus();
-				Page.spotlightSelect();
-				Page.waitTransitionEnd();
+				Page.waitTransitionEnd(3000, undefined, () => {
+					Page.spotlightSelect();
+				});
+
 				Page.spotlightUp();
 				expectOpen(expandable);
 				expect(expandable.title.hasFocus()).to.be.true();
@@ -443,8 +487,10 @@ describe('ExpandableList', function () {
 		describe('5-way', function () {
 			it('should close on select', function () {
 				expandable.focus();
-				Page.spotlightSelect();
-				Page.waitTransitionEnd();
+				Page.waitTransitionEnd(3000, undefined, () => {
+					Page.spotlightSelect();
+				});
+
 				expectClosed(expandable);
 				expect(expandable.title.hasFocus()).to.be.true();
 			});

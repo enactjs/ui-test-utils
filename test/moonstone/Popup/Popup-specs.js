@@ -271,8 +271,10 @@ describe('Popup', function () {
 			it('should spot back the popup button on auto dismiss the popup', function () {
 				Page.spotlightRight();
 				Page.spotlightRight();
-				Page.spotlightSelect();
-				Page.waitTransitionEnd();
+				Page.waitTransitionEnd(3000, undefined, () => {
+					Page.spotlightSelect();
+				});
+
 				expectOpen(popupCommon);
 				Page.waitTransitionEnd(3000, 'popup close', () => {
 					Page.backKey();
@@ -544,8 +546,10 @@ describe('Popup', function () {
 					Page.spotlightSelect();
 				});
 				expectOpen(popupCommon);
-				Page.spotlightSelect();
-				Page.waitTransitionEnd();
+				Page.waitTransitionEnd(3000, undefined, () => {
+					Page.spotlightSelect();
+				});
+
 				expectClosed(popupCommon);
 				expect(popupCommon.buttonPopup5.hasFocus()).to.be.true();
 			});
