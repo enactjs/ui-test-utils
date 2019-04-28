@@ -35,7 +35,7 @@ const app = (props) => <div {...props}>
 			id="expandable4"
 			title="ExpandableInput Password"
 			noneText="No Input Text"
-			type ="password"
+			type="password"
 			defaultValue="Password"
 		/>
 		<ExpandableInput

@@ -22,8 +22,7 @@ const app = (props) => <div {...props}>
 				id="toggleButton2"
 				toggleOnLabel="On"
 				toggleOffLabel="Off"
-			>
-			</ToggleButton>
+			/>
 		</div>
 
 		<div>

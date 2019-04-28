@@ -51,7 +51,7 @@ const ButtonPanel = ({title, onClick, ...rest}) => (
 			<Button id="button4" onClick={onClick}>Button 4</Button>
 		</Header>
 	</Panel>
-)
+);
 
 const ItemPanel = ({title, onClick, ...rest}) => (
 	<Panel {...rest}>
@@ -74,6 +74,6 @@ const MainPanel = ({title, onClick, ...rest}) => (
 		<Item id="item3" onClick={onClick}>Item 3</Item>
 		<Item id="item4" onClick={onClick}>Item 4</Item>
 	</Panel>
-)
+);
 
 export default MoonstoneDecorator(App);
