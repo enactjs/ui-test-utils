@@ -8,6 +8,7 @@
     "pack-enact": "node build-apps.js --skip-tests",
     "pack-tests": "node build-apps.js --skip-enact",
     "test": "wdio wdio.conf.js",
+    "test-docker": "wdio wdio.docker.conf.js",
     "test-tv": "wdio wdio.tv.conf.js"
   },
   "author": "Roy Sutton <roy.sutton@lge.com>",
@@ -42,7 +43,6 @@
     "case-sensitive-paths-webpack-plugin": "2.1.2",
     "chai": "4.2.0",
     "css-loader": "1.0.0",
-    "wdio-spec-reporter": "^0.1.5",
     "dirty-chai": "2.0.1",
     "file-loader": "2.0.0",
     "fs-extra": "7.0.1",
@@ -51,8 +51,8 @@
     "less-loader": "4.1.0",
     "mini-css-extract-plugin": "0.4.4",
     "postcss-flexbugs-fixes": "4.1.0",
-    "postcss-loader": "3.0.0",
     "postcss-global-import": "1.0.6",
+    "postcss-loader": "3.0.0",
     "postcss-remove-classes": "1.0.4",
     "ramda": "0.25.0",
     "react": "16.7.0",
@@ -62,9 +62,11 @@
     "style-loader": "0.23.1",
     "thread-loader": "1.0.3",
     "wdio": "3.0.0",
+    "wdio-docker-service": "^1.5.0",
     "wdio-mocha-framework": "0.5.12",
     "wdio-sauce-service": "0.4.8",
     "wdio-selenium-standalone-service": "^0.0.10",
+    "wdio-spec-reporter": "^0.1.5",
     "wdio-static-server-service": "1.0.1",
     "webpack": "4.22.0"
   }
