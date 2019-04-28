@@ -10,6 +10,7 @@ module.exports = {
 		'node': true,
 		'mocha': true
 	},
+	root: true,
 	extends: ['eslint:recommended'],
 	rules: {
 		'comma-dangle': 2,
