@@ -83,8 +83,9 @@ describe('TimePicker', function () {
 					const {hour} = extractValues(timePicker);
 					expectOpen(timePicker);
 					expect(timePicker.hour.hasFocus()).to.be.true();
+					Page.waitTransitionEnd(3000, undefined, () => {
 					Page.spotlightUp();
-					Page.waitTransitionEnd();
+				});;
 					const {hour: value} = extractValues(timePicker);
 					const expected = hour < 12 ? hour + 1 : 1;
 					expect(value).to.equal(expected);
@@ -114,8 +115,9 @@ describe('TimePicker', function () {
 					expectOpen(timePicker);
 					Page.spotlightRight();
 					expect(timePicker.minute.hasFocus()).to.be.true();
+					Page.waitTransitionEnd(3000, undefined, () => {
 					Page.spotlightUp();
-					Page.waitTransitionEnd();
+				});;
 					const {minute: value} = extractValues(timePicker);
 					const expected = minute !== 59 ? minute + 1 : 0;
 					expect(value).to.equal(expected);
@@ -147,8 +149,9 @@ describe('TimePicker', function () {
 					Page.spotlightRight();
 					Page.spotlightRight();
 					expect(timePicker.meridiem.hasFocus()).to.be.true();
+					Page.waitTransitionEnd(3000, undefined, () => {
 					Page.spotlightUp();
-					Page.waitTransitionEnd();
+				});;
 					const newTime = timePicker.valueText;
 					const value = time !== newTime;
 					expect(value).to.equal(true);

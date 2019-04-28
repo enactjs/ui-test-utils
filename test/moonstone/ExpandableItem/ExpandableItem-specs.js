@@ -131,8 +131,9 @@ describe('ExpandableItem', function () {
 
 			expectOpen(expandableItem);
 			expect(expandableItem.item.hasFocus()).to.be.true();
-			Page.spotlightUp();
-			Page.waitTransitionEnd();
+			Page.waitTransitionEnd(3000, undefined, () => {
+					Page.spotlightUp();
+				});;
 			expectClosed(expandableItem);
 		});
 	});

@@ -40,8 +40,9 @@ describe('ExpandableList', function () {
 				});
 
 				expect(expandable.isOpen).to.be.true();
-				Page.spotlightUp();
-				Page.waitTransitionEnd();
+				Page.waitTransitionEnd(3000, undefined, () => {
+					Page.spotlightUp();
+				});;
 				expect(expandable.isOpen).to.be.false();
 				expect(expandable.title.hasFocus()).to.be.true();
 			});
@@ -103,47 +104,55 @@ describe('ExpandableList', function () {
 
 		describe('pointer', function () {
 			it('should open on title click when closed', function () {
-				expandable.title.click();
-				Page.waitTransitionEnd();
+				Page.waitTransitionEnd(3000, undefined, () => {
+					expandable.title.click();
+				});
 				expectOpen(expandable);
 			});
 
 			it('should close on title click when open', function () {
-				expandable.title.click();
-				Page.waitTransitionEnd();
+				Page.waitTransitionEnd(3000, undefined, () => {
+					expandable.title.click();
+				});
 				expect(expandable.isOpen).to.be.true();
-				expandable.title.click();
-				Page.waitTransitionEnd();
+				Page.waitTransitionEnd(3000, undefined, () => {
+					expandable.title.click();
+				});
 				expect(expandable.isOpen).to.be.false();
 			});
 
 			it('should select item', function () {
-				expandable.title.click();
-				Page.waitTransitionEnd();
+				Page.waitTransitionEnd(3000, undefined, () => {
+					expandable.title.click();
+				});
 				expandable.item(0).click();
 				expect(expandable.item(0).isExisting(expandable.selectedClass)).to.be.true();
 			});
 
 			it('should update value text', function () {
-				expandable.title.click();
-				Page.waitTransitionEnd();
+				Page.waitTransitionEnd(3000, undefined, () => {
+					expandable.title.click();
+				});
 				expandable.item(0).click();
-				expandable.title.click();
-				Page.waitTransitionEnd();
+				Page.waitTransitionEnd(3000, undefined, () => {
+					expandable.title.click();
+				});
 				expect(expandable.valueText).to.equal('option1');
 			});
 
 			it('should not unselect item', function () {
-				expandable.title.click();
-				Page.waitTransitionEnd();
+				Page.waitTransitionEnd(3000, undefined, () => {
+					expandable.title.click();
+				});
 				expandable.item(0).click();
 				expandable.item(0).click();
 				expect(expandable.item(0).isExisting(expandable.selectedClass)).to.be.true();
 			});
 
 			it('should only allow one selected item', function () {
-				expandable.title.click();
-				Page.waitTransitionEnd();
+				Page.waitTransitionEnd(3000, undefined, () => {
+					expandable.title.click();
+				});
 				expandable.item(0).click();
 				expandable.item(1).click();
 				expect(expandable.item(0).isExisting(expandable.selectedClass)).to.be.false();
@@ -238,47 +247,55 @@ describe('ExpandableList', function () {
 
 		describe('pointer', function () {
 			it('should open on title click when closed', function () {
-				expandable.title.click();
-				Page.waitTransitionEnd();
+				Page.waitTransitionEnd(3000, undefined, () => {
+					expandable.title.click();
+				});
 				expectOpen(expandable);
 			});
 
 			it('should close on title click when open', function () {
-				expandable.title.click();
-				Page.waitTransitionEnd();
+				Page.waitTransitionEnd(3000, undefined, () => {
+					expandable.title.click();
+				});
 				expect(expandable.isOpen).to.be.true();
-				expandable.title.click();
-				Page.waitTransitionEnd();
+				Page.waitTransitionEnd(3000, undefined, () => {
+					expandable.title.click();
+				});
 				expect(expandable.isOpen).to.be.false();
 			});
 
 			it('should select item', function () {
-				expandable.title.click();
-				Page.waitTransitionEnd();
+				Page.waitTransitionEnd(3000, undefined, () => {
+					expandable.title.click();
+				});
 				expandable.item(0).click();
 				expect(expandable.item(0).isExisting(expandable.selectedClass)).to.be.true();
 			});
 
 			it('should update value text', function () {
-				expandable.title.click();
-				Page.waitTransitionEnd();
+				Page.waitTransitionEnd(3000, undefined, () => {
+					expandable.title.click();
+				});
 				expandable.item(0).click();
-				expandable.title.click();
-				Page.waitTransitionEnd();
+				Page.waitTransitionEnd(3000, undefined, () => {
+					expandable.title.click();
+				});
 				expect(expandable.valueText).to.equal('option1');
 			});
 
 			it('should allow unselecting item', function () {
-				expandable.title.click();
-				Page.waitTransitionEnd();
+				Page.waitTransitionEnd(3000, undefined, () => {
+					expandable.title.click();
+				});
 				expandable.item(0).click();
 				expandable.item(0).click();
 				expect(expandable.item(0).isExisting(expandable.selectedClass)).to.be.false();
 			});
 
 			it('should allow multiple selected items', function () {
-				expandable.title.click();
-				Page.waitTransitionEnd();
+				Page.waitTransitionEnd(3000, undefined, () => {
+					expandable.title.click();
+				});
 				expandable.item(0).click();
 				expandable.item(1).click();
 				expect(expandable.item(0).isExisting(expandable.selectedClass)).to.be.true();
@@ -371,47 +388,55 @@ describe('ExpandableList', function () {
 
 		describe('pointer', function () {
 			it('should open on title click when closed', function () {
-				expandable.title.click();
-				Page.waitTransitionEnd();
+				Page.waitTransitionEnd(3000, undefined, () => {
+					expandable.title.click();
+				});
 				expectOpen(expandable);
 			});
 
 			it('should close on title click when open', function () {
-				expandable.title.click();
-				Page.waitTransitionEnd();
+				Page.waitTransitionEnd(3000, undefined, () => {
+					expandable.title.click();
+				});
 				expect(expandable.isOpen).to.be.true();
-				expandable.title.click();
-				Page.waitTransitionEnd();
+				Page.waitTransitionEnd(3000, undefined, () => {
+					expandable.title.click();
+				});
 				expect(expandable.isOpen).to.be.false();
 			});
 
 			it('should select item', function () {
-				expandable.title.click();
-				Page.waitTransitionEnd();
+				Page.waitTransitionEnd(3000, undefined, () => {
+					expandable.title.click();
+				});
 				expandable.item(0).click();
 				expect(expandable.item(0).isExisting(expandable.selectedClass)).to.be.true();
 			});
 
 			it('should update value text', function () {
-				expandable.title.click();
-				Page.waitTransitionEnd();
+				Page.waitTransitionEnd(3000, undefined, () => {
+					expandable.title.click();
+				});
 				expandable.item(0).click();
-				expandable.title.click();
-				Page.waitTransitionEnd();
+				Page.waitTransitionEnd(3000, undefined, () => {
+					expandable.title.click();
+				});
 				expect(expandable.valueText).to.equal('option1');
 			});
 
 			it('should unselect item', function () {
-				expandable.title.click();
-				Page.waitTransitionEnd();
+				Page.waitTransitionEnd(3000, undefined, () => {
+					expandable.title.click();
+				});
 				expandable.item(0).click();
 				expandable.item(0).click();
 				expect(expandable.item(0).isExisting(expandable.selectedClass)).to.be.false();
 			});
 
 			it('should only allow one selected item', function () {
-				expandable.title.click();
-				Page.waitTransitionEnd();
+				Page.waitTransitionEnd(3000, undefined, () => {
+					expandable.title.click();
+				});
 				expandable.item(0).click();
 				expandable.item(1).click();
 				expect(expandable.item(0).isExisting(expandable.selectedClass)).to.be.false();
@@ -498,8 +523,9 @@ describe('ExpandableList', function () {
 			it('should close when navigating up to title', function () {
 				expandable.focus();
 				Page.spotlightDown();
-				Page.spotlightUp();
-				Page.waitTransitionEnd();
+				Page.waitTransitionEnd(3000, undefined, () => {
+					Page.spotlightUp();
+				});;
 				expect(expandable.isOpen).to.be.false();
 				expect(expandable.chevron).to.equal('󯿭');
 				expect(expandable.item(0).isVisible()).to.be.false();
@@ -509,19 +535,22 @@ describe('ExpandableList', function () {
 
 		describe('pointer', function () {
 			it('should close on title click', function () {
-				expandable.title.click();
-				Page.waitTransitionEnd();
+				Page.waitTransitionEnd(3000, undefined, () => {
+					expandable.title.click();
+				});
 				expect(expandable.isOpen).to.be.false();
 				expect(expandable.chevron).to.equal('󯿭');
 				expect(expandable.item(0).isVisible()).to.be.false();
 			});
 
 			it('should open on title click when closed', function () {
-				expandable.title.click();
-				Page.waitTransitionEnd();
+				Page.waitTransitionEnd(3000, undefined, () => {
+					expandable.title.click();
+				});
 				expect(expandable.isOpen).to.be.false();
-				expandable.title.click();
-				Page.waitTransitionEnd();
+				Page.waitTransitionEnd(3000, undefined, () => {
+					expandable.title.click();
+				});
 				expect(expandable.isOpen).to.be.true();
 			});
 		});

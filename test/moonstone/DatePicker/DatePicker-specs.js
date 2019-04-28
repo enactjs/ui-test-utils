@@ -82,8 +82,9 @@ describe('DatePicker', function () {
 					const {month} = extractValues(datePicker);
 					expectOpen(datePicker);
 					expect(datePicker.month.hasFocus()).to.be.true();
+					Page.waitTransitionEnd(3000, undefined, () => {
 					Page.spotlightUp();
-					Page.waitTransitionEnd();
+				});;
 					const {month: value} = extractValues(datePicker);
 					const expected = month < 12 ? month + 1 : 1;
 					expect(value).to.equal(expected);
@@ -114,8 +115,9 @@ describe('DatePicker', function () {
 					expectOpen(datePicker);
 					Page.spotlightRight();
 					expect(datePicker.day.hasFocus()).to.be.true();
+					Page.waitTransitionEnd(3000, undefined, () => {
 					Page.spotlightUp();
-					Page.waitTransitionEnd();
+				});;
 					const {day: value} = extractValues(datePicker);
 					const expected = day !== numDays ? day + 1 : 1;
 					expect(value).to.equal(expected);
@@ -148,8 +150,9 @@ describe('DatePicker', function () {
 					Page.spotlightRight();
 					Page.spotlightRight();
 					expect(datePicker.year.hasFocus()).to.be.true();
+					Page.waitTransitionEnd(3000, undefined, () => {
 					Page.spotlightUp();
-					Page.waitTransitionEnd();
+				});;
 					const {year: value} = extractValues(datePicker);
 					const expected = year + 1;
 					expect(value).to.equal(expected);
