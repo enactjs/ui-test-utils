@@ -1,0 +1,9 @@
+language: node_js
+node_js:
+    - "10"
+install:
+    - npm install
+script:
+    - echo -e "\x1b\x5b35;1m*** Linting...\x1b\x5b0m"
+    - npm run lint
+    - echo -e "\x1b\x5b35;1m*** Linting complete...\x1b\x5b0m"
