@@ -11,67 +11,87 @@ describe('ActivityPanels', function () {
 	});
 
 	it('should have breadcrumb on second panel', function () {
-		Page.button1.click();
-		Page.waitTransitionEnd();
+		Page.waitTransitionEnd(3000, undefined, () => {
+			Page.button1.click();
+		});
 
 		expect(Page.breadcrumbHeader.getText()).to.include('01');
 	});
 
 	describe('Transition', function () {
 		it('should move from first panel to the second', function () {
-			Page.button1.click();
-			Page.waitTransitionEnd();
+			Page.waitTransitionEnd(3000, undefined, () => {
+				Page.button1.click();
+			});
 
 			expect(Page.panelTitle).to.equal('SECOND');
 		});
 
 		it('should navigate to DEFAULT ELEMENT', function () {
-			Page.item1.click();
-			Page.waitTransitionEnd();
-			Page.item5.click();
-			Page.waitTransitionEnd();
-			Page.button4.click();
-			Page.waitTransitionEnd();
-			Page.item2.click();
-			Page.waitTransitionEnd();
+			Page.waitTransitionEnd(3000, undefined, () => {
+				Page.item1.click();
+			});
+			Page.waitTransitionEnd(3000, undefined, () => {
+				Page.item5.click();
+			});
+			Page.waitTransitionEnd(3000, undefined, () => {
+				Page.button4.click();
+			});
+			Page.waitTransitionEnd(3000, undefined, () => {
+				Page.item2.click();
+			});
 
 			expect(Page.panelTitle).to.equal('DEFAULT ELEMENT');
 		});
 
 		it('should navigate back to the First panel from clicking on breadcrumb', function () {
-			Page.item1.click();
-			Page.waitTransitionEnd();
-			Page.item5.click();
-			Page.waitTransitionEnd();
-			Page.button4.click();
-			Page.waitTransitionEnd();
-			Page.item2.click();
-			Page.waitTransitionEnd();
-			Page.breadcrumbHeader.click();
-			Page.waitTransitionEnd();
-			Page.breadcrumbHeader.click();
-			Page.waitTransitionEnd();
-			Page.breadcrumbHeader.click();
-			Page.waitTransitionEnd();
-			Page.breadcrumbHeader.click();
-			Page.waitTransitionEnd();
+			Page.waitTransitionEnd(3000, undefined, () => {
+				Page.item1.click();
+			});
+			Page.waitTransitionEnd(3000, undefined, () => {
+				Page.item5.click();
+			});
+			Page.waitTransitionEnd(3000, undefined, () => {
+				Page.button4.click();
+			});
+			Page.waitTransitionEnd(3000, undefined, () => {
+				Page.item2.click();
+			});
+			Page.waitTransitionEnd(3000, undefined, () => {
+				Page.breadcrumbHeader.click();
+			});
+			Page.waitTransitionEnd(3000, undefined, () => {
+				Page.breadcrumbHeader.click();
+			});
+			Page.waitTransitionEnd(3000, undefined, () => {
+				Page.breadcrumbHeader.click();
+			});
+			Page.waitTransitionEnd(3000, undefined, () => {
+				Page.breadcrumbHeader.click();
+			});
 
 			expect(Page.panelTitle).to.equal('FIRST');
 		});
 
 		it('should navigate back to the Third panel from clicking on breadcrumb', function () {
-			Page.item1.click();
-			Page.waitTransitionEnd();
-			Page.item5.click();
-			Page.waitTransitionEnd();
-			Page.breadcrumbHeader.click();
-			Page.waitTransitionEnd();
-			Page.item8.click();
-			Page.waitTransitionEnd();
-			Page.button4.click();
-			Page.waitTransitionEnd();
-			Page.breadcrumbHeader.click();
-			Page.waitTransitionEnd();
+			Page.waitTransitionEnd(3000, undefined, () => {
+				Page.item1.click();
+			});
+			Page.waitTransitionEnd(3000, undefined, () => {
+				Page.item5.click();
+			});
+			Page.waitTransitionEnd(3000, undefined, () => {
+				Page.breadcrumbHeader.click();
+			});
+			Page.waitTransitionEnd(3000, undefined, () => {
+				Page.item8.click();
+			});
+			Page.waitTransitionEnd(3000, undefined, () => {
+				Page.button4.click();
+			});
+			Page.waitTransitionEnd(3000, undefined, () => {
+				Page.breadcrumbHeader.click();
+			});
 
 			expect(Page.panelTitle).to.equal('THIRD');
 		});
@@ -122,8 +142,9 @@ describe('ActivityPanels', function () {
 		});
 
 		it('should transition back to First panel with back key', function () {
-			Page.button1.click();
-			Page.waitTransitionEnd();
+			Page.waitTransitionEnd(3000, undefined, () => {
+				Page.button1.click();
+			});
 			expect(Page.panelTitle).to.equal('SECOND');
 			Page.waitTransitionEnd(3000, undefined, () => {
 				Page.backKey();
@@ -141,8 +162,9 @@ describe('ActivityPanels', function () {
 		describe('pointer', function () {
 			// The ESC button (Back Key) does _not_ unset the pointer mode and does _not_ focus [ENYO-5865] [ENYO-5882]
 			it('should Not spot last focused item when transitioning back', function () {
-				Page.item2.click();
-				Page.waitTransitionEnd();
+				Page.waitTransitionEnd(3000, undefined, () => {
+					Page.item2.click();
+				});
 				Page.waitTransitionEnd(3000, undefined, () => {
 					Page.backKey();
 				});
@@ -152,8 +174,9 @@ describe('ActivityPanels', function () {
 
 			// The ESC button (Back Key) does _not_ unset the pointer mode and does _not_ focus [ENYO-5865] [ENYO-5882]
 			it('should Not spot last focused item when transitioning back after moving pointer', function () {
-				Page.item2.click();
-				Page.waitTransitionEnd();
+				Page.waitTransitionEnd(3000, undefined, () => {
+					Page.item2.click();
+				});
 				Page.item8.moveToObject();
 				Page.waitTransitionEnd(3000, undefined, () => {
 					Page.backKey();

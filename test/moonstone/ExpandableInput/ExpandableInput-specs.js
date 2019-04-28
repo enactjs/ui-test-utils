@@ -55,8 +55,8 @@ describe('ExpandableInput', function () {
 
 					expectOpen(expandable);
 					Page.waitTransitionEnd(3000, undefined, () => {
-					Page.spotlightUp();
-				});;
+						Page.spotlightUp();
+					});
 					expectClosed(expandable);
 					expect(expandable.title.hasFocus()).to.be.true();
 				});
@@ -67,8 +67,9 @@ describe('ExpandableInput', function () {
 					});
 
 					expectOpen(expandable);
-					Page.spotlightDown();
-					Page.waitTransitionEnd();
+					Page.waitTransitionEnd(3000, undefined, () => {
+						Page.spotlightDown();
+					});
 					expectClosed(expandable);
 					expect(expandable.title.hasFocus()).to.be.true();
 				});
@@ -85,8 +86,9 @@ describe('ExpandableInput', function () {
 					});
 
 					expectOpen(expandable);
-					Page.escape();
-					Page.waitTransitionEnd();
+					Page.waitTransitionEnd(3000, undefined, () => {
+						Page.escape();
+					});
 					expectClosed(expandable);
 				});
 
@@ -99,8 +101,8 @@ describe('ExpandableInput', function () {
 						expectOpen(expandable);
 						expandable.input.setValue('New Value');
 						Page.waitTransitionEnd(3000, undefined, () => {
-					Page.spotlightUp();
-				});;
+							Page.spotlightUp();
+						});
 						expectClosed(expandable);
 						expect(expandable.labelText).to.equal('New Value');
 					});
@@ -112,8 +114,9 @@ describe('ExpandableInput', function () {
 
 						expectOpen(expandable);
 						expandable.input.setValue('New Value');
-						Page.spotlightDown();
-						Page.waitTransitionEnd();
+						Page.waitTransitionEnd(3000, undefined, () => {
+							Page.spotlightDown();
+						});
 						expectClosed(expandable);
 						expect(expandable.labelText).to.equal('New Value');
 					});
@@ -125,8 +128,9 @@ describe('ExpandableInput', function () {
 
 						expectOpen(expandable);
 						expandable.input.setValue('New Value');
-						Page.escape();
-						Page.waitTransitionEnd();
+						Page.waitTransitionEnd(3000, undefined, () => {
+							Page.escape();
+						});
 						expectClosed(expandable);
 						expect(expandable.labelText).to.equal('No Input Text');
 					});
@@ -136,27 +140,27 @@ describe('ExpandableInput', function () {
 			describe('pointer', function () {
 				it('should open and focus input on title click when closed', function () {
 					Page.waitTransitionEnd(3000, undefined, () => {
-					expandable.title.click();
-				});
+						expandable.title.click();
+					});
 					expectOpen(expandable);
 					expect(expandable.input.hasFocus()).to.be.true();
 				});
 
 				it('should close on title click when open', function () {
 					Page.waitTransitionEnd(3000, undefined, () => {
-					expandable.title.click();
-				});
+						expandable.title.click();
+					});
 					expectOpen(expandable);
 					Page.waitTransitionEnd(3000, undefined, () => {
-					expandable.title.click();
-				});
+						expandable.title.click();
+					});
 					expectClosed(expandable);
 				});
 
 				it('should not close on input click', function () {
 					Page.waitTransitionEnd(3000, undefined, () => {
-					expandable.title.click();
-				});
+						expandable.title.click();
+					});
 					expandable.input.click();
 					expectOpen(expandable);
 				});
@@ -169,8 +173,8 @@ describe('ExpandableInput', function () {
 
 				it('should retain the focus on input when hovered on other expandable', function () {
 					Page.waitTransitionEnd(3000, undefined, () => {
-					expandable.title.click();
-				});
+						expandable.title.click();
+					});
 					expectOpen(expandable);
 					Page.hover();
 					expect(expandable.input.hasFocus()).to.be.true();
@@ -179,13 +183,13 @@ describe('ExpandableInput', function () {
 				describe('input value', function () {
 					it('should update value text on input and then closed by title click', function () {
 						Page.waitTransitionEnd(3000, undefined, () => {
-					expandable.title.click();
-				});
+							expandable.title.click();
+						});
 						expectOpen(expandable);
 						expandable.input.setValue('New Value');
 						Page.waitTransitionEnd(3000, undefined, () => {
-					expandable.title.click();
-				});
+							expandable.title.click();
+						});
 						expectClosed(expandable);
 						expect(expandable.labelText).to.equal('New Value');
 					});
@@ -237,8 +241,8 @@ describe('ExpandableInput', function () {
 
 					expectOpen(expandable);
 					Page.waitTransitionEnd(3000, undefined, () => {
-					Page.spotlightUp();
-				});;
+						Page.spotlightUp();
+					});
 					expectClosed(expandable);
 					expect(expandable.title.hasFocus()).to.be.true();
 				});
@@ -253,27 +257,27 @@ describe('ExpandableInput', function () {
 			describe('pointer', function () {
 				it('should open and focus input on title click when closed', function () {
 					Page.waitTransitionEnd(3000, undefined, () => {
-					expandable.title.click();
-				});
+						expandable.title.click();
+					});
 					expectOpen(expandable);
 					expect(expandable.input.hasFocus()).to.be.true();
 				});
 
 				it('should close on title click when open', function () {
 					Page.waitTransitionEnd(3000, undefined, () => {
-					expandable.title.click();
-				});
+						expandable.title.click();
+					});
 					expectOpen(expandable);
 					Page.waitTransitionEnd(3000, undefined, () => {
-					expandable.title.click();
-				});
+						expandable.title.click();
+					});
 					expectClosed(expandable);
 				});
 
 				it('should not close on input click', function () {
 					Page.waitTransitionEnd(3000, undefined, () => {
-					expandable.title.click();
-				});
+						expandable.title.click();
+					});
 					expandable.input.click();
 					expectOpen(expandable);
 				});
@@ -330,26 +334,26 @@ describe('ExpandableInput', function () {
 			describe('pointer', function () {
 				it('should close on title click', function () {
 					Page.waitTransitionEnd(3000, undefined, () => {
-					expandable.title.click();
-				});
+						expandable.title.click();
+					});
 					expectClosed(expandable);
 				});
 
 				it('should open on title click when closed', function () {
 					Page.waitTransitionEnd(3000, undefined, () => {
-					expandable.title.click();
-				});
+						expandable.title.click();
+					});
 					expectClosed(expandable);
 					Page.waitTransitionEnd(3000, undefined, () => {
-					expandable.title.click();
-				});
+						expandable.title.click();
+					});
 					expectOpen(expandable);
 				});
 
 				it('should open on two title clicks', function () {
 					Page.waitTransitionEnd(3000, undefined, () => {
-					expandable.title.click();
-				});
+						expandable.title.click();
+					});
 					expandable.title.click();
 					expectOpen(expandable);
 				});
@@ -374,8 +378,8 @@ describe('ExpandableInput', function () {
 
 					expectOpen(expandable);
 					Page.waitTransitionEnd(3000, undefined, () => {
-					Page.spotlightUp();
-				});;
+						Page.spotlightUp();
+					});
 					expectClosed(expandable);
 					expect(expandable.isLabelExists).to.be.false();
 				});
@@ -385,12 +389,12 @@ describe('ExpandableInput', function () {
 			describe('pointer', function () {
 				it('should not have value text on open and close', function () {
 					Page.waitTransitionEnd(3000, undefined, () => {
-					expandable.title.click();
-				});
+						expandable.title.click();
+					});
 					expectOpen(expandable);
 					Page.waitTransitionEnd(3000, undefined, () => {
-					expandable.title.click();
-				});
+						expandable.title.click();
+					});
 					expectClosed(expandable);
 					expect(expandable.isLabelExists).to.be.false();
 				});
@@ -435,8 +439,8 @@ describe('ExpandableInput', function () {
 			describe('pointer', function () {
 				it('should close on title click', function () {
 					Page.waitTransitionEnd(3000, undefined, () => {
-					expandable.title.click();
-				});
+						expandable.title.click();
+					});
 					expectClosed(expandable);
 				});
 			});
@@ -484,8 +488,8 @@ describe('ExpandableInput', function () {
 			describe('pointer', function () {
 				it('should close on title click', function () {
 					Page.waitTransitionEnd(3000, undefined, () => {
-					expandable.title.click();
-				});
+						expandable.title.click();
+					});
 					expectClosed(expandable);
 				});
 			});
@@ -533,8 +537,8 @@ describe('ExpandableInput', function () {
 			describe('pointer', function () {
 				it('should close on title click', function () {
 					Page.waitTransitionEnd(3000, undefined, () => {
-					expandable.title.click();
-				});
+						expandable.title.click();
+					});
 					expectClosed(expandable);
 				});
 			});
@@ -591,8 +595,8 @@ describe('ExpandableInput', function () {
 			describe('pointer', function () {
 				it('should close on title click', function () {
 					Page.waitTransitionEnd(3000, undefined, () => {
-					expandable.title.click();
-				});
+						expandable.title.click();
+					});
 					expectClosed(expandable);
 				});
 			});
@@ -636,10 +640,12 @@ describe('ExpandableInput', function () {
 
 		describe('general pointer operation', function () {
 			it('should prevent selecting other controls when open', function () {
-				Page.components.default.title.click();
-				Page.waitTransitionEnd();
-				Page.components.defaultValue.title.click();
-				Page.waitTransitionEnd();
+				Page.waitTransitionEnd(3000, undefined, () => {
+					Page.components.default.title.click();
+				});
+				Page.waitTransitionEnd(3000, undefined, () => {
+					Page.components.defaultValue.title.click();
+				});
 				expectClosed(Page.components.default);
 				expectClosed(Page.components.defaultValue);
 			});

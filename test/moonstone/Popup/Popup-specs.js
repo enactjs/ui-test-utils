@@ -22,8 +22,9 @@ describe('Popup', function () {
 		const popup = Page.components.popup1;
 
 		it('should have correct title', function () {
-			popupCommon.buttonPopup1.click();
-			Page.waitTransitionEnd();
+			Page.waitTransitionEnd(3000, undefined, () => {
+				popupCommon.buttonPopup1.click();
+			});
 			expectOpen(popupCommon);
 			validateTitle(popup, 'Popup with AutoDismiss');
 		});
@@ -116,8 +117,9 @@ describe('Popup', function () {
 
 		describe('pointer', function () {
 			it('should dismiss the popup on escape key', function () {
-				popupCommon.buttonPopup1.click();
-				Page.waitTransitionEnd();
+				Page.waitTransitionEnd(3000, undefined, () => {
+					popupCommon.buttonPopup1.click();
+				});
 				expectOpen(popupCommon);
 				Page.waitTransitionEnd(3000, 'popup close', () => {
 					Page.backKey();
@@ -126,51 +128,61 @@ describe('Popup', function () {
 			});
 
 			it('should dismiss the popup on click on outside the popup', function () {
-				popupCommon.buttonPopup1.click();
-				Page.waitTransitionEnd();
+				Page.waitTransitionEnd(3000, undefined, () => {
+					popupCommon.buttonPopup1.click();
+				});
 				expectOpen(popupCommon);
-				Page.clickPopupFloatLayer();
-				Page.waitTransitionEnd();
+				Page.waitTransitionEnd(3000, undefined, () => {
+					Page.clickPopupFloatLayer();
+				});
 				expectClosed(popupCommon);
 			});
 
 			it('should open the popup with scrim on click', function () {
-				popupCommon.buttonPopup1.click();
-				Page.waitTransitionEnd();
+				Page.waitTransitionEnd(3000, undefined, () => {
+					popupCommon.buttonPopup1.click();
+				});
 				expectOpen(popupCommon);
 			});
 
 			it('should show close button in the popup container on display', function () {
-				popupCommon.buttonPopup1.click();
-				Page.waitTransitionEnd();
+				Page.waitTransitionEnd(3000, undefined, () => {
+					popupCommon.buttonPopup1.click();
+				});
 				expectOpen(popupCommon);
 				expectCloseButton(popup);
 			});
 
 			it('should close the popup and scrim on click in popup container', function () {
-				popupCommon.buttonPopup1.click();
-				Page.waitTransitionEnd();
+				Page.waitTransitionEnd(3000, undefined, () => {
+					popupCommon.buttonPopup1.click();
+				});
 				expectOpen(popupCommon);
-				popup.buttonOK.click();
-				Page.waitTransitionEnd();
+				Page.waitTransitionEnd(3000, undefined, () => {
+					popup.buttonOK.click();
+				});
 				expectClosed(popupCommon);
 			});
 
 			it('should close the popup and scrim on cancel click in popup container', function () {
-				popupCommon.buttonPopup1.click();
-				Page.waitTransitionEnd();
+				Page.waitTransitionEnd(3000, undefined, () => {
+					popupCommon.buttonPopup1.click();
+				});
 				expectOpen(popupCommon);
-				popup.buttonCancel.click();
-				Page.waitTransitionEnd();
+				Page.waitTransitionEnd(3000, undefined, () => {
+					popup.buttonCancel.click();
+				});
 				expectClosed(popupCommon);
 			});
 
 			it('should close the popup and scrim on close click in popup container', function () {
-				popupCommon.buttonPopup1.click();
-				Page.waitTransitionEnd();
+				Page.waitTransitionEnd(3000, undefined, () => {
+					popupCommon.buttonPopup1.click();
+				});
 				expectOpen(popupCommon);
-				popup.buttonClose.click();
-				Page.waitTransitionEnd();
+				Page.waitTransitionEnd(3000, undefined, () => {
+					popup.buttonClose.click();
+				});
 				expectClosed(popupCommon);
 			});
 		});
@@ -181,8 +193,9 @@ describe('Popup', function () {
 		const popup = Page.components.popup2;
 
 		it('should have correct title', function () {
-			popupCommon.buttonPopup2.click();
-			Page.waitTransitionEnd();
+			Page.waitTransitionEnd(3000, undefined, () => {
+				popupCommon.buttonPopup2.click();
+			});
 			expectOpen(popupCommon);
 			validateTitle(popup, 'Popup without AutoDismiss');
 		});
@@ -214,8 +227,9 @@ describe('Popup', function () {
 		describe('pointer', function () {
 
 			it('should not dismiss the popup on click on outside the popup', function () {
-				popupCommon.buttonPopup2.click();
-				Page.waitTransitionEnd();
+				Page.waitTransitionEnd(3000, undefined, () => {
+					popupCommon.buttonPopup2.click();
+				});
 				expectOpen(popupCommon);
 				Page.clickPopupFloatLayer();
 				browser.pause(300);  // needed to pass instead of waitTransitionEnd
@@ -223,24 +237,28 @@ describe('Popup', function () {
 			});
 
 			it('should open the popup with scrim on click', function () {
-				popupCommon.buttonPopup2.click();
-				Page.waitTransitionEnd();
+				Page.waitTransitionEnd(3000, undefined, () => {
+					popupCommon.buttonPopup2.click();
+				});
 				expectOpen(popupCommon);
 			});
 
 			it('should show close button in the popup container on display', function () {
-				popupCommon.buttonPopup2.click();
-				Page.waitTransitionEnd();
+				Page.waitTransitionEnd(3000, undefined, () => {
+					popupCommon.buttonPopup2.click();
+				});
 				expectOpen(popupCommon);
 				expectCloseButton(popup);
 			});
 
 			it('should close the popup and scrim on ok click in popup container', function () {
-				popupCommon.buttonPopup2.click();
-				Page.waitTransitionEnd();
+				Page.waitTransitionEnd(3000, undefined, () => {
+					popupCommon.buttonPopup2.click();
+				});
 				expectOpen(popupCommon);
-				popup.buttonOK.click();
-				Page.waitTransitionEnd();
+				Page.waitTransitionEnd(3000, undefined, () => {
+					popup.buttonOK.click();
+				});
 				expectClosed(popupCommon);
 			});
 		});
@@ -251,8 +269,9 @@ describe('Popup', function () {
 		const popup = Page.components.popup3;
 
 		it('should have correct title', function () {
-			popupCommon.buttonPopup3.click();
-			Page.waitTransitionEnd();
+			Page.waitTransitionEnd(3000, undefined, () => {
+				popupCommon.buttonPopup3.click();
+			});
 			expectOpen(popupCommon);
 			validateTitle(popup, 'Popup with no Component');
 		});
@@ -287,8 +306,9 @@ describe('Popup', function () {
 		describe('pointer', function () {
 
 			it('should dismiss the popup on escape key', function () {
-				popupCommon.buttonPopup3.click();
-				Page.waitTransitionEnd();
+				Page.waitTransitionEnd(3000, undefined, () => {
+					popupCommon.buttonPopup3.click();
+				});
 				expectOpen(popupCommon);
 				Page.waitTransitionEnd(3000, 'popup close', () => {
 					Page.backKey();
@@ -297,17 +317,20 @@ describe('Popup', function () {
 			});
 
 			it('should dismiss the popup on click on outside the popup', function () {
-				popupCommon.buttonPopup3.click();
-				Page.waitTransitionEnd();
+				Page.waitTransitionEnd(3000, undefined, () => {
+					popupCommon.buttonPopup3.click();
+				});
 				expectOpen(popupCommon);
-				Page.clickPopupFloatLayer();
-				Page.waitTransitionEnd();
+				Page.waitTransitionEnd(3000, undefined, () => {
+					Page.clickPopupFloatLayer();
+				});
 				expectClosed(popupCommon);
 			});
 
 			it('should open the popup with scrim on click', function () {
-				popupCommon.buttonPopup3.click();
-				Page.waitTransitionEnd();
+				Page.waitTransitionEnd(3000, undefined, () => {
+					popupCommon.buttonPopup3.click();
+				});
 				expectOpen(popupCommon);
 			});
 		});
@@ -474,8 +497,9 @@ describe('Popup', function () {
 		const popup = Page.components.popup5;
 
 		it('should have correct title', function () {
-			popupCommon.buttonPopup5.click();
-			Page.waitTransitionEnd();
+			Page.waitTransitionEnd(3000, undefined, () => {
+				popupCommon.buttonPopup5.click();
+			});
 			expectOpen(popupCommon);
 			validateTitle(popup, 'Popup without Close button');
 		});
@@ -603,24 +627,28 @@ describe('Popup', function () {
 		describe('pointer', function () {
 
 			it('should open the popup with scrim on click', function () {
-				popupCommon.buttonPopup5.click();
-				Page.waitTransitionEnd();
+				Page.waitTransitionEnd(3000, undefined, () => {
+					popupCommon.buttonPopup5.click();
+				});
 				expectOpen(popupCommon);
 			});
 
 			it('should not show close button in the popup container on display', function () {
-				popupCommon.buttonPopup5.click();
-				Page.waitTransitionEnd();
+				Page.waitTransitionEnd(3000, undefined, () => {
+					popupCommon.buttonPopup5.click();
+				});
 				expectOpen(popupCommon);
 				expect(popup.isCloseButton).to.be.false();
 			});
 
 			it('should close the popup and scrim on ok click in popup container', function () {
-				popupCommon.buttonPopup5.click();
-				Page.waitTransitionEnd();
+				Page.waitTransitionEnd(3000, undefined, () => {
+					popupCommon.buttonPopup5.click();
+				});
 				expectOpen(popupCommon);
-				popup.buttonOK.click();
-				Page.waitTransitionEnd();
+				Page.waitTransitionEnd(3000, undefined, () => {
+					popup.buttonOK.click();
+				});
 				expectClosed(popupCommon);
 			});
 		});
@@ -631,8 +659,9 @@ describe('Popup', function () {
 		const popup = Page.components.popup6;
 
 		it('should have correct title', function () {
-			popupCommon.buttonPopup6.click();
-			Page.waitTransitionEnd();
+			Page.waitTransitionEnd(3000, undefined, () => {
+				popupCommon.buttonPopup6.click();
+			});
 			expectOpen(popupCommon);
 			validateTitle(popup, 'Popup spotlightRestrict is self-only');
 		});
@@ -749,24 +778,28 @@ describe('Popup', function () {
 		describe('pointer', function () {
 
 			it('should open the popup with scrim on click', function () {
-				popupCommon.buttonPopup6.click();
-				Page.waitTransitionEnd();
+				Page.waitTransitionEnd(3000, undefined, () => {
+					popupCommon.buttonPopup6.click();
+				});
 				expectOpen(popupCommon);
 			});
 
 			it('should show close button in the popup container on display', function () {
-				popupCommon.buttonPopup6.click();
-				Page.waitTransitionEnd();
+				Page.waitTransitionEnd(3000, undefined, () => {
+					popupCommon.buttonPopup6.click();
+				});
 				expectOpen(popupCommon);
 				expectCloseButton(popup);
 			});
 
 			it('should close the popup and scrim on ok click in popup container', function () {
-				popupCommon.buttonPopup6.click();
-				Page.waitTransitionEnd();
+				Page.waitTransitionEnd(3000, undefined, () => {
+					popupCommon.buttonPopup6.click();
+				});
 				expectOpen(popupCommon);
-				popup.buttonOK.click();
-				Page.waitTransitionEnd();
+				Page.waitTransitionEnd(3000, undefined, () => {
+					popup.buttonOK.click();
+				});
 				expectClosed(popupCommon);
 			});
 		});
@@ -774,8 +807,9 @@ describe('Popup', function () {
 		describe('5-way and Pointer', function () {
 
 			it('should retain spotlight on the Close button inside the popup [GT-21627]', function (){
-				popupCommon.buttonPopup6.click();
-				Page.waitTransitionEnd();
+				Page.waitTransitionEnd(3000, undefined, () => {
+					popupCommon.buttonPopup6.click();
+				});
 				expectOpen(popupCommon);
 				Page.showPointerByKeycode();
 				// Position the pointer inside popup to the right of the Cancel button (step 4)
@@ -801,8 +835,9 @@ describe('Popup', function () {
 				// Spotlight is on the button 'spotlightRestrict - self-only' (verify step 3)
 				expect(popupCommon.buttonPopup6.hasFocus()).to.be.true();
 				// Open popup (step 4)
-				popupCommon.buttonPopup6.click();
-				Page.waitTransitionEnd();
+				Page.waitTransitionEnd(3000, undefined, () => {
+					popupCommon.buttonPopup6.click();
+				});
 				// Verify the popup opens (verify step 4) - Spotlight will be on buttonOK by default
 				expectOpen(popupCommon);
 				// Wave the pointer to change to cursor mode (step 5)
@@ -818,8 +853,9 @@ describe('Popup', function () {
 			});
 
 			it('should not spot Buttons Outside of Popup - [GT-21630]', function (){
-				popupCommon.buttonPopup6.click();
-				Page.waitTransitionEnd();
+				Page.waitTransitionEnd(3000, undefined, () => {
+					popupCommon.buttonPopup6.click();
+				});
 				// Verify the popup opens
 				expectOpen(popupCommon);
 				// Hover a button outside Popup (step 4)
@@ -829,16 +865,18 @@ describe('Popup', function () {
 				// Check spotlight is NOT on buttons outside popup (verify step 4)
 				expect(popup.buttonOK.hasFocus()).to.be.true();
 				// Close Popup (step 5)
-				popup.buttonClose.click();
-				Page.waitTransitionEnd();
+				Page.waitTransitionEnd(3000, undefined, () => {
+					popup.buttonClose.click();
+				});
 				Page.spotlightUp();
 				// Hover the button 'spotlightRestrict - self-only' outside of the popup (step 6)
 				Page.spotlightUp();
 				// Check spotlight is on the button 'spotlightRestrict - self-only' outside popup (verify step 6)
 				expect(popupCommon.buttonPopup6.hasFocus()).to.be.true();
 				// Open popup (step 7)
-				popupCommon.buttonPopup6.click();
-				Page.waitTransitionEnd();
+				Page.waitTransitionEnd(3000, undefined, () => {
+					popupCommon.buttonPopup6.click();
+				});
 				// Verify the popup opens (step 7)
 				expectOpen(popupCommon);
 				// Hover outside Popup (step 8)
@@ -856,8 +894,9 @@ describe('Popup', function () {
 		const popup = Page.components.popup7;
 
 		it('should have correct title', function () {
-			popupCommon.buttonPopup7.click();
-			Page.waitTransitionEnd();
+			Page.waitTransitionEnd(3000, undefined, () => {
+				popupCommon.buttonPopup7.click();
+			});
 			expectOpen(popupCommon);
 			validateTitle(popup, 'Popup spotlightRestrict is self-first');
 		});
@@ -967,24 +1006,28 @@ describe('Popup', function () {
 		describe('pointer', function () {
 
 			it('should open the popup with scrim on click', function () {
-				popupCommon.buttonPopup7.click();
-				Page.waitTransitionEnd();
+				Page.waitTransitionEnd(3000, undefined, () => {
+					popupCommon.buttonPopup7.click();
+				});
 				expectOpen(popupCommon);
 			});
 
 			it('should show close button in the popup container on display', function () {
-				popupCommon.buttonPopup7.click();
-				Page.waitTransitionEnd();
+				Page.waitTransitionEnd(3000, undefined, () => {
+					popupCommon.buttonPopup7.click();
+				});
 				expectOpen(popupCommon);
 				expectCloseButton(popup);
 			});
 
 			it('should close the popup and scrim on ok click in popup container', function () {
-				popupCommon.buttonPopup7.click();
-				Page.waitTransitionEnd();
+				Page.waitTransitionEnd(3000, undefined, () => {
+					popupCommon.buttonPopup7.click();
+				});
 				expectOpen(popupCommon);
-				popup.buttonOK.click();
-				Page.waitTransitionEnd();
+				Page.waitTransitionEnd(3000, undefined, () => {
+					popup.buttonOK.click();
+				});
 				expectClosed(popupCommon);
 			});
 		});
@@ -992,8 +1035,9 @@ describe('Popup', function () {
 		describe('5-way and Pointer', function () {
 
 			it('should navigate to nearest neighbor [GT-25513]', function (){
-				popupCommon.buttonPopup7.click();
-				Page.waitTransitionEnd();
+				Page.waitTransitionEnd(3000, undefined, () => {
+					popupCommon.buttonPopup7.click();
+				});
 				expectOpen(popupCommon);
 				Page.showPointerByKeycode();
 				// Position the pointer inside popup to the right of the Cancel button (step 4)
@@ -1015,8 +1059,9 @@ describe('Popup', function () {
 		const popup = Page.components.popup8;
 
 		it('should have correct title', function () {
-			popupCommon.buttonPopup8.click();
-			Page.waitTransitionEnd();
+			Page.waitTransitionEnd(3000, undefined, () => {
+				popupCommon.buttonPopup8.click();
+			});
 			expectOpen(popupCommon);
 			validateTitle(popup, 'Popup scrimType is transparent');
 		});
@@ -1134,8 +1179,9 @@ describe('Popup', function () {
 		describe('pointer', function () {
 
 			it('should dismiss the popup on escape key', function () {
-				popupCommon.buttonPopup8.click();
-				Page.waitTransitionEnd();
+				Page.waitTransitionEnd(3000, undefined, () => {
+					popupCommon.buttonPopup8.click();
+				});
 				expectOpen(popupCommon);
 				Page.waitTransitionEnd(3000, 'popup close', () => {
 					Page.backKey();
@@ -1146,51 +1192,61 @@ describe('Popup', function () {
 			});
 
 			it('should dismiss the popup on click on outside the popup', function () {
-				popupCommon.buttonPopup8.click();
-				Page.waitTransitionEnd();
+				Page.waitTransitionEnd(3000, undefined, () => {
+					popupCommon.buttonPopup8.click();
+				});
 				expectOpen(popupCommon);
-				Page.clickPopupFloatLayer();
-				Page.waitTransitionEnd();
+				Page.waitTransitionEnd(3000, undefined, () => {
+					Page.clickPopupFloatLayer();
+				});
 				expectClosed(popupCommon);
 			});
 
 			it('should open the popup with scrim on click', function () {
-				popupCommon.buttonPopup8.click();
-				Page.waitTransitionEnd();
+				Page.waitTransitionEnd(3000, undefined, () => {
+					popupCommon.buttonPopup8.click();
+				});
 				expectOpen(popupCommon);
 			});
 
 			it('should show close button in the popup container on display', function () {
-				popupCommon.buttonPopup8.click();
-				Page.waitTransitionEnd();
+				Page.waitTransitionEnd(3000, undefined, () => {
+					popupCommon.buttonPopup8.click();
+				});
 				expectOpen(popupCommon);
 				expectCloseButton(popup);
 			});
 
 			it('should close the popup and scrim on click in popup container', function () {
-				popupCommon.buttonPopup8.click();
-				Page.waitTransitionEnd();
+				Page.waitTransitionEnd(3000, undefined, () => {
+					popupCommon.buttonPopup8.click();
+				});
 				expectOpen(popupCommon);
-				popup.buttonOK.click();
-				Page.waitTransitionEnd();
+				Page.waitTransitionEnd(3000, undefined, () => {
+					popup.buttonOK.click();
+				});
 				expectClosed(popupCommon);
 			});
 
 			it('should close the popup and scrim on cancel click in popup container', function () {
-				popupCommon.buttonPopup8.click();
-				Page.waitTransitionEnd();
+				Page.waitTransitionEnd(3000, undefined, () => {
+					popupCommon.buttonPopup8.click();
+				});
 				expectOpen(popupCommon);
-				popup.buttonCancel.click();
-				Page.waitTransitionEnd();
+				Page.waitTransitionEnd(3000, undefined, () => {
+					popup.buttonCancel.click();
+				});
 				expectClosed(popupCommon);
 			});
 
 			it('should close the popup and scrim on close click in popup container', function () {
-				popupCommon.buttonPopup8.click();
-				Page.waitTransitionEnd();
+				Page.waitTransitionEnd(3000, undefined, () => {
+					popupCommon.buttonPopup8.click();
+				});
 				expectOpen(popupCommon);
-				popup.buttonClose.click();
-				Page.waitTransitionEnd();
+				Page.waitTransitionEnd(3000, undefined, () => {
+					popup.buttonClose.click();
+				});
 				expectClosed(popupCommon);
 			});
 		});
@@ -1201,8 +1257,9 @@ describe('Popup', function () {
 		const popup = Page.components.popup9;
 
 		it('should have correct title', function () {
-			popupCommon.buttonPopup9.click();
-			Page.waitTransitionEnd(); // browser.pause(3250);
+			Page.waitTransitionEnd(3000, undefined, () => {
+				popupCommon.buttonPopup9.click();
+			}); // browser.pause(3250);
 			expectNoneScrimOpen(popupCommon);
 			validateTitle(popup, 'Popup scrimType is none');
 		});
@@ -1328,8 +1385,9 @@ describe('Popup', function () {
 		describe('pointer', function () {
 
 			it('should dismiss the popup on escape key', function () {
-				popupCommon.buttonPopup9.click();
-				Page.waitTransitionEnd();
+				Page.waitTransitionEnd(3000, undefined, () => {
+					popupCommon.buttonPopup9.click();
+				});
 				expectNoneScrimOpen(popupCommon);
 				Page.waitTransitionEnd(3000, 'popup close', () => {
 					Page.backKey();
@@ -1338,51 +1396,61 @@ describe('Popup', function () {
 			});
 
 			it('should dismiss the popup on click on outside the popup', function () {
-				popupCommon.buttonPopup9.click();
-				Page.waitTransitionEnd();
+				Page.waitTransitionEnd(3000, undefined, () => {
+					popupCommon.buttonPopup9.click();
+				});
 				expectNoneScrimOpen(popupCommon);
-				Page.clickPopupMain();
-				Page.waitTransitionEnd();
+				Page.waitTransitionEnd(3000, undefined, () => {
+					Page.clickPopupMain();
+				});
 				expectClosed(popupCommon);
 			});
 
 			it('should open the popup without scrim on click', function () {
-				popupCommon.buttonPopup9.click();
-				Page.waitTransitionEnd();
+				Page.waitTransitionEnd(3000, undefined, () => {
+					popupCommon.buttonPopup9.click();
+				});
 				expectNoneScrimOpen(popupCommon);
 			});
 
 			it('should show close button in the popup container on display', function () {
-				popupCommon.buttonPopup9.click();
-				Page.waitTransitionEnd();
+				Page.waitTransitionEnd(3000, undefined, () => {
+					popupCommon.buttonPopup9.click();
+				});
 				expectNoneScrimOpen(popupCommon);
 				expectCloseButton(popup);
 			});
 
 			it('should close the popup on click in popup container', function () {
-				popupCommon.buttonPopup9.click();
-				Page.waitTransitionEnd();
+				Page.waitTransitionEnd(3000, undefined, () => {
+					popupCommon.buttonPopup9.click();
+				});
 				expectNoneScrimOpen(popupCommon);
-				popup.buttonOK.click();
-				Page.waitTransitionEnd();
+				Page.waitTransitionEnd(3000, undefined, () => {
+					popup.buttonOK.click();
+				});
 				expectClosed(popupCommon);
 			});
 
 			it('should close the popup on cancel click in popup container', function () {
-				popupCommon.buttonPopup9.click();
-				Page.waitTransitionEnd();
+				Page.waitTransitionEnd(3000, undefined, () => {
+					popupCommon.buttonPopup9.click();
+				});
 				expectNoneScrimOpen(popupCommon);
-				popup.buttonCancel.click();
-				Page.waitTransitionEnd();
+				Page.waitTransitionEnd(3000, undefined, () => {
+					popup.buttonCancel.click();
+				});
 				expectClosed(popupCommon);
 			});
 
 			it('should close the popup on close click in popup container', function () {
-				popupCommon.buttonPopup9.click();
-				Page.waitTransitionEnd();
+				Page.waitTransitionEnd(3000, undefined, () => {
+					popupCommon.buttonPopup9.click();
+				});
 				expectNoneScrimOpen(popupCommon);
-				popup.buttonClose.click();
-				Page.waitTransitionEnd();
+				Page.waitTransitionEnd(3000, undefined, () => {
+					popup.buttonClose.click();
+				});
 				expectClosed(popupCommon);
 			});
 		});

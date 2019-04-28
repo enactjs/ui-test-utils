@@ -59,17 +59,20 @@ describe('ExpandableItem', function () {
 
 		describe('pointer', function () {
 			it('should open on title click when closed', function () {
-				expandableItem.title.click();
-				Page.waitTransitionEnd();
+				Page.waitTransitionEnd(3000, undefined, () => {
+					expandableItem.title.click();
+				});
 				expectOpen(expandableItem);
 			});
 
 			it('should close on title click when open', function () {
-				expandableItem.title.click();
-				Page.waitTransitionEnd();
+				Page.waitTransitionEnd(3000, undefined, () => {
+					expandableItem.title.click();
+				});
 				expectOpen(expandableItem);
-				expandableItem.title.click();
-				Page.waitTransitionEnd();
+				Page.waitTransitionEnd(3000, undefined, () => {
+					expandableItem.title.click();
+				});
 				expectClosed(expandableItem);
 			});
 		});
@@ -104,17 +107,20 @@ describe('ExpandableItem', function () {
 
 		describe('pointer', function () {
 			it('should close on title click when open', function () {
-				expandableItem.title.click();
-				Page.waitTransitionEnd();
+				Page.waitTransitionEnd(3000, undefined, () => {
+					expandableItem.title.click();
+				});
 				expectClosed(expandableItem);
 			});
 
 			it('should open on title click when closed', function () {
-				expandableItem.title.click();
-				Page.waitTransitionEnd();
+				Page.waitTransitionEnd(3000, undefined, () => {
+					expandableItem.title.click();
+				});
 				expectClosed(expandableItem);
-				expandableItem.title.click();
-				Page.waitTransitionEnd();
+				Page.waitTransitionEnd(3000, undefined, () => {
+					expandableItem.title.click();
+				});
 				expectOpen(expandableItem);
 			});
 		});
@@ -132,8 +138,8 @@ describe('ExpandableItem', function () {
 			expectOpen(expandableItem);
 			expect(expandableItem.item.hasFocus()).to.be.true();
 			Page.waitTransitionEnd(3000, undefined, () => {
-					Page.spotlightUp();
-				});;
+				Page.spotlightUp();
+			});
 			expectClosed(expandableItem);
 		});
 	});

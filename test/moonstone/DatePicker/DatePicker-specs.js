@@ -83,8 +83,8 @@ describe('DatePicker', function () {
 					expectOpen(datePicker);
 					expect(datePicker.month.hasFocus()).to.be.true();
 					Page.waitTransitionEnd(3000, undefined, () => {
-					Page.spotlightUp();
-				});;
+						Page.spotlightUp();
+					});
 					const {month: value} = extractValues(datePicker);
 					const expected = month < 12 ? month + 1 : 1;
 					expect(value).to.equal(expected);
@@ -98,8 +98,9 @@ describe('DatePicker', function () {
 					const {month} = extractValues(datePicker);
 					expectOpen(datePicker);
 					expect(datePicker.month.hasFocus()).to.be.true();
-					Page.spotlightDown();
-					Page.waitTransitionEnd();
+					Page.waitTransitionEnd(3000, undefined, () => {
+						Page.spotlightDown();
+					});
 					const {month: value} = extractValues(datePicker);
 					const expected = month > 1 ? month - 1 : 12;
 					expect(value).to.equal(expected);
@@ -116,8 +117,8 @@ describe('DatePicker', function () {
 					Page.spotlightRight();
 					expect(datePicker.day.hasFocus()).to.be.true();
 					Page.waitTransitionEnd(3000, undefined, () => {
-					Page.spotlightUp();
-				});;
+						Page.spotlightUp();
+					});
 					const {day: value} = extractValues(datePicker);
 					const expected = day !== numDays ? day + 1 : 1;
 					expect(value).to.equal(expected);
@@ -133,8 +134,9 @@ describe('DatePicker', function () {
 					expectOpen(datePicker);
 					Page.spotlightRight();
 					expect(datePicker.day.hasFocus()).to.be.true();
-					Page.spotlightDown();
-					Page.waitTransitionEnd();
+					Page.waitTransitionEnd(3000, undefined, () => {
+						Page.spotlightDown();
+					});
 					const {day: value} = extractValues(datePicker);
 					const expected = day !== 1 ? day - 1 : numDays;
 					expect(value).to.equal(expected);
@@ -151,8 +153,8 @@ describe('DatePicker', function () {
 					Page.spotlightRight();
 					expect(datePicker.year.hasFocus()).to.be.true();
 					Page.waitTransitionEnd(3000, undefined, () => {
-					Page.spotlightUp();
-				});;
+						Page.spotlightUp();
+					});
 					const {year: value} = extractValues(datePicker);
 					const expected = year + 1;
 					expect(value).to.equal(expected);
@@ -168,8 +170,9 @@ describe('DatePicker', function () {
 					Page.spotlightRight();
 					Page.spotlightRight();
 					expect(datePicker.year.hasFocus()).to.be.true();
-					Page.spotlightDown();
-					Page.waitTransitionEnd();
+					Page.waitTransitionEnd(3000, undefined, () => {
+						Page.spotlightDown();
+					});
 					const {year: value} = extractValues(datePicker);
 					const expected = year - 1;
 					expect(value).to.equal(expected);
@@ -178,96 +181,112 @@ describe('DatePicker', function () {
 
 			describe('pointer', function () {
 				it('should open on title click when closed', function () {
-					datePicker.title.click();
-					Page.waitTransitionEnd();
+					Page.waitTransitionEnd(3000, undefined, () => {
+						datePicker.title.click();
+					});
 					expectOpen(datePicker);
 				});
 
 				it('should close on title click when open', function () {
-					datePicker.title.click();
-					Page.waitTransitionEnd();
+					Page.waitTransitionEnd(3000, undefined, () => {
+						datePicker.title.click();
+					});
 					expectOpen(datePicker);
-					datePicker.title.click();
-					Page.waitTransitionEnd();
+					Page.waitTransitionEnd(3000, undefined, () => {
+						datePicker.title.click();
+					});
 					expectClosed(datePicker);
 				});
 
 				it('should select item', function () {
-					datePicker.title.click();
-					Page.waitTransitionEnd();
+					Page.waitTransitionEnd(3000, undefined, () => {
+						datePicker.title.click();
+					});
 					datePicker.month.click();
 					expect(datePicker.month.hasFocus()).to.be.true();
 				});
 
 				it('should increase the month when incrementing the picker', function () {
-					datePicker.title.click();
-					Page.waitTransitionEnd();
+					Page.waitTransitionEnd(3000, undefined, () => {
+						datePicker.title.click();
+					});
 					const {month} = extractValues(datePicker);
 					expectOpen(datePicker);
-					datePicker.incrementer(datePicker.month).click();
-					Page.waitTransitionEnd();
+					Page.waitTransitionEnd(3000, undefined, () => {
+						datePicker.incrementer(datePicker.month).click();
+					});
 					const {month: value} = extractValues(datePicker);
 					const expected = month < 12 ? month + 1 : 1;
 					expect(value).to.equal(expected);
 				});
 
 				it('should decrease the month when decrementing the picker', function () {
-					datePicker.title.click();
-					Page.waitTransitionEnd();
+					Page.waitTransitionEnd(3000, undefined, () => {
+						datePicker.title.click();
+					});
 					const {month} = extractValues(datePicker);
 					expectOpen(datePicker);
-					datePicker.decrementer(datePicker.month).click();
-					Page.waitTransitionEnd();
+					Page.waitTransitionEnd(3000, undefined, () => {
+						datePicker.decrementer(datePicker.month).click();
+					});
 					const {month: value} = extractValues(datePicker);
 					const expected = month > 1 ? month - 1 : 12;
 					expect(value).to.equal(expected);
 				});
 
 				it('should increase the day when incrementing the picker', function () {
-					datePicker.title.click();
-					Page.waitTransitionEnd();
+					Page.waitTransitionEnd(3000, undefined, () => {
+						datePicker.title.click();
+					});
 					const {day, month, year} = extractValues(datePicker);
 					const numDays = daysInMonth({month, year});
 					expectOpen(datePicker);
-					datePicker.incrementer(datePicker.day).click();
-					Page.waitTransitionEnd();
+					Page.waitTransitionEnd(3000, undefined, () => {
+						datePicker.incrementer(datePicker.day).click();
+					});
 					const {day: value} = extractValues(datePicker);
 					const expected = day !== numDays ? day + 1 : 1;
 					expect(value).to.equal(expected);
 				});
 
 				it('should decrease the day when decrementing the picker', function () {
-					datePicker.title.click();
-					Page.waitTransitionEnd();
+					Page.waitTransitionEnd(3000, undefined, () => {
+						datePicker.title.click();
+					});
 					const {day, month, year} = extractValues(datePicker);
 					const numDays = daysInMonth({month, year});
 					expectOpen(datePicker);
-					datePicker.decrementer(datePicker.day).click();
-					Page.waitTransitionEnd();
+					Page.waitTransitionEnd(3000, undefined, () => {
+						datePicker.decrementer(datePicker.day).click();
+					});
 					const {day: value} = extractValues(datePicker);
 					const expected = day !== 1 ? day - 1 : numDays;
 					expect(value).to.equal(expected);
 				});
 
 				it('should increase the year when incrementing the picker', function () {
-					datePicker.title.click();
-					Page.waitTransitionEnd();
+					Page.waitTransitionEnd(3000, undefined, () => {
+						datePicker.title.click();
+					});
 					const {year} = extractValues(datePicker);
 					expectOpen(datePicker);
-					datePicker.incrementer(datePicker.year).click();
-					Page.waitTransitionEnd();
+					Page.waitTransitionEnd(3000, undefined, () => {
+						datePicker.incrementer(datePicker.year).click();
+					});
 					const {year: value} = extractValues(datePicker);
 					const expected = year + 1;
 					expect(value).to.equal(expected);
 				});
 
 				it('should decrease the year when decrementing the picker', function () {
-					datePicker.title.click();
-					Page.waitTransitionEnd();
+					Page.waitTransitionEnd(3000, undefined, () => {
+						datePicker.title.click();
+					});
 					const {year} = extractValues(datePicker);
 					expectOpen(datePicker);
-					datePicker.decrementer(datePicker.year).click();
-					Page.waitTransitionEnd();
+					Page.waitTransitionEnd(3000, undefined, () => {
+						datePicker.decrementer(datePicker.year).click();
+					});
 					const {year: value} = extractValues(datePicker);
 					const expected = year - 1;
 					expect(value).to.equal(expected);
@@ -305,17 +324,20 @@ describe('DatePicker', function () {
 
 			describe('pointer', function () {
 				it('should close on title click when open - [GT-21246]', function () {
-					datePicker.title.click();
-					Page.waitTransitionEnd();
+					Page.waitTransitionEnd(3000, undefined, () => {
+						datePicker.title.click();
+					});
 					expectClosed(datePicker);
 				});
 
 				it('should open on title click when closed', function () {
-					datePicker.title.click();
-					Page.waitTransitionEnd();
+					Page.waitTransitionEnd(3000, undefined, () => {
+						datePicker.title.click();
+					});
 					expectClosed(datePicker);
-					datePicker.title.click();
-					Page.waitTransitionEnd();
+					Page.waitTransitionEnd(3000, undefined, () => {
+						datePicker.title.click();
+					});
 					expectOpen(datePicker);
 				});
 			});
@@ -356,8 +378,9 @@ describe('DatePicker', function () {
 
 			describe('pointer', function () {
 				it('should not update on title click', function () {
-					datePicker.title.click();
-					Page.waitTransitionEnd();
+					Page.waitTransitionEnd(3000, undefined, () => {
+						datePicker.title.click();
+					});
 					const {day, month, year} = extractValues(datePicker);
 
 					expect(day).to.equal(6);

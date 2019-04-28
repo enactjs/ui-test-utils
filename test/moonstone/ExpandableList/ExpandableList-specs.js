@@ -42,7 +42,7 @@ describe('ExpandableList', function () {
 				expect(expandable.isOpen).to.be.true();
 				Page.waitTransitionEnd(3000, undefined, () => {
 					Page.spotlightUp();
-				});;
+				});
 				expect(expandable.isOpen).to.be.false();
 				expect(expandable.title.hasFocus()).to.be.true();
 			});
@@ -525,7 +525,7 @@ describe('ExpandableList', function () {
 				Page.spotlightDown();
 				Page.waitTransitionEnd(3000, undefined, () => {
 					Page.spotlightUp();
-				});;
+				});
 				expect(expandable.isOpen).to.be.false();
 				expect(expandable.chevron).to.equal('󯿭');
 				expect(expandable.item(0).isVisible()).to.be.false();
@@ -594,10 +594,12 @@ describe('ExpandableList', function () {
 
 	describe('general pointer operation', function () {
 		it('should not close other expandable when opening', function () {
-			Page.components.radioSelect.title.click();
-			Page.waitTransitionEnd();
-			Page.components.multiSelect.title.click();
-			Page.waitTransitionEnd();
+			Page.waitTransitionEnd(3000, undefined, () => {
+				Page.components.radioSelect.title.click();
+			});
+			Page.waitTransitionEnd(3000, undefined, () => {
+				Page.components.multiSelect.title.click();
+			});
 			expect(Page.components.radioSelect.isOpen).to.be.true();
 			expect(Page.components.multiSelect.isOpen).to.be.true();
 		});
