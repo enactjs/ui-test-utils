@@ -19,6 +19,9 @@ before_script:
     - "sh -e /etc/init.d/xvfb start"
     - sleep 3 # give xvfb some time to start
 script:
+    - echo -e "\x1b\x5b35;1m*** Linting...\x1b\x5b0m"
+    - npm run lint
+    - echo -e "\x1b\x5b35;1m*** Linting complete...\x1b\x5b0m"
     - echo -e "\x1b\x5b35;1m*** Starting tests...\x1b\x5b0m"
     - npm run test
     - echo -e "\x1b\x5b35;1m*** Tests complete\x1b\x5b0m"
