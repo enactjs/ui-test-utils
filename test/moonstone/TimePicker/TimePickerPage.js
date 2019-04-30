@@ -22,7 +22,7 @@ class PickerInterface {
 	get titleText () { return getText(getLabeledItemTitle(this.self)); }
 	get     value () { return getLabeledItemValue(this.self); }
 	get valueText () { return getText(this.value); }
-	//get    isOpen () { return this.self.isExisting('.enact_ui_Transition_Transition_shown'); }
+	// get    isOpen () { return this.self.isExisting('.enact_ui_Transition_Transition_shown'); }
 	get    isOpen () {
 		return !(!this.self.isExisting('.enact_ui_Transition_Transition_transition') ||
 		!this.self.isExisting('.enact_ui_Transition_Transition_shown') && this.self.isExisting('.enact_ui_Transition_Transition_hidden'));
