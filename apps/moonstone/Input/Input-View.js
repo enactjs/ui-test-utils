@@ -12,18 +12,22 @@ spotlight.setPointerMode(false);
 const app = (props) => <div {...props}>
 	<div>
 		<div>
-			<Input id="input1"
+			<Input
+				id="input1"
 				defaultValue="Input field one"
 			/>
-			<Input id="input2"
+			<Input
+				id="input2"
 				defaultValue="Input field two"
 			/>
 		</div>
 		<div>
-			<Input id="input3"
+			<Input
+				id="input3"
 				defaultValue="Input field three"
 			/>
-			<Input id="input4"
+			<Input
+				id="input4"
 				defaultValue="Input field four"
 			/>
 		</div>

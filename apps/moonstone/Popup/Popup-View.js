@@ -127,20 +127,20 @@ class app extends Component {
 					</Container>
 				</Popup>
 				<Popup
-						id="popup6"
-						open={this.state.open6}
-						noAnimation={false}
-						noAutoDismiss={false}
-						showCloseButton
-						spotlightRestrict="self-only"
-						onClose={() => this.clickHandler({open6: false})}
+					id="popup6"
+					open={this.state.open6}
+					noAnimation={false}
+					noAutoDismiss={false}
+					showCloseButton
+					spotlightRestrict="self-only"
+					onClose={() => this.clickHandler({open6: false})}
 				>
-						<div>Popup spotlightRestrict is self-only</div>
-						<br />
-						<Container>
-							<Button id="buttonOK" onClick={() => this.clickHandler({open6: false})}>OK</Button>
-							<Button id="buttonCancel" onClick={() => this.clickHandler({open6: false})}>Cancel</Button>
-						</Container>
+					<div>Popup spotlightRestrict is self-only</div>
+					<br />
+					<Container>
+						<Button id="buttonOK" onClick={() => this.clickHandler({open6: false})}>OK</Button>
+						<Button id="buttonCancel" onClick={() => this.clickHandler({open6: false})}>Cancel</Button>
+					</Container>
 				</Popup>
 				<Popup
 					id="popup7"
