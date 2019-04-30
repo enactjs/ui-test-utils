@@ -90,7 +90,7 @@ class Page {
 	}
 
 	/* global window */
-	waitTransitionEnd (delay = 3000, msg = 'timed out waiting for transitionend') {
+	waitTransitionEnd (delay = 3000, msg = 'timed out waiting for transitionend', callback) {
 		browser.execute(
 			function () {
 				window.ontransitionend = function () {
@@ -99,6 +99,9 @@ class Page {
 				window.__transition = false;
 			}
 		);
+		if (callback) {
+			callback();
+		}
 		browser.waitUntil(
 			function () {
 				return browser.execute(
