@@ -159,10 +159,10 @@ describe('RadioItem', function () {
 		});
 
 		describe('5-way', function () {
-			it('should not focus the item', function () {
+			it('should be able to focus the item', function () {
 				prevRadioItem.focus();
 				Page.spotlightDown();
-				expect(prevRadioItem.self.hasFocus()).to.be.true();
+				expect(radioItem.self.hasFocus()).to.be.true();
 			});
 		});
 
@@ -180,6 +180,7 @@ describe('RadioItem', function () {
 	describe('inline disabled', function () {
 		const radioItem = Page.components.radioInlineDisabled;
 		const prevRadioItem = Page.components.radioInline;
+		const radioDisabled = Page.components.radioDisabled;
 
 		it('should have correct text', function () {
 			expect(radioItem.valueText).to.equal('Radio Item inline disabled');
@@ -194,10 +195,10 @@ describe('RadioItem', function () {
 		});
 
 		describe('5-way', function () {
-			it('should not focus the item', function () {
-				prevRadioItem.focus();
+			it('should be able to focus the item', function () {
+				radioDisabled.focus();
 				Page.spotlightDown();
-				expect(prevRadioItem.self.hasFocus()).to.be.true();
+				expect(radioItem.self.hasFocus()).to.be.true();
 			});
 		});
 
