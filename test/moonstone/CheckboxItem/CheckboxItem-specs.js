@@ -290,10 +290,10 @@ describe('CheckboxItem', function () {
 			});
 
 			describe('5-way', function () {
-				it('should not focus the item', function () {
+				it('should be able to focus the item', function () {
 					prevCheckboxItem.focus();
 					Page.spotlightDown();
-					expect(prevCheckboxItem.self.hasFocus()).to.be.true();
+					expect(checkboxItem.self.hasFocus()).to.be.true();
 				});
 			});
 
