@@ -416,7 +416,7 @@ describe('DatePicker', function () {
 				it('should not receive focus', function () {
 					Page.components.datePickerNoLabels.focus();
 					Page.spotlightDown();
-					expect(datePicker.title.hasFocus()).to.be.false();
+					expect(datePicker.title.hasFocus()).to.be.true();
 				});
 			});
 
