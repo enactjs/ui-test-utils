@@ -438,7 +438,7 @@ describe('TimePicker', function () {
 				it('should not receive focus', function () {
 					Page.components.timePickerNoLabels.focus();
 					Page.spotlightDown();
-					expect(timePicker.title.hasFocus()).to.be.false();
+					expect(timePicker.title.hasFocus()).to.be.true();
 				});
 			});
 
