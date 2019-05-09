@@ -262,10 +262,10 @@ describe('ExpandableItem', function () {
 		});
 
 		describe('5-way', function () {
-			it('should not receive focus', function () {
+			it('should be able to receive focus', function () {
 				Page.components.expandableItemNeverLabel.focus();
 				Page.spotlightDown();
-				expect(expandableItem.title.hasFocus()).to.be.false();
+				expect(expandableItem.title.hasFocus()).to.be.true();
 			});
 		});
 

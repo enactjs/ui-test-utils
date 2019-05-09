@@ -413,7 +413,7 @@ describe('DatePicker', function () {
 			});
 
 			describe('5-way', function () {
-				it('should not receive focus', function () {
+				it('should be able to receive focus', function () {
 					Page.components.datePickerNoLabels.focus();
 					Page.spotlightDown();
 					expect(datePicker.title.hasFocus()).to.be.true();
