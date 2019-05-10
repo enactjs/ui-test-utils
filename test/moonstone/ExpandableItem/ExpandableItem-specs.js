@@ -267,6 +267,10 @@ describe('ExpandableItem', function () {
 				Page.spotlightDown();
 				expect(expandableItem.title.hasFocus()).to.be.true();
 			});
+			it('should not open when selected', function () {
+				Page.spotlightSelect();
+				expectClosed(expandableItem);
+			});
 		});
 
 		describe('pointer', function () {
