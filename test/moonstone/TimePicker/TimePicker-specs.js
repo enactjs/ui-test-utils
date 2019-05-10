@@ -435,7 +435,7 @@ describe('TimePicker', function () {
 			});
 
 			describe('5-way', function () {
-				it('should not receive focus', function () {
+				it('should be able receive focus', function () {
 					Page.components.timePickerNoLabels.focus();
 					Page.spotlightDown();
 					expect(timePicker.title.hasFocus()).to.be.true();

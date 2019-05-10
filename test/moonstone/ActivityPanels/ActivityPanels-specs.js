@@ -7,7 +7,7 @@ describe('ActivityPanels', function () {
 	});
 
 	it('should load first panel.', function () {
-		expect(Page.panelTitle).to.equal('FIRST');
+		expect(Page.panelTitle.toLowerCase()).to.equal('FIRST'.toLowerCase());
 	});
 
 	it('should have breadcrumb on second panel', function () {
@@ -24,7 +24,7 @@ describe('ActivityPanels', function () {
 				Page.button1.click();
 			});
 
-			expect(Page.panelTitle).to.equal('SECOND');
+			expect(Page.panelTitle.toLowerCase()).to.equal('SECOND'.toLowerCase());
 		});
 
 		it('should navigate to DEFAULT ELEMENT', function () {
@@ -41,7 +41,7 @@ describe('ActivityPanels', function () {
 				Page.item2.click();
 			});
 
-			expect(Page.panelTitle).to.equal('DEFAULT ELEMENT');
+			expect(Page.panelTitle.toLowerCase()).to.equal('DEFAULT ELEMENT'.toLowerCase());
 		});
 
 		it('should navigate back to the First panel from clicking on breadcrumb', function () {
@@ -70,7 +70,7 @@ describe('ActivityPanels', function () {
 				Page.breadcrumbHeader.click();
 			});
 
-			expect(Page.panelTitle).to.equal('FIRST');
+			expect(Page.panelTitle.toLowerCase()).to.equal('FIRST'.toLowerCase());
 		});
 
 		it('should navigate back to the Third panel from clicking on breadcrumb', function () {
@@ -93,7 +93,7 @@ describe('ActivityPanels', function () {
 				Page.breadcrumbHeader.click();
 			});
 
-			expect(Page.panelTitle).to.equal('THIRD');
+			expect(Page.panelTitle.toLowerCase()).to.equal('THIRD'.toLowerCase());
 		});
 
 		it('should move from first panel to the third', function () {
@@ -102,14 +102,14 @@ describe('ActivityPanels', function () {
 				Page.spotlightSelect();
 			});
 
-			expect(Page.panelTitle).to.equal('SECOND');
+			expect(Page.panelTitle.toLowerCase()).to.equal('SECOND'.toLowerCase());
 			Page.item8.moveToObject();
 			Page.waitTransitionEnd(3000, undefined, () => {
 				Page.spotlightSelect();
 			});
 
 
-			expect(Page.panelTitle).to.equal('THIRD');
+			expect(Page.panelTitle.toLowerCase()).to.equal('THIRD'.toLowerCase());
 		});
 
 		it('should move to first panel from the third', function () {
@@ -118,19 +118,19 @@ describe('ActivityPanels', function () {
 				Page.spotlightSelect();
 			});
 
-			expect(Page.panelTitle).to.equal('SECOND');
+			expect(Page.panelTitle.toLowerCase()).to.equal('SECOND'.toLowerCase());
 			Page.item8.moveToObject();
 			Page.waitTransitionEnd(3000, undefined, () => {
 				Page.spotlightSelect();
 			});
 
-			expect(Page.panelTitle).to.equal('THIRD');
+			expect(Page.panelTitle.toLowerCase()).to.equal('THIRD'.toLowerCase());
 			Page.breadcrumbHeader.moveToObject();
 			Page.waitTransitionEnd(3000, undefined, () => {
 				Page.spotlightSelect();
 			});
 
-			expect(Page.panelTitle).to.equal('SECOND');
+			expect(Page.panelTitle.toLowerCase()).to.equal('SECOND'.toLowerCase());
 			Page.item8.moveToObject();
 			Page.breadcrumbHeader.moveToObject();
 			Page.waitTransitionEnd(3000, undefined, () => {
@@ -138,19 +138,19 @@ describe('ActivityPanels', function () {
 			});
 
 
-			expect(Page.panelTitle).to.equal('FIRST');
+			expect(Page.panelTitle.toLowerCase()).to.equal('FIRST'.toLowerCase());
 		});
 
 		it('should transition back to First panel with back key', function () {
 			Page.waitTransitionEnd(3000, undefined, () => {
 				Page.button1.click();
 			});
-			expect(Page.panelTitle).to.equal('SECOND');
+			expect(Page.panelTitle.toLowerCase()).to.equal('SECOND'.toLowerCase());
 			Page.waitTransitionEnd(3000, undefined, () => {
 				Page.backKey();
 			});
 
-			expect(Page.panelTitle).to.equal('FIRST');
+			expect(Page.panelTitle.toLowerCase()).to.equal('FIRST'.toLowerCase());
 		});
 	});
 
@@ -310,7 +310,7 @@ describe('ActivityPanels', function () {
 					Page.spotlightSelect();
 				});
 
-				expect(Page.panelTitle).to.equal('SECOND');
+				expect(Page.panelTitle.toLowerCase()).to.equal('SECOND'.toLowerCase());
 				Page.item8.moveToObject();
 				Page.waitTransitionEnd(3000, undefined, () => {
 					Page.spotlightSelect();
@@ -332,19 +332,19 @@ describe('ActivityPanels', function () {
 					Page.spotlightSelect();
 				});
 
-				expect(Page.panelTitle).to.equal('SECOND');
+				expect(Page.panelTitle.toLowerCase()).to.equal('SECOND'.toLowerCase());
 				Page.item8.moveToObject();
 				Page.waitTransitionEnd(3000, undefined, () => {
 					Page.spotlightSelect();
 				});
 
-				expect(Page.panelTitle).to.equal('THIRD');
+				expect(Page.panelTitle.toLowerCase()).to.equal('THIRD'.toLowerCase());
 				Page.button4.moveToObject();
 				Page.waitTransitionEnd(3000, undefined, () => {
 					Page.spotlightSelect();
 				});
 
-				expect(Page.panelTitle).to.equal('NONE');
+				expect(Page.panelTitle.toLowerCase()).to.equal('NONE'.toLowerCase());
 				Page.button2.moveToObject();
 				Page.waitTransitionEnd(3000, undefined, () => {
 					Page.spotlightSelect();
