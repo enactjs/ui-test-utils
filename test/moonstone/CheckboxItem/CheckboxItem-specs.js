@@ -295,6 +295,10 @@ describe('CheckboxItem', function () {
 					Page.spotlightDown();
 					expect(checkboxItem.self.hasFocus()).to.be.true();
 				});
+				it('should not uncheck the item when selected', function () {
+					Page.spotlightDown();
+					expectChecked(checkboxItem);
+				});
 			});
 
 			describe('pointer', function () {
