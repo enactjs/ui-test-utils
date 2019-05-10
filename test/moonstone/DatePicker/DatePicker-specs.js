@@ -418,6 +418,11 @@ describe('DatePicker', function () {
 					Page.spotlightDown();
 					expect(datePicker.title.hasFocus()).to.be.true();
 				});
+				it('should not open when selected', function () {
+					Page.spotlightSelect();
+					browser.pause(500);
+					expectClosed(datePicker);
+				});
 			});
 
 			describe('pointer', function () {
