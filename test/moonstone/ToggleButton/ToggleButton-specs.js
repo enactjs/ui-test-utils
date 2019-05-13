@@ -247,6 +247,11 @@ describe('ToggleButton', function () {
 				Page.spotlightDown();
 				expect(toggleButton.self.hasFocus()).to.be.true();
 			});
+			it('should not unselect the item when selected - [GT-21952]', function () {
+				toggleButton.focus();
+				Page.spotlightSelect();
+				expect(toggleButton.isSelected).to.be.true();
+			});
 		});
 
 		describe('pointer', function () {
