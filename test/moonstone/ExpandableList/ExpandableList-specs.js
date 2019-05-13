@@ -572,6 +572,14 @@ describe('ExpandableList', function () {
 				Page.spotlightDown();
 				expect(expandable.title.hasFocus()).to.be.false();
 			});
+			it('should stay closed on title selected', function () {
+				expandable.focus();
+				Page.spotlightSelect();
+				// In this case, it should never fire, but we need to wait just in case.
+				browser.pause(500);
+				expect(expandable.isOpen).to.be.false();
+				expect(expandable.chevron).to.equal('󯿭');
+			});
 		});
 
 		describe('pointer', function () {
