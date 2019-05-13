@@ -180,7 +180,6 @@ describe('SelectableItem', function () {
 
 	describe('inline disabled', function () {
 		const selectableItem = Page.components.selectableInlineDisabled;
-		const prevSelectableItem = Page.components.selectableInline;
 		const selectableDisabled = Page.components.selectableDisabled;
 
 		it('should have correct text', function () {

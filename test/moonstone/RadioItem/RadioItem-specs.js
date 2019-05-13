@@ -179,7 +179,6 @@ describe('RadioItem', function () {
 
 	describe('inline disabled', function () {
 		const radioItem = Page.components.radioInlineDisabled;
-		const prevRadioItem = Page.components.radioInline;
 		const radioDisabled = Page.components.radioDisabled;
 
 		it('should have correct text', function () {
@@ -199,6 +198,11 @@ describe('RadioItem', function () {
 				radioDisabled.focus();
 				Page.spotlightDown();
 				expect(radioItem.self.hasFocus()).to.be.true();
+			});
+			it('should not unselect the item when selected', function () {
+				radioItem.focus();
+				Page.spotlightSelect();
+				expect(radioItem.isSelected).to.be.true();
 			});
 		});
 
