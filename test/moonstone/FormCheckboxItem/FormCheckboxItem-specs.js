@@ -304,7 +304,6 @@ describe('FormCheckboxItem', function () {
 	// update the links.
 	describe('inline disabled', function () {
 		const FormCheckboxItem = Page.components.formCheckboxInlineDisabled;
-		const prevFormCheckboxItem = Page.components.formCheckboxInlineAfter;
 		const formCheckboxInlineDisabled = Page.components.formCheckboxInlineDisabled;
 
 		it('should have correct text', function () {
@@ -328,6 +327,11 @@ describe('FormCheckboxItem', function () {
 				FormCheckboxItem.focus();
 				Page.spotlightDown();
 				expect(formCheckboxInlineDisabled.self.hasFocus()).to.be.true();
+			});
+			it('should not uncheck the item when selected', function () {
+				FormCheckboxItem.focus();
+				Page.spotlightSelect();
+				expectChecked(FormCheckboxItem);
 			});
 		});
 
