@@ -199,6 +199,11 @@ describe('SwitchItem', function () {
 				Page.spotlightDown();
 				expect(switchItem.self.hasFocus()).to.be.true();
 			});
+			it('should not unselect the item when clicked', function () {
+				switchItem.focus();
+				Page.spotlightSelect();
+				expect(switchItem.isSelected).to.be.true();
+			});
 		});
 
 		describe('pointer', function () {
