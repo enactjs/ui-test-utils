@@ -200,6 +200,11 @@ describe('SelectableItem', function () {
 				Page.spotlightDown();
 				expect(selectableItem.self.hasFocus()).to.be.true();
 			});
+			it('should not unselect the item when selected', function () {
+				selectableItem.focus();
+				Page.spotlightSelect();
+				expectSelected(selectableItem);
+			});
 		});
 
 		describe('pointer', function () {
