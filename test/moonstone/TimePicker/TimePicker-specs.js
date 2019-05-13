@@ -440,6 +440,13 @@ describe('TimePicker', function () {
 					Page.spotlightDown();
 					expect(timePicker.title.hasFocus()).to.be.true();
 				});
+				it('should not open when selected', function () {
+					timePicker.focus();
+					Page.spotlightSelect();
+					// it should never open, but wait and then check to be sure
+					browser.pause(500);
+					expectClosed(timePicker);
+				});
 			});
 
 			describe('pointer', function () {
