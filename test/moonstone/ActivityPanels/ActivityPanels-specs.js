@@ -18,7 +18,7 @@ describe('ActivityPanels', function () {
 		expect(Page.breadcrumbHeader.getText()).to.include('01');
 	});
 
-	describe('Transition', function () {
+	xdescribe('Transition', function () {
 		it('should move from first panel to the second', function () {
 			Page.waitTransitionEnd(3000, undefined, () => {
 				Page.button1.click();
@@ -155,11 +155,11 @@ describe('ActivityPanels', function () {
 	});
 
 	describe('Spotlight', function () {
-		it('should spot item 1 on render', function () {
+		xit('should spot item 1 on render', function () {
 			expect(Page.item1.hasFocus()).to.be.true();
 		});
 
-		describe('pointer', function () {
+		xdescribe('pointer', function () {
 			// The ESC button (Back Key) does _not_ unset the pointer mode and does _not_ focus [ENYO-5865] [ENYO-5882]
 			it('should Not spot last focused item when transitioning back', function () {
 				Page.waitTransitionEnd(3000, undefined, () => {
@@ -187,7 +187,7 @@ describe('ActivityPanels', function () {
 		});
 
 
-		describe('5way', function () {
+		xdescribe('5way', function () {
 			it('should spot first item on second panel', function () {
 				Page.waitTransitionEnd(3000, undefined, () => {
 					Page.spotlightSelect();
@@ -304,7 +304,7 @@ describe('ActivityPanels', function () {
 		});
 
 		describe('5way and pointer', function () {
-			it('should not spot in None panel', function () {
+			xit('should not spot in None panel', function () {
 				Page.button1.moveToObject();
 				Page.waitTransitionEnd(3000, undefined, () => {
 					Page.spotlightSelect();
@@ -345,7 +345,7 @@ describe('ActivityPanels', function () {
 				});
 
 				expect(Page.panelTitle.toLowerCase()).to.equal('NONE'.toLowerCase());
-				Page.button2.moveToObject();
+				Page.button1.moveToObject();
 				Page.waitTransitionEnd(3000, undefined, () => {
 					Page.spotlightSelect();
 				});
@@ -354,7 +354,7 @@ describe('ActivityPanels', function () {
 				expect(Page.item5.hasFocus()).to.be.true();
 			});
 
-			it('should re-spot in Default panel', function () {
+			xit('should re-spot in Default panel', function () {
 				Page.button1.moveToObject();
 				Page.waitTransitionEnd(3000, undefined, () => {
 					Page.spotlightSelect();
@@ -394,7 +394,7 @@ describe('ActivityPanels', function () {
 
 			});
 
-			it('should spot last focused item when transitioning back with Back key, deep navigation', function () {
+			xit('should spot last focused item when transitioning back with Back key, deep navigation', function () {
 				Page.item3.moveToObject();
 				Page.waitTransitionEnd(3000, undefined, () => {
 					Page.spotlightSelect();
