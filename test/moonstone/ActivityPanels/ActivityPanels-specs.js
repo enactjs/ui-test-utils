@@ -18,7 +18,7 @@ describe('ActivityPanels', function () {
 		expect(Page.breadcrumbHeader.getText()).to.include('01');
 	});
 
-	xdescribe('Transition', function () {
+	describe('Transition', function () {
 		it('should move from first panel to the second', function () {
 			Page.waitTransitionEnd(3000, undefined, () => {
 				Page.button1.click();
@@ -155,11 +155,11 @@ describe('ActivityPanels', function () {
 	});
 
 	describe('Spotlight', function () {
-		xit('should spot item 1 on render', function () {
+		it('should spot item 1 on render', function () {
 			expect(Page.item1.hasFocus()).to.be.true();
 		});
 
-		xdescribe('pointer', function () {
+		describe('pointer', function () {
 			// The ESC button (Back Key) does _not_ unset the pointer mode and does _not_ focus [ENYO-5865] [ENYO-5882]
 			it('should Not spot last focused item when transitioning back', function () {
 				Page.waitTransitionEnd(3000, undefined, () => {
@@ -187,7 +187,7 @@ describe('ActivityPanels', function () {
 		});
 
 
-		xdescribe('5way', function () {
+		describe('5way', function () {
 			it('should spot first item on second panel', function () {
 				Page.waitTransitionEnd(3000, undefined, () => {
 					Page.spotlightSelect();
@@ -284,6 +284,31 @@ describe('ActivityPanels', function () {
 				// expect(Page.item8.hasFocus()).to.be.true(); // on 2.3.0 and prior
 			});
 
+			it('should spot the seventh item on last panel', function () {
+				Page.waitTransitionEnd(3000, undefined, () => {
+					Page.spotlightSelect();
+				});
+				Page.waitTransitionEnd(3000, undefined, () => {
+					Page.spotlightSelect();
+				});
+				Page.waitTransitionEnd(3000, undefined, () => {
+					Page.spotlightSelect();
+				});
+				Page.spotlightRight();
+				Page.spotlightRight();
+				Page.waitTransitionEnd(3000, undefined, () => {
+					Page.spotlightSelect();
+				});
+
+
+				expect(Page.item5.hasFocus()).to.be.true();
+				Page.spotlightDown();
+				Page.spotlightDown();
+				Page.spotlightLeft();
+				expect(Page.breadcrumb.hasFocus()).to.be.true();
+				Page.spotlightRight();
+				expect(Page.item7.hasFocus()).to.be.true();
+			});
 
 			it('should spot third item on first panel', function () {
 				Page.spotlightDown();
@@ -304,7 +329,7 @@ describe('ActivityPanels', function () {
 		});
 
 		describe('5way and pointer', function () {
-			xit('should not spot in None panel', function () {
+			it('should not spot in None panel', function () {
 				Page.button1.moveToObject();
 				Page.waitTransitionEnd(3000, undefined, () => {
 					Page.spotlightSelect();
@@ -354,7 +379,7 @@ describe('ActivityPanels', function () {
 				expect(Page.item5.hasFocus()).to.be.true();
 			});
 
-			xit('should re-spot in Default panel', function () {
+			it('should re-spot in Default panel', function () {
 				Page.button1.moveToObject();
 				Page.waitTransitionEnd(3000, undefined, () => {
 					Page.spotlightSelect();
@@ -394,7 +419,7 @@ describe('ActivityPanels', function () {
 
 			});
 
-			xit('should spot last focused item when transitioning back with Back key, deep navigation', function () {
+			it('should spot last focused item when transitioning back with Back key, deep navigation', function () {
 				Page.item3.moveToObject();
 				Page.waitTransitionEnd(3000, undefined, () => {
 					Page.spotlightSelect();
