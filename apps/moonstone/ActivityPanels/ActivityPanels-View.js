@@ -38,7 +38,7 @@ class App extends React.Component {
 				<ItemPanel title="Second" onClick={this.handleClick} />
 				<ButtonPanel title="Third" autoFocus="default-element" onClick={this.handleClick} />
 				<MainPanel title="None" autoFocus="none" onClick={this.handleClick} />
-				<ItemPanel title="Default Element" autoFocus="last-focused" />
+				<ItemPanel title="Last focused" autoFocus="last-focused" />
 			</ActivityPanels>
 		);
 	}
