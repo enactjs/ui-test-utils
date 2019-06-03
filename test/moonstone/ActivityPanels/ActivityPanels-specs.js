@@ -27,7 +27,7 @@ describe('ActivityPanels', function () {
 			expect(Page.panelTitle.toLowerCase()).to.equal('SECOND'.toLowerCase());
 		});
 
-		it('should navigate to DEFAULT ELEMENT', function () {
+		it('should navigate to Last Focused', function () {
 			Page.waitTransitionEnd(5000, undefined, () => {
 				Page.item1.click();
 			});
@@ -41,7 +41,7 @@ describe('ActivityPanels', function () {
 				Page.item2.click();
 			});
 
-			expect(Page.panelTitle.toLowerCase()).to.equal('DEFAULT ELEMENT'.toLowerCase());
+			expect(Page.panelTitle.toLowerCase()).to.equal('Last Focused'.toLowerCase());
 		});
 
 		it('should navigate back to the First panel from clicking on breadcrumb', function () {
