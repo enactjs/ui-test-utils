@@ -413,10 +413,15 @@ describe('DatePicker', function () {
 			});
 
 			describe('5-way', function () {
-				it('should not receive focus', function () {
+				it('should be able to receive focus', function () {
 					Page.components.datePickerNoLabels.focus();
 					Page.spotlightDown();
-					expect(datePicker.title.hasFocus()).to.be.false();
+					expect(datePicker.title.hasFocus()).to.be.true();
+				});
+				it('should not open when selected', function () {
+					Page.spotlightSelect();
+					browser.pause(500);
+					expectClosed(datePicker);
 				});
 			});
 

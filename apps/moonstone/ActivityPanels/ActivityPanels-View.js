@@ -36,9 +36,9 @@ class App extends React.Component {
 			<ActivityPanels {...this.props} onSelectBreadcrumb={this.handleSelectBreadcrumb} index={this.state.index}>
 				<MainPanel title="First" onClick={this.handleClick} />
 				<ItemPanel title="Second" onClick={this.handleClick} />
-				<ButtonPanel title="Third" onClick={this.handleClick} />
+				<ButtonPanel title="Third" autoFocus="default-element" onClick={this.handleClick} />
 				<MainPanel title="None" autoFocus="none" onClick={this.handleClick} />
-				<ItemPanel title="Default Element" autoFocus="default-element" />
+				<ItemPanel title="Last focused" autoFocus="last-focused" />
 			</ActivityPanels>
 		);
 	}

@@ -435,10 +435,17 @@ describe('TimePicker', function () {
 			});
 
 			describe('5-way', function () {
-				it('should not receive focus', function () {
+				it('should be able receive focus', function () {
 					Page.components.timePickerNoLabels.focus();
 					Page.spotlightDown();
-					expect(timePicker.title.hasFocus()).to.be.false();
+					expect(timePicker.title.hasFocus()).to.be.true();
+				});
+				it('should not open when selected', function () {
+					timePicker.focus();
+					Page.spotlightSelect();
+					// it should never open, but wait and then check to be sure
+					browser.pause(500);
+					expectClosed(timePicker);
 				});
 			});
 

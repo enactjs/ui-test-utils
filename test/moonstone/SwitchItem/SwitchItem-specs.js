@@ -159,10 +159,10 @@ describe('SwitchItem', function () {
 		});
 
 		describe('5-way', function () {
-			it('should not focus the item', function () {
+			it('should be able focus the item', function () {
 				prevSwitchItem.focus();
 				Page.spotlightDown();
-				expect(prevSwitchItem.self.hasFocus()).to.be.true();
+				expect(switchItem.self.hasFocus()).to.be.true();
 			});
 		});
 
@@ -179,7 +179,7 @@ describe('SwitchItem', function () {
 
 	describe('inline disabled', function () {
 		const switchItem = Page.components.switchInlineDisabled;
-		const prevSwitchItem = Page.components.switchInline;
+		const prevSwitchInline = Page.components.switchDisabled;
 
 		it('should have correct text', function () {
 			expect(switchItem.valueText).to.equal('Switch Item inline disabled');
@@ -194,10 +194,15 @@ describe('SwitchItem', function () {
 		});
 
 		describe('5-way', function () {
-			it('should not focus the item', function () {
-				prevSwitchItem.focus();
+			it('should be able focus the item', function () {
+				prevSwitchInline.focus();
 				Page.spotlightDown();
-				expect(prevSwitchItem.self.hasFocus()).to.be.true();
+				expect(switchItem.self.hasFocus()).to.be.true();
+			});
+			it('should not unselect the item when clicked', function () {
+				switchItem.focus();
+				Page.spotlightSelect();
+				expect(switchItem.isSelected).to.be.true();
 			});
 		});
 

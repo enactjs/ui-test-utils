@@ -23,4 +23,13 @@ describe('Input', function () {
 		Page.open('?locale=ar-SA');
 		expect(Page.inputElement1.getCssProperty('text-align').value).to.equal('right');
 	});
+
+	describe('disabled', function () {
+		it('should be spottable', function () {
+			Page.open();
+			Page.spotlightDown();
+			Page.spotlightDown();
+			expect(Page.disabledInput.hasFocus()).to.be.true();
+		});
+	});
 });

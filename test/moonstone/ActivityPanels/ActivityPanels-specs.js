@@ -7,7 +7,7 @@ describe('ActivityPanels', function () {
 	});
 
 	it('should load first panel.', function () {
-		expect(Page.panelTitle).to.equal('FIRST');
+		expect(Page.panelTitle.toLowerCase()).to.equal('FIRST'.toLowerCase());
 	});
 
 	it('should have breadcrumb on second panel', function () {
@@ -24,10 +24,10 @@ describe('ActivityPanels', function () {
 				Page.button1.click();
 			});
 
-			expect(Page.panelTitle).to.equal('SECOND');
+			expect(Page.panelTitle.toLowerCase()).to.equal('SECOND'.toLowerCase());
 		});
 
-		it('should navigate to DEFAULT ELEMENT', function () {
+		it('should navigate to Last Focused', function () {
 			Page.waitTransitionEnd(5000, undefined, () => {
 				Page.item1.click();
 			});
@@ -41,7 +41,7 @@ describe('ActivityPanels', function () {
 				Page.item2.click();
 			});
 
-			expect(Page.panelTitle).to.equal('DEFAULT ELEMENT');
+			expect(Page.panelTitle.toLowerCase()).to.equal('Last Focused'.toLowerCase());
 		});
 
 		it('should navigate back to the First panel from clicking on breadcrumb', function () {
@@ -70,7 +70,7 @@ describe('ActivityPanels', function () {
 				Page.breadcrumbHeader.click();
 			});
 
-			expect(Page.panelTitle).to.equal('FIRST');
+			expect(Page.panelTitle.toLowerCase()).to.equal('FIRST'.toLowerCase());
 		});
 
 		it('should navigate back to the Third panel from clicking on breadcrumb', function () {
@@ -93,7 +93,7 @@ describe('ActivityPanels', function () {
 				Page.breadcrumbHeader.click();
 			});
 
-			expect(Page.panelTitle).to.equal('THIRD');
+			expect(Page.panelTitle.toLowerCase()).to.equal('THIRD'.toLowerCase());
 		});
 
 		it('should move from first panel to the third', function () {
@@ -102,14 +102,13 @@ describe('ActivityPanels', function () {
 				Page.spotlightSelect();
 			});
 
-			expect(Page.panelTitle).to.equal('SECOND');
+			expect(Page.panelTitle.toLowerCase()).to.equal('SECOND'.toLowerCase());
 			Page.item8.moveToObject();
 			Page.waitTransitionEnd(5000, undefined, () => {
 				Page.spotlightSelect();
 			});
 
-
-			expect(Page.panelTitle).to.equal('THIRD');
+			expect(Page.panelTitle.toLowerCase()).to.equal('THIRD'.toLowerCase());
 		});
 
 		it('should move to first panel from the third', function () {
@@ -118,39 +117,38 @@ describe('ActivityPanels', function () {
 				Page.spotlightSelect();
 			});
 
-			expect(Page.panelTitle).to.equal('SECOND');
+			expect(Page.panelTitle.toLowerCase()).to.equal('SECOND'.toLowerCase());
 			Page.item8.moveToObject();
 			Page.waitTransitionEnd(5000, undefined, () => {
 				Page.spotlightSelect();
 			});
 
-			expect(Page.panelTitle).to.equal('THIRD');
+			expect(Page.panelTitle.toLowerCase()).to.equal('THIRD'.toLowerCase());
 			Page.breadcrumbHeader.moveToObject();
 			Page.waitTransitionEnd(5000, undefined, () => {
 				Page.spotlightSelect();
 			});
 
-			expect(Page.panelTitle).to.equal('SECOND');
+			expect(Page.panelTitle.toLowerCase()).to.equal('SECOND'.toLowerCase());
 			Page.item8.moveToObject();
 			Page.breadcrumbHeader.moveToObject();
 			Page.waitTransitionEnd(5000, undefined, () => {
 				Page.spotlightSelect();
 			});
 
-
-			expect(Page.panelTitle).to.equal('FIRST');
+			expect(Page.panelTitle.toLowerCase()).to.equal('FIRST'.toLowerCase());
 		});
 
 		it('should transition back to First panel with back key', function () {
 			Page.waitTransitionEnd(5000, undefined, () => {
 				Page.button1.click();
 			});
-			expect(Page.panelTitle).to.equal('SECOND');
+			expect(Page.panelTitle.toLowerCase()).to.equal('SECOND'.toLowerCase());
 			Page.waitTransitionEnd(5000, undefined, () => {
 				Page.backKey();
 			});
 
-			expect(Page.panelTitle).to.equal('FIRST');
+			expect(Page.panelTitle.toLowerCase()).to.equal('FIRST'.toLowerCase());
 		});
 	});
 
@@ -192,7 +190,6 @@ describe('ActivityPanels', function () {
 				Page.waitTransitionEnd(5000, undefined, () => {
 					Page.spotlightSelect();
 				});
-
 
 				expect(Page.item5.hasFocus()).to.be.true();
 			});
@@ -284,6 +281,30 @@ describe('ActivityPanels', function () {
 				// expect(Page.item8.hasFocus()).to.be.true(); // on 2.3.0 and prior
 			});
 
+			it('should spot the seventh item on last panel', function () {
+				Page.waitTransitionEnd(5000, undefined, () => {
+					Page.spotlightSelect();
+				});
+				Page.waitTransitionEnd(5000, undefined, () => {
+					Page.spotlightSelect();
+				});
+				Page.waitTransitionEnd(5000, undefined, () => {
+					Page.spotlightSelect();
+				});
+				Page.spotlightRight();
+				Page.spotlightRight();
+				Page.waitTransitionEnd(5000, undefined, () => {
+					Page.spotlightSelect();
+				});
+
+				expect(Page.item5.hasFocus()).to.be.true();
+				Page.spotlightDown();
+				Page.spotlightDown();
+				Page.spotlightLeft();
+				expect(Page.breadcrumb.hasFocus()).to.be.true();
+				Page.spotlightRight();
+				expect(Page.item7.hasFocus()).to.be.true();
+			});
 
 			it('should spot third item on first panel', function () {
 				Page.spotlightDown();
@@ -298,7 +319,6 @@ describe('ActivityPanels', function () {
 					Page.spotlightSelect();
 				});
 
-
 				expect(Page.item3.hasFocus()).to.be.true();
 			});
 		});
@@ -310,7 +330,7 @@ describe('ActivityPanels', function () {
 					Page.spotlightSelect();
 				});
 
-				expect(Page.panelTitle).to.equal('SECOND');
+				expect(Page.panelTitle.toLowerCase()).to.equal('SECOND'.toLowerCase());
 				Page.item8.moveToObject();
 				Page.waitTransitionEnd(5000, undefined, () => {
 					Page.spotlightSelect();
@@ -321,9 +341,7 @@ describe('ActivityPanels', function () {
 					Page.spotlightSelect();
 				});
 
-
 				expect(Page.body.hasFocus()).to.be.true();
-
 			});
 
 			it('should spot default item in Default panel', function () {
@@ -332,29 +350,28 @@ describe('ActivityPanels', function () {
 					Page.spotlightSelect();
 				});
 
-				expect(Page.panelTitle).to.equal('SECOND');
+				expect(Page.panelTitle.toLowerCase()).to.equal('SECOND'.toLowerCase());
 				Page.item8.moveToObject();
 				Page.waitTransitionEnd(5000, undefined, () => {
 					Page.spotlightSelect();
 				});
 
-				expect(Page.panelTitle).to.equal('THIRD');
+				expect(Page.panelTitle.toLowerCase()).to.equal('THIRD'.toLowerCase());
 				Page.button4.moveToObject();
 				Page.waitTransitionEnd(5000, undefined, () => {
 					Page.spotlightSelect();
 				});
 
-				expect(Page.panelTitle).to.equal('NONE');
-				Page.button2.moveToObject();
+				expect(Page.panelTitle.toLowerCase()).to.equal('NONE'.toLowerCase());
+				Page.button1.moveToObject();
 				Page.waitTransitionEnd(5000, undefined, () => {
 					Page.spotlightSelect();
 				});
 
-
 				expect(Page.item5.hasFocus()).to.be.true();
 			});
 
-			it('should re-spot in Default panel', function () {
+			it('should re-spot last focused in last focused panel', function () {
 				Page.button1.moveToObject();
 				Page.waitTransitionEnd(5000, undefined, () => {
 					Page.spotlightSelect();
@@ -380,6 +397,7 @@ describe('ActivityPanels', function () {
 				});
 
 				expect(Page.item5.hasFocus(), 'item 5 focus 2').to.be.true();
+				// Focus to item 6 so it can be last-focused item when returning
 				Page.spotlightDown();
 				Page.waitTransitionEnd(5000, undefined, () => {
 					Page.backKey();
@@ -389,9 +407,7 @@ describe('ActivityPanels', function () {
 					Page.spotlightSelect();
 				});
 
-
-				expect(Page.item5.hasFocus(), 'item 5 focus 3').to.be.true();
-
+				expect(Page.item6.hasFocus(), 'item 6').to.be.true();
 			});
 
 			it('should spot last focused item when transitioning back with Back key, deep navigation', function () {
