@@ -346,7 +346,7 @@ describe('ActivityPanels', function () {
 
 			it('should spot default item in Default panel', function () {
 				Page.button1.moveToObject();
-				Page.waitTransitionEnd(5000, 'undefined', () => {
+				Page.waitTransitionEnd(5000, undefined, () => {
 					Page.spotlightSelect();
 				});
 
