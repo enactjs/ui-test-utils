@@ -70,42 +70,6 @@ const app = (props) => <div {...props}>
 				small
 			/>
 		</div>
-
-		<div>
-			<ToggleButton
-				id="toggleButton8"
-				toggleOnLabel="toggle on"
-				toggleOffLabel="toggle off"
-				casing="preserve"
-			/>
-		</div>
-
-		<div>
-			<ToggleButton
-				id="toggleButton9"
-				toggleOnLabel="toggle on"
-				toggleOffLabel="toggle off"
-				casing="sentence"
-			/>
-		</div>
-
-		<div>
-			<ToggleButton
-				id="toggleButton10"
-				toggleOnLabel="toggle on"
-				toggleOffLabel="toggle off"
-				casing="word"
-			/>
-		</div>
-
-		<div>
-			<ToggleButton
-				id="toggleButton11"
-				toggleOnLabel="toggle on"
-				toggleOffLabel="toggle off"
-				casing="upper"
-			/>
-		</div>
 	</div>
 </div>;
 
