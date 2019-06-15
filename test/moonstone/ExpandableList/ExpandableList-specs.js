@@ -567,10 +567,17 @@ describe('ExpandableList', function () {
 		});
 
 		describe('5-way', function () {
-			it('should not be spottable', function () {
-				Page.components.defaultOpen.focus();
-				Page.spotlightDown();
-				expect(expandable.title.hasFocus()).to.be.false();
+			it('should be spottable', function () {
+				expandable.focus();
+				expect(expandable.title.hasFocus()).to.be.true();
+			});
+			it('should stay closed on title selected', function () {
+				expandable.focus();
+				Page.spotlightSelect();
+				// In this case, it should never fire, but we need to wait just in case.
+				browser.pause(500);
+				expect(expandable.isOpen).to.be.false();
+				expect(expandable.chevron).to.equal('󯿭');
 			});
 		});
 

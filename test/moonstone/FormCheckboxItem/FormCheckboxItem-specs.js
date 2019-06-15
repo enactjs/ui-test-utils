@@ -278,10 +278,10 @@ describe('FormCheckboxItem', function () {
 		});
 
 		describe('5-way', function () {
-			it('should not focus the item', function () {
+			it('should be able to focus the item', function () {
 				prevFormCheckboxItem.focus();
 				Page.spotlightDown();
-				expect(prevFormCheckboxItem.self.hasFocus()).to.be.true();
+				expect(FormCheckboxItem.self.hasFocus()).to.be.true();
 			});
 
 			it('should not uncheck the item when selected', function () {
@@ -304,7 +304,7 @@ describe('FormCheckboxItem', function () {
 	// update the links.
 	describe('inline disabled', function () {
 		const FormCheckboxItem = Page.components.formCheckboxInlineDisabled;
-		const prevFormCheckboxItem = Page.components.formCheckboxInlineAfter;
+		const formCheckboxInlineDisabled = Page.components.formCheckboxInlineDisabled;
 
 		it('should have correct text', function () {
 			expect(FormCheckboxItem.valueText).to.equal('FormCheckbox Item inline disabled');
@@ -323,10 +323,15 @@ describe('FormCheckboxItem', function () {
 		});
 
 		describe('5-way', function () {
-			it('should not focus the item', function () {
-				prevFormCheckboxItem.focus();
+			it('should be able to focus the item', function () {
+				FormCheckboxItem.focus();
 				Page.spotlightDown();
-				expect(prevFormCheckboxItem.self.hasFocus()).to.be.true();
+				expect(formCheckboxInlineDisabled.self.hasFocus()).to.be.true();
+			});
+			it('should not uncheck the item when selected', function () {
+				FormCheckboxItem.focus();
+				Page.spotlightSelect();
+				expectChecked(FormCheckboxItem);
 			});
 		});
 
