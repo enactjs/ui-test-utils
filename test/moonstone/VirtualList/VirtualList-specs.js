@@ -17,7 +17,7 @@ describe('VirtualList', function () {
 		expectFocusedItem(0);
 	});
 
-	it('should focus and Scroll with Up/Down and 5-way - GT_24451', function () {
+	it('should focus and Scroll with Up/Down and 5-way [GT_24451]', function () {
 		Page.spotlightRight();
 		Page.spotlightDown();
 		expectFocusedItem(1, 'step 3 focus');
@@ -39,7 +39,7 @@ describe('VirtualList', function () {
 		expectFocusedItem(5, 'step 8 focus');
 	});
 
-	it('should focus scroll up/down buttons with 5-way - GT-24811', function () {
+	it('should focus scroll up/down buttons with 5-way [GT-24811]', function () {
 		Page.spotlightRight();
 		Page.spotlightDown();
 		expectFocusedItem(1);
