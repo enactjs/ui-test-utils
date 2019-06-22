@@ -17,13 +17,6 @@ describe('VirtualList', function () {
 		expectFocusedItem(0);
 	});
 
-	it('should focus disabled scroll button on right', function () {
-		Page.spotlightRight();
-		expectFocusedItem(0);
-		Page.spotlightRight();
-		expect(Page.buttonScrollUp.hasFocus()).to.be.true();
-	});
-
 	it('should focus and Scroll with Up/Down and 5-way - GT_24451', function () {
 		Page.spotlightRight();
 		Page.spotlightDown();
@@ -44,5 +37,25 @@ describe('VirtualList', function () {
 		Page.delay(1500);
 		// TODO: This seems wrong, should be item 0, I think!
 		expectFocusedItem(5, 'step 8 focus');
+	});
+
+	it('should focus scroll up/down buttons with 5-way - GT-24811', function () {
+		Page.spotlightRight();
+		Page.spotlightDown();
+		expectFocusedItem(1);
+		Page.spotlightRight();
+		expect(Page.buttonScrollUp.hasFocus(), 'step 5 focus').to.be.true();
+		Page.spotlightLeft();
+		expectFocusedItem(0, 'step 6.1 focus');
+		// expectFocusedItem(1);  // TODO: VL should remember last focused!
+		Page.spotlightDown();
+		Page.spotlightDown();
+		Page.spotlightDown();
+		Page.spotlightDown();
+		Page.spotlightDown();
+		Page.spotlightDown();
+		Page.spotlightDown();	// TODO: Should remove 1 when focus returns right
+		Page.spotlightRight();
+		expect(Page.buttonScrollDown.hasFocus(), 'step 6.3 focus').to.be.true();
 	});
 });
