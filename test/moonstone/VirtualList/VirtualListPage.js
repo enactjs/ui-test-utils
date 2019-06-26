@@ -24,6 +24,28 @@ class VirtualListPage extends Page {
 	item (num) {
 		return element(`#item${num}`, browser);
 	}
+
+	/* global document */
+	topVisibleItemId () {
+		return document.execute(function () {
+			const scroller = document.querySelector('.enact_ui_Scrollable_Scrollable_scrollable'),
+				{top, left, width} = scroller.getBoundingClientRect().bottom;
+
+			let currentY = top + 1,
+				middle = left + Math.floor((left + width)/2);
+
+			for (let i = 0; i < 10; i++) {
+				const el = document.elementFromPoint(currentY, middle);
+
+				// If the element at the point has an id, return it
+				if (el.id) {
+					return el.id;
+				}
+				// else, it's inside the list itself, increment y and try again
+			}
+			return 'unknown';	// we didn't find it?!
+		}).value;
+	}
 }
 
 module.exports = new VirtualListPage();
