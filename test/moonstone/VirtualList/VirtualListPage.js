@@ -20,6 +20,8 @@ class VirtualListPage extends Page {
 	get buttonBottom () { return element('#bottom', browser); }
 	get buttonScrollUp () { return element('.enact_moonstone_Scrollable_Scrollbar_scrollbar :nth-child(1)', browser); }
 	get buttonScrollDown () { return element('.enact_moonstone_Scrollable_Scrollbar_scrollbar :nth-child(3)', browser); }
+	get scrollBarSize () { return browser.getElementSize('.enact_moonstone_Scrollable_Scrollbar_scrollbar'); }
+	get virtualListSize () { return browser.getElementSize('.enact_ui_Scrollable_Scrollable_scrollable'); }
 
 	item (num) {
 		return element(`#item${num}`, browser);
