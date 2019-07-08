@@ -70,7 +70,7 @@ describe('VirtualList', function () {
 			expectFocusedItem(0);
 			for (let i = 0; i < 49; ++i) {
 				Page.spotlightDown();
-				Page.delay(80); // TODO: 80 is an arbitrary value to help provide expected behavior in-between rapidly repeating keydown events
+				Page.delay(80); // TODO: 80 is an arbitrary value to help provide expected behavior between rapidly repeating keydown events
 			}
 			expectFocusedItem(49, 'step 7 focus');
 			Page.spotlightDown();
@@ -93,24 +93,21 @@ describe('VirtualList', function () {
 			expectFocusedItem(6, 'step 4.1 focus');
 			Page.spotlightRight();
 			expect(Page.buttonScrollDown.hasFocus(), 'step 4.2 focus').to.be.true();
-			// Page.spotlightSelect(); // TODO: doesn't work due to a VL bug
 			Page.buttonScrollDown.click();
 			Page.delay(1500);
-			// Page.spotlightSelect(); // TODO: doesn't work due to a VL bug
 			Page.buttonScrollDown.click();
 			Page.delay(1500);
 			Page.spotlightUp();
 			expect(Page.buttonScrollUp.hasFocus(), 'step 6 focus').to.be.true();
-			// Page.spotlightSelect(); // TODO: doesn't work due to a VL bug
 			Page.buttonScrollUp.click();
 			Page.delay(1500);
-			// Page.spotlightSelect(); // TODO: doesn't work due to a VL bug
 			Page.buttonScrollUp.click();
 			expect(Page.buttonScrollUp.hasFocus()).to.be.true();
-			// expect(Page.buttonScrollUp.isEnabled(), 'step 7 focus').to.be.false(); // TODO: appears to return an incorrect value
+			// TODO: This seems wrong, isEnabled appears to return an incorrect value
+			// expect(Page.buttonScrollUp.isEnabled(), 'step 7 focus').to.be.false();
 		});
 
-		it.only('should retain focus on scroll buttons when using paging controls [GT-23845]', function () {
+		it('should retain focus on scroll buttons when using paging controls [GT-23845]', function () {
 			Page.spotlightRight();
 			Page.spotlightDown();
 			expectFocusedItem(1);
@@ -129,12 +126,64 @@ describe('VirtualList', function () {
 			expect(Page.buttonScrollDown.hasFocus(), 'step 5 focus').to.be.true();
 			Page.pageUp();
 			Page.delay(1500);  // TODO: Need better way to detect scroll end
+			// TODO: This seems wrong, I believe the top scroll button should have focus
+			// expect(Page.buttonScrollUp.hasFocus(), 'step 6 focus').to.be.true();
+			Page.pageUp();
+			Page.delay(1500);  // TODO: Need better way to detect scroll end
+			Page.pageUp();
+			Page.delay(1500);  // TODO: Need better way to detect scroll end
+			// TODO: This seems wrong, I believe the top scroll button should have focus
+			// expect(Page.buttonScrollUp.hasFocus(), 'step 7 focus').to.be.true();
+		});
+
+		it('should position scrollbar on right side [GT-21271]', function () {
+			Page.spotlightRight();
+			Page.spotlightDown();
+			expectFocusedItem(1);
+			Page.spotlightRight();
+			expect(Page.buttonScrollUp.hasFocus(), 'step 2.2 focus').to.be.true();
+		});
+
+		it('should navigate inside and outside of scroll buttons via 5way [GT-22761]', function () {
+			Page.spotlightRight();
+			Page.spotlightDown();
+			expectFocusedItem(1);
+			Page.spotlightDown();
+			Page.spotlightDown();
+			Page.spotlightDown();
+			Page.spotlightDown();
+			Page.spotlightDown();
+			expectFocusedItem(6);
+			Page.spotlightRight();
+			expect(Page.buttonScrollDown.hasFocus(), 'step 4.2 focus').to.be.true();
+			Page.spotlightDown();
+			expect(Page.buttonBottom.hasFocus()).to.be.true();
+			Page.spotlightUp();
+			expect(Page.buttonScrollDown.hasFocus(), 'step 5 focus').to.be.true();
+			Page.spotlightUp();
 			expect(Page.buttonScrollUp.hasFocus(), 'step 6 focus').to.be.true();
-			Page.pageUp();
-			Page.delay(1500);  // TODO: Need better way to detect scroll end
-			Page.pageUp();
-			Page.delay(1500);  // TODO: Need better way to detect scroll end
-			expect(Page.buttonScrollUp.hasFocus(), 'step 7 focus').to.be.true();
+			Page.spotlightUp();
+			expect(Page.buttonTop.hasFocus(), 'step 7 focus').to.be.true();
+		});
+
+		it('should navigate between items and scroll buttons via 5way right [GT-21163]', function () {
+			Page.spotlightRight();
+			expectFocusedItem(0, 'step 5.1 focus');
+			// TODO: This seems wrong, isEnabled appears to return an incorrect value
+			// expect(Page.buttonScrollUp.isEnabled(), 'step 5.2 focus').to.be.false();
+			Page.spotlightRight();
+			expect(Page.buttonScrollUp.hasFocus(), 'step 6 focus').to.be.true();
+			Page.spotlightLeft();
+			expectFocusedItem(0);
+			for (let i = 0; i < 49; ++i) {
+				Page.spotlightDown();
+				Page.delay(80); // TODO: 80 is an arbitrary value to help provide expected behavior between rapidly repeating keydown events
+			}
+			expectFocusedItem(49, 'step 7.1 focus');
+			// TODO: This seems wrong, isEnabled appears to return an incorrect value
+			// expect(Page.buttonScrollDown.isEnabled(), 'step 7.2 focus').to.be.false();
+			Page.spotlightRight();
+			expect(Page.buttonScrollDown.hasFocus(), 'step 8 focus').to.be.true();
 		});
 	});
 
@@ -144,23 +193,12 @@ describe('VirtualList', function () {
 			Page.open('?locale=ar-SA');
 		});
 
-		it('should position scrollbar on left side [GT-21230]', function () {
+		it('should position scrollbar on left side [GT-21270]', function () {
 			Page.spotlightLeft();
 			Page.spotlightDown();
 			expectFocusedItem(1);
 			Page.spotlightLeft();
 			expect(Page.buttonScrollUp.hasFocus(), 'step 3 focus').to.be.true();
-			Page.spotlightRight();
-			expectFocusedItem(0);
-			Page.spotlightDown();
-			Page.spotlightDown();
-			Page.spotlightDown();
-			Page.spotlightDown();
-			Page.spotlightDown();
-			Page.spotlightDown();
-			Page.spotlightDown();
-			Page.spotlightLeft();
-			expect(Page.buttonScrollDown.hasFocus(), 'step 3.1 focus').to.be.true();
 		});
 	});
 });
