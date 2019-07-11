@@ -93,18 +93,16 @@ describe('VirtualList', function () {
 			expectFocusedItem(6, 'step 4.1 focus');
 			Page.spotlightRight();
 			expect(Page.buttonScrollDown.hasFocus(), 'step 4.2 focus').to.be.true();
-			Page.buttonScrollDown.click();
+			Page.spotlightSelect();
 			Page.delay(1500);
-			Page.buttonScrollDown.click();
+			Page.spotlightSelect();
 			Page.delay(1500);
 			Page.spotlightUp();
 			expect(Page.buttonScrollUp.hasFocus(), 'step 6 focus').to.be.true();
-			Page.buttonScrollUp.click();
+			Page.spotlightSelect();
 			Page.delay(1500);
-			Page.buttonScrollUp.click();
+			Page.spotlightSelect();
 			expect(Page.buttonScrollUp.hasFocus()).to.be.true();
-			// TODO: This seems wrong, isEnabled appears to return an incorrect value
-			// expect(Page.buttonScrollUp.isEnabled(), 'step 7 focus').to.be.false();
 		});
 
 		it('should retain focus on scroll buttons when using paging controls [GT-23845]', function () {
@@ -169,8 +167,6 @@ describe('VirtualList', function () {
 		it('should navigate between items and scroll buttons via 5way right [GT-21163]', function () {
 			Page.spotlightRight();
 			expectFocusedItem(0, 'step 5.1 focus');
-			// TODO: This seems wrong, isEnabled appears to return an incorrect value
-			// expect(Page.buttonScrollUp.isEnabled(), 'step 5.2 focus').to.be.false();
 			Page.spotlightRight();
 			expect(Page.buttonScrollUp.hasFocus(), 'step 6 focus').to.be.true();
 			Page.spotlightLeft();
@@ -180,8 +176,6 @@ describe('VirtualList', function () {
 				Page.delay(80); // TODO: 80 is an arbitrary value to help provide expected behavior between rapidly repeating keydown events
 			}
 			expectFocusedItem(49, 'step 7.1 focus');
-			// TODO: This seems wrong, isEnabled appears to return an incorrect value
-			// expect(Page.buttonScrollDown.isEnabled(), 'step 7.2 focus').to.be.false();
 			Page.spotlightRight();
 			expect(Page.buttonScrollDown.hasFocus(), 'step 8 focus').to.be.true();
 		});
