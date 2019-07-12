@@ -68,8 +68,10 @@ module.exports = function (env) {
 			symlinks: false,
 			alias: {
 				'UI_TEST_APP_ENTRY': env.APPENTRY,
-				// Support ilib shorthand alias for ilib modules
-				ilib: '@enact/i18n/ilib/lib'
+				// Backward compatibility for iLib paths
+				alias: fs.existsSync(path.join(app.context, 'node_modules', '@enact', 'i18n', 'ilib')) ?
+					{ilib: '@enact/i18n/ilib'} :
+					{'@enact/i18n/ilib': 'ilib'}
 			}
 		},
 		// Resolve loaders (webpack plugins for CSS, images, transpilation) from the
