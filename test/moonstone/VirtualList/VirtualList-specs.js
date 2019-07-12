@@ -3,9 +3,9 @@ const Page = require('./VirtualListPage'),
 	{expectFocusedItem} = require('./VirtualList-utils');
 
 describe('VirtualList', function () {
-	Page.open();
 
 	it('should focus the left button on start', function () {
+		Page.open();
 		expect(Page.buttonLeft.hasFocus()).to.be.true();
 	});
 
