@@ -66,11 +66,10 @@ module.exports = function (env) {
 			// Allows us to specify paths to check for module resolving.
 			modules: [path.resolve('./node_modules'), 'node_modules'],
 			symlinks: false,
-			alias: {
-				'UI_TEST_APP_ENTRY': env.APPENTRY,
-				// Support ilib shorthand alias for ilib modules
-				ilib: '@enact/i18n/ilib/lib'
-			}
+			// Backward compatibility for iLib paths
+			alias: fs.existsSync(path.join(app.context, 'node_modules', '@enact', 'i18n', 'ilib')) ?
+				{'UI_TEST_APP_ENTRY': env.APPENTRY, ilib: '@enact/i18n/ilib'} :
+				{'UI_TEST_APP_ENTRY': env.APPENTRY, '@enact/i18n/ilib': 'ilib'}
 		},
 		// Resolve loaders (webpack plugins for CSS, images, transpilation) from the
 		// directory of `@enact/cli` itself rather than the project directory.

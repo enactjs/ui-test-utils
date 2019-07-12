@@ -6,7 +6,9 @@ const readdirp = require('readdirp');
 const webpack = require('webpack');
 const generator = require('./webpack.config.js');
 
-const ilib = path.join('node_modules', '@enact', 'i18n', 'ilib');
+let ilib = path.join('node_modules', 'ilib');
+const ilibOld = path.join('node_modules', '@enact', 'i18n', 'ilib');
+if (fs.existsSync(ilibOld)) ilib = ilibOld;
 process.env.ILIB_BASE_PATH = path.join('/framework', ilib);
 const enact = framework.apply(generator({APPENTRY: 'framework', APPOUTPUT: path.join('dist', 'framework')}));
 
