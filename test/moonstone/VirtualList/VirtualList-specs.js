@@ -4,9 +4,11 @@ const Page = require('./VirtualListPage'),
 
 describe('VirtualList', function () {
 
-	it('should focus the left button on start', function () {
+	it('should meet initial conditions', function () {
 		Page.open();
-		expect(Page.buttonLeft.hasFocus()).to.be.true();
+		expect(Page.buttonLeft.hasFocus(), 'focus').to.be.true();
+		expect(Page.buttonScrollUp.getAttribute('disabled'), 'Up disabled').to.be.equal('true');
+		expect(Page.buttonScrollDown.getAttribute('disabled'), 'Down disabled').to.be.null();
 	});
 
 	describe('LTR locale', function () {
@@ -124,14 +126,12 @@ describe('VirtualList', function () {
 			expect(Page.buttonScrollDown.hasFocus(), 'step 5 focus').to.be.true();
 			Page.pageUp();
 			Page.delay(1500);  // TODO: Need better way to detect scroll end
-			// TODO: This seems wrong, I believe the top scroll button should have focus
-			// expect(Page.buttonScrollUp.hasFocus(), 'step 6 focus').to.be.true();
+			expect(Page.buttonScrollUp.hasFocus(), 'step 6 focus').to.be.true();
 			Page.pageUp();
 			Page.delay(1500);  // TODO: Need better way to detect scroll end
 			Page.pageUp();
 			Page.delay(1500);  // TODO: Need better way to detect scroll end
-			// TODO: This seems wrong, I believe the top scroll button should have focus
-			// expect(Page.buttonScrollUp.hasFocus(), 'step 7 focus').to.be.true();
+			expect(Page.buttonScrollUp.hasFocus(), 'step 7 focus').to.be.true();
 		});
 
 		it('should position scrollbar on right side [GT-21271]', function () {
