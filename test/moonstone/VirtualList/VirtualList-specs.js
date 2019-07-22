@@ -1,12 +1,12 @@
 
 const Page = require('./VirtualListPage'),
-	{expectFocusedItem} = require('./VirtualList-utils');
+	{expectList1FocusedItem, expectList2FocusedItem, expectList3FocusedItem} = require('./VirtualList-utils');
 
 describe('VirtualList', function () {
 	Page.open();
 
 	it('should focus the left button on start', function () {
-		expect(Page.buttonLeft.hasFocus()).to.be.true();
+		expect(Page.list1ButtonLeft.hasFocus()).to.be.true();
 	});
 
 	describe('LTR locale', function () {
@@ -16,39 +16,39 @@ describe('VirtualList', function () {
 
 		it('should focus first item on first focus', function () {
 			Page.spotlightRight();
-			expectFocusedItem(0);
+			expectList1FocusedItem(0);
 		});
 
 		it('should focus and Scroll with Up/Down and 5-way [GT_24451]', function () {
 			Page.spotlightRight();
 			Page.spotlightDown();
-			expectFocusedItem(1, 'step 3 focus');
+			expectList1FocusedItem(1, 'step 3 focus');
 			Page.pageDown();
 			Page.delay(1500);  // TODO: Need better way to detect scroll end
-			expectFocusedItem(9, 'step 4 focus');
+			expectList1FocusedItem(9, 'step 4 focus');
 			Page.spotlightDown();
-			expectFocusedItem(10, 'step 5 focus');
+			expectList1FocusedItem(10, 'step 5 focus');
 			Page.pageUp();
 			Page.delay(1500);
-			expectFocusedItem(2, 'step 6 focus');
+			expectList1FocusedItem(2, 'step 6 focus');
 			Page.spotlightDown();
 			Page.spotlightDown();
 			Page.spotlightDown();
-			expectFocusedItem(5, 'step 7 focus');
+			expectList1FocusedItem(5, 'step 7 focus');
 			Page.pageUp();
 			Page.delay(1500);
 			// TODO: This seems wrong, should be item 0, I think!
-			expectFocusedItem(5, 'step 8 focus');
+			expectList1FocusedItem(5, 'step 8 focus');
 		});
 
 		it('should focus scroll up/down buttons with 5-way [GT-24811]', function () {
 			Page.spotlightRight();
 			Page.spotlightDown();
-			expectFocusedItem(1);
+			expectList1FocusedItem(1);
 			Page.spotlightRight();
-			expect(Page.buttonScrollUp.hasFocus(), 'step 5 focus').to.be.true();
+			expect(Page.list1ButtonScrollUp.hasFocus(), 'step 5 focus').to.be.true();
 			Page.spotlightLeft();
-			expectFocusedItem(0, 'step 6.1 focus');
+			expectList1FocusedItem(0, 'step 6.1 focus');
 			// expectFocusedItem(1);  // TODO: VL should remember last focused!
 			Page.spotlightDown();
 			Page.spotlightDown();
@@ -58,126 +58,224 @@ describe('VirtualList', function () {
 			Page.spotlightDown();
 			Page.spotlightDown();	// TODO: Should remove 1 when focus returns right
 			Page.spotlightRight();
-			expect(Page.buttonScrollDown.hasFocus(), 'step 6.3 focus').to.be.true();
+			expect(Page.list1ButtonScrollDown.hasFocus(), 'step 6.3 focus').to.be.true();
 		});
 
 		it('should not scroll when leaving list with 5-way up/down [GT-25987]', function () {
 			Page.spotlightRight();
-			expectFocusedItem(0, 'step 5 focus');
+			expectList1FocusedItem(0, 'step 5 focus');
 			Page.spotlightUp();
-			expect(Page.buttonTop.hasFocus(), 'step 6 focus').to.be.true();
+			expect(Page.list1ButtonTop.hasFocus(), 'step 6 focus').to.be.true();
 			Page.spotlightDown();
-			expectFocusedItem(0);
+			expectList1FocusedItem(0);
 			for (let i = 0; i < 49; ++i) {
 				Page.spotlightDown();
 				Page.delay(80); // TODO: 80 is an arbitrary value to help provide expected behavior between rapidly repeating keydown events
 			}
-			expectFocusedItem(49, 'step 7 focus');
+			expectList1FocusedItem(49, 'step 7 focus');
 			Page.spotlightDown();
-			expect(Page.buttonBottom.hasFocus(), 'step 8 focus').to.be.true();
+			expect(Page.list1ButtonBottom.hasFocus(), 'step 8 focus').to.be.true();
 		});
 
 		it('should have same height list and scrollbar [GT-22079]', function () {
-			expect(Page.virtualListSize.height).to.equal(Page.scrollBarSize.height);
+			expect(Page.list1Size.height).to.equal(Page.list1ScrollBarSize.height);
 		});
 
 		it('should retain focus on paging control when they become disabled [GT-23899]', function () {
 			Page.spotlightRight();
 			Page.spotlightDown();
-			expectFocusedItem(1);
+			expectList1FocusedItem(1);
 			Page.spotlightDown();
 			Page.spotlightDown();
 			Page.spotlightDown();
 			Page.spotlightDown();
 			Page.spotlightDown();
-			expectFocusedItem(6, 'step 4.1 focus');
+			expectList1FocusedItem(6, 'step 4.1 focus');
 			Page.spotlightRight();
-			expect(Page.buttonScrollDown.hasFocus(), 'step 4.2 focus').to.be.true();
+			expect(Page.list1ButtonScrollDown.hasFocus(), 'step 4.2 focus').to.be.true();
 			Page.spotlightSelect();
 			Page.delay(1500);
 			Page.spotlightSelect();
 			Page.delay(1500);
 			Page.spotlightUp();
-			expect(Page.buttonScrollUp.hasFocus(), 'step 6 focus').to.be.true();
+			expect(Page.list1ButtonScrollUp.hasFocus(), 'step 6 focus').to.be.true();
 			Page.spotlightSelect();
 			Page.delay(1500);
 			Page.spotlightSelect();
-			expect(Page.buttonScrollUp.hasFocus()).to.be.true();
+			expect(Page.list1ButtonScrollUp.hasFocus()).to.be.true();
 		});
 
 		it('should retain focus on scroll buttons when using paging controls [GT-23845]', function () {
 			Page.spotlightRight();
 			Page.spotlightDown();
-			expectFocusedItem(1);
+			expectList1FocusedItem(1);
 			Page.spotlightDown();
 			Page.spotlightDown();
 			Page.spotlightDown();
 			Page.spotlightDown();
 			Page.spotlightDown();
-			expectFocusedItem(6);
+			expectList1FocusedItem(6);
 			Page.spotlightRight();
-			expect(Page.buttonScrollDown.hasFocus(), 'step 4 focus').to.be.true();
+			expect(Page.list1ButtonScrollDown.hasFocus(), 'step 4 focus').to.be.true();
 			Page.pageDown();
 			Page.delay(1500);  // TODO: Need better way to detect scroll end
 			Page.pageDown();
 			Page.delay(1500);  // TODO: Need better way to detect scroll end
-			expect(Page.buttonScrollDown.hasFocus(), 'step 5 focus').to.be.true();
+			expect(Page.list1ButtonScrollDown.hasFocus(), 'step 5 focus').to.be.true();
 			Page.pageUp();
 			Page.delay(1500);  // TODO: Need better way to detect scroll end
-			// TODO: This seems wrong, I believe the top scroll button should have focus
-			// expect(Page.buttonScrollUp.hasFocus(), 'step 6 focus').to.be.true();
+			expect(Page.buttonScrollUp.hasFocus(), 'step 6 focus').to.be.true();
 			Page.pageUp();
 			Page.delay(1500);  // TODO: Need better way to detect scroll end
 			Page.pageUp();
 			Page.delay(1500);  // TODO: Need better way to detect scroll end
-			// TODO: This seems wrong, I believe the top scroll button should have focus
-			// expect(Page.buttonScrollUp.hasFocus(), 'step 7 focus').to.be.true();
+			expect(Page.buttonScrollUp.hasFocus(), 'step 7 focus').to.be.true();
 		});
 
 		it('should position scrollbar on right side [GT-21271]', function () {
 			Page.spotlightRight();
 			Page.spotlightDown();
-			expectFocusedItem(1);
+			expectList1FocusedItem(1);
 			Page.spotlightRight();
-			expect(Page.buttonScrollUp.hasFocus(), 'step 2.2 focus').to.be.true();
+			expect(Page.list1ButtonScrollUp.hasFocus(), 'step 2.2 focus').to.be.true();
 		});
 
 		it('should navigate inside and outside of scroll buttons via 5way [GT-22761]', function () {
 			Page.spotlightRight();
 			Page.spotlightDown();
-			expectFocusedItem(1);
+			expectList1FocusedItem(1);
 			Page.spotlightDown();
 			Page.spotlightDown();
 			Page.spotlightDown();
 			Page.spotlightDown();
 			Page.spotlightDown();
-			expectFocusedItem(6);
+			expectList1FocusedItem(6);
 			Page.spotlightRight();
-			expect(Page.buttonScrollDown.hasFocus(), 'step 4.2 focus').to.be.true();
+			expect(Page.list1ButtonScrollDown.hasFocus(), 'step 4.2 focus').to.be.true();
 			Page.spotlightDown();
-			expect(Page.buttonBottom.hasFocus()).to.be.true();
+			expect(Page.list1ButtonBottom.hasFocus()).to.be.true();
 			Page.spotlightUp();
-			expect(Page.buttonScrollDown.hasFocus(), 'step 5 focus').to.be.true();
+			expect(Page.list1ButtonScrollDown.hasFocus(), 'step 5 focus').to.be.true();
 			Page.spotlightUp();
-			expect(Page.buttonScrollUp.hasFocus(), 'step 6 focus').to.be.true();
+			expect(Page.list1ButtonScrollUp.hasFocus(), 'step 6 focus').to.be.true();
 			Page.spotlightUp();
-			expect(Page.buttonTop.hasFocus(), 'step 7 focus').to.be.true();
+			expect(Page.list1ButtonTop.hasFocus(), 'step 7 focus').to.be.true();
 		});
 
 		it('should navigate between items and scroll buttons via 5way right [GT-21163]', function () {
 			Page.spotlightRight();
-			expectFocusedItem(0, 'step 5.1 focus');
+			expectList1FocusedItem(0, 'step 5.1 focus');
 			Page.spotlightRight();
-			expect(Page.buttonScrollUp.hasFocus(), 'step 6 focus').to.be.true();
+			expect(Page.list1ButtonScrollUp.hasFocus(), 'step 6 focus').to.be.true();
 			Page.spotlightLeft();
-			expectFocusedItem(0);
+			expectList1FocusedItem(0);
 			for (let i = 0; i < 49; ++i) {
 				Page.spotlightDown();
 				Page.delay(80); // TODO: 80 is an arbitrary value to help provide expected behavior between rapidly repeating keydown events
 			}
-			expectFocusedItem(49, 'step 7.1 focus');
+			expectList1FocusedItem(49, 'step 7.1 focus');
 			Page.spotlightRight();
-			expect(Page.buttonScrollDown.hasFocus(), 'step 8 focus').to.be.true();
+			expect(Page.list1ButtonScrollDown.hasFocus(), 'step 8 focus').to.be.true();
+		});
+
+		describe('onKeyDown event behavior [GT-27663]', function () {
+			it('should stop bubbling while navigating within a list', function () {
+				Page.spotlightRight();
+				expectList1FocusedItem(0);
+				Page.spotlightDown();
+				expectList1FocusedItem(1);
+				Page.spotlightUp();
+				expectList1FocusedItem(0);
+				Page.spotlightRight();
+				expect(Page.list1ButtonScrollUp.hasFocus()).to.be.true();
+				Page.spotlightDown();
+				expect(Page.list1ButtonScrollDown.hasFocus()).to.be.true();
+				Page.spotlightUp();
+				expect(Page.list1ButtonScrollUp.hasFocus()).to.be.true();
+				Page.spotlightLeft();
+				expectList1FocusedItem(0);
+				expect(Page.list1.getAttribute('data-keydown-events')).to.equal('0');
+			});
+
+			it('should allow bubbling while navigating out of a focusableScrollbar list via scroll buttons', function () {
+				Page.spotlightRight();
+				Page.spotlightRight();
+				expect(Page.list1ButtonScrollUp.hasFocus()).to.be.true();
+				Page.spotlightRight();
+				Page.spotlightLeft();
+				Page.spotlightUp();
+				Page.spotlightDown();
+				Page.spotlightDown();
+				Page.spotlightRight();
+				Page.spotlightLeft();
+				Page.spotlightDown();
+				expect(Page.list1.getAttribute('data-keydown-events'), 'step 8').to.equal('4');
+			});
+
+			it('should allow bubbling while navigating out of a list using visible focusableScrollbar via items', function () {
+				Page.spotlightRight();
+				expectList1FocusedItem(0);
+				Page.spotlightUp();
+				Page.spotlightDown();
+				Page.spotlightLeft();
+				Page.spotlightRight();
+				expectList1FocusedItem(0);
+				for (let i = 0; i < 49; ++i) {
+					Page.spotlightDown();
+					Page.delay(80); // TODO: 80 is an arbitrary value to help provide expected behavior between rapidly repeating keydown events
+				}
+				expectList1FocusedItem(49);
+				Page.spotlightDown();
+				expect(Page.list1.getAttribute('data-keydown-events')).to.equal('3');
+			});
+
+			it('should allow bubbling while navigating out of a list using hidden focusableScrollbar via items', function () {
+				Page.setList2Focus();
+				Page.spotlightRight();
+				expectList2FocusedItem(0);
+				Page.spotlightUp();
+				expect(Page.list2ButtonTop.hasFocus()).to.be.true();
+				Page.spotlightDown();
+				Page.spotlightLeft();
+				expect(Page.list2ButtonLeft.hasFocus()).to.be.true();
+				Page.spotlightRight();
+				Page.spotlightRight();
+				expect(Page.list2ButtonRight.hasFocus()).to.be.true();
+				Page.spotlightLeft();
+				expectList2FocusedItem(0);
+				for (let i = 0; i < 49; ++i) {
+					Page.spotlightDown();
+					Page.delay(80); // TODO: 80 is an arbitrary value to help provide expected behavior between rapidly repeating keydown events
+				}
+				expectList2FocusedItem(49);
+				Page.spotlightDown();
+				expect(Page.list2ButtonBottom.hasFocus()).to.be.true();
+				expect(Page.list2.getAttribute('data-keydown-events')).to.equal('4');
+			});
+
+			it.only('should allow bubbling while navigating out of a list using non-focusableScrollbar via items', function () {
+				Page.setList3Focus();
+				Page.spotlightRight();
+				expectList2FocusedItem(0);
+				Page.spotlightUp();
+				expect(Page.list3ButtonTop.hasFocus()).to.be.true();
+				Page.spotlightDown();
+				Page.spotlightLeft();
+				expect(Page.list3ButtonTop.hasFocus()).to.be.true();
+				Page.spotlightRight();
+				Page.spotlightRight();
+				expect(Page.list3ButtonTop.hasFocus()).to.be.true();
+				Page.spotlightLeft();
+				expectList3FocusedItem(0);
+				for (let i = 0; i < 49; ++i) {
+					Page.spotlightDown();
+					Page.delay(80); // TODO: 80 is an arbitrary value to help provide expected behavior between rapidly repeating keydown events
+				}
+				expectList3FocusedItem(49);
+				Page.spotlightDown();
+				expect(Page.list3ButtonTop.hasFocus()).to.be.true();
+				expect(Page.list3.getAttribute('data-keydown-events')).to.equal('4');
+			});
 		});
 	});
 
@@ -190,9 +288,9 @@ describe('VirtualList', function () {
 		it('should position scrollbar on left side [GT-21270]', function () {
 			Page.spotlightLeft();
 			Page.spotlightDown();
-			expectFocusedItem(1);
+			expectList1FocusedItem(1);
 			Page.spotlightLeft();
-			expect(Page.buttonScrollUp.hasFocus(), 'step 3 focus').to.be.true();
+			expect(Page.list1ButtonScrollUp.hasFocus(), 'step 3 focus').to.be.true();
 		});
 	});
 });
