@@ -3,10 +3,12 @@ const Page = require('./VirtualListPage'),
 	{expectList1FocusedItem, expectList2FocusedItem, expectList3FocusedItem} = require('./VirtualList-utils');
 
 describe('VirtualList', function () {
-	Page.open();
 
-	it('should focus the left button on start', function () {
-		expect(Page.list1ButtonLeft.hasFocus()).to.be.true();
+	it('should meet initial conditions', function () {
+		Page.open();
+		expect(Page.buttonLeft.hasFocus(), 'focus').to.be.true();
+		expect(Page.buttonScrollUp.getAttribute('disabled'), 'Up disabled').to.be.equal('true');
+		expect(Page.buttonScrollDown.getAttribute('disabled'), 'Down disabled').to.be.null();
 	});
 
 	describe('LTR locale', function () {
