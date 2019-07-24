@@ -6,9 +6,9 @@ describe('VirtualList', function () {
 
 	it('should meet initial conditions', function () {
 		Page.open();
-		expect(Page.buttonLeft.hasFocus(), 'focus').to.be.true();
-		expect(Page.buttonScrollUp.getAttribute('disabled'), 'Up disabled').to.be.equal('true');
-		expect(Page.buttonScrollDown.getAttribute('disabled'), 'Down disabled').to.be.null();
+		expect(Page.list1ButtonLeft.hasFocus(), 'focus').to.be.true();
+		expect(Page.list1ButtonScrollUp.getAttribute('disabled'), 'Up disabled').to.be.equal('true');
+		expect(Page.list1ButtonScrollDown.getAttribute('disabled'), 'Down disabled').to.be.null();
 	});
 
 	describe('LTR locale', function () {
@@ -75,6 +75,7 @@ describe('VirtualList', function () {
 				Page.delay(80); // TODO: 80 is an arbitrary value to help provide expected behavior between rapidly repeating keydown events
 			}
 			expectList1FocusedItem(49, 'step 7 focus');
+			Page.delay(1500);
 			Page.spotlightDown();
 			expect(Page.list1ButtonBottom.hasFocus(), 'step 8 focus').to.be.true();
 		});
@@ -183,26 +184,26 @@ describe('VirtualList', function () {
 		describe('onKeyDown event behavior [GT-27663]', function () {
 			it('should stop bubbling while navigating within a list', function () {
 				Page.spotlightRight();
-				expectList1FocusedItem(0);
+				expectList1FocusedItem(0, 'focus 1');
 				Page.spotlightDown();
-				expectList1FocusedItem(1);
+				expectList1FocusedItem(1, 'focus 2');
 				Page.spotlightUp();
-				expectList1FocusedItem(0);
+				expectList1FocusedItem(0, 'focus 3');
 				Page.spotlightRight();
-				expect(Page.list1ButtonScrollUp.hasFocus()).to.be.true();
+				expect(Page.list1ButtonScrollUp.hasFocus(), 'focus 4').to.be.true();
 				Page.spotlightDown();
-				expect(Page.list1ButtonScrollDown.hasFocus()).to.be.true();
+				expect(Page.list1ButtonScrollDown.hasFocus(), 'focus 5').to.be.true();
 				Page.spotlightUp();
-				expect(Page.list1ButtonScrollUp.hasFocus()).to.be.true();
+				expect(Page.list1ButtonScrollUp.hasFocus(), 'focus 6').to.be.true();
 				Page.spotlightLeft();
-				expectList1FocusedItem(0);
+				expectList1FocusedItem(0, 'focus 7');
 				expect(Page.list1.getAttribute('data-keydown-events')).to.equal('0');
 			});
 
 			it('should allow bubbling while navigating out of a focusableScrollbar list via scroll buttons', function () {
 				Page.spotlightRight();
 				Page.spotlightRight();
-				expect(Page.list1ButtonScrollUp.hasFocus()).to.be.true();
+				expect(Page.list1ButtonScrollUp.hasFocus(), 'focus 1').to.be.true();
 				Page.spotlightRight();
 				Page.spotlightLeft();
 				Page.spotlightUp();
@@ -216,17 +217,17 @@ describe('VirtualList', function () {
 
 			it('should allow bubbling while navigating out of a list using visible focusableScrollbar via items', function () {
 				Page.spotlightRight();
-				expectList1FocusedItem(0);
+				expectList1FocusedItem(0, 'focus 1');
 				Page.spotlightUp();
 				Page.spotlightDown();
 				Page.spotlightLeft();
 				Page.spotlightRight();
-				expectList1FocusedItem(0);
+				expectList1FocusedItem(0, 'focus 2');
 				for (let i = 0; i < 49; ++i) {
 					Page.spotlightDown();
 					Page.delay(80); // TODO: 80 is an arbitrary value to help provide expected behavior between rapidly repeating keydown events
 				}
-				expectList1FocusedItem(49);
+				expectList1FocusedItem(49, 'focus 3');
 				Page.spotlightDown();
 				expect(Page.list1.getAttribute('data-keydown-events')).to.equal('3');
 			});
@@ -234,48 +235,50 @@ describe('VirtualList', function () {
 			it('should allow bubbling while navigating out of a list using hidden focusableScrollbar via items', function () {
 				Page.setList2Focus();
 				Page.spotlightRight();
-				expectList2FocusedItem(0);
+				expectList2FocusedItem(0, 'focus 1');
 				Page.spotlightUp();
-				expect(Page.list2ButtonTop.hasFocus()).to.be.true();
+				expect(Page.list2ButtonTop.hasFocus(), 'focus 2').to.be.true();
 				Page.spotlightDown();
 				Page.spotlightLeft();
-				expect(Page.list2ButtonLeft.hasFocus()).to.be.true();
+				expect(Page.list2ButtonLeft.hasFocus(), 'focus 3').to.be.true();
 				Page.spotlightRight();
 				Page.spotlightRight();
-				expect(Page.list2ButtonRight.hasFocus()).to.be.true();
+				expect(Page.list2ButtonRight.hasFocus(), 'focus 4').to.be.true();
 				Page.spotlightLeft();
-				expectList2FocusedItem(0);
+				expectList2FocusedItem(0, 'focus 5');
 				for (let i = 0; i < 49; ++i) {
 					Page.spotlightDown();
 					Page.delay(80); // TODO: 80 is an arbitrary value to help provide expected behavior between rapidly repeating keydown events
 				}
-				expectList2FocusedItem(49);
+				expectList2FocusedItem(49, 'focus 6');
+				Page.delay(1500);
 				Page.spotlightDown();
-				expect(Page.list2ButtonBottom.hasFocus()).to.be.true();
+				expect(Page.list2ButtonBottom.hasFocus(), 'focus 7').to.be.true();
 				expect(Page.list2.getAttribute('data-keydown-events')).to.equal('4');
 			});
 
-			it.only('should allow bubbling while navigating out of a list using non-focusableScrollbar via items', function () {
+			it('should allow bubbling while navigating out of a list using non-focusableScrollbar via items', function () {
 				Page.setList3Focus();
 				Page.spotlightRight();
-				expectList2FocusedItem(0);
+				expectList3FocusedItem(0, 'focus 1');
 				Page.spotlightUp();
-				expect(Page.list3ButtonTop.hasFocus()).to.be.true();
+				expect(Page.list3ButtonTop.hasFocus(), 'focus 2').to.be.true();
 				Page.spotlightDown();
 				Page.spotlightLeft();
-				expect(Page.list3ButtonTop.hasFocus()).to.be.true();
+				expect(Page.list3ButtonLeft.hasFocus(), 'focus 3').to.be.true();
 				Page.spotlightRight();
 				Page.spotlightRight();
-				expect(Page.list3ButtonTop.hasFocus()).to.be.true();
+				expect(Page.list3ButtonRight.hasFocus(), 'focus 4').to.be.true();
 				Page.spotlightLeft();
-				expectList3FocusedItem(0);
+				expectList3FocusedItem(0, 'focus 5');
 				for (let i = 0; i < 49; ++i) {
 					Page.spotlightDown();
 					Page.delay(80); // TODO: 80 is an arbitrary value to help provide expected behavior between rapidly repeating keydown events
 				}
-				expectList3FocusedItem(49);
+				expectList3FocusedItem(49, 'focus 6');
+				Page.delay(1500);
 				Page.spotlightDown();
-				expect(Page.list3ButtonTop.hasFocus()).to.be.true();
+				expect(Page.list3ButtonBottom.hasFocus(), 'focus 7').to.be.true();
 				expect(Page.list3.getAttribute('data-keydown-events')).to.equal('4');
 			});
 		});
