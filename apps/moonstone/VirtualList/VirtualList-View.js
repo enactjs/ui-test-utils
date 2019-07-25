@@ -1,19 +1,17 @@
 import {Button} from '@enact/moonstone/Button';
 import ri from '@enact/ui/resolution';
 import {Row, Column, Cell} from '@enact/ui/Layout';
-import Scroller from '@enact/moonstone/Scroller';
 import SwitchItem from '@enact/moonstone/SwitchItem';
+import ToggleButton from '@enact/moonstone/ToggleButton';
 import VirtualList from '@enact/moonstone/VirtualList';
 import MoonstoneDecorator from '@enact/moonstone/MoonstoneDecorator';
 import React from 'react';
 import spotlight from '@enact/spotlight';
 import SpotlightContainerDecorator from '@enact/spotlight/SpotlightContainerDecorator';
 
-const Container = SpotlightContainerDecorator({leaveFor: {down: '', up: ''}}, 'div');
-
-const list1 = 'list1';
-const list2 = 'list2';
-const list3 = 'list3';
+const ListContainer = SpotlightContainerDecorator({leaveFor: {up: ''}}, 'div');
+const OptionsContainer = SpotlightContainerDecorator({leaveFor: {down: '#left'}}, 'div');
+const getScrollbarVisibility = (hidden) => hidden ? 'hidden' : 'visible';
 const fullHeightStyle = {
 	height: '100%'
 };
@@ -30,10 +28,10 @@ const items = [],
 	},
 	numItems = 50;
 
-const renderItem = (list, size) => ({index, ...rest}) => {
+const renderItem = (size) => ({index, ...rest}) => {
 	const style = {height: size + 'px', ...itemStyle};
 	return (
-		<StatefulSwitchItem index={index} style={style} {...rest} id={`${list}Item${index}`}>
+		<StatefulSwitchItem index={index} style={style} {...rest} id={`item${index}`}>
 			{items[index].item}
 		</StatefulSwitchItem>
 	);
@@ -98,116 +96,66 @@ class app extends React.Component {
 	constructor (props) {
 		super(props);
 		this.state = {
-			list1KeyDown: 0,
-			list2KeyDown: 0,
-			list3KeyDown: 0
+			focusableScrollbar: false,
+			hideScrollbar: false,
+			keyDownEvents: 0,
+			wrap: false
 		};
 	}
 
-	onKeyDown = (list) => () => {
-		const key = `${list}KeyDown`;
-		this.setState((state) => {
-			return ({[key]: state[key] + 1});
-		});
+	onKeyDown = () => {
+		this.setState(({keyDownEvents}) => ({keyDownEvents: keyDownEvents + 1}));
+	}
+
+	onToggle = ({currentTarget}) => {
+		const key = currentTarget.getAttribute('id');
+		this.setState((state) => ({[key]: !state[key]}));
 	}
 
 	render () {
+		const {focusableScrollbar, hideScrollbar, keyDownEvents, wrap} = this.state;
 		return (
-			<Scroller {...this.props}>
-				<Container id={list1} data-keydown-events={this.state.list1KeyDown} style={fullHeightStyle}>
-					<Row align="center" style={fullHeightStyle}>
-						<Cell component={Button} shrink className="left">
-							Left
-						</Cell>
-						<Cell align="stretch">
-							<Column align="center" style={fullHeightStyle}>
-								<Cell component={Button} shrink className="top">
-									Top
-								</Cell>
-								<Cell>
-									<VirtualList
-										dataSize={numItems}
-										focusableScrollbar
-										itemRenderer={renderItem(list1, itemSize)}
-										itemSize={itemSize}
-										onKeyDown={this.onKeyDown(list1)}
-										spacing={0}
-										verticalScrollbar="auto"
-									/>
-								</Cell>
-								<Cell component={Button} shrink className="bottom">
-									Bottom
-								</Cell>
-							</Column>
-						</Cell>
-						<Cell component={Button} shrink className="right">
-							Right
-						</Cell>
-					</Row>
-				</Container>
-				<Container id={list2} data-keydown-events={this.state.list2KeyDown} style={fullHeightStyle}>
-					<Row align="center" style={fullHeightStyle}>
-						<Cell component={Button} shrink className="left">
-							Left
-						</Cell>
-						<Cell align="stretch">
-							<Column align="center" style={fullHeightStyle}>
-								<Cell component={Button} shrink className="top">
-									Top
-								</Cell>
-								<Cell>
-									<VirtualList
-										dataSize={numItems}
-										focusableScrollbar
-										itemRenderer={renderItem(list2, itemSize)}
-										itemSize={itemSize}
-										onKeyDown={this.onKeyDown(list2)}
-										spacing={0}
-										verticalScrollbar="hidden"
-									/>
-								</Cell>
-								<Cell component={Button} shrink className="bottom">
-									Bottom
-								</Cell>
-							</Column>
-						</Cell>
-						<Cell component={Button} shrink className="right">
-							Right
-						</Cell>
-					</Row>
-				</Container>
-				<Container id={list3} data-keydown-events={this.state.list3KeyDown} style={fullHeightStyle}>
-					<Row align="center" style={fullHeightStyle}>
-						<Cell component={Button} shrink className="left">
-							Left
-						</Cell>
-						<Cell align="stretch">
-							<Column align="center" style={fullHeightStyle}>
-								<Cell component={Button} shrink className="top">
-									Top
-								</Cell>
-								<Cell>
-									<VirtualList
-										dataSize={numItems}
-										focusableScrollbar={false}
-										itemRenderer={renderItem(list3, itemSize)}
-										itemSize={itemSize}
-										onKeyDown={this.onKeyDown(list3)}
-										spacing={0}
-										verticalScrollbar="auto"
-									/>
-								</Cell>
-								<Cell component={Button} shrink className="bottom">
-									Bottom
-								</Cell>
-							</Column>
-						</Cell>
-						<Cell component={Button} shrink className="right">
-							Right
-						</Cell>
-					</Row>
-				</Container>
-			</Scroller>
+			<div {...this.props} data-keydown-events={keyDownEvents} id="list" style={fullHeightStyle}>
+				<Column>
+					<Cell component={OptionsContainer} shrink>
+						<ToggleButton id="focusableScrollbar" onClick={this.onToggle} selected={focusableScrollbar}>focusableScrollbar</ToggleButton>
+						<ToggleButton id="hideScrollbar" onClick={this.onToggle} selected={hideScrollbar}>hide scrollbar</ToggleButton>
+						<ToggleButton id="wrap" onClick={this.onToggle} selected={wrap}>wrap</ToggleButton>
+					</Cell>
+					<Cell component={ListContainer}>
+						<Row align="center" style={fullHeightStyle}>
+							<Cell component={Button} shrink id="left">
+								Left
+							</Cell>
+							<Cell align="stretch">
+								<Column align="center" style={fullHeightStyle}>
+									<Cell component={Button} shrink id="top">
+										Top
+									</Cell>
+									<Cell>
+										<VirtualList
+											dataSize={numItems}
+											focusableScrollbar={focusableScrollbar}
+											itemRenderer={renderItem(itemSize)}
+											itemSize={itemSize}
+											onKeyDown={this.onKeyDown}
+											spacing={0}
+											verticalScrollbar={getScrollbarVisibility(hideScrollbar)}
+											wrap={wrap}
+										/>
+									</Cell>
+									<Cell component={Button} shrink id="bottom">
+										Bottom
+									</Cell>
+								</Column>
+							</Cell>
+							<Cell component={Button} shrink id="right">
+								Right
+							</Cell>
+						</Row>
+					</Cell>
+				</Column>
+			</div>
 		);
 	}
 }
