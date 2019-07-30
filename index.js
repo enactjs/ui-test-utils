@@ -1,8 +1,8 @@
-import '@babel/polyfill';
+import 'core-js';
 import React from 'react';
 import {render} from 'react-dom';
 import App from 'UI_TEST_APP_ENTRY';
-	
+
 const url = new URL(window.location.href);
 const locale = url.searchParams.get('locale');
 

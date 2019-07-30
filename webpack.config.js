@@ -66,7 +66,6 @@ module.exports = function (env) {
 			// Allows us to specify paths to check for module resolving.
 			modules: [path.resolve('./node_modules'), 'node_modules'],
 			symlinks: false,
-			// Backward compatibility for iLib paths
 			alias: fs.existsSync(path.join(app.context, 'node_modules', '@enact', 'i18n', 'ilib')) ?
 				{'UI_TEST_APP_ENTRY': env.APPENTRY, ilib: '@enact/i18n/ilib'} :
 				{'UI_TEST_APP_ENTRY': env.APPENTRY, '@enact/i18n/ilib': 'ilib'}
@@ -102,11 +101,20 @@ module.exports = function (env) {
 										{
 											exclude: [
 												'transform-regenerator',
-												'web.dom.iterable',
+												// Ignore web features since window and DOM is not available
+												// in a V8 snapshot blob.
+												// TODO: investigates ways to include but delay loading.
+												'web.dom-collections.for-each',
+												'web.dom-collections.iterator',
+												'web.immediate',
+												'web.queue-microtask',
 												'web.timers',
-												'web.immediate'
+												'web.url',
+												'web.url.to-json',
+												'web.url-search-params'
 											],
 											useBuiltIns: 'entry',
+											corejs: 3,
 											modules: false
 										}
 									],
