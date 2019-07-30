@@ -65,6 +65,7 @@
     "style-loader": "0.23.1",
     "thread-loader": "1.0.3",
     "wdio": "^3.0.3",
+    "wdio-docker-service": "^1.5.0",
     "wdio-mocha-framework": "0.5.12",
     "wdio-sauce-service": "0.4.8",
     "wdio-selenium-standalone-service": "^0.0.10",
