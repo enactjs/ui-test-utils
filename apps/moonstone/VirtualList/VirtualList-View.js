@@ -2,10 +2,19 @@ import {Button} from '@enact/moonstone/Button';
 import ri from '@enact/ui/resolution';
 import {Row, Column, Cell} from '@enact/ui/Layout';
 import SwitchItem from '@enact/moonstone/SwitchItem';
+import ToggleButton from '@enact/moonstone/ToggleButton';
 import VirtualList from '@enact/moonstone/VirtualList';
 import MoonstoneDecorator from '@enact/moonstone/MoonstoneDecorator';
 import React from 'react';
 import spotlight from '@enact/spotlight';
+import SpotlightContainerDecorator from '@enact/spotlight/SpotlightContainerDecorator';
+
+const ListContainer = SpotlightContainerDecorator({leaveFor: {up: ''}}, 'div');
+const OptionsContainer = SpotlightContainerDecorator({leaveFor: {down: '#left'}}, 'div');
+const getScrollbarVisibility = (hidden) => hidden ? 'hidden' : 'visible';
+const fullHeightStyle = {
+	height: '100%'
+};
 
 // NOTE: Forcing pointer mode off so we can be sure that regardless of webOS pointer mode the app
 // runs the same way
@@ -83,35 +92,72 @@ class StatefulSwitchItem extends React.Component {
 	}
 }
 
-const app = (props) => <div {...props}>
-	<Row align="center" style={{height: '100%'}}>
-		<Cell component={Button} shrink id="left">
-			Left
-		</Cell>
-		<Cell align="stretch">
-			<Column align="center" style={{height: '100%'}}>
-				<Cell component={Button} shrink id="top">
-					Top
-				</Cell>
-				<Cell>
-					<VirtualList
-						dataSize={numItems}
-						focusableScrollbar
-						itemRenderer={renderItem(itemSize)}
-						itemSize={itemSize}
-						spacing={0}
-					/>
-				</Cell>
-				<Cell component={Button} shrink id="bottom">
-					Bottom
-				</Cell>
-			</Column>
-		</Cell>
-		<Cell component={Button} shrink id="right">
-			Right
-		</Cell>
-	</Row>
-</div>;
+class app extends React.Component {
+	constructor (props) {
+		super(props);
+		this.state = {
+			focusableScrollbar: false,
+			hideScrollbar: false,
+			keyDownEvents: 0,
+			wrap: false
+		};
+	}
 
+	onKeyDown = () => {
+		this.setState(({keyDownEvents}) => ({keyDownEvents: keyDownEvents + 1}));
+	}
+
+	onToggle = ({currentTarget}) => {
+		const key = currentTarget.getAttribute('id');
+		this.setState((state) => ({[key]: !state[key]}));
+	}
+
+	render () {
+		const {focusableScrollbar, hideScrollbar, keyDownEvents, wrap} = this.state;
+		return (
+			<div {...this.props} data-keydown-events={keyDownEvents} id="list" style={fullHeightStyle}>
+				<Column>
+					<Cell component={OptionsContainer} shrink>
+						<ToggleButton id="focusableScrollbar" onClick={this.onToggle} selected={focusableScrollbar}>focusableScrollbar</ToggleButton>
+						<ToggleButton id="hideScrollbar" onClick={this.onToggle} selected={hideScrollbar}>hide scrollbar</ToggleButton>
+						<ToggleButton id="wrap" onClick={this.onToggle} selected={wrap}>wrap</ToggleButton>
+					</Cell>
+					<Cell component={ListContainer}>
+						<Row align="center" style={fullHeightStyle}>
+							<Cell component={Button} shrink id="left">
+								Left
+							</Cell>
+							<Cell align="stretch">
+								<Column align="center" style={fullHeightStyle}>
+									<Cell component={Button} shrink id="top">
+										Top
+									</Cell>
+									<Cell>
+										<VirtualList
+											dataSize={numItems}
+											focusableScrollbar={focusableScrollbar}
+											itemRenderer={renderItem(itemSize)}
+											itemSize={itemSize}
+											onKeyDown={this.onKeyDown}
+											spacing={0}
+											verticalScrollbar={getScrollbarVisibility(hideScrollbar)}
+											wrap={wrap}
+										/>
+									</Cell>
+									<Cell component={Button} shrink id="bottom">
+										Bottom
+									</Cell>
+								</Column>
+							</Cell>
+							<Cell component={Button} shrink id="right">
+								Right
+							</Cell>
+						</Row>
+					</Cell>
+				</Column>
+			</div>
+		);
+	}
+}
 
 export default MoonstoneDecorator(app);
