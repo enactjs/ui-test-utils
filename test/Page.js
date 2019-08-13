@@ -45,6 +45,14 @@ class Page {
 		return this.keyDelay('Escape');
 	}
 
+	pageUp () {
+		return this.keyDelay('PageUp');
+	}
+
+	pageDown () {
+		return this.keyDelay('PageDown');
+	}
+
 	// For testing "pointer off" by timeout.
 	hidePointerByKeycode () {
 		browser.execute(function () {
