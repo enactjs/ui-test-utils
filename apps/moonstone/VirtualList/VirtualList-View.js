@@ -26,7 +26,7 @@ const items = [],
 		borderBottom: ri.unit(3, 'rem') + ' solid #202328',
 		boxSizing: 'border-box'
 	},
-	numItems = 50;
+	numItems = 100;
 
 const renderItem = (size) => ({index, ...rest}) => {
 	const style = {height: size + 'px', ...itemStyle};
