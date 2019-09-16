@@ -74,7 +74,7 @@ describe('VirtualList', function () {
 			Page.pageUp();
 			Page.delay(1500);
 			// Verify Step 9: Spotlight is on the *Item* closest to the previously focused Item's location.
-			expectFocusedItem(1, 'step 9 focus');
+			expectFocusedItem(0, 'step 9 focus');
 			// Step 10. Wave the pointer. Step 11. Hover on an item.
 			browser.moveToObject('#item3', 302, 50);
 			// Verify Step 10, Step 11: Spotlight is on 'Item 003'
