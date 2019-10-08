@@ -1,20 +1,11 @@
 import {Button} from '@enact/moonstone/Button';
-import ri from '@enact/ui/resolution';
 import {Row, Column, Cell} from '@enact/ui/Layout';
-import SwitchItem from '@enact/moonstone/SwitchItem';
-import ToggleButton from '@enact/moonstone/ToggleButton';
-import VirtualList from '@enact/moonstone/VirtualList';
 import MoonstoneDecorator from '@enact/moonstone/MoonstoneDecorator';
 import React from 'react';
 import spotlight from '@enact/spotlight';
-import SpotlightContainerDecorator from '@enact/spotlight/SpotlightContainerDecorator';
 
 import {Panel, Header} from '@enact/moonstone/Panels';
 import Scroller from '@enact/moonstone/Scroller';
-
-const ListContainer = SpotlightContainerDecorator({leaveFor: {up: ''}}, 'div');
-const OptionsContainer = SpotlightContainerDecorator({leaveFor: {down: '#left'}}, 'div');
-const getScrollbarVisibility = (hidden) => hidden ? 'hidden' : 'visible';
 
 const fullHeightStyle = {
 	height: '100%'
