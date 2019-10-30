@@ -41,6 +41,10 @@ Note: `pattern' can also be a regex and may need to be in quotes to prevent expa
 
 When a test fails, a screenshot will be captured showing the state when it failed. The screenshots are saved to **`./errorShots/`**. The test run will display the filename for a failed test:
 
+Screenshot location: /errorShots/<test title>.png
+
+Example:
+
 ```none
 F
 	Screenshot location: ./errorShots/should-meet-initial-conditions.png
