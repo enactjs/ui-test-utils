@@ -26,16 +26,16 @@ npm test -- --spec <pattern>
 
 Note: `pattern` may need to be in quotes to prevent expansion on the command line if you use a regex.
 
-Example 1 - uses regular expression to match only tests that begin with 'Button'
+Example 1 - uses regular expression to match only tests that begin with 'Input'
 
 ```bash
-npm test -- --spec "^Button"
+npm test -- --spec "^Input"
 ```
 
-Example 2 - match all tests that contain 'Button'
+Example 2 - match all tests that contain 'Input'
 
 ```bash
-npm test -- --spec Button
+npm test -- --spec Input
 ```
 
 ## Optimizing Building
@@ -45,7 +45,7 @@ npm test -- --spec Button
 The `--skip-build` option can be used to skip packing Enact and the `apps` directory.  Changes to the Enact version or test cases will not be picked up.
 
 ```bash
-npm test -- --tests "^Button" --spec Moonstone-specs --skip-build
+npm test -- --tests "^Input" --spec Moonstone-specs --skip-build
 ```
 
 ### Re-pack the apps without running the tests
@@ -64,6 +64,14 @@ By default, tests run in 'headless' mode, which hides the browser window used fo
 
 ```bash
 npm run test -- --visible
+```
+
+### Running with visible browser and filtering by component
+
+For example, filtering for the component 'Input'.
+
+```bash
+npm run test -- --visible --spec /Input
 ```
 
 ### Loading sample apps in a browser
