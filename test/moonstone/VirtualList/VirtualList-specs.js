@@ -4,12 +4,12 @@ const Page = require('./VirtualListPage'),
 
 describe('VirtualList', function () {
 
-	it('should meet initial conditions', function () {
-		Page.open();
-		expect(Page.buttonFocusableScrollbar.hasFocus(), 'focus').to.be.true();
-		expect(Page.buttonScrollUp.getAttribute('disabled'), 'Up disabled').to.be.equal('true');
-		expect(Page.buttonScrollDown.getAttribute('disabled'), 'Down disabled').to.be.null();
-	});
+	// it('should meet initial conditions', function () {
+	// 	Page.open();
+	// 	expect(Page.buttonFocusableScrollbar.hasFocus(), 'focus').to.be.true();
+	// 	expect(Page.buttonScrollUp.getAttribute('disabled'), 'Up disabled').to.be.equal('true');
+	// 	expect(Page.buttonScrollDown.getAttribute('disabled'), 'Down disabled').to.be.null();
+	// });
 
 	describe('LTR locale', function () {
 		beforeEach(function () {
@@ -438,18 +438,18 @@ describe('VirtualList', function () {
 			});
 		});
 
-		it('should hide focus after scroll wheel [GT-21110]', function () {
-			// Step 3
-			browser.moveToObject('#item3', 302, 50);
-			// Verify Step 3: Spotlight is on 'Item 003'
-			expectFocusedItem(3, 'step 3 focus');
-			// Step 4. 5-way focus.
+		it('should hide Spotlight after scroll wheel [GT-21110]', function () {
+			// Step 3 - Position the pointer on an item.
+			Page.item(5).moveToObject();
+			// Verify Step 3: Spotlight is on 'Item 05'
+			expectFocusedItem(5, 'focus Item 5');
+			// Step 4. 5-way Spot another item.
 			Page.spotlightDown();
-			// Verify Step 4: Spotlight is on 'Item 004'
-			expectFocusedItem(4, 'step 4 focus');
-			// Step 5. Mouse wheel
-			Page.mouseWheel(-40, Page.item(4));
-			// Verify step 5: Spotlight is not on any item
+			// Verify Step 4: Spotlight is on 'Item 06'
+			expectFocusedItem(6, 'focus Item 6');
+			// Step 5. Mouse wheel Down.
+			Page.mouseWheel(-40, Page.item(6));
+			// Verify step 5: Spotlight is not on any item after wheeling stopped.
 			expectNoFocusedItem();
 		});
 	});
