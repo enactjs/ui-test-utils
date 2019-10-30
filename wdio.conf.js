@@ -1,5 +1,7 @@
 const buildApps = require('./build-apps');
 
+const visibleBrowser = process.argv.includes('--visible');
+
 exports.config = {
 
 	//
@@ -47,7 +49,7 @@ exports.config = {
 		maxInstances: 2,
 		//
 		browserName: 'chrome',
-		chromeOptions: {
+		chromeOptions: visibleBrowser ? {} : {
 			args: ['--headless', '--window-size=1920,1280'],
 		}
 	}],
