@@ -1,4 +1,5 @@
-const buildApps = require('./build-apps');
+const buildApps = require('./build-apps'),
+	fs = require('fs');
 
 exports.config = {
 
@@ -226,9 +227,12 @@ exports.config = {
 			return;
 		}
 		// get current test title and clean it, to use it as file name
-		var filename = encodeURIComponent(testCase.title.replace(/\s+/g, '-'));
+		const filename = encodeURIComponent(testCase.title.replace(/\s+/g, '-'));
 		// build file path
-		var filePath = this.screenshotPath + filename + '.png';
+		const filePath = this.screenshotPath + filename + '.png';
+		if (!fs.existsSync(this.screenshotPath)) {
+			fs.mkdirSync(this.screenshotPath, {recursive: true});	// May only work recursively on Node 10.12+
+		}
 		// save screenshot
 		browser.saveScreenshot(filePath);
 		console.log('\n\tScreenshot location:', filePath, '\n');
