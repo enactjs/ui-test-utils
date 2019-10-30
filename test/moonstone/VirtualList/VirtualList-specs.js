@@ -1,6 +1,6 @@
 
 const Page = require('./VirtualListPage'),
-	{expectFocusedItem} = require('./VirtualList-utils');
+	{expectFocusedItem, expectNoFocusedItem} = require('./VirtualList-utils');
 
 describe('VirtualList', function () {
 
@@ -436,6 +436,21 @@ describe('VirtualList', function () {
 				expect(Page.buttonBottom.hasFocus(), 'focus 7').to.be.true();
 				expect(Page.list.getAttribute('data-keydown-events')).to.equal('4');
 			});
+		});
+
+		it('should hide Spotlight after scroll wheel [GT-21110]', function () {
+			// Step 3 - Position the pointer on an item.
+			Page.item(5).moveToObject();
+			// Verify Step 3: Spotlight is on 'Item 05'
+			expectFocusedItem(5, 'focus Item 5');
+			// Step 4. 5-way Spot another item.
+			Page.spotlightDown();
+			// Verify Step 4: Spotlight is on 'Item 06'
+			expectFocusedItem(6, 'focus Item 6');
+			// Step 5. Mouse wheel Down.
+			Page.mouseWheel(-40, Page.item(6));
+			// Verify step 5: Spotlight is not on any item after wheeling stopped.
+			expectNoFocusedItem();
 		});
 	});
 

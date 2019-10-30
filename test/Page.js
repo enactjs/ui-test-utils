@@ -77,6 +77,16 @@ class Page {
 		return browser;
 	}
 
+	/* global WheelEvent */
+	mouseWheel (_deltaY, _element) {
+		browser.execute(function (deltaY, element = document.body) {
+			const {x: clientX, y: clientY} = element.getBoundingClientRect();
+			const payload = {view: window, bubbles: true, cancelable: true, clientX, clientY, deltaY};
+			const event = new WheelEvent('wheel', payload);
+			element.dispatchEvent(event);
+		}, _deltaY, _element ? _element.value : null);
+	}
+
 	windowSpotlightBlur () {
 		browser.execute(
 			function () {
