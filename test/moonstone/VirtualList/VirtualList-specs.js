@@ -4,12 +4,12 @@ const Page = require('./VirtualListPage'),
 
 describe('VirtualList', function () {
 
-	// it('should meet initial conditions', function () {
-	// 	Page.open();
-	// 	expect(Page.buttonFocusableScrollbar.hasFocus(), 'focus').to.be.true();
-	// 	expect(Page.buttonScrollUp.getAttribute('disabled'), 'Up disabled').to.be.equal('true');
-	// 	expect(Page.buttonScrollDown.getAttribute('disabled'), 'Down disabled').to.be.null();
-	// });
+	it('should meet initial conditions', function () {
+		Page.open();
+		expect(Page.buttonFocusableScrollbar.hasFocus(), 'focus').to.be.true();
+		expect(Page.buttonScrollUp.getAttribute('disabled'), 'Up disabled').to.be.equal('true');
+		expect(Page.buttonScrollDown.getAttribute('disabled'), 'Down disabled').to.be.null();
+	});
 
 	describe('LTR locale', function () {
 		beforeEach(function () {
