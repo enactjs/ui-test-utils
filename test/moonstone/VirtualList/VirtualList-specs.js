@@ -1,6 +1,6 @@
 
 const Page = require('./VirtualListPage'),
-	{expectFocusedItem} = require('./VirtualList-utils');
+	{expectFocusedItem, expectNoFocusedItem} = require('./VirtualList-utils');
 
 describe('VirtualList', function () {
 
@@ -436,6 +436,21 @@ describe('VirtualList', function () {
 				expect(Page.buttonBottom.hasFocus(), 'focus 7').to.be.true();
 				expect(Page.list.getAttribute('data-keydown-events')).to.equal('4');
 			});
+		});
+
+		it('should hide focus after scroll wheel [GT-21110]', function () {
+			// Step 3
+			browser.moveToObject('#item3', 302, 50);
+			// Verify Step 3: Spotlight is on 'Item 003'
+			expectFocusedItem(3, 'step 3 focus');
+			// Step 4. 5-way focus.
+			Page.spotlightDown();
+			// Verify Step 4: Spotlight is on 'Item 004'
+			expectFocusedItem(4, 'step 4 focus');
+			// Step 5. Mouse wheel
+			Page.mouseWheel(-40, Page.item(4));
+			// Verify step 5: Spotlight is not on any item
+			expectNoFocusedItem();
 		});
 	});
 
