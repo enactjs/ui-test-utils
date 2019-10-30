@@ -22,35 +22,34 @@ TV_IP=10.0.1.1 npm run test-tv
 
 ```bash
 npm test -- --spec <pattern>
-```
 
-Note: `pattern` may need to be in quotes to prevent expansion on the command line if you use a regex.
-
-Example 1 - uses regular expression to match only tests that begin with 'Input'
-
-```bash
-npm test -- --spec "^Input"
-```
-
-Example 2 - match all tests that contain 'Input'
+Example 1 -  will execute tests for 'ExpandableInput' (at this time - review when we have more components)
 
 ```bash
 npm test -- --spec Input
 ```
 
+Example 2 - will execute tests for 'Input' component
+
+```bash
+npm test -- --spec /Input
+```
+
+Note: `pattern' can also be a regex and may need to be in quotes to prevent expansion on the command line if you use a regex.
+
 ## Optimizing Building
 
 ### Re-run tests without building
 
-The `--skip-build` option can be used to skip packing Enact and the `apps` directory.  Changes to the Enact version or test cases will not be picked up.
+The `--skip-build` option can be used to skip packing Enact and the `apps` directory.  Changes to the Enact version or test apps will not be picked up.
 
 ```bash
-npm test -- --tests "^Input" --spec Moonstone-specs --skip-build
+npm test -- --spec /Input --skip-build
 ```
 
 ### Re-pack the apps without running the tests
 
-To re-pack just the tests, without rebuilding Enact or running the tests, use `--pack-tests`. This is primarily useful when using `serve dist` (see below) to view test cases in the browser.
+To re-pack just the tests, without rebuilding Enact or running the tests, use `--pack-tests`. This is primarily useful when using `serve dist` (See **Loading sample apps in a browser** below) to view test apps in the browser.
 
 ```bash
 npm run pack-tests
