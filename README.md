@@ -4,7 +4,7 @@ Usage: `npm test`
 
 ## Creating tests
 
-Create an app for testing in `/apps` and create a corresponding test in `/tests`.
+Create an app for testing in **`/apps`** and create a corresponding test in **`/tests`**.
 
 The `Page` component contains useful methods for loading tests
 
@@ -23,7 +23,7 @@ TV_IP=10.0.1.1 npm run test-tv
 ```bash
 npm test -- --spec <pattern>
 
-Example 1 -  will execute tests for 'ExpandableInput' (at this time - review when we have more components)
+Example 1 -  will execute tests for 'ExpandableInput' (todo: review when we have more components)
 
 ```bash
 npm test -- --spec Input
@@ -35,7 +35,18 @@ Example 2 - will execute tests for 'Input' component
 npm test -- --spec /Input
 ```
 
-Note: `pattern' can also be a regex and may need to be in quotes to prevent expansion on the command line if you use a regex.
+Note: `pattern' can also be a regex and may need to be in quotes to prevent expansion on the command line.
+
+## Failed Test Screenshots
+
+When a test fails, a screenshot will be captured showing the state when it failed. The screenshots are saved to **`./errorShots/`**. The test run will display the filename for a failed test:
+
+Example:
+
+```none
+F
+	Screenshot location: ./errorShots/should-meet-initial-conditions.png
+```
 
 ## Optimizing Building
 

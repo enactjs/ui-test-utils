@@ -1,4 +1,5 @@
-const buildApps = require('./build-apps');
+const buildApps = require('./build-apps'),
+	fs = require('fs');
 
 const visibleBrowser = process.argv.includes('--visible');
 
@@ -177,7 +178,7 @@ exports.config = {
 		chai.use(dirtyChai);
 		global.expect = chai.expect;
 		chai.Should();
-	}
+	},
 	/**
 	 * Hook that gets executed before the suite starts
 	 * @param {Object} suite suite details
@@ -222,8 +223,22 @@ exports.config = {
 	 * Function to be executed after a test (in Mocha/Jasmine) or a step (in Cucumber) starts.
 	 * @param {Object} test test details
 	 */
-	// afterTest: function (test) {
-	// },
+	afterTest: function (testCase) {
+		// if test passed, ignore, else take and save screenshot.
+		if (testCase.passed) {
+			return;
+		}
+		// get current test title and clean it, to use it as file name
+		const filename = encodeURIComponent(testCase.title.replace(/\s+/g, '-'));
+		// build file path
+		const filePath = this.screenshotPath + filename + '.png';
+		if (!fs.existsSync(this.screenshotPath)) {
+			fs.mkdirSync(this.screenshotPath, {recursive: true});	// May only work recursively on Node 10.12+
+		}
+		// save screenshot
+		browser.saveScreenshot(filePath);
+		console.log('\n\tScreenshot location:', filePath, '\n');
+	}
 	/**
 	 * Hook that gets executed after the suite has ended
 	 * @param {Object} suite suite details
