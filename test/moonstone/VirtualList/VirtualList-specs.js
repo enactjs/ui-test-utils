@@ -452,7 +452,7 @@ describe('VirtualList', function () {
 				expectNoFocusedItem();
 			});
 
-			it.only('should enable and disable Paging Controls when reaching to the edge with 5-way and Channel Down [GT-21159]', function () {
+			it('should enable and disable Paging Controls when reaching to the edge with 5-way and Channel Down [GT-21159]', function () {
 				// Test (Jira) calls for 30 items only. Test uses default of 100 items.
 				Page.spotlightSelect();
 				Page.spotlightDown();
