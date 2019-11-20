@@ -82,8 +82,6 @@ describe('VirtualList', function () {
 			// Step 12. Press Channel Down.
 			Page.pageDown();
 			Page.delay(1000);
-			// Verify Step 12: 1. Spotlight hides.
-			expect(Page.list.hasFocus(), 'step 12 focus PAGE').to.be.false();
 		});
 
 		it('should focus back to Paging Controls with 5-way Right [GT-24811]', function () {
@@ -279,12 +277,12 @@ describe('VirtualList', function () {
 		});
 
 		it('should navigate between items and Paging Controls via 5-way Right [GT-21163]', function () {
-			// Test calls for 30 items only. Test uses defalt of 100 items.
+			// Test (Jira) calls for 30 items only. Test uses default of 100 items.
 			Page.spotlightSelect();
 			Page.spotlightDown();
 			// Step 5. Move focus to the first item ('Item 00').
 			Page.spotlightRight();
-			// Verify Step5: 1. Spotlight displays on the first item. 2. Up Paging Control (∧) is Disabled.
+			// Verify Step 5: 1. Spotlight displays on the first item. 2. Up Paging Control (∧) is Disabled.
 			expectFocusedItem(0, 'step 5.1 focus');
 			expect(Page.buttonScrollUp.getAttribute('disabled'), ' Step 5 Up disabled').to.be.equal('true');
 			// Step 6. 5-way Right.
@@ -438,19 +436,94 @@ describe('VirtualList', function () {
 			});
 		});
 
-		it('should hide Spotlight after scroll wheel [GT-21110]', function () {
+		describe('VirtualList with Wheeling', function () {
+			it('should hide Spotlight after scroll wheel [GT-21110]', function () {
 			// Step 3 - Position the pointer on an item.
-			Page.item(5).moveToObject();
-			// Verify Step 3: Spotlight is on 'Item 05'
-			expectFocusedItem(5, 'focus Item 5');
-			// Step 4. 5-way Spot another item.
-			Page.spotlightDown();
-			// Verify Step 4: Spotlight is on 'Item 06'
-			expectFocusedItem(6, 'focus Item 6');
-			// Step 5. Mouse wheel Down.
-			Page.mouseWheel(-40, Page.item(6));
-			// Verify step 5: Spotlight is not on any item after wheeling stopped.
-			expectNoFocusedItem();
+				Page.item(5).moveToObject();
+				// Verify Step 3: Spotlight is on 'Item 05'
+				expectFocusedItem(5, 'focus Item 5');
+				// Step 4. 5-way Spot another item.
+				Page.spotlightDown();
+				// Verify Step 4: Spotlight is on 'Item 06'
+				expectFocusedItem(6, 'focus Item 6');
+				// Step 5. Mouse wheel Down.
+				Page.mouseWheel(-40, Page.item(6));
+				// Verify step 5: Spotlight is not on any item after wheeling stopped.
+				expectNoFocusedItem();
+			});
+
+			it.only('should enable and disable Paging Controls when reaching to the edge with 5-way and Channel Down [GT-21159]', function () {
+				// Test (Jira) calls for 30 items only. Test uses default of 100 items.
+				Page.spotlightSelect();
+				Page.spotlightDown();
+				// Step 4. Move focus to the first item ('Item 00').
+				Page.spotlightRight();
+				// Verify Step 4: 1. Spotlight displays on the first item.
+				expectFocusedItem(0, 'focus Item 0');
+				// Verify Step 4: 2. Up Paging Control (∧) is Disabled.
+				expect(Page.buttonScrollUp.getAttribute('disabled'), 'Up disabled').to.be.equal('true');
+				// Verify Step 4: 3. Down Paging Control (∨) is Enabled.
+				expect(Page.buttonScrollDown.getAttribute('disabled'), 'Down enabled').to.be.null();
+				// Step 5. Press Channel Down.
+				Page.pageDown();
+				// Verify Step 5: 1. Spotlight hides.
+				expectNoFocusedItem();
+				// Verify Step 5: 2. The list Scrolls Up by page with animation.
+				// Verify Step 5: 3. Up Paging Control (∧) is Enabled.
+				expect(Page.buttonScrollUp.getAttribute('disabled'), 'Up enabled').to.be.null();
+				// Verify Step 5: 4. Down Paging Control (∨) is still Enabled.
+				expect(Page.buttonScrollDown.getAttribute('disabled'), 'Down enabled').to.be.null();
+				// Verify Step 5: 5. Spotlight is on the item below the pointer when the list stops.
+				Page.delay(1000);
+				expectFocusedItem(8, 'focus Item 8');
+				// Step 6. Press Channel Down.
+				Page.pageDown();
+				// Verify Step 6: 1. Spotlight hides.
+				expectNoFocusedItem();
+				// Verify Step 6: 2. The list Scrolls Up by page with animation.
+				// Verify Step 6: 3. Up Paging Control (∧) is still Enabled.
+				expect(Page.buttonScrollUp.getAttribute('disabled'), 'Up enabled').to.be.null();
+				// Verify Step 6: 4. Down Paging Control (∨) is still Enabled.
+				expect(Page.buttonScrollDown.getAttribute('disabled'), 'Down enabled').to.be.null();
+				// Verify Step 6: 5. Spotlight is on the item below the pointer when the list stops.
+				Page.delay(1000);
+				expectFocusedItem(16, 'focus Item 16');
+				// Step 7. 5-way Down several times to scroll down the list.
+				for (let i = 16; i <= 29; ++i) {
+					Page.spotlightDown();
+					Page.delay(80);
+				}
+				expectFocusedItem(30, 'focus Item 30');
+				// Verify Step 7: Up Paging Control (∧) is still Enabled.
+				expect(Page.buttonScrollUp.getAttribute('disabled'), 'Up enabled').to.be.null();
+				// Step 8. 5-way Spot the last item.
+				for (let i = 30; i < 99; ++i) {
+					Page.spotlightDown();
+					Page.delay(80);
+				}
+				// Verify Step 8: 1. Spotlight displays on the last item.
+				Page.delay(1000);
+				expectFocusedItem(99, 'focus Item 99');
+				// Verify Step 8: 2. Up Paging Control (∧) is still Enabled.
+				Page.delay(1000);
+				expect(Page.buttonScrollUp.getAttribute('disabled'), 'Up enabled').to.be.null();
+				// Verify Step 8: 3. Down Paging Control (∨) is Disabled.
+				Page.delay(1000);
+				expect(Page.buttonScrollDown.getAttribute('disabled'), 'Down disabled').to.be.equal('true');
+				// Step 9: 5-way Spot the first item.
+				for (let i = 0; i < 99; ++i) {
+					Page.spotlightUp();
+					Page.delay(80);
+				}
+				// Verify Step 9: 1. Spotlight displays on the first item.
+				Page.delay(1000);
+				expectFocusedItem(0, 'focus Item 0');
+				// Verify Step 9: 2. Up Paging Control (∧) is Disabled.
+				Page.delay(1000);
+				expect(Page.buttonScrollUp.getAttribute('disabled'), 'Up disabled').to.be.equal('true');
+				// Verify Step 9: 3. Down Paging Control (∨) is Enabled.
+				expect(Page.buttonScrollDown.getAttribute('disabled'), 'Down enabled').to.be.null();
+			});
 		});
 	});
 
@@ -470,4 +543,5 @@ describe('VirtualList', function () {
 			expect(Page.buttonScrollUp.hasFocus(), 'step 3 focus').to.be.true();
 		});
 	});
+
 });
