@@ -309,6 +309,179 @@ describe('VirtualList', function () {
 			expect(Page.buttonScrollDown.getAttribute('disabled'), ' Step 7 Down disabled').to.be.equal('true');
 		});
 
+		it('should enable and disable Paging Controls when reaching to the edge with 5-way and Channel Down [GT-21159]', function () {
+			// Test (Jira) calls for 30 items only. Test uses default of 100 items.
+			Page.spotlightSelect();
+			Page.spotlightDown();
+			// Step 4. Move focus to the first item ('Item 00').
+			Page.spotlightRight();
+			// Verify Step 4: 1. Spotlight displays on the first item.
+			expectFocusedItem(0, 'focus Item 0');
+			// Verify Step 4: 2. Up Paging Control (∧) is Disabled.
+			expect(Page.buttonScrollUp.getAttribute('disabled'), 'Up disabled').to.be.equal('true');
+			// Verify Step 4: 3. Down Paging Control (∨) is Enabled.
+			expect(Page.buttonScrollDown.getAttribute('disabled'), 'Down enabled').to.be.null();
+			// Step 5. Press Channel Down.
+			Page.pageDown();
+			// Verify Step 5: 1. Spotlight hides.
+			expectNoFocusedItem();
+			// Verify Step 5: 2. The list Scrolls Up by page with animation.
+			// Verify Step 5: 3. Up Paging Control (∧) is Enabled.
+			expect(Page.buttonScrollUp.getAttribute('disabled'), 'Up enabled').to.be.null();
+			// Verify Step 5: 4. Down Paging Control (∨) is still Enabled.
+			expect(Page.buttonScrollDown.getAttribute('disabled'), 'Down enabled').to.be.null();
+			// Verify Step 5: 5. Spotlight is on the item below the pointer when the list stops.
+			Page.delay(1000);
+			expectFocusedItem(8, 'focus Item 8');
+			// Step 6. Press Channel Down.
+			Page.pageDown();
+			// Verify Step 6: 1. Spotlight hides.
+			expectNoFocusedItem();
+			// Verify Step 6: 2. The list Scrolls Up by page with animation.
+			// Verify Step 6: 3. Up Paging Control (∧) is still Enabled.
+			expect(Page.buttonScrollUp.getAttribute('disabled'), 'Up enabled').to.be.null();
+			// Verify Step 6: 4. Down Paging Control (∨) is still Enabled.
+			expect(Page.buttonScrollDown.getAttribute('disabled'), 'Down enabled').to.be.null();
+			// Verify Step 6: 5. Spotlight is on the item below the pointer when the list stops.
+			Page.delay(1000);
+			expectFocusedItem(16, 'focus Item 16');
+			// Step 7. 5-way Down several times to scroll down the list.
+			for (let i = 16; i <= 29; ++i) {
+				Page.spotlightDown();
+				Page.delay(80);
+			}
+			expectFocusedItem(30, 'focus Item 30');
+			// Verify Step 7: Up Paging Control (∧) is still Enabled.
+			expect(Page.buttonScrollUp.getAttribute('disabled'), 'Up enabled').to.be.null();
+			// Step 8. 5-way Spot the last item.
+			for (let i = 30; i < 99; ++i) {
+				Page.spotlightDown();
+				Page.delay(80);
+			}
+			// Verify Step 8: 1. Spotlight displays on the last item.
+			Page.delay(1000);
+			expectFocusedItem(99, 'focus Item 99');
+			// Verify Step 8: 2. Up Paging Control (∧) is still Enabled.
+			Page.delay(1000);
+			expect(Page.buttonScrollUp.getAttribute('disabled'), 'Up enabled').to.be.null();
+			// Verify Step 8: 3. Down Paging Control (∨) is Disabled.
+			Page.delay(1000);
+			expect(Page.buttonScrollDown.getAttribute('disabled'), 'Down disabled').to.be.equal('true');
+			// Step 9: 5-way Spot the first item.
+			for (let i = 0; i < 99; ++i) {
+				Page.spotlightUp();
+				Page.delay(80);
+			}
+			// Verify Step 9: 1. Spotlight displays on the first item.
+			Page.delay(1000);
+			expectFocusedItem(0, 'focus Item 0');
+			// Verify Step 9: 2. Up Paging Control (∧) is Disabled.
+			Page.delay(1000);
+			expect(Page.buttonScrollUp.getAttribute('disabled'), 'Up disabled').to.be.equal('true');
+			// Verify Step 9: 3. Down Paging Control (∨) is Enabled.
+			expect(Page.buttonScrollDown.getAttribute('disabled'), 'Down enabled').to.be.null();
+		});
+
+
+		it('Spotlight Stays on Item that Comes into View [GT-21539]', function () {
+			Page.spotlightSelect();
+			Page.spotlightDown();
+			Page.spotlightRight();
+			expectFocusedItem(0, 'focus Item 0');
+			// Step 3. 1. 5-way Spot the second item ('*Item 001*').
+			Page.spotlightDown();
+			// Verify Step 3: 1. Spotlight stays on the last item that comes into view.
+			expectFocusedItem(1, 'focus Item 1');
+			// Step 3. 2. 5-way Down pass '*Item 010*' while observing the location of the Spotlight.
+			// Verify Step 3: 2. All content and lines between the content display.
+			for (let i = 2; i < 12; ++i) {
+				Page.spotlightDown();
+				Page.delay(80);
+				expectFocusedItem(i, 'focus Item + i');
+			}
+			expectFocusedItem(11, 'focus Item 11');
+			// Step 4. 5-way Up until the Top of the list is reached while observing the location of the spotlight.
+			// Verify Step 4: 1. Spotlight stays on the first item that comes into view.
+			// Verify Step 4: 2. All content and lines between the content display.
+			for (let i = 10; i > -1; i--) {
+				Page.spotlightUp();
+				Page.delay(80);
+				expectFocusedItem(i, 'focus Item + i');
+			}
+			// Step 5. 1. Hover the second item ('*Item 001*').
+			Page.showPointerByKeycode();
+			Page.item(1).moveToObject();
+			expectFocusedItem(1, 'focus Item 1');
+			// Step 5. 2. Wheel Down a couple times.
+			Page.mouseWheel(-40, Page.item(9));
+			// Verify Step 5: 1. Spotlight *disappears* when Wheeling.
+			expectNoFocusedItem();
+			// Step 5. 3. Move the pointer after the list scroll Stops.
+			Page.showPointerByKeycode();
+			Page.delay(80);
+			// Verify Step 5: 2. Spotlight displays on the item where the pointer is positioned after the list scroll Stops.
+			// we need to be able to verify this.
+		});
+		// ***
+		// it.only('Items Animate via 5-way Up and Down on Last Item on the page - vertical [GT-21437]', function () {
+		// 	Page.spotlightSelect();
+		// 	Page.spotlightDown();
+		// 	// Step 3. 1. Position the pointer on the last item in a current page.
+		// 	Need to use the pointer Page.spotlightRight();
+
+		// 	// Verify Step 3: Spotlight displays on the item.
+
+		//  // Step 4. 5-way Down to the item below the last item on the current page.
+
+		// // Verify Step 4: 1. The list Scrolled Up.
+
+		// // Verify Step 4: 2 The Spotted item is placed on the Bottom.
+
+		// // Step 5: 5-way Up to the previous item.
+
+		// // Verify Step 5: 1. The list *does not* Scroll Down.
+		//
+		// // Verify Step 5: 2. The Spotted item is placed above the item on the Bottom.
+		//
+		// // Step 6: 5-way Up to the first item ('*Item 000*').
+		//
+		// //Verify Step 6: 1. The list Scroll Down.
+		//
+		// //Verify Step 6: 2. The Spotted item is placed on the Top.
+
+
+		// 	for (let i = 0; i < 9; ++i) {
+		// 		Page.spotlightDown();
+		// 		Page.delay(80);
+		// 	}
+		// 	Page.delay(1000);
+		// 	expectFocusedItem(10, 'focus Item 10');
+		// });
+
+		it.only('Items Animate via Clicking on Page Controls [GT-21571]', function () {
+			// Page.spotlightSelect();
+			Page.spotlightDown();
+			Page.spotlightRight();
+			Page.spotlightRight();
+			// Page.spotlightDown();
+			// Step 3. Click on Down Paging Control (∨).
+			expect(Page.listSize.height).to.equal(Page.scrollBarSize.height);
+			console.log('list size height = ' +Page.listSize.height);
+			Page.buttonScrollDown.click();
+			expect(Page.buttonScrollUp.getAttribute('disabled'), 'Up is enabled').to.be.null();
+			// Verify Step 3: The list Scrolls 66% of the Scroller height Up.
+			// TO DO
+			// Step 4. Click on Up Paging Control (∧).
+			Page.buttonScrollUp.click();
+			Page.delay(1500);
+			expect(Page.buttonScrollUp.getAttribute('disabled'), 'Up disabled').to.be.equal('true');
+			// Verify Step 4: The list Scrolls 66% of the Scroller height Down.
+			// TO DO
+			let mytopitem = Page.topVisibleItemId();
+			console.log('mytop item = ' +mytopitem);
+		});
+
+
 		describe('onKeyDown event behavior [GT-27663]', function () {
 			it('should prevent bubbling while navigating within a list', function () {
 				Page.spotlightSelect();
@@ -452,77 +625,65 @@ describe('VirtualList', function () {
 				expectNoFocusedItem();
 			});
 
-			it('should enable and disable Paging Controls when reaching to the edge with 5-way and Channel Down [GT-21159]', function () {
-				// Test (Jira) calls for 30 items only. Test uses default of 100 items.
+			// it.only('Items Animate Upward and Downward via Wheel Down and Up [GT-21527]', function () {
+			// 	Page.spotlightSelect();
+			// 	Page.spotlightDown();
+			// 	// Step 3. 1. Hover the first item ('Item 00').
+			// 	Need to use the pointer Page.spotlightRight();
+
+			// 	// Verify Step 3: Spotlight displays on the first item.
+			// 	expectFocusedItem(0, 'focus Item 0');
+
+			// // Step 3. 2. Wheel Down *3 times*.
+
+			// // Verify Step 3: The content Animates Upward *3 times*.
+
+			// // Step 4: 1. Hover an item in the middle of the current page.
+
+			// // Verify Step 4: 1. Spotlight displays on an item in the middle of the page.
+
+			// // Step 4: 2. Wheel Up *3 times*.
+
+			// // Verify Step 4: The content Animates Downward *3 times*.
+
+			it('Spotlight Stays on Item that Comes into View [GT-21539]', function () {
 				Page.spotlightSelect();
 				Page.spotlightDown();
-				// Step 4. Move focus to the first item ('Item 00').
 				Page.spotlightRight();
-				// Verify Step 4: 1. Spotlight displays on the first item.
 				expectFocusedItem(0, 'focus Item 0');
-				// Verify Step 4: 2. Up Paging Control (∧) is Disabled.
-				expect(Page.buttonScrollUp.getAttribute('disabled'), 'Up disabled').to.be.equal('true');
-				// Verify Step 4: 3. Down Paging Control (∨) is Enabled.
-				expect(Page.buttonScrollDown.getAttribute('disabled'), 'Down enabled').to.be.null();
-				// Step 5. Press Channel Down.
-				Page.pageDown();
-				// Verify Step 5: 1. Spotlight hides.
-				expectNoFocusedItem();
-				// Verify Step 5: 2. The list Scrolls Up by page with animation.
-				// Verify Step 5: 3. Up Paging Control (∧) is Enabled.
-				expect(Page.buttonScrollUp.getAttribute('disabled'), 'Up enabled').to.be.null();
-				// Verify Step 5: 4. Down Paging Control (∨) is still Enabled.
-				expect(Page.buttonScrollDown.getAttribute('disabled'), 'Down enabled').to.be.null();
-				// Verify Step 5: 5. Spotlight is on the item below the pointer when the list stops.
-				Page.delay(1000);
-				expectFocusedItem(8, 'focus Item 8');
-				// Step 6. Press Channel Down.
-				Page.pageDown();
-				// Verify Step 6: 1. Spotlight hides.
-				expectNoFocusedItem();
-				// Verify Step 6: 2. The list Scrolls Up by page with animation.
-				// Verify Step 6: 3. Up Paging Control (∧) is still Enabled.
-				expect(Page.buttonScrollUp.getAttribute('disabled'), 'Up enabled').to.be.null();
-				// Verify Step 6: 4. Down Paging Control (∨) is still Enabled.
-				expect(Page.buttonScrollDown.getAttribute('disabled'), 'Down enabled').to.be.null();
-				// Verify Step 6: 5. Spotlight is on the item below the pointer when the list stops.
-				Page.delay(1000);
-				expectFocusedItem(16, 'focus Item 16');
-				// Step 7. 5-way Down several times to scroll down the list.
-				for (let i = 16; i <= 29; ++i) {
+				// Step 3. 1. 5-way Spot the second item ('*Item 001*').
+				Page.spotlightDown();
+				// Verify Step 3: 1. Spotlight stays on the last item that comes into view.
+				expectFocusedItem(1, 'focus Item 1');
+				// Step 3. 2. 5-way Down pass '*Item 010*' while observing the location of the Spotlight.
+				// Verify Step 3: 2. All content and lines between the content display.
+				for (let i = 2; i < 12; ++i) {
 					Page.spotlightDown();
 					Page.delay(80);
+					expectFocusedItem(i, 'focus Item + i');
 				}
-				expectFocusedItem(30, 'focus Item 30');
-				// Verify Step 7: Up Paging Control (∧) is still Enabled.
-				expect(Page.buttonScrollUp.getAttribute('disabled'), 'Up enabled').to.be.null();
-				// Step 8. 5-way Spot the last item.
-				for (let i = 30; i < 99; ++i) {
-					Page.spotlightDown();
-					Page.delay(80);
-				}
-				// Verify Step 8: 1. Spotlight displays on the last item.
-				Page.delay(1000);
-				expectFocusedItem(99, 'focus Item 99');
-				// Verify Step 8: 2. Up Paging Control (∧) is still Enabled.
-				Page.delay(1000);
-				expect(Page.buttonScrollUp.getAttribute('disabled'), 'Up enabled').to.be.null();
-				// Verify Step 8: 3. Down Paging Control (∨) is Disabled.
-				Page.delay(1000);
-				expect(Page.buttonScrollDown.getAttribute('disabled'), 'Down disabled').to.be.equal('true');
-				// Step 9: 5-way Spot the first item.
-				for (let i = 0; i < 99; ++i) {
+				expectFocusedItem(11, 'focus Item 11');
+				// Step 4. 5-way Up until the Top of the list is reached while observing the location of the spotlight.
+				// Verify Step 4: 1. Spotlight stays on the first item that comes into view.
+				// Verify Step 4: 2. All content and lines between the content display.
+				for (let i = 10; i > -1; i--) {
 					Page.spotlightUp();
 					Page.delay(80);
+					expectFocusedItem(i, 'focus Item + i');
 				}
-				// Verify Step 9: 1. Spotlight displays on the first item.
-				Page.delay(1000);
-				expectFocusedItem(0, 'focus Item 0');
-				// Verify Step 9: 2. Up Paging Control (∧) is Disabled.
-				Page.delay(1000);
-				expect(Page.buttonScrollUp.getAttribute('disabled'), 'Up disabled').to.be.equal('true');
-				// Verify Step 9: 3. Down Paging Control (∨) is Enabled.
-				expect(Page.buttonScrollDown.getAttribute('disabled'), 'Down enabled').to.be.null();
+				// Step 5. 1. Hover the second item ('*Item 001*').
+				Page.showPointerByKeycode();
+				Page.item(1).moveToObject();
+				expectFocusedItem(1, 'focus Item 1');
+				// Step 5. 2. Wheel Down a couple times.
+				Page.mouseWheel(-40, Page.item(9));
+				// Verify Step 5: 1. Spotlight *disappears* when Wheeling.
+				expectNoFocusedItem();
+				// Step 5. 3. Move the pointer after the list scroll Stops.
+				Page.showPointerByKeycode();
+				Page.delay(80);
+				// Verify Step 5: 2. Spotlight displays on the item where the pointer is positioned after the list scroll Stops.
+				// we need to be able to verify this.
 			});
 		});
 	});

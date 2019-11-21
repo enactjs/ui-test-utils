@@ -35,15 +35,57 @@ class VirtualListPage extends Page {
 	}
 
 	/* global document */
+	// topVisibleItemId () {
+	// 	return browser.execute(function () {
+	// 		const scroller = document.querySelector(scrollableSelector),
+	// 			{top, left, width} = scroller.getBoundingClientRect().bottom;
+	//
+	// 		let currentY = top + 1,
+	// 			middle = left + Math.floor((left + width)/2);
+	//
+	// 		for (let i = 0; i < 10; i++) {
+	// 			const el = document.elementFromPoint(currentY, middle);
+	//
+	// 			// If the element at the point has an id, return it
+	// 			if (el.id) {
+	// 				return el.id;
+	// 			}
+	// 			// else, it's inside the list itself, increment y and try again
+	// 		}
+	// 		return 'unknown';	// we didn't find it?!
+	// 	}).value;
+	// }
 	topVisibleItemId () {
-		return document.execute(function () {
-			const scroller = document.querySelector(scrollableSelector),
-				{top, left, width} = scroller.getBoundingClientRect().bottom;
-
+		return browser.execute(function (_scrollableSelector) {
+			const scroller = document.querySelector(_scrollableSelector),
+				{top, left, width} = scroller.getBoundingClientRect();
 			let currentY = top + 1,
 				middle = left + Math.floor((left + width)/2);
-
 			for (let i = 0; i < 10; i++) {
+				const el = document.elementFromPoint(currentY, middle);
+				// If the element at the point has an id, return it
+				if (el.id) {
+					return el.id;
+				}
+				// else, it's inside the list itself, increment y and try again
+			}
+			return 'unknown';	// we didn't find it?!
+		}, scrollableSelector).value;
+	}
+
+
+
+	/* global document */
+	bottomVisibleItemId () {
+		return browser.execute(function () {
+			const scroller = document.querySelector(scrollableSelector),
+				{bottom, left, width} = scroller.getBoundingClientRect().bottom;
+
+			let currentY = bottom + 1,
+				middle = left + Math.floor((left + width)/2);
+
+			// for (let i = 0; i < 10; i++) {
+			for (let i = 10; i < 0; i++) {
 				const el = document.elementFromPoint(currentY, middle);
 
 				// If the element at the point has an id, return it
