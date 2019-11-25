@@ -42,10 +42,14 @@ class VirtualListPage extends Page {
 			let currentY = top + 1,
 				middle = left + Math.floor((left + width)/2);
 			for (let i = 0; i < 10; i++) {
-				const el = document.elementFromPoint(middle, currentY + i);
-				// If the element at the point has an id, return it
-				if (el && el.id) {
-					return el.id;
+				let el = document.elementFromPoint(middle, currentY + i);
+				// Search parents for the row ID
+				while (el && el !== scroller && el !== document.body) {
+					if (el.id) {
+						return el.id;
+					} else {
+						el = el.parentNode;
+					}
 				}
 				// else, it's inside the list itself, increment y and try again
 			}
@@ -63,11 +67,15 @@ class VirtualListPage extends Page {
 				middle = left + Math.floor((left + width)/2);
 
 			for (let i = 0; i < 10; i++) {
-				const el = document.elementFromPoint(middle, currentY - i);
+				let el = document.elementFromPoint(middle, currentY - i);
 
-				// If the element at the point has an id, return it
-				if (el && el.id) {
-					return el.id;
+				// Search parents for the row ID
+				while (el && el !== scroller && el !== document.body) {
+					if (el.id) {
+						return el.id;
+					} else {
+						el = el.parentNode;
+					}
 				}
 				// else, it's inside the list itself, decrement y and try again
 			}

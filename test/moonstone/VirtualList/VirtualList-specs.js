@@ -479,6 +479,8 @@ describe('VirtualList', function () {
 			// TO DO
 			let mytopitem = Page.topVisibleItemId();
 			console.log('mytop item = ' +mytopitem);
+			let mybottomitem = Page.bottomVisibleItemId();
+			console.log('mybottom item = ' +mybottomitem);
 		});
 
 
