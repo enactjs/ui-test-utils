@@ -30,8 +30,8 @@ class VirtualListPage extends Page {
 	get list () { return element('#list', browser); }
 	get listSize () { return browser.getElementSize(`${scrollableSelector}`); }
 
-	item (num) {
-		return element(`#item${num}`, browser);
+	item (id) {
+		return element(`#${typeof id === 'number' ? `item${id}` : id}`, browser);
 	}
 
 	/* global document */
@@ -81,6 +81,13 @@ class VirtualListPage extends Page {
 			}
 			return 'unknown';	// we didn't find it?!
 		}, scrollableSelector).value;
+	}
+
+	/* global document */
+	itemOffsetTopById (id) {
+		return browser.execute(function (_element) {
+			return _element.getBoundingClientRect().top;
+		}, this.item(id).value).value;
 	}
 }
 
