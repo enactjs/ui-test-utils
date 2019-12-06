@@ -30,30 +30,64 @@ class VirtualListPage extends Page {
 	get list () { return element('#list', browser); }
 	get listSize () { return browser.getElementSize(`${scrollableSelector}`); }
 
-	item (num) {
-		return element(`#item${num}`, browser);
+	item (id) {
+		return element(`#${typeof id === 'number' ? `item${id}` : id}`, browser);
 	}
 
 	/* global document */
 	topVisibleItemId () {
-		return document.execute(function () {
-			const scroller = document.querySelector(scrollableSelector),
-				{top, left, width} = scroller.getBoundingClientRect().bottom;
-
+		return browser.execute(function (_scrollableSelector) {
+			const scroller = document.querySelector(_scrollableSelector),
+				{top, left, width} = scroller.getBoundingClientRect();
 			let currentY = top + 1,
 				middle = left + Math.floor((left + width)/2);
-
 			for (let i = 0; i < 10; i++) {
-				const el = document.elementFromPoint(currentY, middle);
-
-				// If the element at the point has an id, return it
-				if (el.id) {
-					return el.id;
+				let el = document.elementFromPoint(middle, currentY + i);
+				// Search parents for the row ID
+				while (el && el !== scroller && el !== document.body) {
+					if (el.id) {
+						return el.id;
+					} else {
+						el = el.parentNode;
+					}
 				}
 				// else, it's inside the list itself, increment y and try again
 			}
 			return 'unknown';	// we didn't find it?!
-		}).value;
+		}, scrollableSelector).value;
+	}
+
+	/* global document */
+	bottomVisibleItemId () {
+		return browser.execute(function (_scrollableSelector) {
+			const scroller = document.querySelector(_scrollableSelector),
+				{bottom, left, width} = scroller.getBoundingClientRect();
+
+			let currentY = bottom - 1,
+				middle = left + Math.floor((left + width)/2);
+
+			for (let i = 0; i < 10; i++) {
+				let el = document.elementFromPoint(middle, currentY - i);
+
+				// Search parents for the row ID
+				while (el && el !== scroller && el !== document.body) {
+					if (el.id) {
+						return el.id;
+					} else {
+						el = el.parentNode;
+					}
+				}
+				// else, it's inside the list itself, decrement y and try again
+			}
+			return 'unknown';	// we didn't find it?!
+		}, scrollableSelector).value;
+	}
+
+	/* global document */
+	itemOffsetTopById (id) {
+		return browser.execute(function (_element) {
+			return _element.getBoundingClientRect().top;
+		}, this.item(id).value).value;
 	}
 }
 
