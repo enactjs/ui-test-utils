@@ -68,7 +68,6 @@ class VirtualListPage extends Page {
 
 			for (let i = 0; i < 10; i++) {
 				let el = document.elementFromPoint(middle, currentY - i);
-
 				// Search parents for the row ID
 				while (el && el !== scroller && el !== document.body) {
 					if (el.id) {

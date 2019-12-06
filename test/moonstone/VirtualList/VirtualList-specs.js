@@ -458,32 +458,6 @@ describe('VirtualList', function () {
 		// 	expectFocusedItem(10, 'focus Item 10');
 		// });
 
-		it.only('Items Animate via Clicking on Page Controls [GT-21571]', function () {
-			// Page.spotlightSelect();
-			Page.spotlightDown();
-			Page.spotlightRight();
-			Page.spotlightRight();
-			// Page.spotlightDown();
-			// Step 3. Click on Down Paging Control (∨).
-			expect(Page.listSize.height).to.equal(Page.scrollBarSize.height);
-			console.log('list size height = ' +Page.listSize.height);
-			Page.buttonScrollDown.click();
-			expect(Page.buttonScrollUp.getAttribute('disabled'), 'Up is enabled').to.be.null();
-			// Verify Step 3: The list Scrolls 66% of the Scroller height Up.
-			// TO DO
-			// Step 4. Click on Up Paging Control (∧).
-			Page.buttonScrollUp.click();
-			Page.delay(1500);
-			expect(Page.buttonScrollUp.getAttribute('disabled'), 'Up disabled').to.be.equal('true');
-			// Verify Step 4: The list Scrolls 66% of the Scroller height Down.
-			// TO DO
-			let mytopitem = Page.topVisibleItemId();
-			console.log('mytop item = ' +mytopitem);
-			let mybottomitem = Page.bottomVisibleItemId();
-			console.log('mybottom item = ' +mybottomitem);
-		});
-
-
 		describe('onKeyDown event behavior [GT-27663]', function () {
 			it('should prevent bubbling while navigating within a list', function () {
 				Page.spotlightSelect();
