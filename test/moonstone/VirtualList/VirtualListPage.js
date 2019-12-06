@@ -30,8 +30,8 @@ class VirtualListPage extends Page {
 	get list () { return element('#list', browser); }
 	get listSize () { return browser.getElementSize(`${scrollableSelector}`); }
 
-	item (num) {
-		return element(`#item${num}`, browser);
+	item (id) {
+		return element(`#${typeof id === 'number' ? `item${id}` : id}`, browser);
 	}
 
 	/* global document */
@@ -40,7 +40,7 @@ class VirtualListPage extends Page {
 			const scroller = document.querySelector(_scrollableSelector),
 				{top, left, width} = scroller.getBoundingClientRect();
 			let currentY = top + 1,
-				middle = left + Math.floor((left + width)/2);
+				middle = left + Math.floor((left + width) / 2);
 			for (let i = 0; i < 10; i++) {
 				let el = document.elementFromPoint(middle, currentY + i);
 				// Search parents for the row ID
@@ -64,10 +64,11 @@ class VirtualListPage extends Page {
 				{bottom, left, width} = scroller.getBoundingClientRect();
 
 			let currentY = bottom - 1,
-				middle = left + Math.floor((left + width)/2);
+				middle = left + Math.floor((left + width) / 2);
 
 			for (let i = 0; i < 10; i++) {
 				let el = document.elementFromPoint(middle, currentY - i);
+
 				// Search parents for the row ID
 				while (el && el !== scroller && el !== document.body) {
 					if (el.id) {
@@ -80,6 +81,13 @@ class VirtualListPage extends Page {
 			}
 			return 'unknown';	// we didn't find it?!
 		}, scrollableSelector).value;
+	}
+
+	/* global document */
+	itemOffsetTopById (id) {
+		return browser.execute(function (_element) {
+			return _element.getBoundingClientRect().top;
+		}, this.item(id).value).value;
 	}
 }
 

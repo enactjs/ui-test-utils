@@ -662,6 +662,41 @@ describe('VirtualList', function () {
 				// we need to be able to verify this.
 			});
 		});
+
+		it('Items Animate via Clicking on Page Controls [GT-21571]', function () {
+			const scrollDistance = Math.round(Page.listSize.height * 0.66);
+			let elementId, initialTop, newTop, travelDistance;
+			Page.spotlightDown();
+			Page.spotlightRight();
+			Page.spotlightRight();
+			// Step 3. Click on Down Paging Control (∨).
+			expect(Page.listSize.height).to.equal(Page.scrollBarSize.height);
+			elementId = Page.bottomVisibleItemId();
+			initialTop = Page.itemOffsetTopById(elementId);
+			Page.buttonScrollDown.click();
+			Page.delay(1500);
+			expect(Page.buttonScrollUp.getAttribute('disabled'), 'Up is enabled').to.be.null();
+			// Verify Step 3: The list Scrolls 66% of the Scroller height Up.
+			newTop = Page.itemOffsetTopById(elementId);
+			travelDistance = initialTop - newTop;
+			expect(travelDistance === scrollDistance).to.be.true();
+			// scroll down to get a valid test for the next step
+			Page.buttonScrollDown.click();
+			Page.delay(1500);
+			// Step 4. Click on Up Paging Control (∧).
+			elementId = Page.topVisibleItemId();
+			initialTop = Page.itemOffsetTopById(elementId);
+			Page.buttonScrollUp.click();
+			Page.delay(1500);
+			// Verify Step 4: The list Scrolls 66% of the Scroller height Down.
+			newTop = Page.itemOffsetTopById(elementId);
+			if (initialTop < 0) {
+				travelDistance = Math.abs(initialTop) + newTop;
+			} else {
+				travelDistance = newTop - initialTop;
+			}
+			expect(travelDistance === scrollDistance).to.be.true();
+		});
 	});
 
 	describe('RTL locale', function () {
