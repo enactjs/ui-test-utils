@@ -2,20 +2,20 @@
 const Page = require('../../Page.js');
 
 class AgateRadioItemInterface {
-	constructor(id) {
+	constructor (id) {
 		this.id = id;
 	}
 
-	focus() {
+	focus () {
 		return browser.selectorExecute(`#${this.id}`, (els) => els && !els[0].focus());
 	}
 
-	get self() { return browser.element(`#${this.id}`); }
+	get self () { return browser.element(`#${this.id}`); }
 }
 
 
 class AgateRadioItemPage extends Page {
-	constructor() {
+	constructor () {
 		super();
 		this.title = 'Agate RadioItem Test';
 		const radioDefault = new AgateRadioItemInterface('radioItem1');
