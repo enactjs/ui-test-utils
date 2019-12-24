@@ -82,6 +82,8 @@ describe('VirtualList', function () {
 			// Step 12. Press Channel Down.
 			Page.pageDown();
 			Page.delay(1000);
+			// Verify Step 12: 1. Spotlight hides. 2. The list Scrolls Up by page with animation. 3. The list stops scrolling. 4. Spotlight still hides (for a few seconds).
+			expectNoFocusedItem();  // Check that Spotlight hides only.
 		});
 
 		it('should focus back to Paging Controls with 5-way Right [GT-24811]', function () {
@@ -130,10 +132,10 @@ describe('VirtualList', function () {
 			// Verify Step 6: 1. The list *does not* Scroll to the Bottom. 2. Spotlight is on the close button 'x'.
 			expect(Page.buttonTop.hasFocus(), 'step 6 focus').to.be.true();  // buttonTop replaces the X button
 			// Step 7: 1. Wheel Down on the list to the last item.
-			// Page.mouseWheel(40, Page.item(6));  // currently not working as expected so using 5-way Down temporary
+			// Page.mouseWheel(40, Page.item(6));  // currently not working as expected so using 5-way Down temporary - to follow up with ENYO-6178
 			for (let i = 0; i < 100; ++i) {
 				Page.spotlightDown();
-				Page.delay(40); // TODO: 80 is an arbitrary value to help provide expected behavior between rapidly repeating keydown events
+				Page.delay(40); // TODO: This is an arbitrary value to help provide expected behavior between rapidly repeating keydown events
 			}
 			// Step 7: 2. Click the last item.
 			Page.spotlightSelect();
@@ -142,9 +144,11 @@ describe('VirtualList', function () {
 			expectFocusedItem(99, 'step 7 focus');
 			// Step 8: 5-way Down
 			Page.spotlightDown();
+			Page.spotlightDown(); // 1 extra 5-way down to check Spotlight does not pass buttonBottom when wrap is off.
 			Page.delay(1000);
 			// Verify Step 8: 1. The list *does not* Scroll to the Top. 2. Spotlight stays on the last item.
-			expect(Number((Page.bottomVisibleItemId()).slice(4)) === 99);
+			// Checking focus is on buttonBottom instead of last item since 5-way Down on last item using this app takes Spotlight to buttonBottom.
+			expect(Page.buttonBottom.hasFocus(), 'step 8 focus').to.be.true();
 		});
 
 		it('should have same height list and scrollbar [GT-22079]', function () {
