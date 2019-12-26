@@ -6,6 +6,11 @@ class AgateInputPage extends Page {
 		super();
 		this.title = 'Agate Input Test';
 	}
+
+	open (urlExtra) {
+		super.open('Agate-Input-View', urlExtra);
+	}
+
 	get disabledInput () { return browser.element('#input5'); }
 }
 

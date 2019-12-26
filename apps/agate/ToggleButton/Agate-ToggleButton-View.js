@@ -11,7 +11,6 @@ const app = (props) => <div {...props}>
 				Missing Toggle Label
 			</ToggleButton>
 		</div>
-
 		<div>
 			<ToggleButton
 				id="toggleButton2"

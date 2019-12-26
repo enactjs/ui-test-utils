@@ -10,7 +10,9 @@ class AgateToggleButtonInterface {
 		return browser.selectorExecute(`#${this.id}`, (els) => els && !els[0].focus());
 	}
 	get self () { return browser.element(`#${this.id}`); }
-	get isSmall () { return browser.isExisting(`#${this.id}.enact_moonstone_ToggleButton_ToggleButton_small`); }
+	get valueText () { return browser.element(`#${this.id}`); }
+	get isSelected () { return browser.element(`#${this.id}`); }
+	get isInline () { return browser.element(`#${this.id}`); }
 }
 
 
@@ -25,7 +27,7 @@ class AgateToggleButtonPage extends Page {
 	}
 
 	open (urlExtra) {
-		super.open('ToggleButton-View', urlExtra);
+		super.open('Agate-ToggleButton-View', urlExtra);
 	}
 }
 
