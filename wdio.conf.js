@@ -21,6 +21,15 @@ exports.config = {
 	exclude: [
 		// 'path/to/excluded/files'
 	],
+	// define specific suites
+	suites: {
+		moonstone: [
+			'./test/moonstone/**/*-specs.js'
+		],
+		agate: [
+			'./test/agate/**/*-specs.js'
+		]
+	},
 	//
 	// ============
 	// Capabilities
