@@ -16,7 +16,7 @@ const app = (props) => <div {...props}>
 				id="toggleButton2"
 				size="small"
 			>
-				ON
+				Small Button
 			</ToggleButton>
 		</div>
 		<div>

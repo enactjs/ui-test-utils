@@ -1,5 +1,6 @@
 'use strict';
 const Page = require('../../Page.js');
+const {getText, hasClass} = require('../../utils');
 
 class AgateToggleButtonInterface {
 	constructor (id) {
@@ -10,9 +11,9 @@ class AgateToggleButtonInterface {
 		return browser.selectorExecute(`#${this.id}`, (els) => els && !els[0].focus());
 	}
 	get self () { return browser.element(`#${this.id}`); }
-	get valueText () { return browser.element(`#${this.id}`); }
-	get isSelected () { return browser.element(`#${this.id}`); }
-	get isInline () { return browser.element(`#${this.id}`); }
+	get textContent () { return getText(this.self); }
+	get isSelected () { return hasClass('enact_agate_ToggleButton_ToggleButton_selected', this.self); }
+	get isInline () { return hasClass('enact_agate_ToggleButton_ToggleButton_inline', this.self); }
 }
 
 
@@ -21,7 +22,7 @@ class AgateToggleButtonPage extends Page {
 		super();
 		this.title = 'Agate ToggleButton Test';
 		const toggleDefault = new AgateToggleButtonInterface('toggleButton1');
-		const toggleWithLabels = new AgateToggleButtonInterface('toggleButton2');
+		const toggleWithLabels = new AgateToggleButtonInterface('toggleButton3');
 
 		this.components = {toggleDefault, toggleWithLabels};
 	}

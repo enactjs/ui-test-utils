@@ -38,10 +38,13 @@ function expectOrdering (firstElement, secondElement) {
 	expect(firstElement.getLocation().x < secondElement.getLocation().x).to.be.true();
 }
 
+const hasClass = curry((className, el) => el.getAttribute('className').includes(className));
+
 module.exports = {
 	element,
 	expectOrdering,
 	getComponent,
 	getSubComponent,
-	getText
+	getText,
+	hasClass
 };

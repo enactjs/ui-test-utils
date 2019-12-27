@@ -14,7 +14,7 @@ describe('RadioItem', function () {
 		const radioItem = Page.components.radioDefault;
 
 		it('should have correct text', function () {
-			expect(radioItem.valueText).to.equal('Radio Item1');
+			expect(radioItem.textContent).to.equal('Radio Item1');
 		});
 
 		it('should not be selected', function () {
@@ -26,7 +26,7 @@ describe('RadioItem', function () {
 		const radioItem = Page.components.radioDefaultSelected;
 
 		it('should have correct text', function () {
-			expect(radioItem.valueText).to.equal('Radio Item selected');
+			expect(radioItem.textContent).to.equal('Radio Item selected');
 		});
 
 		it('should be selected', function () {

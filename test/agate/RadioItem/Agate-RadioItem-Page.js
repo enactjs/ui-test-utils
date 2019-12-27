@@ -1,6 +1,6 @@
 'use strict';
 const Page = require('../../Page.js');
-const {getText} = require('../../utils.js');
+const {element, getText, hasClass} = require('../../utils.js');
 
 class AgateRadioItemInterface {
 	constructor (id) {
@@ -12,8 +12,8 @@ class AgateRadioItemInterface {
 	}
 
 	get self () { return browser.element(`#${this.id}`); }
-	get valueText () { return getText(this.self); }
-	get isSelected () { return this.self.isExisting('.enact_agate_RadioItem_RadioItem_selected'); }
+	get textContent () { return getText(element('.enact_agate_Item_Item_content', this.self)); }
+	get isSelected () { return hasClass('enact_agate_RadioItem_RadioItem_selected', this.self); }
 }
 
 

@@ -14,7 +14,7 @@ describe('ToggleButton', function () {
 		const toggleButton = Page.components.toggleDefault;
 
 		it('should have correct text', function () {
-			expect(toggleButton.valueText.toLowerCase()).to.equal('MISSING TOGGLE LABEL'.toLowerCase());
+			expect(toggleButton.textContent.toLowerCase()).to.equal('missing toggle label');
 		});
 
 		it('should be unselected', function () {
@@ -26,7 +26,7 @@ describe('ToggleButton', function () {
 		const toggleButton = Page.components.toggleWithLabels;
 
 		it('should have correct text', function () {
-			expect(toggleButton.valueText.toLowerCase()).to.equal('OFF'.toLowerCase());
+			expect(toggleButton.textContent.toLowerCase()).to.equal('off');
 		});
 
 		it('should be unselected', function () {
