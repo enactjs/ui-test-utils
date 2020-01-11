@@ -15,21 +15,12 @@ exports.config = {
 	// directory is where your package.json resides, so `wdio` will be called from there.
 	//
 	specs: [
-		'./test/**/*-specs.js'
+		'./tests/ui/specs/**/*-specs.js'
 	],
 	// Patterns to exclude.
 	exclude: [
 		// 'path/to/excluded/files'
 	],
-	// define specific suites
-	suites: {
-		moonstone: [
-			'./test/moonstone/**/*-specs.js'
-		],
-		agate: [
-			'./test/agate/**/*-specs.js'
-		]
-	},
 	//
 	// ============
 	// Capabilities
@@ -85,7 +76,7 @@ exports.config = {
 	bail: 0,
 	//
 	// Saves a screenshot to a given path if a command fails.
-	screenshotPath: './errorShots/',
+	screenshotPath: './tests/ui/errorShots/',
 	//
 	// Set a base URL in order to shorten url command calls. If your url parameter starts
 	// with "/", then the base url gets prepended.
@@ -148,7 +139,7 @@ exports.config = {
 		timeout: 30000
 	},
 	staticServerFolders: [
-		{ mount: '/', path: './dist' }
+		{ mount: '/', path: './tests/ui/dist' }
 	],
 	//
 	// =====
