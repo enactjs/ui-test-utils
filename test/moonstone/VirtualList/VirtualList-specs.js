@@ -92,19 +92,19 @@ describe('VirtualList', function () {
 			Page.spotlightDown();  // is on Left button
 			Page.spotlightRight(); // is on 'Item 000'
 			// Step 4. Position the pointer on 'Item 001'.
-			Page.spotlightDown();
+			Page.showPointerByKeycode();
+			Page.item(1).moveToObject();
 			// Verify Step 4: Spotlight displays on 'Item 001'.
-			expectFocusedItem(1);
+			expectFocusedItem(1, 'focus Item 1');
 			// Step 5. 5-way Down aznd 5-way Right.
 			Page.spotlightDown();
 			Page.spotlightRight();
 			// Verify Step 3: Spotlight displays on the Disabled Up Paging Control (∧).
-			// ??? expect(Page.buttonScrollUp.getAttribute('disabled'), 'Up disabled').to.be.equal('true');
+			expect(Page.buttonScrollUp.getAttribute('disabled'), 'Up disabled').to.be.equal('true');
 			expect(Page.buttonScrollUp.hasFocus(), 'step 5 focus').to.be.true();
 			// Step 6.1. 5-way Left to go back to the list.
 			Page.spotlightLeft();
 			expectFocusedItem(0, 'step 6.1 focus');
-			// expectFocusedItem(1);  // TODO: VL should remember last focused!
 			// Step 6.2. 5-way Down to item 005.
 			Page.spotlightDown();
 			Page.spotlightDown();
@@ -132,7 +132,8 @@ describe('VirtualList', function () {
 			// Verify Step 6: 1. The list *does not* Scroll to the Bottom. 2. Spotlight is on the close button 'x'.
 			expect(Page.buttonTop.hasFocus(), 'step 6 focus').to.be.true();  // buttonTop replaces the X button
 			// Step 7: 1. Wheel Down on the list to the last item.
-			// Page.mouseWheel(40, Page.item(6));  // currently not working as expected so using 5-way Down temporary - to follow up with ENYO-6178
+			// Page.mouseWheel(40, Page.item(6));  // currently not working as expected so using 5-way Down temporary
+			// Wheeling will not be implemented - see ENYO-6178
 			for (let i = 0; i < 100; ++i) {
 				Page.spotlightDown();
 				Page.delay(40); // TODO: This is an arbitrary value to help provide expected behavior between rapidly repeating keydown events
@@ -313,6 +314,7 @@ describe('VirtualList', function () {
 			expect(Page.buttonScrollDown.getAttribute('disabled'), ' Step 7 Down disabled').to.be.equal('true');
 		});
 
+		// Need mochaOpts - timeout set to 60000 to pass
 		it('should enable and disable Paging Controls when reaching to the edge with 5-way and Channel Down [GT-21159]', function () {
 			// Test (Jira) calls for 30 items only. Test uses default of 100 items.
 			Page.spotlightSelect();
@@ -493,6 +495,7 @@ describe('VirtualList', function () {
 				expect(Page.list.getAttribute('data-keydown-events')).to.equal('3');
 			});
 
+			// Need mochaOpts - timeout set to 60000 to pass
 			it('should allow bubbling while navigating out of a list using hidden focusableScrollbar via items', function () {
 				Page.spotlightSelect();
 				Page.spotlightRight();
@@ -521,6 +524,7 @@ describe('VirtualList', function () {
 				expect(Page.list.getAttribute('data-keydown-events')).to.equal('4');
 			});
 
+			// Need mochaOpts - timeout set to 60000 to pass
 			it('should allow bubbling while navigating out of a list using non-focusableScrollbar via items', function () {
 				Page.spotlightDown();
 				Page.spotlightRight();
@@ -548,83 +552,6 @@ describe('VirtualList', function () {
 		});
 
 		describe('VirtualList with Wheeling', function () {
-			it('should hide Spotlight after scroll wheel [GT-21110]', function () {
-			// Step 3 - Position the pointer on an item.
-				Page.item(5).moveToObject();
-				// Verify Step 3: Spotlight is on 'Item 05'
-				expectFocusedItem(5, 'focus Item 5');
-				// Step 4. 5-way Spot another item.
-				Page.spotlightDown();
-				// Verify Step 4: Spotlight is on 'Item 06'
-				expectFocusedItem(6, 'focus Item 6');
-				// Step 5. Mouse wheel Down.
-				Page.mouseWheel(40, Page.item(6));
-				Page.delay(2500);
-				// Verify step 5: Spotlight is not on any item after wheeling stopped.
-				expectNoFocusedItem();
-			});
-
-			it('Items Animate Upward and Downward via Wheel Down and Up [GT-21527]', function () {
-				Page.spotlightSelect();
-				Page.spotlightDown();
-				// Step 3. 1. Hover the first item ('Item 00').
-				Page.showPointerByKeycode();
-				Page.item(0).moveToObject();
-				// Verify Step 3: Spotlight displays on the first item.
-				expectFocusedItem(0, 'focus Item 0');
-				// Step 3. 2. Wheel Down *3 times*.
-				Page.mouseWheel(40, Page.item(6));
-				// Verify Step 3: The content Animates Upward *3 times*.
-				// TODO
-				// Step 4: 1. Hover an item in the middle of the current page.
-				Page.showPointerByKeycode();
-				Page.item(5).moveToObject();
-				expectFocusedItem(5, 'focus Item 0');
-				// Step 4: 2. Wheel Up *3 times*.
-				Page.mouseWheel(-40, Page.item(6));
-				// Verify Step 4: The content Animates Downward *3 times*.
-				// TODO
-			});
-
-			it('Spotlight Stays on Item that Comes into View [GT-21539]', function () {
-				Page.spotlightSelect();
-				Page.spotlightDown();
-				Page.spotlightRight();
-				expectFocusedItem(0, 'focus Item 0');
-				// Step 3. 1. 5-way Spot the second item ('*Item 001*').
-				Page.spotlightDown();
-				// Verify Step 3: 1. Spotlight stays on the last item that comes into view.
-				expectFocusedItem(1, 'focus Item 1');
-				// Step 3. 2. 5-way Down pass '*Item 010*' while observing the location of the Spotlight.
-				// Verify Step 3: 2. All content and lines between the content display.
-				for (let i = 2; i < 12; ++i) {
-					Page.spotlightDown();
-					Page.delay(80);
-					expectFocusedItem(i, 'focus Item + i');
-				}
-				expectFocusedItem(11, 'focus Item 11');
-				// Step 4. 5-way Up until the Top of the list is reached while observing the location of the spotlight.
-				// Verify Step 4: 1. Spotlight stays on the first item that comes into view.
-				// Verify Step 4: 2. All content and lines between the content display.
-				for (let i = 10; i > -1; i--) {
-					Page.spotlightUp();
-					Page.delay(80);
-					expectFocusedItem(i, 'focus Item + i');
-				}
-				// Step 5. 1. Hover the second item ('*Item 001*').
-				Page.showPointerByKeycode();
-				Page.item(1).moveToObject();
-				expectFocusedItem(1, 'focus Item 1');
-				// Step 5. 2. Wheel Down a couple times.
-				Page.mouseWheel(40, Page.item(9));
-				// Verify Step 5: 1. Spotlight *disappears* when Wheeling.
-				expectNoFocusedItem();
-				// Step 5. 3. Move the pointer after the list scroll Stops.
-				Page.showPointerByKeycode();
-				Page.delay(80);
-				// Verify Step 5: 2. Spotlight displays on the item where the pointer is positioned after the list scroll Stops.
-				// we need to be able to verify this.
-			});
 
 			it('Items Animate via Clicking on Page Controls [GT-21571]', function () {
 				const scrollDistance = Math.round(Page.listSize.height * 0.66);
@@ -671,11 +598,18 @@ describe('VirtualList', function () {
 			it('should position Paging Controls on left side in RTL [GT-21270]', function () {
 				Page.spotlightSelect();
 				Page.spotlightDown();
+				// Step 3: The list is Right aligned so Spotlight needs to move to the left
 				Page.spotlightLeft();
 				Page.spotlightDown();
+				// Verify Step 3.1:  The list displays Right aligned.
 				expectFocusedItem(1);
 				Page.spotlightLeft();
+				// Verify Step 3.2: Paging Controls display left aligned.
 				expect(Page.buttonScrollUp.hasFocus(), 'step 3 focus').to.be.true();
+				// Verify Up Paging Control (∧) is Disabled.
+				expect(Page.buttonScrollUp.getAttribute('disabled'), 'Up disabled').to.be.equal('true');
+				// Verify Step 9: 3. Down Paging Control (∨) is Enabled.
+				expect(Page.buttonScrollDown.getAttribute('disabled'), 'Down enabled').to.be.null();
 			});
 		});
 	});

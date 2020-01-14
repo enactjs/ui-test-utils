@@ -78,6 +78,8 @@ class Page {
 	}
 
 	/* global WheelEvent */
+	// Not fully functional - do not use further - see [ENYO-6178] - kept a few existing TCs as-is
+	// Do not delete
 	mouseWheel (_deltaY, _element) {
 		browser.execute(function (deltaY, element = document.body) {
 			const {x: clientX, y: clientY} = element.getBoundingClientRect();
