@@ -12,24 +12,32 @@ const element = curry((selector, el) => el.element(selector));
 // Element => String
 const getText = (el) => el.getText();
 
+const join = (...args) => args.filter(Boolean).join('_');
+
 // Given n CSS class names, return a selector with them joined per our CSS Module plugin rules
 // String... => String
-const cssModuleSelector = (...args) => `.${args.join('_')}`;
+const cssModuleSelector = (...args) => `.${join(...args)}`;
 
-const toEnactPath = (lib, component) => `enact_${lib}_${component}`;
+const getBasePath = (lib, internal, component) => join(lib && 'enact', lib, internal && 'internal', component);
+
+const componentSelector = ({lib, component, child, internal}) => cssModuleSelector(
+	getBasePath(lib, internal, component),
+	component,
+	child ? child : toLower(component)
+);
 
 // Given a component name and starting element, returns the first matching descendant Element
 // String => Element => Element
-const getComponent = curry((lib, component, el) => element(
-	cssModuleSelector(toEnactPath(lib, component), component, toLower(component)),
+const getComponent = curry((opts, el) => element(
+	componentSelector(opts),
 	el
 ));
 
 // Given a component name, child name, and starting element, returns the first matching descendant Element
 // String => String => Element => Element
-const getSubComponent = curry((lib, component, child, el) => element(
-	cssModuleSelector(toEnactPath(lib, component), component, child),
-	getComponent(lib, component, el)
+const getSubComponent = curry((opts, el) => element(
+	componentSelector(opts),
+	getComponent({...opts, child: null}, el)
 ));
 
 // Given two elements, determine if the first element is to the left of the second element
