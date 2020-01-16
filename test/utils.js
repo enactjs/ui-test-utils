@@ -46,9 +46,13 @@ function expectOrdering (firstElement, secondElement) {
 	expect(firstElement.getLocation().x < secondElement.getLocation().x).to.be.true();
 }
 
-const hasClass = curry((className, el) => el.getAttribute('className').includes(className));
+const hasClass = curry((className, el) => {
+	if (className[0] === '.') className = className.slice(1);
+	return el.getAttribute('className').includes(className);
+});
 
 module.exports = {
+	componentSelector,
 	element,
 	expectOrdering,
 	getComponent,
