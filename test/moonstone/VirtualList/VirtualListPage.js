@@ -40,7 +40,7 @@ class VirtualListPage extends Page {
 			const scroller = document.querySelector(_scrollableSelector),
 				{top, left, width} = scroller.getBoundingClientRect();
 			let currentY = top + 1,
-				middle = left + Math.floor((left + width)/2);
+				middle = left + Math.floor((left + width) / 2);
 			for (let i = 0; i < 10; i++) {
 				let el = document.elementFromPoint(middle, currentY + i);
 				// Search parents for the row ID
@@ -64,7 +64,7 @@ class VirtualListPage extends Page {
 				{bottom, left, width} = scroller.getBoundingClientRect();
 
 			let currentY = bottom - 1,
-				middle = left + Math.floor((left + width)/2);
+				middle = left + Math.floor((left + width) / 2);
 
 			for (let i = 0; i < 10; i++) {
 				let el = document.elementFromPoint(middle, currentY - i);
