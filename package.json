@@ -1,5 +1,5 @@
 {
-  "name": "enact-ui-tests",
+  "name": "@enact/ui-test-utils",
   "version": "1.0.0",
   "description": "UI Testing for the Enact framework",
   "main": "index.js",
