@@ -37,7 +37,7 @@ const getComponent = curry((opts, el) => element(
 // String => String => Element => Element
 const getSubComponent = curry((opts, el) => element(
 	componentSelector(opts),
-	getComponent({...opts, child: null}, el)
+	getComponent(Object.assign({}, opts, {child: null}), el)
 ));
 
 // Given two elements, determine if the first element is to the left of the second element
