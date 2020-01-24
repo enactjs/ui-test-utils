@@ -96,7 +96,7 @@ By default, tests run in 'headless' mode, which hides the browser window used fo
 watch the tests run by passing `--visible`:
 
 ```bash
-npm run test -- --visible
+npm run test-ui -- --visible
 ```
 
 ### Running with visible browser and filtering by component
@@ -104,7 +104,7 @@ npm run test -- --visible
 For example, filtering for the component 'Input'.
 
 ```bash
-npm run test -- --visible --spec /Input
+npm run test-ui -- --visible --spec /Input
 ```
 
 ### Loading sample apps in a browser
