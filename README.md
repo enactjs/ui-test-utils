@@ -52,7 +52,7 @@ Example 2 - will execute tests for 'Input' component
 npm test-ui -- --spec /Input
 ```
 
-Note: `pattern' can also be a regex and may need to be in quotes to prevent expansion on the command
+Note: `<pattern>` can also be a regex and may need to be in quotes to prevent expansion on the command
 line.
 
 ## Failed Test Screenshots
