@@ -10,15 +10,17 @@ and must be configured as a `devDependency` of the UI library.
 2. Create the `tests/ui` folder struture within the UI library
 3. Add `apps` and `specs` folders to `tests/ui`
 4. Add local WebDriver configuation files within `tests/ui`
-  * `wdio.conf.js` containing `module.exports = require('@enact/ui-test-utils/wdio.conf.js');`
-  * `wdio.docker.conf.js` containing `module.exports = require('@enact/ui-test-utils/wdio.docker.conf.js');`
-  * `wdio.tv.conf.js` containing `module.exports = require('@enact/ui-test-utils/wdio.tv.conf.js');`
+
+    * `wdio.conf.js` containing `module.exports = require('@enact/ui-test-utils/wdio.conf.js');`
+    * `wdio.docker.conf.js` containing `module.exports = require('@enact/ui-test-utils/wdio.docker.conf.js');`
+    * `wdio.tv.conf.js` containing `module.exports = require('@enact/ui-test-utils/wdio.tv.conf.js');`
+
 5. Optionally configure different ESLint and git configuration rules using `.eslintrc.js` and
    `.gitignore` files, respectively
 
 ## Creating tests
 
-Within the UI Library, create an app for testing in **`/apps`** and create a corresponding test in **`/specs`**.
+Within the UI Library, create an app for testing in **`/tests/ui/apps`** and create a corresponding test in **`/tests/ui/specs`**.
 
 The `Page` component from `@enact/ui-test-utils/test/Page` contains useful methods for loading tests.
 
