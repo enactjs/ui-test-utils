@@ -15,7 +15,18 @@ and must be configured as a `devDependency` of the UI library.
     * `wdio.docker.conf.js` containing `module.exports = require('@enact/ui-test-utils/wdio.docker.conf.js');`
     * `wdio.tv.conf.js` containing `module.exports = require('@enact/ui-test-utils/wdio.tv.conf.js');`
 
-5. Optionally configure different ESLint and git configuration rules using `.eslintrc.js` and
+5. Add npm scripts for each of the above configuration files. There are likely other scripts already
+   defined so these will be added to the existing scripts.
+
+   ```
+   "scripts": {
+	   "test-ui": "wdio tests/ui/wdio.conf.js",
+	   "test-ui-docker": "wdio tests/ui/wdio.docker.conf.js",
+	   "test-ui-tv": "wdio tests/ui/wdio.tv.conf.js"
+   }
+   ```
+
+6. Optionally configure different ESLint and git configuration rules using `.eslintrc.js` and
    `.gitignore` files, respectively
 
 ## Creating tests
@@ -26,7 +37,7 @@ The `Page` component from `@enact/ui-test-utils/test/Page` contains useful metho
 
 ## Testing on TV
 
-Pass the IP address of the TV as an environment variable and use the `test-tv` task:
+Pass the IP address of the TV as an environment variable and use the `test-ui-tv` task:
 
 ```bash
 TV_IP=10.0.1.1 npm run test-ui-tv
@@ -58,7 +69,7 @@ line.
 ## Failed Test Screenshots
 
 When a test fails, a screenshot will be captured showing the state when it failed. The screenshots
-are saved to **`./errorShots/`**. The test run will display the filename for a failed test:
+are saved to **`./tests/ui/errorShots/`**. The test run will display the filename for a failed test:
 
 Example:
 
