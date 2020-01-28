@@ -48,19 +48,19 @@ TV_IP=10.0.1.1 npm run test-ui-tv
 ### Filtering by Component
 
 ```bash
-npm test-ui -- --spec <pattern>
+npm run test-ui -- --spec <pattern>
 ```
 
 Example 1 -  will execute tests for 'ExpandableInput'
 
 ```bash
-npm test-ui -- --spec ExpandableInput
+npm run test-ui -- --spec ExpandableInput
 ```
 
 Example 2 - will execute tests for 'Input' component
 
 ```bash
-npm test-ui -- --spec /Input
+npm run test-ui -- --spec /Input
 ```
 
 Note: `<pattern>` can also be a regex and may need to be in quotes to prevent expansion on the command
