@@ -6,7 +6,7 @@ const readdirp = require('readdirp');
 const webpack = require('webpack');
 const generator = require('./webpack.config.js');
 
-process.env.ILIB_BASE_PATH = '/framework/node_modules/ilib';
+process.env.ILIB_BASE_PATH = '/framework/ilib';
 const enact = framework.apply(generator({
 	APPENTRY: 'framework',
 	APPOUTPUT: path.join('tests', 'ui', 'dist', 'framework')
