@@ -1,12 +1,12 @@
 const path = require('path');
+const fs = require('fs-extra');
 const externals = require('@enact/dev-utils/mixins/externals');
 const framework = require('@enact/dev-utils/mixins/framework');
 const readdirp = require('readdirp');
 const webpack = require('webpack');
 const generator = require('./webpack.config.js');
 
-const ilib = path.join('node_modules', 'ilib');
-process.env.ILIB_BASE_PATH = ilib;
+process.env.ILIB_BASE_PATH = '/framework/node_modules/ilib';
 const enact = framework.apply(generator({
 	APPENTRY: 'framework',
 	APPOUTPUT: path.join('tests', 'ui', 'dist', 'framework')
@@ -32,6 +32,16 @@ function buildApps () {
 			if(!process.argv.includes('--skip-enact')) {
 				console.log('Packing Enact framework...');
 				return epack([enact]);
+			}
+		})
+		.then(() => {
+			if(!process.argv.includes('--skip-ilib')) {
+				console.log('Copying ilib locale data...');
+				fs.mkdirSync(path.join('tests', 'ui', 'dist', 'framework', 'ilib'))
+				return fs.copy(
+					path.join('node_modules', 'ilib', 'locale'),
+					path.join('tests', 'ui', 'dist', 'framework', 'ilib', 'locale')
+				)
 			}
 		})
 		.then(() => {
