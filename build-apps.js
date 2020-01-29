@@ -6,15 +6,15 @@ const readdirp = require('readdirp');
 const webpack = require('webpack');
 const generator = require('./webpack.config.js');
 
-let ilib = path.join('node_modules', 'ilib');
-const ilibOld = path.join('node_modules', '@enact', 'i18n', 'ilib');
-if (fs.existsSync(ilibOld)) ilib = ilibOld;
-process.env.ILIB_BASE_PATH = path.join('/framework', ilib);
-const enact = framework.apply(generator({APPENTRY: 'framework', APPOUTPUT: path.join('dist', 'framework')}));
+process.env.ILIB_BASE_PATH = '/framework/ilib';
+const enact = framework.apply(generator({
+	APPENTRY: 'framework',
+	APPOUTPUT: path.join('tests', 'ui', 'dist', 'framework')
+}));
 
 function findViews () {
 	return new Promise((resolve, reject) => {
-		readdirp({root: 'apps', fileFilter: '*-View.js'}, (err, res) => {
+		readdirp({root: 'tests/ui/apps', fileFilter: '*-View.js'}, (err, res) => {
 			if (err) {
 				reject(err);
 			} else {
@@ -31,10 +31,17 @@ function buildApps () {
 		.then(() => {
 			if(!process.argv.includes('--skip-enact')) {
 				console.log('Packing Enact framework...');
-				const ilibDist = path.join('dist', process.env.ILIB_BASE_PATH);
-				return epack([enact])
-					.then(() => fs.ensureDir(ilibDist))
-					.then(() => fs.existsSync(ilib) && fs.copy(ilib, ilibDist));
+				return epack([enact]);
+			}
+		})
+		.then(() => {
+			if(!process.argv.includes('--skip-ilib')) {
+				console.log('Copying ilib locale data...');
+				fs.mkdirSync(path.join('tests', 'ui', 'dist', 'framework', 'ilib'))
+				return fs.copy(
+					path.join('node_modules', 'ilib', 'locale'),
+					path.join('tests', 'ui', 'dist', 'framework', 'ilib', 'locale')
+				)
 			}
 		})
 		.then(() => {
@@ -44,8 +51,10 @@ function buildApps () {
 					epack(files.map(f => (
 						externals.apply(generator({
 							APPENTRY: f.fullPath,
-							APPOUTPUT: path.join('dist', path.basename(f.fullPath, '.js'))
-						}), {externalsPublic:'dist/framework'})
+							APPOUTPUT: path.join('tests', 'ui', 'dist', path.basename(f.fullPath, '.js'))
+						}), {
+							externalsPublic: 'tests/ui/dist/framework'
+						})
 					)))
 				));
 			}
