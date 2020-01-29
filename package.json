@@ -1,6 +1,6 @@
 {
   "name": "@enact/ui-test-utils",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "UI Testing for the Enact framework",
   "main": "index.js",
   "scripts": {
@@ -8,6 +8,9 @@
   },
   "author": "Roy Sutton <roy.sutton@lge.com>",
   "license": "Apache-2.0",
+  "publishConfig": {
+    "access": "public"
+  },
   "eslintIgnore": [
     "build/*",
     "dist/*"
@@ -22,7 +25,7 @@
     "@babel/plugin-transform-react-inline-elements": "7.2.0",
     "@babel/preset-env": "7.4.3",
     "@babel/preset-react": "7.0.0",
-    "@enact/dev-utils": "^2.3.0",
+    "@enact/dev-utils": "^2.4.2",
     "address": "1.1.0",
     "ajv": "6.5.4",
     "autoprefixer": "9.6.0",
