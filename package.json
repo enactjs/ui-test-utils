@@ -47,6 +47,7 @@
     "postcss-global-import": "1.0.6",
     "postcss-loader": "3.0.0",
     "postcss-remove-classes": "1.0.4",
+    "postcss-resolution-independence": "^1.0.0",
     "ramda": "0.26.1",
     "react": "16.8.6",
     "react-dom": "16.8.6",
