@@ -7,7 +7,14 @@ const pattern = args.component, // Component group to match
 	testToExecute = args.id, // Specific test ID
 	titlePattern = args.title; // Pattern for matching test case title
 
-const runTest = ({testName, Page, skin, ...rest}) => {
+const runTest = (props) => {
+	const rest = Object.assign({}, props);
+	const {Page, skin, testName} = props;
+
+	delete rest.testName;
+	delete rest.Page;
+	delete rest.skin;
+
 	describe(testName, function () {
 		it('should fetch test cases', function () {
 			Page.open('?request');
@@ -32,12 +39,11 @@ const runTest = ({testName, Page, skin, ...rest}) => {
 								return;
 							}
 							it(`${component}/${testName}/${testCase.title}`, function () {
-								const params = Page.serializeParams({
+								const params = Page.serializeParams(Object.assign({
 									component,
 									testId,
-									skin,
-									...rest
-								});
+									skin
+								}, rest));
 								const context = {params, component, testName};
 								this.test.context = context;
 

@@ -4,7 +4,7 @@
   "description": "UI Testing for the Enact framework",
   "main": "index.js",
   "scripts": {
-    "lint": "eslint test"
+    "lint": "eslint utils"
   },
   "author": "Roy Sutton <roy.sutton@lge.com>",
   "license": "Apache-2.0",
