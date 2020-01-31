@@ -4,7 +4,7 @@ const externals = require('@enact/dev-utils/mixins/externals');
 const framework = require('@enact/dev-utils/mixins/framework');
 const readdirp = require('readdirp');
 const webpack = require('webpack');
-const generator = require('./webpack.config.js');
+const generator = require('../config/webpack.config.js');
 
 process.env.ILIB_BASE_PATH = '/framework/ilib';
 const enact = framework.apply(generator({
@@ -37,11 +37,11 @@ function buildApps () {
 		.then(() => {
 			if(!process.argv.includes('--skip-ilib')) {
 				console.log('Copying ilib locale data...');
-				fs.mkdirSync(path.join('tests', 'ui', 'dist', 'framework', 'ilib'))
+				fs.mkdirSync(path.join('tests', 'ui', 'dist', 'framework', 'ilib'));
 				return fs.copy(
 					path.join('node_modules', 'ilib', 'locale'),
 					path.join('tests', 'ui', 'dist', 'framework', 'ilib', 'locale')
-				)
+				);
 			}
 		})
 		.then(() => {
