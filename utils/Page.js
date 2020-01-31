@@ -1,5 +1,7 @@
 'use strict';
 
+const queryString = require('query-string');
+
 class Page {
 	constructor () {
 		this.title = 'Untitled Test';
@@ -15,6 +17,12 @@ class Page {
 			});
 		}
 		browser.url(url);
+	}
+
+	serializeParams (params){
+		const queryObject =  queryString.stringify(params);
+
+		return queryObject;
 	}
 
 	delay (delay = 1000) {
@@ -136,4 +144,6 @@ class Page {
 	}
 }
 
-module.exports = Page;
+module.exports = {
+	Page
+};

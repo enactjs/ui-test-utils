@@ -1,18 +1,26 @@
 import 'core-js/stable';
 import React from 'react';
 import {render} from 'react-dom';
-import App from 'UI_TEST_APP_ENTRY';
+import App, * as metadata from 'UI_TEST_APP_ENTRY';
 
 const url = new URL(window.location.href);
-const locale = url.searchParams.get('locale');
 
-const appElement = (<App locale={locale}/>);
+const props = ['locale', 'request', 'component', 'testId'].reduce((obj, param) => {
+	const value = url.searchParams.get(param);
+	if (value != null) {
+		obj[param] = value;
+	}
 
-if (typeof window !== 'undefined') {
+	return obj;
+}, {});
+
+if ('testId' in props) props.testId = Number.parseInt(props.testId);
+
+if ('request' in props) {
+	window.__TEST_DATA = metadata.testMetadata;
+} else {
 	render(
-		appElement,
+		<App {...props} />,
 		document.getElementById('root')
 	);
 }
-
-export default appElement;
