@@ -6,7 +6,6 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const flexbugfixes = require('postcss-flexbugs-fixes');
 const globalImport = require('postcss-global-import');
-const LessPluginRi = require('resolution-independence');
 const {DefinePlugin, EnvironmentPlugin} = require('webpack');
 const {optionParser: app, GracefulFsPlugin, ILibPlugin} = require('@enact/dev-utils');
 
@@ -194,7 +193,8 @@ module.exports = function (env) {
 									// See https://github.com/philipwalton/flexbugs
 									flexbugfixes,
 									// Support @global-import syntax to import css in a global context.
-									globalImport
+									globalImport,
+									app.ri !== false && require('postcss-resolution-independence')(app.ri)
 								]
 							}
 						},
@@ -202,9 +202,7 @@ module.exports = function (env) {
 							loader: require.resolve('less-loader'),
 							options: {
 								modifyVars: Object.assign({}, app.accent),
-								sourceMap: true,
-								// If resolution independence options are specified, use the LESS plugin.
-								plugins: app.ri ? [new LessPluginRi(app.ri)] : []
+								sourceMap: true
 							}
 						}
 					]
