@@ -30,18 +30,27 @@ const comparator = new VisualRegressionCompare.LocalCompare({
 	misMatchTolerance: 0.005
 });
 
+function initFile (name, content) {
+	const dir = path.dirname(name);
+
+	if (!fs.existsSync(dir)) {
+		fs.mkdirSync(dir, {recursive: true});
+	} else {
+		try {
+			fs.unlinkSync(name);
+		} catch (err) {}
+	}
+
+	fs.appendFileSync(name, content, 'utf8');
+}
+
 function onPrepare () {
 	if (!fs.existsSync('tests/screenshot/dist/screenshots/reference')) {
 		console.log('No reference screenshots found, creating new references!');
 	}
-	try {
-		fs.unlinkSync(newScreenshotFilename);
-	} catch (err) {}
-	fs.appendFileSync(newScreenshotFilename, newScreenshotHeader, 'utf8');
-	try {
-		fs.unlinkSync(failedScreenshotFilename);
-	} catch (err) {}
-	fs.appendFileSync(failedScreenshotFilename, failedScreenshotHeader, 'utf8');
+
+	initFile(failedScreenshotFilename, failedScreenshotHeader);
+	initFile(newScreenshotFilename, newScreenshotHeader);
 
 	return buildApps('screenshot');
 }
