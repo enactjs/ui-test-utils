@@ -65,6 +65,18 @@ function buildApps (base) {
 				));
 			}
 		})
+		.then(() => {
+			if (base.indexOf('screenshot') >= 0) {
+				const distUtils = path.join('tests', base, 'dist', 'utils'),
+					redistSrc = path.join(__dirname, '..', 'screenshot', 'utils', 'redist');
+
+				if (!fs.existsSync(distUtils)) {
+					fs.mkdirSync(distUtils);
+				}
+
+				return fs.copy(redistSrc, distUtils);
+			}
+		})
 		.catch(err => {
 			console.error('Build failed:');
 			console.error();

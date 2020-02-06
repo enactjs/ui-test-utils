@@ -61,7 +61,8 @@ function beforeTest (testData) {
 		const filename = generateReferenceName({test: testData});
 		if (!fs.existsSync(filename)) {
 			fs.open(newScreenshotFilename, 'a', (err, fd) => {
-				const relativeName = path.relative(process.cwd(), filename);
+				const distPath = path.join(process.cwd(), 'tests', 'screenshot', 'dist'),
+					relativeName = path.relative(distPath, filename);
 				if (err) {
 					console.error('Unable to create log file!');
 				} else {
@@ -80,9 +81,10 @@ function afterTest (testData) {
 	if (testData && testData.title && testData.context && testData.context.params) {
 		if (!testData.passed) {
 			fs.open(failedScreenshotFilename, 'a', (err, fd) => {
-				const diffPath = path.relative(process.cwd(), generateDiffName({test: testData})),
-					referencePath = path.relative(process.cwd(), generateReferenceName({test: testData})),
-					screenPath = path.relative(process.cwd(), generateScreenshotName({test: testData}));
+				const distPath = path.join(process.cwd(), 'tests', 'screenshot', 'dist'),
+					diffPath = path.relative(distPath, generateDiffName({test: testData})),
+					referencePath = path.relative(distPath, generateReferenceName({test: testData})),
+					screenPath = path.relative(distPath, generateScreenshotName({test: testData}));
 				if (err) {
 					console.error('Unable to create failed test log file!');
 				} else {
