@@ -37,10 +37,11 @@ function buildApps () {
 		.then(() => {
 			if(!process.argv.includes('--skip-ilib')) {
 				console.log('Copying ilib locale data...');
-				fs.mkdirSync(path.join('tests', 'ui', 'dist', 'framework', 'ilib'));
+				const ilibDir = path.join('tests', 'ui', 'dist', 'framework', 'ilib');
+				if (!fs.existsSync(ilibDir)) fs.mkdirSync(ilibDir);
 				return fs.copy(
 					path.join('node_modules', 'ilib', 'locale'),
-					path.join('tests', 'ui', 'dist', 'framework', 'ilib', 'locale'),
+					path.join(ilibDir, 'locale'),
 					{overwrite: true}
 				);
 			}
