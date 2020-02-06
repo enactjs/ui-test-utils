@@ -71,11 +71,11 @@
 		btn.innerText = 'test case';
 		btn.id = 'testcase';
 		btn.onclick = () => {
-			let path = `Moonstone-View/?${results[currentIndex].params}`;
+			let path = results[currentIndex].url;
 			if (window.location.protocol === 'file:') {
-				path = 'http://localhost:5000/' + path;
+				path = 'http://localhost:5000' + path;
 			} else {
-				path = 'dist/' + path;
+				path = 'dist' + path;
 			}
 			document.defaultView.open(path, '_blank');
 		};

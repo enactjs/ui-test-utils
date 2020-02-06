@@ -89,8 +89,8 @@ function afterTest (testData) {
 					console.error('Unable to create failed test log file!');
 				} else {
 					const title = testData.title;
-					const params = testData.context.params;
-					const output = {title, diffPath, referencePath, screenPath, params};
+					const {params, url} = testData.context;
+					const output = {title, diffPath, referencePath, screenPath, params, url};
 					fs.appendFile(fd, `${JSON.stringify(output)},`, 'utf8', () => {
 						fs.close(fd);
 					});

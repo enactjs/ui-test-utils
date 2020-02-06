@@ -44,12 +44,12 @@ const runTest = (props) => {
 									testId,
 									skin
 								}, rest));
-								const context = {params, component, testName};
-								this.test.context = context;
 
 								Page.open(`?${params}`);
 
-								let result = browser.checkDocument();
+								const context = {params, component, testName, url: Page.url};
+								this.test.context = context;
+								const result = browser.checkDocument();
 								expect(result[0].isWithinMisMatchTolerance).to.be.true();
 							});
 						});
