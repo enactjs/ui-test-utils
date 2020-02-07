@@ -1,5 +1,5 @@
-const localIp = require('address').ip();
-const {config} = require('../wdio.conf.js');
+const ipAddress = require('../utils/ipAddress.js');
+const {config} = require('./wdio.conf.js');
 
 exports.config = Object.assign(
 	{},
@@ -32,7 +32,7 @@ exports.config = Object.assign(
 		//
 		// Set a base URL in order to shorten url command calls. If your url parameter starts
 		// with "/", then the base url gets prepended.
-		baseUrl: `http://${localIp}:4567`,
+		baseUrl: `http://${ipAddress}:4567`,
 		//
 		// Test reporter for stdout.
 		// The only one supported by default is 'dot'

@@ -1,4 +1,4 @@
-const {config} = require('../wdio.conf.js');
+const {config} = require('./wdio.conf.js');
 
 exports.config = Object.assign(
 	{},
