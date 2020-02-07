@@ -4,17 +4,13 @@ const externals = require('@enact/dev-utils/mixins/externals');
 const framework = require('@enact/dev-utils/mixins/framework');
 const readdirp = require('readdirp');
 const webpack = require('webpack');
-const generator = require('./webpack.config.js');
+const generator = require('../config/webpack.config.js');
 
 process.env.ILIB_BASE_PATH = '/framework/ilib';
-const enact = framework.apply(generator({
-	APPENTRY: 'framework',
-	APPOUTPUT: path.join('tests', 'ui', 'dist', 'framework')
-}));
 
-function findViews () {
+function findViews (base) {
 	return new Promise((resolve, reject) => {
-		readdirp({root: 'tests/ui/apps', fileFilter: '*-View.js'}, (err, res) => {
+		readdirp({root: path.join('tests', base, 'apps'), fileFilter: '*-View.js'}, (err, res) => {
 			if (err) {
 				reject(err);
 			} else {
@@ -24,12 +20,17 @@ function findViews () {
 	});
 }
 
-function buildApps () {
+function buildApps (base) {
 	if (process.argv.includes('--skip-build')) return;
 
 	return Promise.resolve()
 		.then(() => {
 			if(!process.argv.includes('--skip-enact')) {
+				const enact = framework.apply(generator({
+					APPENTRY: 'framework',
+					APPOUTPUT: path.join('tests', base, 'dist', 'framework')
+				}));
+
 				console.log('Packing Enact framework...');
 				return epack([enact]);
 			}
@@ -37,28 +38,43 @@ function buildApps () {
 		.then(() => {
 			if(!process.argv.includes('--skip-ilib')) {
 				console.log('Copying ilib locale data...');
-				const ilibDir = path.join('tests', 'ui', 'dist', 'framework', 'ilib');
-				if (!fs.existsSync(ilibDir)) fs.mkdirSync(ilibDir);
+
+				const ilibDist = path.join('tests', base, 'dist', 'framework', 'ilib');
+				if (!fs.existsSync(ilibDist)) {
+					fs.mkdirSync(ilibDist);
+				}
+
 				return fs.copy(
 					path.join('node_modules', 'ilib', 'locale'),
-					path.join(ilibDir, 'locale'),
-					{overwrite: true}
+					path.join(ilibDist, 'locale')
 				);
 			}
 		})
 		.then(() => {
 			if(!process.argv.includes('--skip-tests')) {
 				console.log('Packing views in parallel...');
-				return findViews().then(files => (
+				return findViews(base).then(files => (
 					epack(files.map(f => (
 						externals.apply(generator({
 							APPENTRY: f.fullPath,
-							APPOUTPUT: path.join('tests', 'ui', 'dist', path.basename(f.fullPath, '.js'))
+							APPOUTPUT: path.join('tests', base, 'dist', path.basename(f.fullPath, '.js'))
 						}), {
-							externalsPublic: 'tests/ui/dist/framework'
+							externalsPublic: 'tests/' + base + '/dist/framework'
 						})
 					)))
 				));
+			}
+		})
+		.then(() => {
+			if (base.indexOf('screenshot') >= 0) {
+				const distUtils = path.join('tests', base, 'dist', 'utils'),
+					redistSrc = path.join(__dirname, '..', 'screenshot', 'utils', 'redist');
+
+				if (!fs.existsSync(distUtils)) {
+					fs.mkdirSync(distUtils);
+				}
+
+				return fs.copy(redistSrc, distUtils);
 			}
 		})
 		.catch(err => {

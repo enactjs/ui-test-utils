@@ -1,12 +1,17 @@
 'use strict';
 
+const queryString = require('query-string');
+
 class Page {
 	constructor () {
 		this.title = 'Untitled Test';
+		this._url = '';
 	}
 
+	get url () { return this._url; }
+
 	open (appPath, urlExtra = '?locale=en-US') {
-		const url = `/${appPath}/${urlExtra}`;
+		this._url = `/${appPath}/${urlExtra}`;
 		// Can't resize browser window when connected to remote debugger!
 		if (!browser._options || !browser._options.remote) {
 			browser.setViewportSize({
@@ -14,7 +19,13 @@ class Page {
 				height: 1080
 			});
 		}
-		browser.url(url);
+		browser.url(this.url);
+	}
+
+	serializeParams (params){
+		const queryObject =  queryString.stringify(params);
+
+		return queryObject;
 	}
 
 	delay (delay = 1000) {
@@ -136,4 +147,6 @@ class Page {
 	}
 }
 
-module.exports = Page;
+module.exports = {
+	Page
+};

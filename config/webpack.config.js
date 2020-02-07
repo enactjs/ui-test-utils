@@ -45,7 +45,7 @@ module.exports = function (env) {
 		// This means they will be the "root" imports that are included in JS bundle.
 		// The first two entry points enable "hot" CSS and auto-refreshes for JS.
 		entry: {
-			main: [path.join(__dirname, 'index.js')]
+			main: [path.join(__dirname, '..', 'src', 'index.js')]
 		},
 		output: {
 			// The build output directory.
@@ -231,7 +231,7 @@ module.exports = function (env) {
 				// be determined automatically from any appinfo.json files discovered.
 				title: env.APPTITLE || 'UI Test',
 				inject: 'body',
-				template: app.template || path.join(__dirname, 'html-template.ejs'),
+				template: app.template || path.join(__dirname, '..', 'src', 'html-template.ejs'),
 				xhtml: true
 			}),
 			// Make NODE_ENV environment variable available to the JS code, for example:
