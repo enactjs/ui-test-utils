@@ -6,6 +6,7 @@ exports.config = Object.assign(
 	config,
 	{
 		baseUrl: `http://${ipAddress}:4567`,
+		services: config.services.concat(['docker']),
 		dockerOptions: {
 			image: 'selenium/standalone-chrome',
 			healthCheck: 'http://localhost:4444',
