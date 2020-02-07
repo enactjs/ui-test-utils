@@ -1,0 +1,158 @@
+@import url('https://fonts.googleapis.com/css?family=Work+Sans:300,400,700');
+
+:focus {
+	outline: 0 none transparent;
+}
+
+body {
+	font-family: "Work Sans", sans-serif;
+}
+
+header h1 {
+	padding: 0 1em;
+}
+
+ol {
+	padding-left: 6ex;
+}
+
+ol li {
+	line-height: 1.7em;
+	padding-right: 12px;
+}
+
+.fit {
+	position: absolute;
+	left: 0;
+	right: 0;
+	top: 0;
+	bottom: 0;
+}
+
+.row,
+.column {
+	display: flex;
+	height: 100%;
+}
+.row {
+	flex-direction: row;
+}
+.column {
+	flex-direction: column;
+}
+
+.cell {
+	flex: 1 1 100%;
+	position: relative;
+}
+.cell.fixed {
+	flex: 0 0 auto;
+}
+
+.body {
+	height: 100%;
+}
+
+.list {
+	margin-right: 12px;
+	overflow: auto;
+	max-width: 40%;
+}
+.list ol {
+	margin-top: 0;
+}
+
+.list li {
+	cursor: pointer;
+}
+.list li:hover {
+	text-decoration: underline;
+}
+
+.preview {
+	width: 0;
+}
+
+.preview-header {
+	padding: 0 12px;
+	border: 1px solid #ddd;
+	border-radius: 9px 9px 0 0;
+	background-color: #eee;
+	line-height: 2em;
+}
+
+.preview-image {
+	height: 100%;
+	width: 100%;
+	overflow: auto;
+	border: 1px solid #ddd;
+	border-top-width: 0;
+	box-sizing: border-box;
+}
+.preview-image:focus-within::before {
+	content: "zoom out";
+	position: fixed;
+	z-index: 1;
+	transform: rotate(90deg) translateX(100%) translateY(100%);
+	right: 0;
+	transform-origin: top right;
+	padding: 0 6px;
+	line-height: 1.4em;
+	border: 1px solid #ccc;
+	border-radius: 6px;
+	margin: 3px;
+	background-color: #f8f8f8;
+	box-shadow: 2px -1px 3px 0px rgba(0, 0, 0, 0.2);
+	cursor: zoom-out;
+}
+
+button {
+	background-color: #fff;
+	background-image: linear-gradient(to bottom, transparent, rgba(0, 0, 0, 0.1));
+	border: 1px solid #ddd;
+	border-radius: 6px;
+	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.3);
+	line-height: 1.5em;
+	padding: 0 1ex;
+	font-size: 16px;
+}
+button.active {
+	background-image: linear-gradient(to bottom, transparent, rgba(0, 0, 0, 0.2), transparent);
+	background-color: #36ceff;
+	color: white;
+	border-color: #2aa6ce;
+}
+
+.buttonbox {
+	display: inline-block;
+	margin: 0 1ex;
+}
+.buttonbox button {
+	border-radius: 0;
+}
+.buttonbox button + button {
+	border-left-color: transparent;
+}
+.buttonbox button:first-child {
+	border-radius: 6px 0 0 6px;
+}
+.buttonbox button:last-child  {
+	border-radius: 0 6px 6px 0;
+}
+.buttonbox button.active {
+	border-left-color: #2aa6ce;
+}
+
+#title {
+	display: inline;
+}
+
+#image {
+	cursor: zoom-in;
+}
+#image:focus {
+	transform: scale(4);
+	transform-origin: top left;
+	cursor: crosshair;
+	image-rendering: pixelated;
+}
