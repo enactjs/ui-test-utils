@@ -1,4 +1,4 @@
-const ipAddress = require('./utils/ipAddress.js');
+const ipAddress = require('../utils/ipAddress.js');
 const {config} = require('./wdio.conf.js');
 
 exports.config = Object.assign(
