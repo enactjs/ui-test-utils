@@ -20,6 +20,13 @@ function replacer (key, value) {
 		};
 	} else if (value === '') {
 		return '<empty>';
+	} else if (typeof value === 'string') {
+		if (value.length > 10) {
+			value = value.slice(0, 8) + '…';
+		}
+		// Replace problematic filenames.  With the exception of '/', all these are valid on OS X
+		// and Linux, but sniffing the OS here is problematic.
+		value = value.replace(/[/\\:?*"|<>]/, '_');
 	} else if (key === 'key' || key === 'ref') {
 		// eslint-disable-next-line no-undefined
 		return undefined;
@@ -27,6 +34,8 @@ function replacer (key, value) {
 		return 'default';
 	} else if (this[key] instanceof Date) {	// `this` is instance of object that contains key/value
 		return formatDate(this[key]);		// Need to do this because toJson called before replacer
+	} else if (value instanceof Array && value.length > 4) {
+		value = value.slice(0, 3).concat('…');
 	}
 	return value;
 }
