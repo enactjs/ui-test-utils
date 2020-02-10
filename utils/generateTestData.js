@@ -36,8 +36,10 @@ function replacer (key, value) {
 	} else if (value === '') {
 		return '<empty>';
 	} else if (typeof value === 'string') {
-		if (value.length > 10) {
-			value = value.slice(0, 8) + '…';
+		value = value.replace('tests/screenshot/images/', '');
+		// Picked 13 arbitrarily so icons 'notification' and 'notificationoff' won't clash.
+		if (value.length > 13) {
+			value = value.slice(0, 13) + '…';
 		}
 	} else if (key === 'key' || key === 'ref') {
 		// eslint-disable-next-line no-undefined
