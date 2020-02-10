@@ -65,9 +65,9 @@ const stringifyProps = (props = {}) => {
 		.replace(/:/g, ' = ')
 		.replace(/,/g, ', ')
 		// TODO: check for complex children and remove
-		.replace('props = children = ', '')
-		.replace('props = ', '')
-		.replace('wrapper = ', '');
+		.replace(/props = children = /g, '')
+		.replace(/props = /g, '')
+		.replace(/wrapper = /g, '');
 
 	return formattedString.length === 0 ? 'default' : formattedString;
 };
