@@ -13,20 +13,32 @@ const formatDate = date => {
 function replacer (key, value) {
 	// Detect components as children
 	// TODO: Would be nice to get displayName but hard to do
+	// TODO: Make use of Symbol.for('react.fragment')
 	if (value && value.$$typeof) {
-		return {
+
+		let type = value.type;
+		const val = {
 			props: value.props,
 			children: value.children
 		};
+		// If it's a symbol, we can replace with empty string
+		if (type === Symbol.for('react.fragment')) {
+			type = '';
+		}
+		// If it's a string, it's a built-in type, output name and props
+		if (typeof type === 'string') {
+			// Must strip quotable characters before they get quoted again
+			const props = JSON.stringify(val, replacer).replace(/[{}"]/g, '')
+			return `<${type}>${props}</${type}>`;
+		} else {
+			return val;
+		}
 	} else if (value === '') {
 		return '<empty>';
 	} else if (typeof value === 'string') {
 		if (value.length > 10) {
 			value = value.slice(0, 8) + '…';
 		}
-		// Replace problematic filenames.  With the exception of '/', all these are valid on OS X
-		// and Linux, but sniffing the OS here is problematic.
-		value = value.replace(/[/\\:?*"|<>]/, '_');
 	} else if (key === 'key' || key === 'ref') {
 		// eslint-disable-next-line no-undefined
 		return undefined;
@@ -53,6 +65,7 @@ const stringifyProps = (props = {}) => {
 		.replace(/:/g, ' = ')
 		.replace(/,/g, ', ')
 		// TODO: check for complex children and remove
+		.replace('props = children = ', '')
 		.replace('props = ', '')
 		.replace('wrapper = ', '');
 
