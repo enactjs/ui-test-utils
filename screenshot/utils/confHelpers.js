@@ -1,5 +1,7 @@
 const path = require('path'),
-	fs = require('fs');
+	fs = require('fs'),
+	os = require('os');
+
 const VisualRegressionCompare = require('wdio-visual-regression-service/compare');
 const buildApps = require('../../src/build-apps');
 const makeHeader = require('./headerTemplate');
@@ -13,7 +15,14 @@ const newScreenshotFilename = 'tests/screenshot/dist/newFiles.html',
 
 function getScreenshotName (basePath) {
 	return function (context) {
-		const testName = context.test.title;
+		let testName = context.test.title;
+		// Replace problematic filenames. Windows is much more restrictive.
+		if (os.platform === 'win32') {
+			testName = testName.replace(/[/\\:?*"|<>]/g, '_');
+		} else {
+			testName = testName.replace(/\//g, '_');
+		}
+
 		return path.join(basePath, `${testName}.png`);
 	};
 }
