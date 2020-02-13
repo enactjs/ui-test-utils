@@ -39,7 +39,7 @@ function replacer (key, value) {
 		value = value.replace('tests/screenshot/images/', '');
 		// Picked 13 arbitrarily so icons 'notification' and 'notificationoff' won't clash.
 		if (value.length > 13) {
-			value = value.slice(0, 13) + '…';
+			value = value.slice(0, 13) + '...';
 		}
 	} else if (key === 'key' || key === 'ref') {
 		// eslint-disable-next-line no-undefined
