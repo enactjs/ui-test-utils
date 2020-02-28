@@ -2,7 +2,7 @@ const path = require('path'),
 	fs = require('fs'),
 	os = require('os');
 
-const VisualRegressionCompare = require('wdio-visual-regression-service/compare');
+const VisualRegressionCompare = require('wdio-novus-visual-regression-service/compare');
 const buildApps = require('../../src/build-apps');
 const makeHeader = require('./headerTemplate');
 

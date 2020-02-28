@@ -1,10 +1,10 @@
-const visualRegression = require('wdio-visual-regression-service');
+// const visualRegression = require('wdio-novus-visual-regression-service');
 const {configure} = require('../config/wdio.conf.js');
 const {afterTest, beforeTest, comparator, onComplete, onPrepare} = require('./utils/confHelpers.js');
 
 exports.config = configure({
 	base: 'screenshot',
-	services: [visualRegression],
+	services: ['novus-visual-regression'],
 	visualRegression: {
 		compare: comparator,
 		viewportChangePause: 300,
