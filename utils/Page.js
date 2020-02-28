@@ -136,7 +136,7 @@ class Page {
 					function () {
 						return window.__transition;
 					}
-				).value;
+				);
 			},
 			delay,
 			msg
