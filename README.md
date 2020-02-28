@@ -26,12 +26,12 @@ and `tests/screenshot`
 
 ```json
    "scripts": {
-      "test-ui": "wdio tests/ui/wdio.conf.js",
-      "test-ui-docker": "wdio tests/ui/wdio.docker.conf.js",
-      "test-ui-tv": "wdio tests/ui/wdio.tv.conf.js",
-      "test-ss": "wdio tests/screenshot/wdio.conf.js",
-      "test-ss-docker": "wdio tests/screenshot/wdio.docker.conf.js",
-      "test-ss-tv": "wdio tests/screenshot/wdio.tv.conf.js",
+      "test-ui": "start-tests tests/ui/wdio.conf.js",
+      "test-ui-docker": "start-tests tests/ui/wdio.docker.conf.js",
+      "test-ui-tv": "start-tests tests/ui/wdio.tv.conf.js",
+      "test-ss": "start-tests tests/screenshot/wdio.conf.js",
+      "test-ss-docker": "start-tests tests/screenshot/wdio.docker.conf.js",
+      "test-ss-tv": "start-tests tests/screenshot/wdio.tv.conf.js",
    }
 ```
 
