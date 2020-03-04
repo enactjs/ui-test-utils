@@ -194,6 +194,14 @@ npm run test-ui -- --pack-tests
 
 ## Advanced Usage
 
+### Limiting Number of Instances
+
+To limit the number of concurrent tests, use the `--instances` option:
+
+```bash
+npm run test-ui -- --instances 2
+```
+
 ### Running with visible browser
 
 By default, tests run in 'headless' mode, which hides the browser window used for testing.  You can

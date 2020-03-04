@@ -16,6 +16,7 @@ exports.config = Object.assign(
 			image: 'selenium/standalone-chrome',
 			healthCheck: 'http://localhost:4444',
 			options: {
+				e: ['NODE_MAX_INSTANCE=5', 'NODE_MAX_SESSION=5'],
 				p: ['4444:4444'],
 				shmSize: '2g'
 			}

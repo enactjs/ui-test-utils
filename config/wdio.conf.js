@@ -1,4 +1,9 @@
-const visibleBrowser = process.argv.includes('--visible');
+const parseArgs = require('minimist');
+
+const args = parseArgs(process.argv);
+
+const visibleBrowser = !!args.visible,
+	maxInstances = args.instances || 5;
 
 module.exports.configure = (options) => {
 	const {base, services} = options;
@@ -61,7 +66,7 @@ module.exports.configure = (options) => {
 				// maxInstances can get overwritten per capability. So if you have an in-house Selenium
 				// grid with only 5 firefox instances available you can make sure that not more than
 				// 5 instances get started at a time.
-				maxInstances: 5,
+				maxInstances,
 				//
 				browserName: 'chrome',
 				'goog:chromeOptions': visibleBrowser ? {} : {
