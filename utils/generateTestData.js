@@ -37,9 +37,9 @@ function replacer (key, value) {
 		return '<empty>';
 	} else if (typeof value === 'string') {
 		value = value.replace('tests/screenshot/images/', '');
-		// Picked 13 arbitrarily so icons 'notification' and 'notificationoff' won't clash.
-		if (value.length > 13) {
-			value = value.slice(0, 13) + '...';
+		// Picked 15 arbitrarily so icons 'notification' and 'notificationoff' won't clash.
+		if (value.length > 15) {
+			value = value.slice(0, 15) + '...';
 		}
 	} else if (key === 'key' || key === 'ref') {
 		// eslint-disable-next-line no-undefined
