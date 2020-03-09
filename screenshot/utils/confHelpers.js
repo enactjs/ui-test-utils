@@ -1,4 +1,5 @@
-const path = require('path'),
+const crypto = require('crypto'),
+	path = require('path'),
 	fs = require('fs'),
 	os = require('os');
 
@@ -22,6 +23,9 @@ function getScreenshotName (basePath) {
 		} else {
 			testName = testName.replace(/\//g, '_');
 		}
+
+		// shorten the name with a little bit of leading context to help find the file manually if necessary
+		testName = testName.substring(0, 128) + '-' + crypto.createHash('md5').update(testName).digest('hex');
 
 		return path.join(basePath, `${testName}.png`);
 	};
