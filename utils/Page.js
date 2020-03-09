@@ -14,10 +14,7 @@ class Page {
 		this._url = `/${appPath}/${urlExtra}`;
 		// Can't resize browser window when connected to remote debugger!
 		if (!browser._options || !browser._options.remote) {
-			browser.setViewportSize({
-				width: 1920,
-				height: 1080
-			});
+			browser.setWindowSize(1920, 1080);
 		}
 		browser.url(this.url);
 	}
@@ -139,7 +136,7 @@ class Page {
 					function () {
 						return window.__transition;
 					}
-				).value;
+				);
 			},
 			delay,
 			msg

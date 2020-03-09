@@ -6,7 +6,7 @@ const toLower = (str) => str.replace(/^\w/, (chr) => chr.toLowerCase());
 
 // Given a selector and a starting element, returns the first matching descendant Element
 // String => Element => Element
-const element = curry((selector, el) => el.element(selector));
+const element = curry((selector, el) => el.$(selector));
 
 // Given an element, returns its inner text
 // Element => String

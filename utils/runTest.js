@@ -20,7 +20,7 @@ const runTest = (props) => {
 			Page.open('?request');
 			let testCases = browser.execute(function () {
 				return window.__TEST_DATA; // eslint-disable-line no-undef
-			}).value;
+			});
 
 			expect(testCases).to.be.an('object', 'Test data failed to load');
 
