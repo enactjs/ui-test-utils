@@ -37,7 +37,7 @@ function replacer (key, value) {
 		return '<empty>';
 	} else if (typeof value === 'string') {
 		value = value.replace('tests/screenshot/images/', '');
-		// Picked 15 arbitrarily so icons 'notification' and 'notificationoff' won't clash.
+		// Picked 13 minimum arbitrarily so icons 'notification' and 'notificationoff' won't clash.
 		if (value.length > 15) {
 			value = value.slice(0, 13) + '...';
 		}
