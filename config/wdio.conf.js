@@ -1,4 +1,9 @@
-const visibleBrowser = process.argv.includes('--visible');
+const parseArgs = require('minimist');
+
+const args = parseArgs(process.argv);
+
+const visibleBrowser = !!args.visible,
+	maxInstances = args.instances || 5;
 
 module.exports.configure = (options) => {
 	const {base, services} = options;
@@ -11,6 +16,14 @@ module.exports.configure = (options) => {
 	return Object.assign(
 		opts,
 		{
+			//
+			// ====================
+			// Runner Configuration
+			// ====================
+			//
+			// WebdriverIO allows it to run your tests in arbitrary locations (e.g. locally or
+			// on a remote machine).
+			runner: 'local',
 			//
 			// ==================
 			// Specify Test Files
@@ -53,10 +66,10 @@ module.exports.configure = (options) => {
 				// maxInstances can get overwritten per capability. So if you have an in-house Selenium
 				// grid with only 5 firefox instances available you can make sure that not more than
 				// 5 instances get started at a time.
-				maxInstances: 5,
+				maxInstances,
 				//
 				browserName: 'chrome',
-				chromeOptions: visibleBrowser ? {} : {
+				'goog:chromeOptions': visibleBrowser ? {} : {
 					args: ['--headless', '--window-size=1920,1280']
 				}
 			}],
@@ -65,11 +78,6 @@ module.exports.configure = (options) => {
 			// Test Configurations
 			// ===================
 			// Define all options that are relevant for the WebdriverIO instance here
-			//
-			// By default WebdriverIO commands are executed in a synchronous way using
-			// the wdio-sync package. If you still want to run your tests in an async way
-			// e.g. using promises you can set the sync option to false.
-			sync: true,
 			//
 			// Level of logging verbosity: silent | verbose | command | data | result | error
 			logLevel: 'silent',
@@ -122,7 +130,7 @@ module.exports.configure = (options) => {
 			// Services take over a specific job you don't want to take care of. They enhance
 			// your test setup with almost no effort. Unlike plugins, they don't add new
 			// commands. Instead, they hook themselves up into the test process.
-			services: ['sauce', 'selenium-standalone', 'static-server'].concat(services || []),
+			services: ['selenium-standalone', 'static-server'].concat(services || []),
 			//
 			// Framework you want to run your specs with.
 			// The following are supported: Mocha, Jasmine, and Cucumber
