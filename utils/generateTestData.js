@@ -28,7 +28,7 @@ function replacer (key, value) {
 		// If it's a string, it's a built-in type, output name and props
 		if (typeof type === 'string') {
 			// Must strip quotable characters before they get quoted again
-			const props = JSON.stringify(val, replacer).replace(/[{}"]/g, '')
+			const props = JSON.stringify(val, replacer).replace(/[{}"]/g, '');
 			return `<${type}>${props}</${type}>`;
 		} else {
 			return val;

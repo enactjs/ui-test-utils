@@ -120,6 +120,7 @@ class Page {
 	/* global window */
 	waitTransitionEnd (delay = 3000, msg = 'timed out waiting for transitionend', callback, ignore = ['opacity', 'filter']) {
 		browser.execute(
+			// eslint-disable-next-line no-shadow
 			function (ignore) {
 				window.ontransitionend = function (evt) {
 					if (!ignore || ignore.indexOf(evt.propertyName) === -1) {
