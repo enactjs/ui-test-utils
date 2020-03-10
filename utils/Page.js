@@ -118,14 +118,17 @@ class Page {
 	}
 
 	/* global window */
-	waitTransitionEnd (delay = 3000, msg = 'timed out waiting for transitionend', callback) {
+	waitTransitionEnd (delay = 3000, msg = 'timed out waiting for transitionend', callback, ignore = ['opacity', 'filter']) {
 		browser.execute(
-			function () {
-				window.ontransitionend = function () {
-					window.__transition = true;
+			function (ignore) {
+				window.ontransitionend = function (evt) {
+					if (!ignore || ignore.indexOf(evt.propertyName) === -1) {
+						window.__transition = true;
+					}
 				};
 				window.__transition = false;
-			}
+			},
+			ignore
 		);
 		if (callback) {
 			callback();
