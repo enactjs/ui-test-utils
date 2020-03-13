@@ -24,7 +24,8 @@
 		const title = document.querySelector('#title');
 		const preview = document.querySelector('.preview-image');
 		currentIndex = index;
-		image.src = results[index].path;
+		const urlParts = results[index].path.split('/');
+		image.src = [...urlParts.slice(0, -1), encodeURIComponent(urlParts.slice(-1)[0])].join('/');
 		title.innerText = `${results[index].title} (${currentIndex + 1} / ${count})`;
 		updateButtons();
 		if (results[index].title.indexOf('ar-SA') >= 0) {
