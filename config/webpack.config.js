@@ -255,7 +255,7 @@ module.exports = function (env) {
 			// Automatically configure iLib library within @enact/i18n. Additionally,
 			// ensure the locale data files and the resource files are copied during
 			// the build to the output directory.
-			new ILibPlugin()
+			new ILibPlugin({context: path.dirname(env.APPENTRY)})
 		]
 	};
 };
