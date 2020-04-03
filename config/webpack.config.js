@@ -254,7 +254,9 @@ module.exports = function (env) {
 			new GracefulFsPlugin(),
 			// Automatically configure iLib library within @enact/i18n. Additionally,
 			// ensure the locale data files and the resource files are copied during
-			// the build to the output directory.
+			// the build to the output directory. The configured context value requires
+			// that resources directory be placed in the same folder as the entry point
+			// javascript file (e.g. tests/ui/apps/Button/resources).
 			new ILibPlugin({context: path.dirname(env.APPENTRY)})
 		]
 	};
