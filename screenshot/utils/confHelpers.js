@@ -16,18 +16,16 @@ const newScreenshotFilename = 'tests/screenshot/dist/newFiles.html',
 
 function getScreenshotName (basePath) {
 	return function (context) {
-		let testName = context.test.title;
+		// Using '~/' as a path part separator in cases where '/' appears in a test name
+		const testNameParts = context.test.title.split('~/');
+		let testName = testNameParts.pop();
 		// Replace problematic filenames. Windows is much more restrictive.
-		if (os.platform === 'win32') {
-			testName = testName.replace(/[/\\:?*"|<>]/g, '_');
-		} else {
-			testName = testName.replace(/\//g, '_');
-		}
+		testName = testName.replace(/[/\\:?*"|<>]/g, '_');
 
 		// shorten the name with a little bit of leading context to help find the file manually if necessary
 		testName = testName.substring(0, 128) + '-' + crypto.createHash('md5').update(testName).digest('hex');
 
-		return path.join(basePath, `${testName}.png`);
+		return path.join(basePath, ...testNameParts, `${testName}.png`);
 	};
 }
 
@@ -78,7 +76,7 @@ function beforeTest (testData) {
 				if (err) {
 					console.error('Unable to create log file!');
 				} else {
-					const output = {title: testData.title, path: relativeName};
+					const output = {title: testData.title.replace(/~\//g, '/'), path: relativeName};
 					fs.appendFile(fd, `${JSON.stringify(output)},`, 'utf8', () => {
 						fs.close(fd);
 					});
@@ -100,7 +98,7 @@ function afterTest (testData) {
 				if (err) {
 					console.error('Unable to create failed test log file!');
 				} else {
-					const title = testData.title;
+					const title = testData.title.replace(/~\//g, '/');
 					const {params, url} = testData.context;
 					const output = {title, diffPath, referencePath, screenPath, params, url};
 					fs.appendFile(fd, `${JSON.stringify(output)},`, 'utf8', () => {
