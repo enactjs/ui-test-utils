@@ -38,7 +38,7 @@ const runTest = (props) => {
 							if (titlePattern && !testCase.title.match(titlePattern)) {
 								return;
 							}
-							it(`${component}/${testName}/${testCase.title}`, function () {
+							it(`${component}~/${testName}~/${testCase.title}`, function () {
 								const params = Page.serializeParams(Object.assign({
 									component,
 									testId,
