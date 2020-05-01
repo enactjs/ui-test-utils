@@ -29,6 +29,7 @@ function resolveModule (ref, rel = '') {
 app.setEnactTargetsAsDefault();
 
 module.exports = function (env) {
+	const indexPath = env.APPOUTPUT.match('screenshot') ? 'screenshot' : 'ui';
 	process.env.NODE_ENV = 'development';
 	process.chdir(app.context);
 
@@ -45,7 +46,7 @@ module.exports = function (env) {
 		// This means they will be the "root" imports that are included in JS bundle.
 		// The first two entry points enable "hot" CSS and auto-refreshes for JS.
 		entry: {
-			main: [path.join(__dirname, '..', 'src', 'index.js')]
+			main: [path.join(__dirname, '..', indexPath, 'index.js')]
 		},
 		output: {
 			// The build output directory.
