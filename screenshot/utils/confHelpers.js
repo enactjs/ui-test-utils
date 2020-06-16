@@ -86,10 +86,10 @@ function beforeTest (testData) {
 	}
 }
 
-function afterTest (testData) {
+function afterTest (testData, context, {passed}) {
 	// If this doesn't include context data, not a screenshot test
-	if (testData && testData.title && testData.context && testData.context.params) {
-		if (!testData.passed) {
+	if (testData && testData.title && context && context.params) {
+		if (!passed) {
 			fs.open(failedScreenshotFilename, 'a', (err, fd) => {
 				const distPath = path.join(process.cwd(), 'tests', 'screenshot', 'dist'),
 					diffPath = path.relative(distPath, generateDiffName({test: testData})),
@@ -99,7 +99,7 @@ function afterTest (testData) {
 					console.error('Unable to create failed test log file!');
 				} else {
 					const title = testData.title.replace(/~\//g, '/');
-					const {params, url} = testData.context;
+					const {params, url} = context;
 					const output = {title, diffPath, referencePath, screenPath, params, url};
 					fs.appendFile(fd, `${JSON.stringify(output)},`, 'utf8', () => {
 						fs.close(fd);
@@ -117,13 +117,17 @@ function onComplete () {
 
 	if (newSize !== Buffer.byteLength(newScreenshotHeader, 'utf8')) {
 		fs.appendFileSync(newScreenshotFilename, newScreenshotFooter, 'utf8');
-		console.log(`New screenshots created.  Open ${newScreenshotFilename} to view.`);
+		process.on('exit', () => {
+			console.log(`New screenshots created.  Open ${newScreenshotFilename} to view.`);
+		});
 	} else {
 		fs.appendFileSync(newScreenshotFilename, newScreenshotFooter, 'utf8');
 	}
 	if (failedSize !== Buffer.byteLength(failedScreenshotHeader, 'utf8')) {
 		fs.appendFileSync(failedScreenshotFilename, failedScreenshotFooter, 'utf8');
-		console.log(`Screenshot diffs created.  Open ${failedScreenshotFilename} to view.`);
+		process.on('exit', () => {
+			console.log(`Screenshot diffs created.  Open ${failedScreenshotFilename} to view.`);
+		});
 	} else {
 		fs.appendFileSync(failedScreenshotFilename, failedScreenshotFooter, 'utf8');
 	}
