@@ -130,7 +130,14 @@ module.exports.configure = (options) => {
 			// Services take over a specific job you don't want to take care of. They enhance
 			// your test setup with almost no effort. Unlike plugins, they don't add new
 			// commands. Instead, they hook themselves up into the test process.
-			services: ['selenium-standalone', 'static-server'].concat(services || []),
+			services: [
+				['selenium-standalone'],
+				['static-server', {
+					folders: [
+						{ mount: '/', path: './tests/' + base + '/dist' }
+					]
+				}]
+			].concat(services || []),
 			//
 			// Framework you want to run your specs with.
 			// The following are supported: Mocha, Jasmine, and Cucumber
@@ -152,9 +159,6 @@ module.exports.configure = (options) => {
 				ui: 'bdd',
 				timeout: 60 * 60 * 1000
 			},
-			staticServerFolders: [
-				{ mount: '/', path: './tests/' + base + '/dist' }
-			],
 			/**
 			 * Gets executed before test execution begins. At this point you can access to all global
 			 * variables like `browser`. It is the perfect place to define custom commands.

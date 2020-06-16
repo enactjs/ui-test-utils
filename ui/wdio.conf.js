@@ -25,9 +25,9 @@ exports.config = configure({
 	 * Function to be executed after a test (in Mocha/Jasmine) or a step (in Cucumber) starts.
 	 * @param {Object} test test details
 	 */
-	afterTest: function (testCase) {
+	afterTest: function (testCase, context, {passed}) {
 		// if test passed, ignore, else take and save screenshot.
-		if (testCase.passed) {
+		if (passed) {
 			return;
 		}
 		// get current test title and clean it, to use it as file name
