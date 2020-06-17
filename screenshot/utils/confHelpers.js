@@ -1,7 +1,6 @@
 const crypto = require('crypto'),
 	path = require('path'),
-	fs = require('fs'),
-	os = require('os');
+	fs = require('fs');
 
 const VisualRegressionCompare = require('wdio-novus-visual-regression-service/compare');
 const buildApps = require('../../src/build-apps');
