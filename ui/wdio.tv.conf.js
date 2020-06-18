@@ -9,15 +9,12 @@ exports.config = Object.assign(
 			maxInstances: 1,
 
 			browserName: 'chrome',
-
 			'goog:chromeOptions': {
 				debuggerAddress: `${process.env.TV_IP}:9998`
 			}
 		}],
 
 		baseUrl: `http://${ipAddress()}:4567`,
-
-		services: ['sauce', 'selenium-standalone', 'static-server'],
 
 		before: function () {
 			if (config.before) config.before();
