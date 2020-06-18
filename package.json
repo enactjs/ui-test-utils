@@ -45,6 +45,7 @@
     "babel-plugin-dev-expression": "0.2.1",
     "case-sensitive-paths-webpack-plugin": "2.2.0",
     "chai": "4.2.0",
+    "chalk": "^4.1.0",
     "core-js": "3.0.1",
     "css-loader": "2.1.1",
     "dirty-chai": "2.0.1",
