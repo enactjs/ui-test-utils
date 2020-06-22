@@ -85,9 +85,9 @@ function beforeTest (testData) {
 	}
 }
 
-function afterTest (testData, context, {passed}) {
+function afterTest (testData, _context, {passed}) {
 	// If this doesn't include context data, not a screenshot test
-	if (testData && testData.title && context && context.params) {
+	if (testData && testData.title && testData.context && testData.context.params) {
 		if (!passed) {
 			fs.open(failedScreenshotFilename, 'a', (err, fd) => {
 				const distPath = path.join(process.cwd(), 'tests', 'screenshot', 'dist'),

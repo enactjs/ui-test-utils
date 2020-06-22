@@ -26,7 +26,7 @@ exports.config = configure({
 	 * Function to be executed after a test (in Mocha/Jasmine) or a step (in Cucumber) starts.
 	 * @param {Object} test test details
 	 */
-	afterTest: function (testCase, context, {duration, passed}) {
+	afterTest: function (testCase, _context, {duration, passed}) {
 		if (duration > 2000) {
 			console.log(chalk.yellow(`Long running test case: ${testCase.title}: ${duration}s`));
 		}
