@@ -4,13 +4,15 @@ const {afterTest, beforeTest, comparator, onComplete, onPrepare} = require('./ut
 
 exports.config = configure({
 	base: 'screenshot',
-	services: ['novus-visual-regression'],
-	visualRegression: {
-		compare: comparator,
-		viewportChangePause: 300,
-		viewports: [{width: 1920, height: 1080}],
-		orientations: ['landscape']
-	},
+	services: [[
+		'novus-visual-regression',
+		{
+			compare: comparator,
+			viewportChangePause: 300,
+			viewports: [{width: 1920, height: 1080}],
+			orientations: ['landscape']
+		}
+	]],
 	//
 	// =====
 	// Hooks
