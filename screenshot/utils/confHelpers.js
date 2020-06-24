@@ -121,7 +121,7 @@ function onComplete () {
 	if (newSize !== Buffer.byteLength(newScreenshotHeader, 'utf8')) {
 		fs.appendFileSync(newScreenshotFilename, newScreenshotFooter, 'utf8');
 		process.on('exit', () => {
-			console.log(`New screenshots created.  Open ${newScreenshotFilename} to view.`);
+			console.log(`New screenshots created.  Use 'open ${newScreenshotFilename}' to view.`);
 		});
 	} else {
 		fs.appendFileSync(newScreenshotFilename, newScreenshotFooter, 'utf8');
@@ -129,7 +129,7 @@ function onComplete () {
 	if (failedSize !== Buffer.byteLength(failedScreenshotHeader, 'utf8')) {
 		fs.appendFileSync(failedScreenshotFilename, failedScreenshotFooter, 'utf8');
 		process.on('exit', () => {
-			console.log(`Screenshot diffs created.  Open ${failedScreenshotFilename} to view.`);
+			console.log(`Screenshot diffs created.  Use 'open ${failedScreenshotFilename}' to view.`);
 		});
 	} else {
 		fs.appendFileSync(failedScreenshotFilename, failedScreenshotFooter, 'utf8');
