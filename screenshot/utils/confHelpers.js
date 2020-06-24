@@ -68,26 +68,30 @@ function beforeTest (testData) {
 	// If title doesn't have a '/', it's not a screenshot test, don't save
 	if (testData && testData.title && testData.title.indexOf('/') > 0) {
 		const filename = generateReferenceName({test: testData});
-		if (!fs.existsSync(filename)) {
-			fs.open(newScreenshotFilename, 'a', (err, fd) => {
-				const distPath = path.join(process.cwd(), 'tests', 'screenshot', 'dist'),
-					relativeName = path.relative(distPath, filename);
-				if (err) {
-					console.error('Unable to create log file!');
-				} else {
-					const output = {title: testData.title.replace(/~\//g, '/'), path: relativeName};
-					fs.appendFile(fd, `${JSON.stringify(output)},`, 'utf8', () => {
-						fs.close(fd);
-					});
-				}
-			});
-		}
+		testData.ctx.isNewScreenshot = !fs.existsSync(filename);
 	}
 }
 
 function afterTest (testData, _context, {passed}) {
 	// If this doesn't include context data, not a screenshot test
 	if (testData && testData.title && testData.context && testData.context.params) {
+		if (_context.isNewScreenshot) {
+			const filename = generateReferenceName({test: testData});
+			fs.open(newScreenshotFilename, 'a', (err, fd) => {
+				const distPath = path.join(process.cwd(), 'tests', 'screenshot', 'dist'),
+					relativeName = path.relative(distPath, filename);
+				if (err) {
+					console.error('Unable to create log file!');
+				} else {
+					const {params, url} = testData.context;
+					const output = {title: testData.title.replace(/~\//g, '/'), path: relativeName, params, url};
+					fs.appendFile(fd, `${JSON.stringify(output)},`, 'utf8', () => {
+						fs.close(fd);
+					});
+				}
+			});
+		}
+
 		if (!passed) {
 			fs.open(failedScreenshotFilename, 'a', (err, fd) => {
 				const distPath = path.join(process.cwd(), 'tests', 'screenshot', 'dist'),
