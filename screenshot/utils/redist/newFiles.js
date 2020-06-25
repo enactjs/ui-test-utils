@@ -49,6 +49,20 @@
 			dec = document.querySelector('#dec');
 		inc.onclick = nextImage;
 		dec.onclick = prevImage;
+
+		const btn = document.createElement('button');
+		btn.innerText = 'test case';
+		btn.id = 'testcase';
+		btn.onclick = () => {
+			let path = results[currentIndex].url;
+			if (window.location.protocol === 'file:') {
+				path = 'http://localhost:5000' + path;
+			} else {
+				path = 'dist' + path;
+			}
+			document.defaultView.open(path, '_blank');
+		};
+		inc.insertAdjacentElement('afterend', btn);
 	}
 
 	function updateButtons () {
