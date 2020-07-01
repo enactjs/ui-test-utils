@@ -6,17 +6,17 @@ const TestChooser = ({metadata}) => {
 	const tests = Object.keys(metadata);
 
 	return (
-		<div>
+		<div className={css.index}>
 			{tests.map((key) => (
 				<div key={key}>
-					<div className={css.component}>{key}</div>
-					<ul>
-					{metadata[key].map(({title}, index) => (
-						<li key={index} className={css.test}>
-							<a href={`?component=${key}&testId=${index}`}>{title}</a>
-						</li>
-					))}
-					</ul>
+					<h3 className={css.component}>{key}</h3>
+					<ol start="0" className={css.list}>
+						{metadata[key].map(({title}, index) => (
+							<li key={index} className={css.listitem}>
+								<a href={`?component=${key}&testId=${index}`} className={css.link}>{title}</a>
+							</li>
+						))}
+					</ol>
 				</div>
 			))}
 		</div>
