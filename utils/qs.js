@@ -1,5 +1,3 @@
-/* global window */
-
 const queryString = require('query-string');
 
 const isJson = (str) => {

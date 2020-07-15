@@ -25,7 +25,7 @@ function buildApps (base) {
 
 	return Promise.resolve()
 		.then(() => {
-			if(!process.argv.includes('--skip-enact')) {
+			if (!process.argv.includes('--skip-enact')) {
 				const enact = framework.apply(generator({
 					APPENTRY: 'framework',
 					APPOUTPUT: path.join('tests', base, 'dist', 'framework')
@@ -36,7 +36,7 @@ function buildApps (base) {
 			}
 		})
 		.then(() => {
-			if(!process.argv.includes('--skip-ilib')) {
+			if (!process.argv.includes('--skip-ilib')) {
 				console.log('Copying ilib locale data...');
 
 				const ilibDist = path.join('tests', base, 'dist', 'framework', 'ilib');
@@ -51,7 +51,7 @@ function buildApps (base) {
 			}
 		})
 		.then(() => {
-			if(!process.argv.includes('--skip-tests')) {
+			if (!process.argv.includes('--skip-tests')) {
 				console.log('Packing views in parallel...');
 				return findViews(base).then(files => (
 					epack(files.map(f => (
@@ -102,7 +102,7 @@ function epack (configs) {
 				reject(err);
 			} else {
 				const statsJSON = stats.toJson({}, true);
-				if (statsJSON.errors.length>0) {
+				if (statsJSON.errors.length > 0) {
 					reject(new Error(statsJSON.errors.join('\n\n')));
 				} else {
 					if (statsJSON.warnings.length) {

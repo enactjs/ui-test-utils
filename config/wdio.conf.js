@@ -134,7 +134,7 @@ module.exports.configure = (options) => {
 				['selenium-standalone'],
 				['static-server', {
 					folders: [
-						{ mount: '/', path: './tests/' + base + '/dist' }
+						{mount: '/', path: './tests/' + base + '/dist'}
 					]
 				}]
 			].concat(services || []),

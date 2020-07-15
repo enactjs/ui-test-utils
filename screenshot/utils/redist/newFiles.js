@@ -10,7 +10,9 @@
 	results.forEach((item, index) => {
 		const li = document.createElement('li');
 		li.appendChild(document.createTextNode(item.title));
-		li.onclick= function () {loadImage(index);};
+		li.onclick = function () {
+			loadImage(index);
+		};
 		list.appendChild(li);
 	});
 
