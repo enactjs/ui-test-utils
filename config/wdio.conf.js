@@ -131,7 +131,26 @@ module.exports.configure = (options) => {
 			// your test setup with almost no effort. Unlike plugins, they don't add new
 			// commands. Instead, they hook themselves up into the test process.
 			services: [
-				['selenium-standalone'],
+				['selenium-standalone', {
+					skipSeleniumInstall: offline,
+					args: {
+						drivers : {
+							chrome : {
+								version : '2.44',
+								arch    : process.arch
+							}
+						}
+					},
+					installArgs: {
+						drivers : {
+							chrome : {
+								version : '2.44',
+								arch    : process.arch,
+								baseURL : 'https://chromedriver.storage.googleapis.com'
+							}
+						}
+					}
+				}],
 				['static-server', {
 					folders: [
 						{ mount: '/', path: './tests/' + base + '/dist' }
