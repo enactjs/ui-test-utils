@@ -8,14 +8,7 @@ const pattern = args.component, // Component group to match
 	titlePattern = args.title,
 	maxInstances = args.instances || 5; // Pattern for matching test case title
 
-const runTest = (props) => {
-	const rest = Object.assign({}, props);
-	const {Page, skin, testName, concurrency} = props;
-
-	delete rest.testName;
-	delete rest.Page;
-	delete rest.skin;
-
+const runTest = ({concurrency, Page, skin, testName, ...rest}) => {
 	if (concurrency && (concurrency > maxInstances)) {
 		return;
 	}
