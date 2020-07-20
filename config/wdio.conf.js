@@ -134,7 +134,24 @@ module.exports.configure = (options) => {
 			// commands. Instead, they hook themselves up into the test process.
 			services: [
 				['selenium-standalone', {
-					skipSeleniumInstall: offline
+					skipSeleniumInstall: offline,
+					args: {
+						drivers : {
+							chrome : {
+								version : '2.44',
+								arch    : process.arch
+							}
+						}
+					},
+					installArgs: {
+						drivers : {
+							chrome : {
+								version : '2.44',
+								arch    : process.arch,
+								baseURL : 'https://chromedriver.storage.googleapis.com'
+							}
+						}
+					}
 				}],
 				['static-server', {
 					folders: [
