@@ -1,4 +1,3 @@
-import 'core-js/stable';
 import React from 'react';
 import {render} from 'react-dom';
 import App from 'UI_TEST_APP_ENTRY';
