@@ -103,7 +103,6 @@ function clearLine () {
 function epack ({file, opts}) {
 	process.stdout.write('\t' + path.basename(file.basename, '.js') + '... ');
 	const result = spawn.sync('enact', opts, {
-		stdio:'inherit',
 		cwd: process.cwd(),
 		env: {
 			...process.env,
@@ -123,7 +122,7 @@ function epack ({file, opts}) {
 	} else {
 		let err = '';
 		if (result.stdout) {
-			err += result.stdout.split(/\n+/).slice(3).join('\n');
+			err += result.stdout.split(/\n+/).slice(2).join('\n');
 		}
 		if (result.stderr) err += '\n' + result.stderr;
 
