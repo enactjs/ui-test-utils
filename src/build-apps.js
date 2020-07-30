@@ -108,7 +108,7 @@ function epack ({file, opts}) {
 			...process.env,
 			...env,
 			ENACT_ALIAS: JSON.stringify({UI_TEST_APP_ENTRY: file.fullPath}),
-			PUBLIC_URL: '/' + path.basename(file.basename, '.js')
+			PUBLIC_URL: '/' + path.basename(file.fullPath, '.js')
 		},
 		encoding: 'utf8'
 	});
