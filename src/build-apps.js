@@ -119,7 +119,14 @@ function epack ({file, opts}) {
 			process.stdout.write('DONE\n');
 		}
 	} else {
-		const err = result.stdout.split(/\n+/).slice(3).join('\n');
+		let err = 'Unknown error';
+
+		if (result.stdout) {
+			err = result.stdout.split(/\n+/).slice(3).join('\n');
+		} else if (result.stderr) {
+			err = result.stderr.split(/\n+/).slice(3).join('\n');
+		}
+
 		if (process.stdout.isTTY) {
 			clearLine();
 			process.stdout.write(chalk.red('\t✖ ') + path.basename(file.basename, '.js') + '\n\n');
