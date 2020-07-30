@@ -103,8 +103,10 @@ function clearLine () {
 function epack ({file, opts}) {
 	process.stdout.write('\t' + path.basename(file.basename, '.js') + '... ');
 	const result = spawn.sync('enact', opts, {
+		stdio:'inherit',
 		cwd: process.cwd(),
 		env: {
+			...process.env,
 			...env,
 			ENACT_ALIAS: JSON.stringify({UI_TEST_APP_ENTRY: file.fullPath}),
 			PUBLIC_URL: '/' + path.basename(file.basename, '.js')
