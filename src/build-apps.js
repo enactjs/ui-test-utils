@@ -119,13 +119,11 @@ function epack ({file, opts}) {
 			process.stdout.write('DONE\n');
 		}
 	} else {
-		let err = 'Unknown error';
-
+		let err = '';
 		if (result.stdout) {
-			err = result.stdout.split(/\n+/).slice(3).join('\n');
-		} else if (result.stderr) {
-			err = result.stderr.split(/\n+/).slice(3).join('\n');
+			err += result.stdout.split(/\n+/).slice(3).join('\n');
 		}
+		if (result.stderr) err += '\n' + result.stderr;
 
 		if (process.stdout.isTTY) {
 			clearLine();
@@ -133,7 +131,7 @@ function epack ({file, opts}) {
 		} else {
 			process.stdout.write('ERROR\n\n');
 		}
-		throw new Error(err);
+		throw new Error(err || 'Unknown error');
 	}
 }
 
