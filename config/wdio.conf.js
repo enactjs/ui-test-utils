@@ -152,7 +152,7 @@ module.exports.configure = (options) => {
 				}],
 				['static-server', {
 					folders: [
-						{ mount: '/', path: './tests/' + base + '/dist' }
+						{mount: '/', path: './tests/' + base + '/dist'}
 					]
 				}]
 			].concat(services || []),
