@@ -1,72 +1,82 @@
 const path = require('path');
-const fs = require('fs-extra');
-const externals = require('@enact/dev-utils/mixins/externals');
-const framework = require('@enact/dev-utils/mixins/framework');
-const readdirp = require('readdirp');
-const webpack = require('webpack');
-const generator = require('../config/webpack.config.js');
 
-process.env.ILIB_BASE_PATH = '/framework/ilib';
+const chalk = require('chalk');
+const spawn = require('cross-spawn');
+const fs = require('fs-extra');
+const readdirp = require('readdirp');
+
+const env = {
+	ILIB_BASE_PATH: '/framework/ilib',
+	SIMPLE_CSS_IDENT: 'true',
+	BROWSERSLIST: 'Chrome 79'
+};
 
 function findViews (base) {
-	return new Promise((resolve, reject) => {
-		readdirp({root: path.join('tests', base, 'apps'), fileFilter: '*-View.js'}, (err, res) => {
-			if (err) {
-				reject(err);
-			} else {
-				resolve(res.files);
-			}
-		});
-	});
+	return readdirp.promise(path.join('tests', base, 'apps'), {fileFilter: '*-View.js'});
 }
 
 function buildApps (base) {
 	if (process.argv.includes('--skip-build')) return;
+	console.log('Building content:\n');
 
 	return Promise.resolve()
 		.then(() => {
-			if(!process.argv.includes('--skip-enact')) {
-				const enact = framework.apply(generator({
-					APPENTRY: 'framework',
-					APPOUTPUT: path.join('tests', base, 'dist', 'framework')
-				}));
-
-				console.log('Packing Enact framework...');
-				return epack([enact]);
+			if (!process.argv.includes('--skip-enact')) {
+				epack({
+					file: {basename: 'Enact framework bundle', fullPath: 'framework'},
+					opts: [
+						'pack',
+						'--output',
+						path.join('tests', base, 'dist', 'framework'),
+						'--framework',
+						'--externals-polyfill'
+					]
+				});
 			}
 		})
 		.then(() => {
-			if(!process.argv.includes('--skip-ilib')) {
-				console.log('Copying ilib locale data...');
-
+			if (!process.argv.includes('--skip-ilib')) {
 				const ilibDist = path.join('tests', base, 'dist', 'framework', 'ilib');
 				if (!fs.existsSync(ilibDist)) {
 					fs.mkdirSync(ilibDist);
 				}
-
+				process.stdout.write('\tiLib locale data... ');
 				return fs.copy(
 					path.join('node_modules', 'ilib', 'locale'),
 					path.join(ilibDist, 'locale')
-				);
+				).then(() => {
+					if (process.stdout.isTTY) {
+						clearLine();
+						process.stdout.write(chalk.green('\t✔ ') + 'iLib locale data\n');
+					} else {
+						process.stdout.write('DONE\n');
+					}
+				});
 			}
 		})
 		.then(() => {
-			if(!process.argv.includes('--skip-tests')) {
-				console.log('Packing views in parallel...');
+			if (!process.argv.includes('--skip-tests')) {
 				return findViews(base).then(files => (
-					epack(files.map(f => (
-						externals.apply(generator({
-							APPENTRY: f.fullPath,
-							APPOUTPUT: path.join('tests', base, 'dist', path.basename(f.fullPath, '.js'))
-						}), {
-							externalsPublic: 'tests/' + base + '/dist/framework'
+					files.forEach(file => (
+						epack({
+							file,
+							opts: [
+								'pack',
+								'--entry',
+								path.join(__dirname, '..', base, 'index.js'),
+								'--output',
+								path.join('tests', base, 'dist', path.basename(file.fullPath, '.js')),
+								'--externals',
+								'tests/' + base + '/dist/framework',
+								'--externals-polyfill'
+							]
 						})
-					)))
+					))
 				));
 			}
 		})
 		.then(() => {
-			if (base.indexOf('screenshot') >= 0) {
+			if (base.includes('screenshot')) {
 				const distUtils = path.join('tests', base, 'dist', 'utils'),
 					redistSrc = path.join(__dirname, '..', 'screenshot', 'utils', 'redist');
 
@@ -78,44 +88,52 @@ function buildApps (base) {
 			}
 		})
 		.catch(err => {
-			console.error('Build failed:');
+			console.error(chalk.red('Build failed:'));
 			console.error();
 			console.error(err.message);
 			process.exit(1);
 		});
 }
 
-function epack (configs) {
-	process.env.NODE_ENV = 'development';
-	console.log();
-	return new Promise((resolve, reject) => {
-		const multiCompiler = webpack(configs);
-		multiCompiler.compilers.forEach(compiler => {
-			compiler.hooks.done.tap('UITests', () => {
-				const src = path.relative(process.cwd(), compiler.options.resolve.alias['UI_TEST_APP_ENTRY']);
-				const out = path.relative(process.cwd(), compiler.options.output.path);
-				console.log('Built ' + src + ' to ' + out);
-			});
-		});
-		multiCompiler.run((err, stats) => {
-			if (err) {
-				reject(err);
-			} else {
-				const statsJSON = stats.toJson({}, true);
-				if (statsJSON.errors.length>0) {
-					reject(new Error(statsJSON.errors.join('\n\n')));
-				} else {
-					if (statsJSON.warnings.length) {
-						console.log('Build completed with warnings:');
-						console.log();
-						console.log(statsJSON.warnings.join('\n\n'));
-					}
-					console.log('Build completed successfully.\n');
-					resolve();
-				}
-			}
-		});
+function clearLine () {
+	process.stdout.clearLine();
+	process.stdout.cursorTo(0);
+}
+
+function epack ({file, opts}) {
+	process.stdout.write('\t' + path.basename(file.basename, '.js') + '... ');
+	const result = spawn.sync('enact', opts, {
+		cwd: process.cwd(),
+		env: {
+			...process.env,
+			...env,
+			ENACT_ALIAS: JSON.stringify({UI_TEST_APP_ENTRY: file.fullPath}),
+			PUBLIC_URL: '/' + path.basename(file.fullPath, '.js')
+		},
+		encoding: 'utf8'
 	});
+	if (result.status === 0) {
+		if (process.stdout.isTTY) {
+			clearLine();
+			process.stdout.write(chalk.green('\t✔ ') + path.basename(file.basename, '.js') + '\n');
+		} else {
+			process.stdout.write('DONE\n');
+		}
+	} else {
+		let err = '';
+		if (result.stdout) {
+			err += result.stdout.split(/\n+/).slice(2).join('\n');
+		}
+		if (result.stderr) err += '\n' + result.stderr;
+
+		if (process.stdout.isTTY) {
+			clearLine();
+			process.stdout.write(chalk.red('\t✖ ') + path.basename(file.basename, '.js') + '\n\n');
+		} else {
+			process.stdout.write('ERROR\n\n');
+		}
+		throw new Error(err || 'Unknown error');
+	}
 }
 
 module.exports = buildApps;

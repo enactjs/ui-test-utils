@@ -1,4 +1,3 @@
-/* eslint-env browser */
 ((results) => {
 	const h = document.querySelector('h1');
 	const list = document.querySelector('.list > ol');
@@ -10,7 +9,9 @@
 	results.forEach((item, index) => {
 		const li = document.createElement('li');
 		li.appendChild(document.createTextNode(item.title));
-		li.onclick= function () {loadImage(index);};
+		li.onclick = function () {
+			loadImage(index);
+		};
 		list.appendChild(li);
 	});
 
@@ -50,6 +51,7 @@
 		btn = document.createElement('button');
 		btn.innerText = text;
 		btn.id = action;
+		// eslint-disable-next-line no-undefined
 		btn.onclick = () => loadImage(undefined, action);
 		target.appendChild(btn);
 		return btn;
