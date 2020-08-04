@@ -47,7 +47,9 @@ function initFile (name, content) {
 	} else {
 		try {
 			fs.unlinkSync(name);
-		} catch (err) {}
+		} catch (err) {
+			// do nothing
+		}
 	}
 
 	fs.appendFileSync(name, content, 'utf8');

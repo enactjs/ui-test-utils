@@ -8,7 +8,9 @@ class Page {
 		this._url = '';
 	}
 
-	get url () { return this._url; }
+	get url () {
+		return this._url;
+	}
 
 	open (appPath, urlExtra = '?locale=en-US') {
 		this._url = `/${appPath}/${urlExtra}`;
@@ -19,7 +21,7 @@ class Page {
 		browser.url(this.url);
 	}
 
-	serializeParams (params){
+	serializeParams (params) {
 		const queryObject =  queryString.stringify(params);
 
 		return queryObject;
@@ -73,7 +75,6 @@ class Page {
 		return browser;
 	}
 
-	/* global document */
 	showPointerByKeycode () {
 		browser.execute(function () {
 			const event = document.createEvent('Events');
@@ -117,7 +118,6 @@ class Page {
 		);
 	}
 
-	/* global window */
 	waitTransitionEnd (delay = 3000, msg = 'timed out waiting for transitionend', callback, ignore = ['opacity', 'filter']) {
 		browser.execute(
 			// eslint-disable-next-line no-shadow
