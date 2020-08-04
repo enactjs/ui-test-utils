@@ -28,7 +28,7 @@ exports.config = configure({
 	 */
 	afterTest: function (testCase, _context, {duration, passed}) {
 		if (duration > 2000) {
-			console.log(chalk.yellow(`Long running test case: ${testCase.title}: ${duration}s`));
+			console.log(chalk.yellow(`Long running test case: ${testCase.title}: ${duration}ms`));
 		}
 		this.__duration = (this.__duration || 0) + duration;
 		// if test passed, ignore, else take and save screenshot.

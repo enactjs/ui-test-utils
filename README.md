@@ -194,12 +194,21 @@ npm run test-ui -- --pack-tests
 
 ## Advanced Usage
 
-### Limiting Number of Instances
+### Setting the Number of Concurrent Instances
 
-To limit the number of concurrent tests, use the `--instances` option:
+To limit or increase the number of concurrent tests, use the `--instances` option:
 
 ```bash
 npm run test-ui -- --instances 2
+```
+
+### Running Tests Offline
+
+By default, the latest versions of various drivers will be downloaded before starting tests. This
+can be skipped when no internet connection is available by specifying the `--offline` option:
+
+```bash
+npm run test-ui -- --offline
 ```
 
 ### Running with visible browser
@@ -238,6 +247,14 @@ http://localhost:5000/VirtualList-View/
 ### Viewing screenshot tests in the browser
 
 Navigate to a URL using the component name and test case number. Change 'Moonstone-View' to the name of the view appropriate for your library.
+
+An index page will be served when no component is specified.  Select a test from the list to open it.
+
+```none
+localhost:5000/Moonstone-View/
+```
+
+You can go directly to a test by specifying the component name and test ID number:
 
 ```none
 localhost:5000/Moonstone-View/?component=<component name>&testId=<number of the test>
