@@ -7,6 +7,7 @@ const readdirp = require('readdirp');
 
 const env = {
 	ILIB_BASE_PATH: '/framework/ilib',
+	ILIB_ASSET_CREATE: 'false',
 	SIMPLE_CSS_IDENT: 'true',
 	BROWSERSLIST: 'Chrome 79'
 };
@@ -107,6 +108,7 @@ function epack ({file, opts}) {
 		env: {
 			...process.env,
 			...env,
+			ILIB_CONTEXT: path.dirname(file.fullPath),
 			ENACT_ALIAS: JSON.stringify({UI_TEST_APP_ENTRY: file.fullPath}),
 			PUBLIC_URL: '/' + path.basename(file.fullPath, '.js')
 		},
