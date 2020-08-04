@@ -5,15 +5,13 @@ const args = parseArgs(process.argv);
 
 const pattern = args.component, // Component group to match
 	testToExecute = args.id, // Specific test ID
-	titlePattern = args.title; // Pattern for matching test case title
+	titlePattern = args.title,
+	maxInstances = args.instances || 5; // Pattern for matching test case title
 
-const runTest = (props) => {
-	const rest = Object.assign({}, props);
-	const {Page, skin, testName} = props;
-
-	delete rest.testName;
-	delete rest.Page;
-	delete rest.skin;
+const runTest = ({concurrency, Page, skin, testName, ...rest}) => {
+	if (concurrency && (concurrency > maxInstances)) {
+		return;
+	}
 
 	describe(testName, function () {
 		it('should fetch test cases', function () {
@@ -32,6 +30,9 @@ const runTest = (props) => {
 
 					describe(component, function () {
 						testCases[component].forEach((testCase, testId) => {
+							if (concurrency && testId % maxInstances !== concurrency - 1) {
+								return;
+							}
 							if (testToExecute >= 0 && testToExecute !== testId) {
 								return;
 							}
