@@ -36,7 +36,8 @@ function replacer (key, value) {
 	} else if (value === '') {
 		return '<empty>';
 	} else if (typeof value === 'string') {
-		value = value.replace('tests/screenshot/images/', '');
+		// Automatically shorten filenames from imported images
+		value = value.replace(/.*tests\/screenshot\/images\//, '');
 		// Picked 13 minimum arbitrarily so icons 'notification' and 'notificationoff' won't clash.
 		if (value.length > 13) {
 			value = value.slice(0, 13) + '…';
