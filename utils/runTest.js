@@ -20,6 +20,10 @@ const runTest = ({concurrency, Page, skin, testName, ...rest}) => {
 				return window.__TEST_DATA; // eslint-disable-line no-undef
 			});
 
+			if (typeof testCases === 'string') {
+				throw new Error(`Test data failed to load: ${testCases}.\n\nLoad page in a browser to view the error.`)
+			}
+
 			expect(testCases).to.be.an('object', 'Test data failed to load');
 
 			describe(testName, function () {
