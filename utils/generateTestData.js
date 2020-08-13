@@ -21,7 +21,7 @@ function replacer (key, value) {
 			props: value.props,
 			children: value.children
 		};
-		// If it's a symbol, we can replace with empty string
+		// If it's a fragment, we can replace with empty string
 		if (type === Symbol.for('react.fragment')) {
 			type = '';
 		}
@@ -85,7 +85,8 @@ const generateTestData = (component, componentTests) => {
 				locale: testCase.locale,
 				props: testCase.props ? testCase.props : testCase.component.props,
 				wrapper: testCase.wrapper,
-				textSize: testCase.textSize
+				textSize: testCase.textSize,
+				skinVariants: testCase.skinVariants
 			});
 		}
 
