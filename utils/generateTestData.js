@@ -82,6 +82,7 @@ const generateTestData = (component, componentTests) => {
 
 		if (!title) {
 			title = stringifyProps({
+				skin: testCase.skin,
 				locale: testCase.locale,
 				props: testCase.props ? testCase.props : testCase.component.props,
 				wrapper: testCase.wrapper,

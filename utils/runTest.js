@@ -8,7 +8,7 @@ const pattern = args.component, // Component group to match
 	titlePattern = args.title,  // Pattern for matching test case title
 	maxInstances = args.instances || 5;  // concurrent instances for 'manual' concurrency
 
-const runTest = ({concurrency, filter, Page, skin, testName, ...rest}) => {
+const runTest = ({concurrency, filter, Page, testName, ...rest}) => {
 	if (concurrency && (concurrency > maxInstances)) {
 		return;
 	}
@@ -45,8 +45,7 @@ const runTest = ({concurrency, filter, Page, skin, testName, ...rest}) => {
 							it(`${component}~/${testName}~/${testCase.title}`, function () {
 								const params = Page.serializeParams(Object.assign({
 									component,
-									testId,
-									skin
+									testId
 								}, rest));
 
 								Page.open(`?${params}`);
