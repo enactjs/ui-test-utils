@@ -118,6 +118,20 @@ class Page {
 		);
 	}
 
+	/**
+	 * Wait for an element to appear and become focused
+	 *
+	 * @param {Element} target                      Target element to match
+	 * @param {Object} [config]                     Optional configuration
+	 * @param {String} [config.targetName="item"]   Human readable name for target, used in default `timeoutMsg`
+	 * @param {String} [config.timeoutMsg=`timed out waiting for ${targetName} focused`]  Error message on timeout
+	 * @param {Number} [config.timeout=1200]        Time to wait for focus condition
+	 * @param {Number} [config.interval=200]        Time between checks
+	 */
+	waitForFocused (target, {targetName = 'item', timeoutMsg = `timed out waiting for ${targetName} focused`, timeout = 1200, interval = 200} = {}) {
+		browser.waitUntil(() => target.isExisting() && target.isFocused(), {timeout, timeoutMsg, interval});
+	}
+
 	waitTransitionEnd (delay = 3000, msg = 'timed out waiting for transitionend', callback, ignore = ['opacity', 'filter']) {
 		browser.execute(
 			// eslint-disable-next-line no-shadow
