@@ -39,6 +39,7 @@
     "webdriverio": "^6.1.7"
   },
   "devDependencies": {
+    "@enact/docs-utils": "^0.3.3",
     "babel-eslint": "^10.1.0",
     "eslint": "^7.4.0",
     "eslint-config-enact": "^2.0.0",
