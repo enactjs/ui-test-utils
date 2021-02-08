@@ -1,5 +1,3 @@
-import React from 'react';
-
 import css from './TestChooser.module.css';
 
 // eslint-disable-next-line enact/prop-types
