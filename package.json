@@ -1,6 +1,6 @@
 {
   "name": "@enact/ui-test-utils",
-  "version": "0.5.4",
+  "version": "0.6.0",
   "description": "UI Testing for the Enact framework",
   "main": "index.js",
   "bin": {
