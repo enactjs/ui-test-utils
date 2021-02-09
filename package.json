@@ -1,6 +1,6 @@
 {
   "name": "@enact/ui-test-utils",
-  "version": "0.5.4",
+  "version": "0.6.0",
   "description": "UI Testing for the Enact framework",
   "main": "index.js",
   "bin": {
@@ -16,14 +16,14 @@
     "access": "public"
   },
   "dependencies": {
-    "@wdio/cli": "^6.1.17",
-    "@wdio/dot-reporter": "^6.1.14",
-    "@wdio/local-runner": "^6.1.17",
-    "@wdio/mocha-framework": "^6.1.17",
-    "@wdio/selenium-standalone-service": "^6.1.14",
-    "@wdio/spec-reporter": "^6.1.14",
-    "@wdio/static-server-service": "^6.1.14",
-    "@wdio/sync": "^6.1.14",
+    "@wdio/cli": "^6.10.3",
+    "@wdio/dot-reporter": "^6.10.3",
+    "@wdio/local-runner": "^6.10.3",
+    "@wdio/mocha-framework": "^6.10.3",
+    "@wdio/selenium-standalone-service": "^6.10.3",
+    "@wdio/spec-reporter": "^6.10.3",
+    "@wdio/static-server-service": "^6.10.3",
+    "@wdio/sync": "^6.10.3",
     "chai": "4.2.0",
     "chalk": "^4.1.0",
     "cross-spawn": "^7.0.3",
@@ -36,20 +36,19 @@
     "readdirp": "^3.4.0",
     "wdio-docker-service": "^2.3.0",
     "wdio-novus-visual-regression-service": "^1.2.0",
-    "webdriverio": "^6.1.7"
+    "webdriverio": "^6.10.3"
   },
   "devDependencies": {
     "babel-eslint": "^10.1.0",
-    "eslint": "^7.4.0",
-    "eslint-config-enact": "^2.0.0",
+    "eslint": "^7.11.0",
+    "eslint-config-enact": "^3.0.0",
     "eslint-config-prettier": "^6.11.0",
     "eslint-plugin-babel": "^5.3.1",
     "eslint-plugin-enact": "^0.2.0",
     "eslint-plugin-import": "^2.22.0",
     "eslint-plugin-jsx-a11y": "^6.3.1",
     "eslint-plugin-prettier": "^3.1.4",
-    "eslint-plugin-react": "^7.20.3",
-    "eslint-plugin-react-hooks": "^4.0.8",
-    "react": "^16.8.6"
+    "eslint-plugin-react": "^7.21.5",
+    "eslint-plugin-react-hooks": "^4.2.0"
   }
 }
