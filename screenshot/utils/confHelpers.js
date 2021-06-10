@@ -36,7 +36,7 @@ const comparator = new VisualRegressionCompare.LocalCompare({
 	referenceName: generateReferenceName,
 	screenshotName: generateScreenshotName,
 	diffName: generateDiffName,
-	misMatchTolerance: 0.005
+	misMatchTolerance: 0
 });
 
 function initFile (name, content) {
