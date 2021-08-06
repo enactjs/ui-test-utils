@@ -1,4 +1,6 @@
 const parseArgs = require('minimist');
+const execSync = require('child_process').execSync;
+const got = require('got');
 
 const args = parseArgs(process.argv);
 
@@ -13,6 +15,24 @@ module.exports.configure = (options) => {
 	delete opts.base;
 	delete opts.before;
 	delete opts.services;
+
+	let chromeDriverVersion = 'latest';	// TODO 보드에서 잘되는지 보기
+
+	if (process.platform !== "win32") {
+		let chromeVersionMajorNumber;
+
+		try {
+			const chromeVersion = /Chrome (\d+)/.exec(execSync('google-chrome -version'));
+			chromeVersionMajorNumber = (chromeVersion && chromeVersion[1]);
+		} catch (error) {
+			console.log('ERROR: Cannnot find Chrome version');
+		}
+
+		chromeDriverVersion = execSync('curl https://chromedriver.storage.googleapis.com/LATEST_RELEASE' + (chromeVersionMajorNumber ? ('_' + chromeVersionMajorNumber) : ''));
+		console.log('Chrome Driver Version : ' + chromeDriverVersion);
+	};
+
+	// TODO: get chrome version on Windows
 
 	return Object.assign(
 		opts,
@@ -138,7 +158,8 @@ module.exports.configure = (options) => {
 					args: {
 						drivers : {
 							chrome : {
-								version : '2.44',
+								version : chromeDriverVersion,
+								// version : 'latest',
 								arch    : process.arch
 							}
 						}
@@ -146,7 +167,8 @@ module.exports.configure = (options) => {
 					installArgs: {
 						drivers : {
 							chrome : {
-								version : '2.44',
+								version : chromeDriverVersion,
+								// version : 'latest',
 								arch    : process.arch,
 								baseURL : 'https://chromedriver.storage.googleapis.com'
 							}
