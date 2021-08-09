@@ -1,6 +1,5 @@
 const parseArgs = require('minimist');
 const execSync = require('child_process').execSync;
-const got = require('got');
 
 const args = parseArgs(process.argv);
 
@@ -16,24 +15,27 @@ module.exports.configure = (options) => {
 	delete opts.before;
 	delete opts.services;
 
-	let chromeVersionMajorNumber;
-
-	if (process.platform === 'win32') {
-		const chromeVersion = /\d+/.exec(execSync('wmic datafile where "name=\'C:\\\\Program Files (x86)\\\\Google\\\\Chrome\\\\Application\\\\chrome.exe\'" get Version /value').toString());
-		chromeVersionMajorNumber = (chromeVersion && chromeVersion[0]);
-	} else {
-		try {
-			const chromeVersion = /Chrome (\d+)/.exec(execSync('google-chrome -version'));
-			chromeVersionMajorNumber = (chromeVersion && chromeVersion[1]);
-		} catch (error) {
-			console.log('ERROR: Cannnot find Chrome version');
+	if (!process.env.CHROME_DRIVER) {
+		if (process.env.TV_IP && process.argv.find(arg => arg.includes('tv.conf'))) {
+			process.env.CHROME_DRIVER = 2.44; // Currently, TV support 83 and lower, but keeps the previous version for safety.
+		} else {
+			let chromeVersionMajorNumber;
+			try {
+				if (process.platform === 'win32') {
+					const chromeVersion = /\d+/.exec(execSync('wmic datafile where "name=\'C:\\\\Program Files (x86)\\\\Google\\\\Chrome\\\\Application\\\\chrome.exe\'" get Version /value').toString());
+					chromeVersionMajorNumber = (chromeVersion && chromeVersion[0]);
+				} else {
+					const chromeVersion = /Chrome (\d+)/.exec(execSync('google-chrome -version'));
+					chromeVersionMajorNumber = (chromeVersion && chromeVersion[1]);
+				}
+			} catch (error) {
+				console.log('ERROR: Cannnot find Chrome version');
+			}
+			process.env.CHROME_DRIVER = execSync('curl https://chromedriver.storage.googleapis.com/LATEST_RELEASE' + (chromeVersionMajorNumber ? ('_' + chromeVersionMajorNumber) : ''));
 		}
-	};
 
-	const chromeDriverVersion = execSync('curl https://chromedriver.storage.googleapis.com/LATEST_RELEASE' + (chromeVersionMajorNumber ? ('_' + chromeVersionMajorNumber) : ''));
-	console.log('Chrome Driver Version : ' + chromeDriverVersion);
-
-	// TODO: get chrome version on Windows
+		console.log('Chrome Driver Version : ' + process.env.CHROME_DRIVER);
+	}
 
 	return Object.assign(
 		opts,
@@ -159,8 +161,7 @@ module.exports.configure = (options) => {
 					args: {
 						drivers : {
 							chrome : {
-								version : chromeDriverVersion,
-								// version : 'latest',
+								version : process.env.CHROME_DRIVER,
 								arch    : process.arch
 							}
 						}
@@ -168,8 +169,7 @@ module.exports.configure = (options) => {
 					installArgs: {
 						drivers : {
 							chrome : {
-								version : chromeDriverVersion,
-								// version : 'latest',
+								version : process.env.CHROME_DRIVER,
 								arch    : process.arch,
 								baseURL : 'https://chromedriver.storage.googleapis.com'
 							}
