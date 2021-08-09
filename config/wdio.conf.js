@@ -28,10 +28,11 @@ module.exports.configure = (options) => {
 					const chromeVersion = /Chrome (\d+)/.exec(execSync('google-chrome -version'));
 					chromeVersionMajorNumber = (chromeVersion && chromeVersion[1]);
 				}
+
+				process.env.CHROME_DRIVER = execSync('curl https://chromedriver.storage.googleapis.com/LATEST_RELEASE' + (chromeVersionMajorNumber ? ('_' + chromeVersionMajorNumber) : ''));
 			} catch (error) {
 				console.log('ERROR: Cannnot find Chrome version');
 			}
-			process.env.CHROME_DRIVER = execSync('curl https://chromedriver.storage.googleapis.com/LATEST_RELEASE' + (chromeVersionMajorNumber ? ('_' + chromeVersionMajorNumber) : ''));
 		}
 
 		console.log('Chrome Driver Version : ' + process.env.CHROME_DRIVER);
