@@ -16,21 +16,22 @@ module.exports.configure = (options) => {
 	delete opts.before;
 	delete opts.services;
 
-	let chromeDriverVersion = 'latest';	// TODO 보드에서 잘되는지 보기
+	let chromeVersionMajorNumber;
 
-	if (process.platform !== "win32") {
-		let chromeVersionMajorNumber;
-
+	if (process.platform === 'win32') {
+		const chromeVersion = /\d+/.exec(execSync('wmic datafile where "name=\'C:\\\\Program Files (x86)\\\\Google\\\\Chrome\\\\Application\\\\chrome.exe\'" get Version /value').toString());
+		chromeVersionMajorNumber = (chromeVersion && chromeVersion[0]);
+	} else {
 		try {
 			const chromeVersion = /Chrome (\d+)/.exec(execSync('google-chrome -version'));
 			chromeVersionMajorNumber = (chromeVersion && chromeVersion[1]);
 		} catch (error) {
 			console.log('ERROR: Cannnot find Chrome version');
 		}
-
-		chromeDriverVersion = execSync('curl https://chromedriver.storage.googleapis.com/LATEST_RELEASE' + (chromeVersionMajorNumber ? ('_' + chromeVersionMajorNumber) : ''));
-		console.log('Chrome Driver Version : ' + chromeDriverVersion);
 	};
+
+	const chromeDriverVersion = execSync('curl https://chromedriver.storage.googleapis.com/LATEST_RELEASE' + (chromeVersionMajorNumber ? ('_' + chromeVersionMajorNumber) : ''));
+	console.log('Chrome Driver Version : ' + chromeDriverVersion);
 
 	// TODO: get chrome version on Windows
 
