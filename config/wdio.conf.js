@@ -1,5 +1,5 @@
 const parseArgs = require('minimist');
-const execSync = require('child_process').execSync;
+const {execSync} = require('child_process');
 
 const args = parseArgs(process.argv);
 
@@ -17,7 +17,7 @@ module.exports.configure = (options) => {
 
 	if (!process.env.CHROME_DRIVER) {
 		if (process.env.TV_IP && process.argv.find(arg => arg.includes('tv.conf'))) {
-			process.env.CHROME_DRIVER = 2.44; // Currently, TV support 83 and lower, but keeps the previous version for safety.
+			process.env.CHROME_DRIVER = 2.44; // Currently, TV supports 83 and lower, but keep the previous version for safety.
 		} else {
 			let chromeVersionMajorNumber;
 			try {
