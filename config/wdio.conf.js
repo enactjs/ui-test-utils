@@ -22,8 +22,13 @@ module.exports.configure = (options) => {
 			let chromeVersionMajorNumber;
 			try {
 				if (process.platform === 'win32') {
+					// Windows
 					const chromeVersion = /\d+/.exec(execSync('wmic datafile where "name=\'C:\\\\Program Files (x86)\\\\Google\\\\Chrome\\\\Application\\\\chrome.exe\'" get Version /value').toString());
 					chromeVersionMajorNumber = (chromeVersion && chromeVersion[0]);
+				} else if (process.platform === 'darwin') {
+					// Mac
+					const chromeVersion = /Chrome (\d+)/.exec(execSync('/Applications/Google\\ Chrome.app/Contents/MacOS/Google\\ Chrome --version'));
+					chromeVersionMajorNumber = (chromeVersion && chromeVersion[1]);
 				} else {
 					const chromeVersion = /Chrome (\d+)/.exec(execSync('google-chrome -version'));
 					chromeVersionMajorNumber = (chromeVersion && chromeVersion[1]);
