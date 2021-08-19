@@ -8,7 +8,6 @@ const services = config.services.map(service => {
 	return service;
 });
 
-console.log("TV IP");
 console.log(process.env.TV_IP);
 
 exports.config = Object.assign(
