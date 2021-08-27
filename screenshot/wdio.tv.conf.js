@@ -34,6 +34,7 @@ exports.config = Object.assign(
 			//
 			browserName: 'chrome',
 			'goog:chromeOptions': {
+				w3c: false,
 				debuggerAddress: `${process.env.TV_IP}:9998`
 			}
 		}],
