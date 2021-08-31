@@ -1,5 +1,6 @@
 import {render} from 'react-dom';
 import App, {testMetadata} from 'UI_TEST_APP_ENTRY';
+import './errorHandler';
 import TestChooser from './TestChooser';
 
 const url = new URL(window.location.href);
