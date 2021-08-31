@@ -10,6 +10,7 @@ exports.config = Object.assign(
 
 			browserName: 'chrome',
 			'goog:chromeOptions': {
+				w3c: false,
 				debuggerAddress: `${process.env.TV_IP}:9998`
 			}
 		}],
@@ -17,7 +18,10 @@ exports.config = Object.assign(
 		baseUrl: `http://${ipAddress()}:4567`,
 
 		before: function () {
-			if (config.before) config.before();
+			if (config.before) {
+				config.before();
+			}
+
 			browser._options = {remote: true};
 		}
 	}

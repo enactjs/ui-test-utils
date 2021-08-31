@@ -4,11 +4,11 @@ const parseArgs = require('minimist');
 const args = parseArgs(process.argv);
 
 const pattern = args.component, // Component group to match
-	testToExecute = args.id, // Specific test ID
-	titlePattern = args.title,
-	maxInstances = args.instances || 5; // Pattern for matching test case title
+	testToExecute = args.id,    // Specific test ID
+	titlePattern = args.title,  // Pattern for matching test case title
+	maxInstances = args.instances || 5;  // concurrent instances for 'manual' concurrency
 
-const runTest = ({concurrency, Page, skin, testName, ...rest}) => {
+const runTest = ({concurrency, filter, Page, testName, ...rest}) => {
 	if (concurrency && (concurrency > maxInstances)) {
 		return;
 	}
@@ -31,6 +31,9 @@ const runTest = ({concurrency, Page, skin, testName, ...rest}) => {
 					if (pattern && !component.match(pattern)) {
 						continue;
 					}
+					if (filter && !component.match(filter)) {
+						continue;
+					}
 
 					describe(component, function () {
 						testCases[component].forEach((testCase, testId) => {
@@ -46,8 +49,7 @@ const runTest = ({concurrency, Page, skin, testName, ...rest}) => {
 							it(`${component}~/${testName}~/${testCase.title}`, function () {
 								const params = Page.serializeParams(Object.assign({
 									component,
-									testId,
-									skin
+									testId
 								}, rest));
 
 								Page.open(`?${params}`);

@@ -1,10 +1,19 @@
 const ipAddress = require('../utils/ipAddress.js');
 const {config} = require('./wdio.conf.js');
 
+const services = config.services.map(service => {
+	if (service[0] === 'novus-visual-regression') {
+		delete service[1].viewports;
+	}
+	return service;
+});
+
 exports.config = Object.assign(
 	{},
 	config,
 	{
+		services,
+
 		// ============
 		// Capabilities
 		// ============
@@ -21,10 +30,11 @@ exports.config = Object.assign(
 			// maxInstances can get overwritten per capability. So if you have an in-house Selenium
 			// grid with only 5 firefox instances available you can make sure that not more than
 			// 5 instances get started at a time.
-			maxInstances: 1,
+			maxInstances: 5,
 			//
 			browserName: 'chrome',
 			'goog:chromeOptions': {
+				w3c: false,
 				debuggerAddress: `${process.env.TV_IP}:9998`
 			}
 		}],
@@ -44,6 +54,9 @@ exports.config = Object.assign(
 			if (config.before) {
 				config.before();
 			}
+
+			browser._options = {remote: true};
+
 			// Have to stub out these methods to prevent exceptions when running against
 			// remote chrome session
 			browser.setViewportSize = () => Promise.resolve({height: 1080, width: 1920});

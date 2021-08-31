@@ -21,7 +21,7 @@ function replacer (key, value) {
 			props: value.props,
 			children: value.children
 		};
-		// If it's a symbol, we can replace with empty string
+		// If it's a fragment, we can replace with empty string
 		if (type === Symbol.for('react.fragment')) {
 			type = '';
 		}
@@ -81,11 +81,18 @@ const generateTestData = (component, componentTests) => {
 		let title = testCase.title;
 
 		if (!title) {
+			// Note: This isn't terribly extensible, but we need to correct the order of props
+			// in the test names so that it's always predictable.  We could in the future filter
+			// out react components and then apply a sort order to known props and alphabetize
+			// unknown props. Alternately, we could move this into the theme to avoid having to
+			// update this module when we want to add new theme-side props.
 			title = stringifyProps({
+				skin: testCase.skin,
 				locale: testCase.locale,
 				props: testCase.props ? testCase.props : testCase.component.props,
 				wrapper: testCase.wrapper,
-				textSize: testCase.textSize
+				textSize: testCase.textSize,
+				skinVariants: testCase.skinVariants
 			});
 		}
 
