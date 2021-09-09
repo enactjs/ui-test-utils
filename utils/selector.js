@@ -47,8 +47,11 @@ function expectOrdering (firstElement, secondElement) {
 }
 
 const hasClass = curry((className, el) => {
-	if (className[0] === '.') className = className.slice(1);
-	return el.getAttribute('className').includes(className);
+	if (className[0] === '.') {
+		className = className.slice(1);
+	}
+	const elementClass = el.getAttribute('className') || el.getAttribute('class');
+	return elementClass.includes(className);
 });
 
 module.exports = {
