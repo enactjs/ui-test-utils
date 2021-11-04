@@ -2,7 +2,6 @@ const crypto = require('crypto'),
 	path = require('path'),
 	fs = require('fs');
 
-const VisualRegressionCompare = require('wdio-novus-visual-regression-service/compare');
 const buildApps = require('../../src/build-apps');
 const makeHeader = require('./headerTemplate');
 
@@ -23,21 +22,17 @@ function getScreenshotName (basePath) {
 
 		// shorten the name with a little bit of leading context to help find the file manually if necessary
 		testName = testName.substring(0, 128) + '-' + crypto.createHash('md5').update(testName).digest('hex');
-
-		return path.join(basePath, ...testNameParts, `${testName}.png`);
+		let screenshotFileName = path.join(basePath, ...testNameParts, `${testName}.png`);
+		return screenshotFileName.replace(/ /g, '_');
 	};
 }
 
-const generateReferenceName = getScreenshotName(path.join(process.cwd(), 'tests/screenshot/dist/screenshots/reference')),
-	generateScreenshotName = getScreenshotName(path.join(process.cwd(), 'tests/screenshot/dist/screenshots/screen')),
-	generateDiffName = getScreenshotName(path.join(process.cwd(), 'tests/screenshot/dist/screenshots/diff'));
+const baselineFolder = path.join(process.cwd(), 'tests/screenshot/dist/screenshots/reference');
+const screenshotFolder = path.join(process.cwd(), 'tests/screenshot/dist/screenshots/screen');
 
-const comparator = new VisualRegressionCompare.LocalCompare({
-	referenceName: generateReferenceName,
-	screenshotName: generateScreenshotName,
-	diffName: generateDiffName,
-	misMatchTolerance: 0.005
-});
+const generateReferenceName = getScreenshotName(baselineFolder);
+const generateScreenshotName = getScreenshotName(screenshotFolder + '/actual');
+const generateDiffName = getScreenshotName(screenshotFolder + '/diff');
 
 function initFile (name, content) {
 	const dir = path.dirname(name);
@@ -141,8 +136,9 @@ function onComplete () {
 
 module.exports = {
 	afterTest,
+	baselineFolder,
 	beforeTest,
-	comparator,
 	onComplete,
-	onPrepare
+	onPrepare,
+	screenshotFolder
 };

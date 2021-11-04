@@ -1,4 +1,5 @@
 'use strict';
+const crypto = require('crypto');
 const parseArgs = require('minimist');
 
 const args = parseArgs(process.argv);
@@ -48,12 +49,23 @@ const runTest = ({concurrency, filter, Page, testName, ...rest}) => {
 									testId
 								}, rest));
 
+								const testNameParts = testCase.title.split('~/');
+								let testCaseName = testNameParts.pop();
+								// Replace problematic filenames. Windows is much more restrictive.
+								testCaseName = testCaseName.replace(/[/\\:?*"|<>]/g, '_');
+								// shorten the name with a little bit of leading context to help find the file manually if necessary
+								testCaseName = testCaseName.substring(0, 128) + '-' + crypto.createHash('md5').update(testCaseName).digest('hex');
+								const screenshotFileName = (component + '/' + testName + '/' + testCaseName);
+
 								Page.open(`?${params}`);
 
 								const context = {params, component, testName, url: Page.url};
 								this.test.context = context;
-								const result = browser.checkDocument();
-								expect(result[0].isWithinMisMatchTolerance).to.be.true();
+
+								expect(browser.checkScreen(screenshotFileName, {
+									ignoreNothing: true,
+									rawMisMatchPercentage: true
+								})).to.equal(0);
 							});
 						});
 					});
