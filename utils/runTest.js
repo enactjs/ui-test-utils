@@ -57,10 +57,10 @@ const runTest = ({concurrency, filter, Page, testName, ...rest}) => {
 								testCaseName = testCaseName.substring(0, 128) + '-' + crypto.createHash('md5').update(testCaseName).digest('hex');
 								const screenshotFileName = (component + '/' + testName + '/' + testCaseName);
 
-								Page.open(`?${params}`);
-
-								const context = {params, component, testName, url: Page.url};
+								const context = {params, component, testName, url: Page.url, fileName: screenshotFileName};
 								this.test.context = context;
+
+								Page.open(`?${params}`);
 
 								expect(browser.checkScreen(screenshotFileName, {
 									disableCSSAnimation: true,
