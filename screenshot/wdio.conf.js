@@ -9,9 +9,7 @@ exports.config = configure({
 			baselineFolder: baselineFolder,
 			formatImageName: '{tag}',
 			screenshotPath: screenshotFolder,
-			autoSaveBaseline: true,
-			blockOutStatusBar: true,
-			blockOutToolBar: true
+			autoSaveBaseline: true
 		}
 	]],
 	//
