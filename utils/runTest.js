@@ -63,6 +63,7 @@ const runTest = ({concurrency, filter, Page, testName, ...rest}) => {
 								this.test.context = context;
 
 								expect(browser.checkScreen(screenshotFileName, {
+									disableCSSAnimation: true,
 									ignoreNothing: true,
 									rawMisMatchPercentage: true
 								})).to.equal(0);
