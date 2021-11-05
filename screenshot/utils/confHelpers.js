@@ -2,7 +2,6 @@ const crypto = require('crypto'),
 	path = require('path'),
 	fs = require('fs');
 
-const VisualRegressionCompare = require('wdio-novus-visual-regression-service/compare');
 const buildApps = require('../../src/build-apps');
 const makeHeader = require('./headerTemplate');
 
@@ -23,21 +22,18 @@ function getScreenshotName (basePath) {
 
 		// shorten the name with a little bit of leading context to help find the file manually if necessary
 		testName = testName.substring(0, 128) + '-' + crypto.createHash('md5').update(testName).digest('hex');
-
-		return path.join(basePath, ...testNameParts, `${testName}.png`);
+		let screenshotFileName = path.join(basePath, ...testNameParts, `${testName}.png`);
+		return screenshotFileName.replace(/ /g, '_');
 	};
 }
 
-const generateReferenceName = getScreenshotName(path.join(process.cwd(), 'tests/screenshot/dist/screenshots/reference')),
-	generateScreenshotName = getScreenshotName(path.join(process.cwd(), 'tests/screenshot/dist/screenshots/screen')),
-	generateDiffName = getScreenshotName(path.join(process.cwd(), 'tests/screenshot/dist/screenshots/diff'));
+const distPath = path.join(process.cwd(), 'tests', 'screenshot', 'dist');
+const baselineRelativePath = 'screenshots/reference';
+const screenshotRelativePath = 'screenshots/screen';
+const baselineFolder = path.join(distPath, baselineRelativePath);
+const screenshotFolder = path.join(distPath, screenshotRelativePath);
 
-const comparator = new VisualRegressionCompare.LocalCompare({
-	referenceName: generateReferenceName,
-	screenshotName: generateScreenshotName,
-	diffName: generateDiffName,
-	misMatchTolerance: 0.005
-});
+const generateReferenceName = getScreenshotName(baselineFolder);
 
 function initFile (name, content) {
 	const dir = path.dirname(name);
@@ -77,16 +73,16 @@ function beforeTest (testData) {
 function afterTest (testData, _context, {passed}) {
 	// If this doesn't include context data, not a screenshot test
 	if (testData && testData.title && testData.context && testData.context.params) {
+		const fileName = testData.context.fileName.replace(/ /g, '_') + '.png';
+		const referencePath = path.join(baselineRelativePath, fileName);
+
 		if (_context.isNewScreenshot) {
-			const filename = generateReferenceName({test: testData});
 			fs.open(newScreenshotFilename, 'a', (err, fd) => {
-				const distPath = path.join(process.cwd(), 'tests', 'screenshot', 'dist'),
-					relativeName = path.relative(distPath, filename);
 				if (err) {
 					console.error('Unable to create log file!');
 				} else {
 					const {params, url} = testData.context;
-					const output = {title: testData.title.replace(/~\//g, '/'), path: relativeName, params, url};
+					const output = {title: testData.title.replace(/~\//g, '/'), path: referencePath, params, url};
 					fs.appendFile(fd, `${JSON.stringify(output)},`, 'utf8', () => {
 						fs.close(fd);
 					});
@@ -95,11 +91,9 @@ function afterTest (testData, _context, {passed}) {
 		}
 
 		if (!passed) {
+			const screenPath = path.join(screenshotRelativePath, 'actual', fileName);
+			const diffPath = path.join(screenshotRelativePath, 'diff', fileName);
 			fs.open(failedScreenshotFilename, 'a', (err, fd) => {
-				const distPath = path.join(process.cwd(), 'tests', 'screenshot', 'dist'),
-					diffPath = path.relative(distPath, generateDiffName({test: testData})),
-					referencePath = path.relative(distPath, generateReferenceName({test: testData})),
-					screenPath = path.relative(distPath, generateScreenshotName({test: testData}));
 				if (err) {
 					console.error('Unable to create failed test log file!');
 				} else {
@@ -114,7 +108,6 @@ function afterTest (testData, _context, {passed}) {
 		}
 	}
 }
-
 
 function onComplete () {
 	const {size: newSize} = fs.statSync(newScreenshotFilename),
@@ -141,8 +134,9 @@ function onComplete () {
 
 module.exports = {
 	afterTest,
+	baselineFolder,
 	beforeTest,
-	comparator,
 	onComplete,
-	onPrepare
+	onPrepare,
+	screenshotFolder
 };

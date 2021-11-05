@@ -1,16 +1,15 @@
-// const visualRegression = require('wdio-novus-visual-regression-service');
 const {configure} = require('../config/wdio.conf.js');
-const {afterTest, beforeTest, comparator, onComplete, onPrepare} = require('./utils/confHelpers.js');
+const {afterTest, baselineFolder, beforeTest, onComplete, onPrepare, screenshotFolder} = require('./utils/confHelpers.js');
 
 exports.config = configure({
 	base: 'screenshot',
 	services: [[
-		'novus-visual-regression',
+		'image-comparison',
 		{
-			compare: comparator,
-			viewportChangePause: 300,
-			viewports: [{width: 1920, height: 1080}],
-			orientations: ['landscape']
+			baselineFolder: baselineFolder,
+			formatImageName: '{tag}',
+			screenshotPath: screenshotFolder,
+			autoSaveBaseline: true
 		}
 	]],
 	//
