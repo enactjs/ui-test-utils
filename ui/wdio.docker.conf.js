@@ -3,7 +3,7 @@ const {config} = require('./wdio.conf.js');
 
 // Remove selenium-standalone and replace with docker service
 const services = config.services
-	.filter(service => service !== 'selenium-standalone')
+	.filter(service => service[0] !== 'selenium-standalone')
 	.concat(['docker']);
 
 exports.config = Object.assign(
