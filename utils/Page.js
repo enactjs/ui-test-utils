@@ -31,10 +31,10 @@ class Page {
 		browser.pause(delay);
 		return browser;
 	}
-	keyDelay (key, delay = 50) {
-		browser.keys(key);
-		browser.pause(delay);
-		return browser;
+	async keyDelay (key, delay = 50) {
+		await browser.keys(key);
+		await browser.pause(delay);
+		return await browser;
 	}
 	spotlightLeft () {
 		return this.keyDelay('Left arrow');
