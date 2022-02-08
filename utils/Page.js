@@ -16,7 +16,7 @@ class Page {
 		this._url = `/${appPath}/${urlExtra}`;
 		// Can't resize browser window when connected to remote debugger!
 		if (!browser._options || !browser._options.remote) {
-			browser.setWindowSize(1920, 1080);
+			await browser.setWindowSize(1920, 1080);
 		}
 		return await browser.url(this.url);
 	}
