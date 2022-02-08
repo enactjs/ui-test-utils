@@ -12,13 +12,13 @@ class Page {
 		return this._url;
 	}
 
-	open (appPath, urlExtra = '?locale=en-US') {
+	async open (appPath, urlExtra = '?locale=en-US') {
 		this._url = `/${appPath}/${urlExtra}`;
 		// Can't resize browser window when connected to remote debugger!
 		if (!browser._options || !browser._options.remote) {
 			browser.setWindowSize(1920, 1080);
 		}
-		browser.url(this.url);
+		return await browser.url(this.url);
 	}
 
 	serializeParams (params) {

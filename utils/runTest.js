@@ -16,12 +16,16 @@ const runTest = ({concurrency, filter, Page, testName, ...rest}) => {
 
 	describe(testName, function () {
 		it('should fetch test cases', async function () {
-			Page.open('?request');
+			await Page.open('?request');
+
+			const body = await $('body');
+			await body.waitForExist({timeout: 1000});
+
 			let testCases = await browser.execute(async function () {
 				return await window.__TEST_DATA; // eslint-disable-line no-undef
 			});
 
-			expect(await testCases).to.be.an('object', 'Test data failed to load');
+			await expect(testCases).to.be.an('object', 'Test data failed to load');
 
 			describe(testName, function () {
 				for (const component in testCases) {
