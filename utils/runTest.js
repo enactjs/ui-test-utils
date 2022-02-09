@@ -66,6 +66,9 @@ const runTest = ({concurrency, filter, Page, testName, ...rest}) => {
 
 								await Page.open(`?${params}`);
 
+								const testCaseBody = await $('body');
+								await testCaseBody.waitForExist({timeout: 1000});
+
 								expect(await browser.checkScreen(screenshotFileName, {
 									disableCSSAnimation: true,
 									ignoreNothing: true,
