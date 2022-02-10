@@ -18,6 +18,9 @@ const runTest = ({concurrency, filter, Page, testName, ...rest}) => {
 		it('should fetch test cases', async function () {
 			await Page.open('?request');
 
+			const body = await $('body');
+			await body.waitForExist({timeout: 1000});
+
 			let testCases = await browser.execute(async function () {
 				return await window.__TEST_DATA; // eslint-disable-line no-undef
 			});
@@ -62,6 +65,9 @@ const runTest = ({concurrency, filter, Page, testName, ...rest}) => {
 								this.test.context = context;
 
 								await Page.open(`?${params}`);
+
+								const testCaseBody = await $('body');
+								await testCaseBody.waitForExist({timeout: 1000});
 
 								expect(await browser.checkScreen(screenshotFileName, {
 									disableCSSAnimation: true,
