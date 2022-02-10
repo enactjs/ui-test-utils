@@ -18,7 +18,11 @@ class Page {
 		if (!browser._options || !browser._options.remote) {
 			await browser.setWindowSize(1920, 1080);
 		}
-		return await browser.url(this.url);
+
+		await browser.url(this.url);
+
+		const body = await $('body');
+		await body.waitForExist({timeout: 1000});
 	}
 
 	serializeParams (params) {
