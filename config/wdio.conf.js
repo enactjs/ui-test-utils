@@ -107,7 +107,7 @@ module.exports.configure = (options) => {
 				//
 				browserName: 'chrome',
 				'goog:chromeOptions': visibleBrowser ? {} : {
-					args: ['--headless', '--window-size=1920,1280']
+					args: ['--headless', '--window-size=1920,1080']
 				}
 			}],
 			//

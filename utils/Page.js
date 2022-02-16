@@ -12,13 +12,17 @@ class Page {
 		return this._url;
 	}
 
-	open (appPath, urlExtra = '?locale=en-US') {
+	async open (appPath, urlExtra = '?locale=en-US') {
 		this._url = `/${appPath}/${urlExtra}`;
 		// Can't resize browser window when connected to remote debugger!
 		if (!browser._options || !browser._options.remote) {
-			browser.setWindowSize(1920, 1080);
+			await browser.setWindowSize(1920, 1080);
 		}
-		browser.url(this.url);
+
+		await browser.url(this.url);
+
+		const body = await $('body');
+		await body.waitForExist({timeout: 1000});
 	}
 
 	serializeParams (params) {
@@ -31,10 +35,10 @@ class Page {
 		browser.pause(delay);
 		return browser;
 	}
-	keyDelay (key, delay = 50) {
-		browser.keys(key);
-		browser.pause(delay);
-		return browser;
+	async keyDelay (key, delay = 50) {
+		await browser.keys(key);
+		await browser.pause(delay);
+		return await browser;
 	}
 	spotlightLeft () {
 		return this.keyDelay('Left arrow');
