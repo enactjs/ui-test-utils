@@ -31,8 +31,8 @@ class Page {
 		return queryObject;
 	}
 
-	delay (delay = 1000) {
-		browser.pause(delay);
+	async delay (delay = 1000) {
+		await browser.pause(delay);
 		return browser;
 	}
 	async keyDelay (key, delay = 50) {
