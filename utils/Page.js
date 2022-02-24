@@ -152,7 +152,7 @@ class Page {
 		if (callback) {
 			callback();
 		}
-		browser.waitUntil(
+		await browser.waitUntil(
 			function () {
 				return browser.execute(
 					function () {
