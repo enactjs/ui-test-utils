@@ -46,11 +46,11 @@ async function expectOrdering (firstElement, secondElement) {
 	expect(await firstElement.getLocation().x < secondElement.getLocation().x).to.be.true();
 }
 
-const hasClass = curry((className, el) => {
+const hasClass = curry(async (className, el) => {
 	if (className[0] === '.') {
 		className = className.slice(1);
 	}
-	const elementClass = el.getAttribute('className') || el.getAttribute('class');
+	const elementClass = await el.getAttribute('className') || await el.getAttribute('class');
 	return elementClass.includes(className);
 });
 
