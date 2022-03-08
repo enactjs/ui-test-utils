@@ -39,9 +39,9 @@
     "webdriverio": "^7.9.0"
   },
   "devDependencies": {
-    "babel-eslint": "^10.1.0",
+    "@babel/eslint-parser": "^7.16.3",
     "eslint": "^7.11.0",
-    "eslint-config-enact": "^3.0.0",
+    "eslint-config-enact": "github:enactjs/eslint-config-enact#feature/WRN-12124",
     "eslint-config-prettier": "^6.11.0",
     "eslint-plugin-babel": "^5.3.1",
     "eslint-plugin-enact": "^0.2.0",
