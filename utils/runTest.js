@@ -1,4 +1,5 @@
 'use strict';
+const crypto = require('crypto');
 const parseArgs = require('minimist');
 
 const args = parseArgs(process.argv);
@@ -14,13 +15,14 @@ const runTest = ({concurrency, filter, Page, testName, ...rest}) => {
 	}
 
 	describe(testName, function () {
-		it('should fetch test cases', function () {
-			Page.open('?request');
-			let testCases = browser.execute(function () {
-				return window.__TEST_DATA; // eslint-disable-line no-undef
+		it('should fetch test cases', async function () {
+			await Page.open('?request');
+
+			let testCases = await browser.execute(async function () {
+				return await window.__TEST_DATA; // eslint-disable-line no-undef
 			});
 
-			expect(testCases).to.be.an('object', 'Test data failed to load');
+			await expect(testCases).to.be.an('object', 'Test data failed to load');
 
 			describe(testName, function () {
 				for (const component in testCases) {
@@ -42,18 +44,30 @@ const runTest = ({concurrency, filter, Page, testName, ...rest}) => {
 							if (titlePattern && !testCase.title.match(titlePattern)) {
 								return;
 							}
-							it(`${component}~/${testName}~/${testCase.title}`, function () {
+							it(`${component}~/${testName}~/${testCase.title}`, async function () {
 								const params = Page.serializeParams(Object.assign({
 									component,
 									testId
 								}, rest));
 
-								Page.open(`?${params}`);
+								const testNameParts = testCase.title.split('~/');
+								let testCaseName = testNameParts.pop();
+								// Replace problematic filenames. Windows is much more restrictive.
+								testCaseName = testCaseName.replace(/[/\\:?*"|<>]/g, '_');
+								// shorten the name with a little bit of leading context to help find the file manually if necessary
+								testCaseName = testCaseName.substring(0, 128) + '-' + crypto.createHash('md5').update(testCaseName).digest('hex');
+								const screenshotFileName = (component + '/' + testName + '/' + testCaseName);
 
-								const context = {params, component, testName, url: Page.url};
+								const context = {params, component, testName, url: Page.url, fileName: screenshotFileName};
 								this.test.context = context;
-								const result = browser.checkDocument();
-								expect(result[0].isWithinMisMatchTolerance).to.be.true();
+
+								await Page.open(`?${params}`);
+
+								expect(await browser.checkScreen(screenshotFileName, {
+									disableCSSAnimation: true,
+									ignoreNothing: true,
+									rawMisMatchPercentage: true
+								})).to.equal(0);
 							});
 						});
 					});
