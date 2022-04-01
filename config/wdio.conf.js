@@ -23,7 +23,7 @@ module.exports.configure = (options) => {
 			try {
 				if (process.platform === 'win32') {
 					// Windows
-					const chromeVersion = /\d+/.exec(execSync('wmic datafile where "name=\'C:\\\\Program Files (x86)\\\\Google\\\\Chrome\\\\Application\\\\chrome.exe\'" get Version /value').toString());
+					const chromeVersion = /\d+/.exec(execSync('wmic datafile where "name=\'C:\\\\Program Files\\\\Google\\\\Chrome\\\\Application\\\\chrome.exe\'" get Version /value').toString());
 					chromeVersionMajorNumber = (chromeVersion && chromeVersion[0]);
 				} else if (process.platform === 'darwin') {
 					// Mac
@@ -107,7 +107,7 @@ module.exports.configure = (options) => {
 				//
 				browserName: 'chrome',
 				'goog:chromeOptions': visibleBrowser ? {} : {
-					args: ['--headless', '--window-size=1920,1280']
+					args: ['--headless', '--window-size=1920,1080']
 				}
 			}],
 			//

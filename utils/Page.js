@@ -12,13 +12,17 @@ class Page {
 		return this._url;
 	}
 
-	open (appPath, urlExtra = '?locale=en-US') {
+	async open (appPath, urlExtra = '?locale=en-US') {
 		this._url = `/${appPath}/${urlExtra}`;
 		// Can't resize browser window when connected to remote debugger!
 		if (!browser._options || !browser._options.remote) {
-			browser.setWindowSize(1920, 1080);
+			await browser.setWindowSize(1920, 1080);
 		}
-		browser.url(this.url);
+
+		await browser.url(this.url);
+
+		const body = await $('body');
+		await body.waitForExist({timeout: 1000});
 	}
 
 	serializeParams (params) {
@@ -27,14 +31,14 @@ class Page {
 		return queryObject;
 	}
 
-	delay (delay = 1000) {
-		browser.pause(delay);
+	async delay (delay = 1000) {
+		await browser.pause(delay);
 		return browser;
 	}
-	keyDelay (key, delay = 50) {
-		browser.keys(key);
-		browser.pause(delay);
-		return browser;
+	async keyDelay (key, delay = 50) {
+		await browser.keys(key);
+		await browser.pause(delay);
+		return await browser;
 	}
 	spotlightLeft () {
 		return this.keyDelay('Left arrow');
@@ -64,25 +68,25 @@ class Page {
 	}
 
 	// For testing "pointer off" by timeout.
-	hidePointerByKeycode () {
+	async hidePointerByKeycode () {
 		browser.execute(function () {
 			const event = document.createEvent('Events');
 			event.initEvent('keydown', true, true);
 			event.keyCode = 1537;
 			document.getElementById('root').dispatchEvent(event);
 		});
-		this.delay();
+		await this.delay();
 		return browser;
 	}
 
-	showPointerByKeycode () {
-		browser.execute(function () {
+	async showPointerByKeycode () {
+		await browser.execute(function () {
 			const event = document.createEvent('Events');
 			event.initEvent('keydown', true, true);
 			event.keyCode = 1536;
 			document.getElementById('root').dispatchEvent(event);
 		});
-		this.delay();
+		await this.delay();
 		return browser;
 	}
 
@@ -128,12 +132,12 @@ class Page {
 	 * @param {Number} [config.timeout=1200]        Time to wait for focus condition
 	 * @param {Number} [config.interval=200]        Time between checks
 	 */
-	waitForFocused (target, {targetName = 'item', timeoutMsg = `timed out waiting for ${targetName} focused`, timeout = 1200, interval = 200} = {}) {
-		browser.waitUntil(() => target.isExisting() && target.isFocused(), {timeout, timeoutMsg, interval});
+	async waitForFocused (target, {targetName = 'item', timeoutMsg = `timed out waiting for ${targetName} focused`, timeout = 1200, interval = 200} = {}) {
+		await browser.waitUntil(() => target.isExisting() && target.isFocused(), {timeout, timeoutMsg, interval});
 	}
 
-	waitTransitionEnd (delay = 3000, msg = 'timed out waiting for transitionend', callback, ignore = ['opacity', 'filter']) {
-		browser.execute(
+	async waitTransitionEnd (delay = 3000, msg = 'timed out waiting for transitionend', callback, ignore = ['opacity', 'filter']) {
+		await browser.execute(
 			// eslint-disable-next-line no-shadow
 			function (ignore) {
 				window.ontransitionend = function (evt) {
@@ -148,7 +152,7 @@ class Page {
 		if (callback) {
 			callback();
 		}
-		browser.waitUntil(
+		await browser.waitUntil(
 			function () {
 				return browser.execute(
 					function () {

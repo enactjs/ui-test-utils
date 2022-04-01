@@ -15,13 +15,14 @@ const runTest = ({concurrency, filter, Page, testName, ...rest}) => {
 	}
 
 	describe(testName, function () {
-		it('should fetch test cases', function () {
-			Page.open('?request');
-			let testCases = browser.execute(function () {
-				return window.__TEST_DATA; // eslint-disable-line no-undef
+		it('should fetch test cases', async function () {
+			await Page.open('?request');
+
+			let testCases = await browser.execute(async function () {
+				return await window.__TEST_DATA; // eslint-disable-line no-undef
 			});
 
-			expect(testCases).to.be.an('object', 'Test data failed to load');
+			await expect(testCases).to.be.an('object', 'Test data failed to load');
 
 			describe(testName, function () {
 				for (const component in testCases) {
@@ -43,7 +44,7 @@ const runTest = ({concurrency, filter, Page, testName, ...rest}) => {
 							if (titlePattern && !testCase.title.match(titlePattern)) {
 								return;
 							}
-							it(`${component}~/${testName}~/${testCase.title}`, function () {
+							it(`${component}~/${testName}~/${testCase.title}`, async function () {
 								const params = Page.serializeParams(Object.assign({
 									component,
 									testId
@@ -60,9 +61,9 @@ const runTest = ({concurrency, filter, Page, testName, ...rest}) => {
 								const context = {params, component, testName, url: Page.url, fileName: screenshotFileName};
 								this.test.context = context;
 
-								Page.open(`?${params}`);
+								await Page.open(`?${params}`);
 
-								expect(browser.checkScreen(screenshotFileName, {
+								expect(await browser.checkScreen(screenshotFileName, {
 									disableCSSAnimation: true,
 									ignoreNothing: true,
 									rawMisMatchPercentage: true
