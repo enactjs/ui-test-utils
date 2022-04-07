@@ -1,4 +1,4 @@
-import {render} from 'react-dom';
+import {createRoot} from 'react-dom/client';
 import App, {testMetadata} from 'UI_TEST_APP_ENTRY';
 import TestChooser from './TestChooser';
 
@@ -18,13 +18,9 @@ if ('testId' in props) props.testId = Number.parseInt(props.testId);
 if ('request' in props) {
 	window.__TEST_DATA = testMetadata;
 } else if (Object.keys(props).length) {
-	render(
-		<App {...props} />,
-		document.getElementById('root')
-	);
+	createRoot(document.getElementById('root'))
+	.render(<App {...props} />);
 } else {
-	render(
-		<TestChooser metadata={testMetadata} />,
-		document.getElementById('root')
-	);
+	createRoot(document.getElementById('root'))
+	.render(<TestChooser metadata={testMetadata} />);
 }
