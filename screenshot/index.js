@@ -19,8 +19,8 @@ if ('request' in props) {
 	window.__TEST_DATA = testMetadata;
 } else if (Object.keys(props).length) {
 	createRoot(document.getElementById('root'))
-	.render(<App {...props} />);
+		.render(<App {...props} />);
 } else {
 	createRoot(document.getElementById('root'))
-	.render(<TestChooser metadata={testMetadata} />);
+		.render(<TestChooser metadata={testMetadata} />);
 }

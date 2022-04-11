@@ -8,7 +8,7 @@ const appElement = (<App locale={locale} />);
 
 if (typeof window !== 'undefined') {
 	createRoot(document.getElementById('root'))
-	.render(appElement);
+		.render(appElement);
 }
 
 export default appElement;
