@@ -64,7 +64,7 @@ const runTest = ({concurrency, filter, Page, testName, ...rest}) => {
 								await Page.open(`?${params}`);
 
 								expect(await browser.checkScreen(screenshotFileName, {
-									disableCSSAnimation: true,
+									//disableCSSAnimation: true,
 									ignoreNothing: true,
 									rawMisMatchPercentage: true
 								})).to.equal(0);
