@@ -26,7 +26,7 @@ class Page {
 		await browser.url(this.url);
 
 		const root = await $('#root');
-		await root.waitForExist({timeout: 1000});
+		await root.waitForDisplayed({timeout: 5000});
 
 		await this.delay(200);
 	}
