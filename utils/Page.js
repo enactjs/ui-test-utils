@@ -28,7 +28,7 @@ class Page {
 		const root = await $('#root');
 		await root.waitForExist({timeout: 1000});
 
-		await this.delay(100);
+		await this.delay(200);
 	}
 
 	serializeParams (params) {
