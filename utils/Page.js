@@ -23,6 +23,7 @@ class Page {
 
 		const body = await $('body');
 		await body.waitForExist({timeout: 1000});
+		await this.delay(50);
 	}
 
 	serializeParams (params) {
