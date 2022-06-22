@@ -169,7 +169,7 @@ module.exports.configure = (options) => {
 			// commands. Instead, they hook themselves up into the test process.
 			services: [
 				['selenium-standalone', {
-					skipSeleniumInstall: offline,
+					skipSeleniumInstall: true,
 					args: {
 						drivers : {
 							chrome : {
