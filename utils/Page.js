@@ -13,6 +13,10 @@ class Page {
 	}
 
 	async open (appPath, urlExtra = '?locale=en-US') {
+		browser.execute(function () {
+			document.body.innerHTML = '';
+		});
+
 		this._url = `/${appPath}/${urlExtra}`;
 		// Can't resize browser window when connected to remote debugger!
 		if (!browser._options || !browser._options.remote) {
@@ -22,7 +26,9 @@ class Page {
 		await browser.url(this.url);
 
 		const body = await $('body');
-		await body.waitForExist({timeout: 1000});
+		await body.waitForDisplayed({timeout: 5000});
+		
+		await this.delay(200);
 	}
 
 	serializeParams (params) {
