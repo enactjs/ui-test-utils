@@ -13,7 +13,7 @@ class Page {
 	}
 
 	async open (appPath, urlExtra = '?locale=en-US') {
-		browser.execute(function () {
+		await browser.execute(function () {
 			document.body.innerHTML = '';
 		});
 
@@ -27,7 +27,7 @@ class Page {
 
 		const body = await $('body');
 		await body.waitForDisplayed({timeout: 5000});
-		
+
 		await this.delay(200);
 	}
 
@@ -75,7 +75,7 @@ class Page {
 
 	// For testing "pointer off" by timeout.
 	async hidePointerByKeycode () {
-		browser.execute(function () {
+		await browser.execute(function () {
 			const event = document.createEvent('Events');
 			event.initEvent('keydown', true, true);
 			event.keyCode = 1537;
