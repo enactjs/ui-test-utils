@@ -1,6 +1,6 @@
 # Change Log
 
-## [unreleased] (June 8, 2022)
+## [unreleased]
 
 * Fixed `open()` and `hidePointerByKeycode()` methods in utils/Page by adding `await` to `browser.execute()`.
 
