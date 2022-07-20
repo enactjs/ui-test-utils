@@ -1,5 +1,9 @@
 # Change Log
 
+## [unreleased] (June 8, 2022)
+
+* Fixed `open()` and `hidePointerByKeycode()` methods in utils/Page by adding `await` to `browser.execute()`.
+
 ## [1.0.0] (June 8, 2022)
 
 * Updated test app to use `createRoot` API from React 18.
