@@ -2,7 +2,7 @@
 
 ## [unreleased]
 
-* Fixed `open()` and `hidePointerByKeycode()` methods in utils/Page by adding `await` to `browser.execute()`.
+* Fixed the first tests in the test suite fail randomly by adding missed `await` in `utils/Page`.
 
 ## [1.0.0] (June 8, 2022)
 
