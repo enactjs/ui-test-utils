@@ -1,5 +1,9 @@
 # Change Log
 
+## [unreleased]
+
+* Fixed the first tests in the test suite fail randomly by adding missed `await` in `utils/Page`.
+
 ## [1.0.0] (June 8, 2022)
 
 * Updated test app to use `createRoot` API from React 18.
