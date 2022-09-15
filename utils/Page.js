@@ -159,15 +159,14 @@ class Page {
 			callback();
 		}
 		await browser.waitUntil(
-			function () {
-				return browser.execute(
+			async function () {
+				return await browser.execute(
 					function () {
 						return window.__transition;
 					}
 				);
 			},
-			delay,
-			msg
+			{timeout: delay, timeoutMsg: msg}
 		);
 	}
 }
