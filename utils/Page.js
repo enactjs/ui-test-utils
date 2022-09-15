@@ -142,7 +142,7 @@ class Page {
 		await browser.waitUntil(() => target.isExisting() && target.isFocused(), {timeout, timeoutMsg, interval});
 	}
 
-	async waitTransitionEnd (delay = 3000, msg = 'timed out waiting for transitionend', callback, ignore = ['opacity', 'filter']) {
+	async waitTransitionEnd (timeout = 3000, timeoutMsg = 'timed out waiting for transitionend', callback, ignore = ['opacity', 'filter']) {
 		await browser.execute(
 			// eslint-disable-next-line no-shadow
 			function (ignore) {
@@ -166,7 +166,7 @@ class Page {
 					}
 				);
 			},
-			{timeout: delay, timeoutMsg: msg}
+			{timeout, timeoutMsg}
 		);
 	}
 }
