@@ -19,7 +19,7 @@ const runTest = ({concurrency, filter, Page, testName, ...rest}) => {
 			await Page.open('?request');
 
 			let testCases = await browser.execute(async function () {
-				return await window.__TEST_DATA; // eslint-disable-line no-undef
+				return await window.__TEST_DATA;
 			});
 
 			await expect(testCases).to.be.an('object', 'Test data failed to load');

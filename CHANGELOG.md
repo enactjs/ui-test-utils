@@ -1,5 +1,10 @@
 # Change Log
 
+## [1.0.1] (October 12, 2022)
+
+* Fixed the first tests in the test suite fail randomly by adding missed `await` in `utils/Page`.
+* Fixed the util method `waitTransitionEnd` in `utils/Page` to correctly call `browser.waitUntil()` and to wait for the promise of `browser.execute()` to be resolved.
+
 ## [1.0.0] (June 8, 2022)
 
 * Updated test app to use `createRoot` API from React 18.

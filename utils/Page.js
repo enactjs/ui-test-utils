@@ -13,6 +13,10 @@ class Page {
 	}
 
 	async open (appPath, urlExtra = '?locale=en-US') {
+		await browser.execute(function () {
+			document.body.innerHTML = '';
+		});
+
 		this._url = `/${appPath}/${urlExtra}`;
 		// Can't resize browser window when connected to remote debugger!
 		if (!browser._options || !browser._options.remote) {
@@ -22,7 +26,9 @@ class Page {
 		await browser.url(this.url);
 
 		const body = await $('body');
-		await body.waitForExist({timeout: 1000});
+		await body.waitForDisplayed({timeout: 5000});
+
+		await this.delay(200);
 	}
 
 	serializeParams (params) {
@@ -69,7 +75,7 @@ class Page {
 
 	// For testing "pointer off" by timeout.
 	async hidePointerByKeycode () {
-		browser.execute(function () {
+		await browser.execute(function () {
 			const event = document.createEvent('Events');
 			event.initEvent('keydown', true, true);
 			event.keyCode = 1537;
@@ -136,7 +142,7 @@ class Page {
 		await browser.waitUntil(() => target.isExisting() && target.isFocused(), {timeout, timeoutMsg, interval});
 	}
 
-	async waitTransitionEnd (delay = 3000, msg = 'timed out waiting for transitionend', callback, ignore = ['opacity', 'filter']) {
+	async waitTransitionEnd (timeout = 3000, timeoutMsg = 'timed out waiting for transitionend', callback, ignore = ['opacity', 'filter']) {
 		await browser.execute(
 			// eslint-disable-next-line no-shadow
 			function (ignore) {
@@ -153,15 +159,14 @@ class Page {
 			callback();
 		}
 		await browser.waitUntil(
-			function () {
-				return browser.execute(
+			async function () {
+				return await browser.execute(
 					function () {
 						return window.__transition;
 					}
 				);
 			},
-			delay,
-			msg
+			{timeout, timeoutMsg}
 		);
 	}
 }
