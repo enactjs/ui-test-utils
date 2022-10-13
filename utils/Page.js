@@ -146,22 +146,26 @@ class Page {
 		await browser.execute(
 			// eslint-disable-next-line no-shadow
 			function (ignore) {
+				console.log("test1")
 				window.ontransitionend = function (evt) {
 					if (!ignore || ignore.indexOf(evt.propertyName) === -1) {
 						window.__transition = true;
 					}
 				};
+				console.log("test2")
 				window.__transition = false;
 			},
 			ignore
 		);
 		if (callback) {
+			console.log("test3");
 			callback();
 		}
 		await browser.waitUntil(
 			async function () {
 				return await browser.execute(
 					function () {
+						console.log("test4")
 						return window.__transition;
 					}
 				);
