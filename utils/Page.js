@@ -145,8 +145,8 @@ class Page {
 	async waitTransitionEnd (timeout = 3000, timeoutMsg = 'timed out waiting for transitionend', callback, ignore = ['opacity', 'filter']) {
 		await browser.execute(
 			// eslint-disable-next-line no-shadow
-			function (ignore) {
-				window.ontransitionend = function (evt) {
+			async function (ignore) {
+				window.ontransitionend = await function (evt) {
 					if (!ignore || ignore.indexOf(evt.propertyName) === -1) {
 						window.__transition = true;
 					}
@@ -156,13 +156,13 @@ class Page {
 			ignore
 		);
 		if (callback) {
-			callback();
+			await callback();
 		}
 		await browser.waitUntil(
 			async function () {
 				return await browser.execute(
-					function () {
-						return window.__transition;
+					async function () {
+						return await window.__transition;
 					}
 				);
 			},
