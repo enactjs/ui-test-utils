@@ -1,4 +1,4 @@
-module.exports = function (title) {
+export default function (title) {
 	return `<html>
 <head>
 	<link rel="stylesheet" href="utils/styles.css">

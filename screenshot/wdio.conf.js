@@ -1,7 +1,9 @@
-const {configure} = require('../config/wdio.conf.js');
-const {afterTest, baselineFolder, beforeTest, onComplete, onPrepare, screenshotFolder} = require('./utils/confHelpers.js');
+// const {configure} = require('../config/wdio.conf.js');
+import {configure} from '../config/wdio.conf.js';
+// const {afterTest, baselineFolder, beforeTest, onComplete, onPrepare, screenshotFolder} = require('./utils/confHelpers.js');
+import {afterTest, baselineFolder, beforeTest, onComplete, onPrepare, screenshotFolder} from './utils/confHelpers.js';
 
-exports.config = configure({
+export const config = configure({
 	base: 'screenshot',
 	services: [[
 		'image-comparison',

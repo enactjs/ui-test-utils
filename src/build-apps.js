@@ -1,9 +1,14 @@
-const path = require('path');
+// const path = require('path');
+import path from 'path';
 
-const chalk = require('chalk');
-const spawn = require('cross-spawn');
-const fs = require('fs-extra');
-const readdirp = require('readdirp');
+// const chalk = require('chalk');
+// const spawn = require('cross-spawn');
+// const fs = require('fs-extra');
+// const readdirp = require('readdirp');
+import chalk from 'chalk';
+import spawn from 'cross-spawn'
+import * as fs from 'fs-extra';
+import readdirp from 'readdirp';
 
 const env = {
 	ILIB_BASE_PATH: '/framework/ilib',
@@ -138,5 +143,6 @@ function epack ({file, opts}) {
 	}
 }
 
-module.exports = buildApps;
-if (require.main === module) buildApps();
+// module.exports = buildApps;
+export default buildApps;
+// if (require.main === module) buildApps();

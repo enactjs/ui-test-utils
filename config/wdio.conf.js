@@ -1,5 +1,10 @@
-const parseArgs = require('minimist');
-const {execSync} = require('child_process');
+// const parseArgs = require('minimist');
+// const {execSync} = require('child_process');
+
+import parseArgs from 'minimist';
+import {execSync} from 'child_process';
+// import chai from 'chai';
+// import dirtyChai from 'dirty-chai';
 
 const args = parseArgs(process.argv);
 
@@ -7,7 +12,7 @@ const visibleBrowser = !!args.visible,
 	maxInstances = args.instances || 5,
 	offline = args.offline;
 
-module.exports.configure = (options) => {
+export const configure = (options) => {
 	const {base, services} = options;
 	const opts = Object.assign({}, options);
 
@@ -222,9 +227,12 @@ module.exports.configure = (options) => {
 			 * @param {Array.<String>} specs List of spec file paths that are to be run
 			 */
 			before: function () {
-				require('expect-webdriverio');
-				const chai = require('chai'),
-					dirtyChai = require('dirty-chai');
+				// require('expect-webdriverio');
+				import('expect-webdriverio');
+				// const chai = require('chai'),
+				// 	dirtyChai = require('dirty-chai');
+				import chai from 'chai';
+				import dirtyChai from 'dirty-chai';
 
 				global.wdioExpect = global.expect;
 				chai.use(dirtyChai);

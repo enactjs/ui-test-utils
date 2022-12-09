@@ -1,4 +1,5 @@
-const os = require('os');
+// const os = require('os');
+import * as os from 'os';
 
 function ipAddress () {
 	const ifaces = os.networkInterfaces();
@@ -17,4 +18,5 @@ function ipAddress () {
 	return address;
 }
 
-module.exports = ipAddress;
+// module.exports = ipAddress;
+export default ipAddress;

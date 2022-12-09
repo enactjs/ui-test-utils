@@ -1,6 +1,8 @@
-'use strict';
-const crypto = require('crypto');
-const parseArgs = require('minimist');
+// 'use strict';
+// const crypto = require('crypto');
+import crypto from 'crypto';
+// const parseArgs = require('minimist');
+import parseArgs from 'minimist';
 
 const args = parseArgs(process.argv);
 
@@ -77,6 +79,7 @@ const runTest = ({concurrency, filter, Page, testName, ...rest}) => {
 	});
 };
 
-module.exports = {
-	runTest
-};
+// module.exports = {
+// 	runTest
+// };
+export default runTest;

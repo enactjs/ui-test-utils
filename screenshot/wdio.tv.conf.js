@@ -1,5 +1,7 @@
-const ipAddress = require('../utils/ipAddress.js');
-const {config} = require('./wdio.conf.js');
+// const ipAddress = require('../utils/ipAddress.js');
+import ipAddress from '../utils/ipAddress.js';
+// const {config} = require('./wdio.conf.js');
+import {config} from './wdio.conf.js';
 
 const services = config.services.map(service => {
 	if (service[0] === 'novus-visual-regression') {
@@ -8,7 +10,7 @@ const services = config.services.map(service => {
 	return service;
 });
 
-exports.config = Object.assign(
+export const config= Object.assign(
 	{},
 	config,
 	{

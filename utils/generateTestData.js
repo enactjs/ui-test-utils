@@ -105,6 +105,7 @@ const generateTestData = (component, componentTests) => {
 	return metaData;
 };
 
-module.exports = {
-	generateTestData
-};
+// module.exports = {
+// 	generateTestData
+// };
+export default generateTestData;

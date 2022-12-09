@@ -1,10 +1,15 @@
-const buildApps = require('../src/build-apps'),
-	fs = require('fs'),
-	chalk = require('chalk');
+// const buildApps = require('../src/build-apps');
+// const fs = require('fs');
+// 	fs = require('fs'),
+// 	chalk = require('chalk');
+import buildApps from '../src/build-apps.js';
+import fs from 'fs';
+import chalk from 'chalk';
 
-const {configure} = require('../config/wdio.conf.js');
+// const {configure} = require('../config/wdio.conf.js');
+import {configure} from '../config/wdio.conf.js';
 
-exports.config = configure({
+export const config = configure({
 	base: 'ui',
 	//
 	// =====
