@@ -1,4 +1,4 @@
-'use strict';
+// 'use strict';
 
 // const queryString = require('query-string');
 import queryString from 'query-string';

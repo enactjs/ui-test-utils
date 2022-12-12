@@ -1,5 +1,5 @@
 // const path = require('path');
-import path from 'path';
+import path from 'node:path';
 
 // const chalk = require('chalk');
 // const spawn = require('cross-spawn');
@@ -7,7 +7,7 @@ import path from 'path';
 // const readdirp = require('readdirp');
 import chalk from 'chalk';
 import spawn from 'cross-spawn'
-import * as fs from 'fs-extra';
+import fs from 'node:fs-extra';
 import readdirp from 'readdirp';
 
 const env = {
@@ -145,4 +145,4 @@ function epack ({file, opts}) {
 
 // module.exports = buildApps;
 export default buildApps;
-// if (require.main === module) buildApps();
+if (require.main === module) buildApps();

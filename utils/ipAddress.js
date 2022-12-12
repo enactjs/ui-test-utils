@@ -1,5 +1,5 @@
 // const os = require('os');
-import * as os from 'os';
+import os from 'node:os';
 
 function ipAddress () {
 	const ifaces = os.networkInterfaces();

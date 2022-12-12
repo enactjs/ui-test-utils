@@ -3,7 +3,7 @@ import {configure} from '../config/wdio.conf.js';
 // const {afterTest, baselineFolder, beforeTest, onComplete, onPrepare, screenshotFolder} = require('./utils/confHelpers.js');
 import {afterTest, baselineFolder, beforeTest, onComplete, onPrepare, screenshotFolder} from './utils/confHelpers.js';
 
-export const config = configure({
+const config = configure({
 	base: 'screenshot',
 	services: [[
 		'image-comparison',
@@ -45,3 +45,5 @@ export const config = configure({
 	 */
 	onComplete: onComplete
 });
+
+export default config;

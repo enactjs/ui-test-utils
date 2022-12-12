@@ -2,9 +2,10 @@
 // const {execSync} = require('child_process');
 
 import parseArgs from 'minimist';
-import {execSync} from 'child_process';
+import {execSync} from 'node:child_process';
 // import chai from 'chai';
 // import dirtyChai from 'dirty-chai';
+// import('expect-webdriverio');
 
 const args = parseArgs(process.argv);
 

@@ -1,7 +1,7 @@
 // 'use strict';
 
 // const curry = require('ramda/src/curry');
-import curry from 'ramda/src/curry';
+import curry from 'ramda/src/curry.js';
 
 const toLower = (str) => str.replace(/^\w/, (chr) => chr.toLowerCase());
 

@@ -1,14 +1,14 @@
 // const ipAddress = require('../utils/ipAddress.js');
 import ipAddress from '../utils/ipAddress.js';
 // const {config} = require('./wdio.conf.js');
-import {config} from './wdio.conf.js';
+import config from './wdio.conf.js';
 
 // Remove selenium-standalone and replace with docker service
 const services = config.services
 	.filter(service => service[0] !== 'selenium-standalone')
 	.concat(['docker']);
 
-export const config = Object.assign(
+const configDocker = Object.assign(
 	{},
 	config,
 	{
@@ -25,3 +25,5 @@ export const config = Object.assign(
 		}
 	}
 );
+
+export default configDocker;

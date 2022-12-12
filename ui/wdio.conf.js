@@ -3,7 +3,7 @@
 // 	fs = require('fs'),
 // 	chalk = require('chalk');
 import buildApps from '../src/build-apps.js';
-import fs from 'fs';
+import fs from 'node:fs';
 import chalk from 'chalk';
 
 // const {configure} = require('../config/wdio.conf.js');

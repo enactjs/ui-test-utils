@@ -1,14 +1,14 @@
 // const crypto = require('crypto'),
 // 	path = require('path'),
 // 	fs = require('fs');
-import crypto from 'crypto';
-import * as path from 'path';
-import * as fs from 'fs';
+import crypto from 'node:crypto';
+import path from 'node:path';
+import fs from 'node:fs';
 
 // const buildApps = require('../../src/build-apps');
-import buildApps from '../../src/build-apps';
+import buildApps from '../../src/build-apps.js';
 // const makeHeader = require('./headerTemplate');
-import makeHeader from './headerTemplate';
+import makeHeader from './headerTemplate.js';
 
 const newScreenshotFilename = 'tests/screenshot/dist/newFiles.html',
 	failedScreenshotFilename = 'tests/screenshot/dist/failedTests.html',
@@ -35,8 +35,8 @@ function getScreenshotName (basePath) {
 const distPath = path.join(process.cwd(), 'tests', 'screenshot', 'dist');
 const baselineRelativePath = 'screenshots/reference';
 const screenshotRelativePath = 'screenshots/screen';
-export const baselineFolder = path.join(distPath, baselineRelativePath);
-export const screenshotFolder = path.join(distPath, screenshotRelativePath);
+const baselineFolder = path.join(distPath, baselineRelativePath);
+const screenshotFolder = path.join(distPath, screenshotRelativePath);
 
 const generateReferenceName = getScreenshotName(baselineFolder);
 
@@ -56,7 +56,7 @@ function initFile (name, content) {
 	fs.appendFileSync(name, content, 'utf8');
 }
 
-export function onPrepare () {
+function onPrepare () {
 	if (!fs.existsSync('tests/screenshot/dist/screenshots/reference')) {
 		console.log('No reference screenshots found, creating new references!');
 	}
@@ -67,7 +67,7 @@ export function onPrepare () {
 	return buildApps('screenshot');
 }
 
-export function beforeTest (testData) {
+function beforeTest (testData) {
 	// If title doesn't have a '/', it's not a screenshot test, don't save
 	if (testData && testData.title && testData.title.indexOf('/') > 0) {
 		const filename = generateReferenceName({test: testData});
@@ -75,7 +75,7 @@ export function beforeTest (testData) {
 	}
 }
 
-export function afterTest (testData, _context, {passed}) {
+function afterTest (testData, _context, {passed}) {
 	// If this doesn't include context data, not a screenshot test
 	if (testData && testData.title && testData.context && testData.context.params) {
 		const fileName = testData.context.fileName.replace(/ /g, '_') + '.png';
@@ -114,7 +114,7 @@ export function afterTest (testData, _context, {passed}) {
 	}
 }
 
-export function onComplete () {
+function onComplete () {
 	const {size: newSize} = fs.statSync(newScreenshotFilename),
 		{size: failedSize} = fs.statSync(failedScreenshotFilename);
 
@@ -136,6 +136,14 @@ export function onComplete () {
 	}
 }
 
+export {
+	afterTest,
+	baselineFolder,
+	beforeTest,
+	onComplete,
+	onPrepare,
+	screenshotFolder
+}
 
 // module.exports = {
 // 	afterTest,

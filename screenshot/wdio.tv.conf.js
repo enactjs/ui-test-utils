@@ -1,7 +1,7 @@
 // const ipAddress = require('../utils/ipAddress.js');
 import ipAddress from '../utils/ipAddress.js';
 // const {config} = require('./wdio.conf.js');
-import {config} from './wdio.conf.js';
+import config from './wdio.conf.js';
 
 const services = config.services.map(service => {
 	if (service[0] === 'novus-visual-regression') {
@@ -10,7 +10,7 @@ const services = config.services.map(service => {
 	return service;
 });
 
-export const config= Object.assign(
+const configTV = Object.assign(
 	{},
 	config,
 	{
@@ -66,3 +66,5 @@ export const config= Object.assign(
 		}
 	}
 );
+
+export default configTV;
