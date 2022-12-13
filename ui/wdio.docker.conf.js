@@ -8,7 +8,7 @@ const services = config.services
 	.filter(service => service[0] !== 'selenium-standalone')
 	.concat(['docker']);
 
-export const config = Object.assign(
+export const configDocker = Object.assign(
 	{},
 	config,
 	{

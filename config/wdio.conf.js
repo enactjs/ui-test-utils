@@ -3,8 +3,8 @@
 
 import parseArgs from 'minimist';
 import {execSync} from 'node:child_process';
-// import chai from 'chai';
-// import dirtyChai from 'dirty-chai';
+import chai from 'chai';
+import dirtyChai from 'dirty-chai';
 // import('expect-webdriverio');
 
 const args = parseArgs(process.argv);
@@ -232,8 +232,8 @@ export const configure = (options) => {
 				import('expect-webdriverio');
 				// const chai = require('chai'),
 				// 	dirtyChai = require('dirty-chai');
-				import chai from 'chai';
-				import dirtyChai from 'dirty-chai';
+				// import chai from 'chai';
+				// import dirtyChai from 'dirty-chai';
 
 				global.wdioExpect = global.expect;
 				chai.use(dirtyChai);
