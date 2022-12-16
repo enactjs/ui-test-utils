@@ -3,7 +3,7 @@ import ipAddress from '../utils/ipAddress.js';
 // const {config} = require('./wdio.conf.js');
 import {config} from './wdio.conf.js';
 
-export const configTV = Object.assign(
+export const config = Object.assign(
 	{},
 	config,
 	{

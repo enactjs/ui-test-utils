@@ -5,10 +5,13 @@ import path from 'node:path';
 // const spawn = require('cross-spawn');
 // const fs = require('fs-extra');
 // const readdirp = require('readdirp');
+import url from 'url'
 import chalk from 'chalk';
 import spawn from 'cross-spawn'
 import fs from 'fs-extra';
 import readdirp from 'readdirp';
+
+const __dirname = path.dirname(url.fileURLToPath(import.meta.url))
 
 const env = {
 	ILIB_BASE_PATH: '/framework/ilib',

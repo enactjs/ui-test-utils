@@ -25,7 +25,6 @@ export const config = configure({
 	 * @param {Array.<Object>} capabilities list of capabilities details
 	 */
 	onPrepare: function () {
-		console.log('here onPrepare')
 		return buildApps('ui');
 	},
 	/**

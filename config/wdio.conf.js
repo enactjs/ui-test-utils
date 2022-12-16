@@ -175,7 +175,6 @@ export const configure = (options) => {
 			// commands. Instead, they hook themselves up into the test process.
 			services: [
 				['selenium-standalone', {
-					skipSeleniumInstall: offline,
 					args: {
 						drivers : {
 							chrome : {
@@ -227,9 +226,9 @@ export const configure = (options) => {
 			 * @param {Array.<Object>} capabilities list of capabilities details
 			 * @param {Array.<String>} specs List of spec file paths that are to be run
 			 */
-			before: function () {
+			before: async function () {
 				// require('expect-webdriverio');
-				import('expect-webdriverio');
+				await import('expect-webdriverio');
 				// const chai = require('chai'),
 				// 	dirtyChai = require('dirty-chai');
 				// import chai from 'chai';
