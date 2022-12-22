@@ -18,7 +18,7 @@ const runTest = ({concurrency, filter, Page, testName, ...rest}) => {
 		it('should fetch test cases', function () {
 			Page.open('?request');
 			let testCases = browser.execute(function () {
-				return window.__TEST_DATA; // eslint-disable-line no-undef
+				return window.__TEST_DATA;
 			});
 
 			expect(testCases).to.be.an('object', 'Test data failed to load');
