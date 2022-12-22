@@ -1,5 +1,9 @@
 # Change Log
 
+## [1.0.2] (December 22, 2022)
+
+* Fixed the util method `waitTransitionEnd` in `utils/Page` by adding `await` to the callback and async-await for the handler function of ontransitionend event.
+
 ## [1.0.1] (October 12, 2022)
 
 * Fixed the first tests in the test suite fail randomly by adding missed `await` in `utils/Page`.
