@@ -142,23 +142,26 @@ class Page {
 		await browser.waitUntil(() => target.isExisting() && target.isFocused(), {timeout, timeoutMsg, interval});
 	}
 
-	async waitTransitionEnd (timeout = 3500, timeoutMsg = 'timed out waiting for transitionend', callback, ignore = ['opacity', 'filter']) {
-		await browser.execute(
-			// eslint-disable-next-line no-shadow
-			async function (ignore) {
-				window.ontransitionend = await function (evt) {
-					if (!ignore || ignore.indexOf(evt.propertyName) === -1) {
-						window.__transition = true;
-					}
-				};
-				window.__transition = false;
-			},
-			ignore
-		);
-		if (callback) {
-			await callback();
-		}
-		await browser.waitUntil(
+	async waitTransitionEnd (timeout = 3000, timeoutMsg = 'timed out waiting for transitionend', callback, ignore = ['opacity', 'filter']) {
+		const executeFirst = async () => {
+			await browser.execute(
+				// eslint-disable-next-line no-shadow
+				async function (ignore) {
+					window.ontransitionend = await function (evt) {
+						if (!ignore || ignore.indexOf(evt.propertyName) === -1) {
+							window.__transition = true;
+						}
+					};
+					window.__transition = false;
+				},
+				ignore
+			);
+			if (callback) {
+				await callback();
+			}
+		};
+
+		const executeAfter = async () => await browser.waitUntil(
 			async function () {
 				return await browser.execute(
 					async function () {
@@ -168,6 +171,9 @@ class Page {
 			},
 			{timeout, timeoutMsg}
 		);
+
+		await executeFirst();
+		return executeAfter();
 	}
 }
 
