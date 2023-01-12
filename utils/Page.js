@@ -172,8 +172,9 @@ class Page {
 			{timeout, timeoutMsg}
 		);
 
-		await executeFirst();
-		return executeAfter();
+		await executeFirst().then(async () => {
+			await executeAfter();
+		});
 	}
 }
 
