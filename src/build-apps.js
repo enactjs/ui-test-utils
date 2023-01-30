@@ -5,11 +5,13 @@ import path from 'node:path';
 // const spawn = require('cross-spawn');
 // const fs = require('fs-extra');
 // const readdirp = require('readdirp');
-import url from 'url'
+// import url from 'url'
 import chalk from 'chalk';
 import spawn from 'cross-spawn'
 import fs from 'fs-extra';
 import readdirp from 'readdirp';
+import * as url from 'node:url';
+import esMain from 'es-main';
 
 const __dirname = path.dirname(url.fileURLToPath(import.meta.url))
 
@@ -148,4 +150,13 @@ function epack ({file, opts}) {
 
 // module.exports = buildApps;
 export default buildApps;
+if (esMain(import.meta)) {
+	buildApps();
+}
+// if (import.meta.url.startsWith('file:')) {
+// 	const modulePath = url.fileURLToPath(import.meta.url);
+// 	if (process.argv[1] === modulePath) {
+// 		buildApps();
+// 	}
+// }
 // if (require.main === module) buildApps();
