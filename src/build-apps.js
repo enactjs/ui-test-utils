@@ -1,5 +1,5 @@
 // const path = require('path');
-import path from 'node:path';
+import path from 'path';
 
 // const chalk = require('chalk');
 // const spawn = require('cross-spawn');
@@ -10,10 +10,11 @@ import chalk from 'chalk';
 import spawn from 'cross-spawn'
 import fs from 'fs-extra';
 import readdirp from 'readdirp';
-import * as url from 'node:url';
+import * as url from 'url';
 import esMain from 'es-main';
 
 const __dirname = path.dirname(url.fileURLToPath(import.meta.url))
+console.log(__dirname);
 
 const env = {
 	ILIB_BASE_PATH: '/framework/ilib',
@@ -26,7 +27,7 @@ function findViews (base) {
 	return readdirp.promise(path.join('tests', base, 'apps'), {fileFilter: '*-View.js'});
 }
 
-function buildApps (base) {
+export function buildApps (base) {
 	if (process.argv.includes('--skip-build')) return;
 	console.log('Building content:\n');
 
@@ -149,14 +150,14 @@ function epack ({file, opts}) {
 }
 
 // module.exports = buildApps;
-export default buildApps;
-if (esMain(import.meta)) {
-	buildApps();
-}
-// if (import.meta.url.startsWith('file:')) {
-// 	const modulePath = url.fileURLToPath(import.meta.url);
-// 	if (process.argv[1] === modulePath) {
-// 		buildApps();
-// 	}
+// export default buildApps;
+// if (esMain(import.meta)) {
+// 	buildApps();
 // }
+if (import.meta.url.startsWith('file:')) {
+	const modulePath = url.fileURLToPath(import.meta.url);
+	if (process.argv[1] === modulePath) {
+		buildApps();
+	}
+}
 // if (require.main === module) buildApps();

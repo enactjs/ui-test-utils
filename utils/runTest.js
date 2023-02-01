@@ -1,6 +1,6 @@
 // 'use strict';
 // const crypto = require('crypto');
-import crypto from 'node:crypto';
+import crypto from 'crypto';
 // const parseArgs = require('minimist');
 import parseArgs from 'minimist';
 

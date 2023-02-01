@@ -2,7 +2,7 @@
 // const {execSync} = require('child_process');
 
 import parseArgs from 'minimist';
-import {execSync} from 'node:child_process';
+import {execSync} from 'child_process';
 // import chai from 'chai';
 // import dirtyChai from 'dirty-chai';
 // import('expect-webdriverio');
@@ -77,7 +77,7 @@ export const configure = (options) => {
 			// directory is where your package.json resides, so `wdio` will be called from there.
 			//
 			specs: [
-				'./tests/' + base + '/specs/**/*-specs.js'
+				'/work/LG/agate/tests/' + base + '/specs/WindDirectionControl/WindDirectionControl-specs.js'
 			],
 			// Patterns to exclude.
 			exclude: [
@@ -123,7 +123,7 @@ export const configure = (options) => {
 			// Define all options that are relevant for the WebdriverIO instance here
 			//
 			// Level of logging verbosity: silent | verbose | command | data | result | error
-			logLevel: 'silent',
+			logLevel: 'info',
 			//
 			// Enables colors for log output.
 			coloredLogs: true,
@@ -236,13 +236,13 @@ export const configure = (options) => {
 				// import chai from 'chai';
 				// import dirtyChai from 'dirty-chai';
 
-				global.wdioExpect = global.expect;
-				chai.use(dirtyChai);
-				global.expect = chai.expect;
-				chai.Should();
+				global.wdioExpect = await global.expect;
+				await chai.use(dirtyChai);
+				global.expect = await chai.expect;
+				await chai.Should();
 
-				if (options.before) {
-					options.before();
+				if (!options.before) {
+					await options.before();
 				}
 			}
 		}
