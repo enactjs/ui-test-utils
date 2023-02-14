@@ -63,6 +63,11 @@ const runTest = ({concurrency, filter, Page, testName, ...rest}) => {
 
 								await Page.open(`?${params}`);
 
+								if (testCase.pressSelectKey) {
+									console.log("test");
+									await Page.spotlightSelect();
+								}
+
 								expect(await browser.checkScreen(screenshotFileName, {
 									disableCSSAnimation: true,
 									ignoreNothing: true,

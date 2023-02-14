@@ -92,12 +92,14 @@ const generateTestData = (component, componentTests) => {
 				props: testCase.props ? testCase.props : testCase.component.props,
 				wrapper: testCase.wrapper,
 				textSize: testCase.textSize,
-				skinVariants: testCase.skinVariants
+				skinVariants: testCase.skinVariants,
+				pressSelectKey: testCase.pressSelectKey
 			});
 		}
 
 		const meta = {
-			title
+			title,
+			pressSelectKey: testCase.pressSelectKey
 		};
 		metaData.push(meta);
 	});
