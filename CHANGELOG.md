@@ -1,5 +1,10 @@
 # Change Log
 
+## [unreleased]
+
+* Added a conditional action in `utils/runTest` before taking the screenshot, if the testsCase has a `pressSelectKey` property.
+
+
 ## [1.0.2] (December 22, 2022)
 
 * Fixed the util method `waitTransitionEnd` in `utils/Page` by adding `await` to the callback and async-await for the handler function of ontransitionend event.
