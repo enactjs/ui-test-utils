@@ -99,8 +99,7 @@ const generateTestData = (component, componentTests) => {
 
 		const meta = {
 			pressSelectKey: testCase.pressSelectKey,
-			title,
-
+			title
 		};
 		metaData.push(meta);
 	});
