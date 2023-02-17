@@ -1,12 +1,7 @@
 const enactPlugin = require('eslint-plugin-enact/strict');
+const globals = require('globals');
 
 module.exports = [{
-		globals: {
-			'browser': true,
-			'expect': true,
-			'$': true,
-			'$$': true
-		},
 		languageOptions: {
 			ecmaVersion: 'latest',
 			sourceType: 'module',
@@ -14,6 +9,12 @@ module.exports = [{
 				ecmaFeatures: {
 					jsx: true,
 				},
+			},
+			globals: {
+				...globals.browser,
+				...globals.expect,
+				...globals.$,
+				...globals.$$
 			}
 		},
 		plugins: {
