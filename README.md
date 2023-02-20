@@ -35,7 +35,7 @@ and `tests/screenshot`
    }
 ```
 
-6. Optionally configure different ESLint and git configuration rules using `.eslint.config.js` and
+6. Optionally configure different ESLint and git configuration rules using `eslint.config.js` and
    `.gitignore` files, respectively
 
 ## Creating tests
