@@ -1,4 +1,4 @@
-const enactPlugin = require('eslint-plugin-enact/strict');
+const enactPlugin = require('eslint-plugin-enact');
 const globals = require('globals');
 
 module.exports = [{
