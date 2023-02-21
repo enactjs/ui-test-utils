@@ -51,7 +51,6 @@
 		btn = document.createElement('button');
 		btn.innerText = text;
 		btn.id = action;
-		// eslint-disable-next-line no-undefined
 		btn.onclick = () => loadImage(undefined, action);
 		target.appendChild(btn);
 		return btn;
@@ -121,5 +120,4 @@
 				break;
 		}
 	};
-// eslint-disable-next-line no-undef
 })(results);

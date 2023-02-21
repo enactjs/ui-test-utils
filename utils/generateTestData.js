@@ -43,7 +43,6 @@ function replacer (key, value) {
 			value = value.slice(0, 13) + '…';
 		}
 	} else if (key === 'key' || key === 'ref') {
-		// eslint-disable-next-line no-undefined
 		return undefined;
 	} else if (key === 'props' && typeof value === 'object' && Object.keys(value).length === 0) {
 		return 'default';
