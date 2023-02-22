@@ -1,4 +1,4 @@
-const enactPlugin = require('eslint-plugin-enact');
+const enactConfig = require('eslint-config-enact/strict');
 const globals = require('globals');
 
 module.exports = [{
@@ -7,8 +7,8 @@ module.exports = [{
 			sourceType: 'module',
 			parserOptions: {
 				ecmaFeatures: {
-					jsx: true,
-				},
+					jsx: true
+				}
 			},
 			globals: {
 				...globals.browser,
@@ -18,7 +18,7 @@ module.exports = [{
 			}
 		},
 		plugins: {
-			enactPlugin
+			enactConfig
 		},
 		rules: {
 			'max-nested-callbacks': 'off',
