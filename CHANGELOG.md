@@ -2,7 +2,7 @@
 
 ## [unreleased]
 
-* Upgraded `eslint-plugin-react` version to `7.32.2`.
+* Upgraded `eslint-plugin-react` version to `^7.32.2`.
 * Replaced `eslint.config.js` with new configuration file `eslint.config.js`.
 
 ## [1.0.2] (December 22, 2022)
