@@ -2,6 +2,7 @@ const enactConfig = require('eslint-config-enact/strict');
 const globals = require('globals');
 
 module.exports = [
+	enactConfig,
 	{
 		languageOptions: {
 			ecmaVersion: 'latest',
@@ -17,9 +18,6 @@ module.exports = [
 				...globals.$,
 				...globals.$$
 			}
-		},
-		plugins: {
-			enactConfig
 		},
 		rules: {
 			'max-nested-callbacks': 'off',
