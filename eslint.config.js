@@ -2,8 +2,8 @@ const enactConfig = require('eslint-config-enact/strict');
 const globals = require('globals');
 
 module.exports = [
-	enactConfig,
 	{
+		...enactConfig,
 		languageOptions: {
 			ecmaVersion: 'latest',
 			sourceType: 'module',
