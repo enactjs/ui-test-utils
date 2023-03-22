@@ -1,5 +1,9 @@
 # Change Log
 
+## [unreleased]
+
+* Upgraded `eslint-plugin-react` version to `^7.32.2`.
+
 ## [1.0.2] (December 22, 2022)
 
 * Fixed the util method `waitTransitionEnd` in `utils/Page` by adding `await` to the callback and async-await for the handler function of ontransitionend event.
