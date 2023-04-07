@@ -10,6 +10,13 @@ module.exports = {
 		node: true
 	},
 	extends: 'enact/strict',
+	parserOptions: {
+		ecmaFeatures: {
+			jsx: true
+		},
+		ecmaVersion: 'latest',
+		sourceType: 'module'
+	},
 	rules: {
 		'max-nested-callbacks': 'off',
 		'no-console': 'off',
