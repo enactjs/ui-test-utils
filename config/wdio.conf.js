@@ -77,7 +77,7 @@ export const configure = (options) => {
 			// directory is where your package.json resides, so `wdio` will be called from there.
 			//
 			specs: [
-				'/work/LG/agate/tests/' + base + '/specs/WindDirectionControl/WindDirectionControl-specs.js'
+				'/work/LG/agate/tests/' + base + '/specs/**/*-specs.js'
 			],
 			// Patterns to exclude.
 			exclude: [
@@ -123,7 +123,7 @@ export const configure = (options) => {
 			// Define all options that are relevant for the WebdriverIO instance here
 			//
 			// Level of logging verbosity: silent | verbose | command | data | result | error
-			logLevel: 'info',
+			logLevel: 'silent',
 			//
 			// Enables colors for log output.
 			coloredLogs: true,
