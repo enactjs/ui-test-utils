@@ -11,7 +11,7 @@ import spawn from 'cross-spawn'
 import fs from 'fs-extra';
 import readdirp from 'readdirp';
 import * as url from 'url';
-import esMain from 'es-main';
+// import esMain from 'es-main';
 
 const __dirname = path.dirname(url.fileURLToPath(import.meta.url))
 console.log(__dirname);
@@ -149,15 +149,18 @@ function epack ({file, opts}) {
 	}
 }
 
+const modulePath = url.fileURLToPath(import.meta.url);
+if (process.argv[1] === modulePath) buildApps();
+
 // module.exports = buildApps;
 // export default buildApps;
 // if (esMain(import.meta)) {
 // 	buildApps();
 // }
-if (import.meta.url.startsWith('file:')) {
-	const modulePath = url.fileURLToPath(import.meta.url);
-	if (process.argv[1] === modulePath) {
-		buildApps();
-	}
-}
+// if (import.meta.url.startsWith('file:')) {
+// 	const modulePath = url.fileURLToPath(import.meta.url);
+// 	if (process.argv[1] === modulePath) {
+// 		buildApps();
+// 	}
+// }
 // if (require.main === module) buildApps();

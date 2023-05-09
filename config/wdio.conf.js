@@ -241,7 +241,7 @@ export const configure = (options) => {
 				global.expect = await chai.expect;
 				await chai.Should();
 
-				if (!options.before) {
+				if (options.before) {
 					await options.before();
 				}
 			}
