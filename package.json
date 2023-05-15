@@ -5,8 +5,7 @@
   "repository": "https://github.com/enactjs/ui-test-utils",
   "main": "index.js",
   "exports": {
-    "./ui/wdio.conf.js": "./ui/wdio.conf.js",
-    "./utils/index.js": "./utils/index.js"
+    "./ui/wdio.conf.js": "./ui/wdio.conf.js"
   },
   "bin": {
     "start-tests": "./start-tests.js"
