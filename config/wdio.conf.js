@@ -71,7 +71,7 @@ module.exports.configure = (options) => {
 			// directory is where your package.json resides, so `wdio` will be called from there.
 			//
 			specs: [
-				'./tests/' + base + '/specs/**/*-specs.js'
+				'../../tests/' + base + '/specs/**/*-specs.js'
 			],
 			// Patterns to exclude.
 			exclude: [
