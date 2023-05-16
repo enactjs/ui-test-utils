@@ -29,7 +29,7 @@
     "cross-spawn": "^7.0.3",
     "dirty-chai": "2.0.1",
     "expect-webdriverio": "^3.5.3",
-    "fs-extra": "^10.1.0",
+    "fs-extra": "^11.1.1",
     "minimist": "^1.2.8",
     "query-string": "^7.1.1",
     "ramda": "^0.29.0",
