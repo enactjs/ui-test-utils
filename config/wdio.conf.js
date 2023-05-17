@@ -117,7 +117,7 @@ module.exports.configure = (options) => {
 			// Define all options that are relevant for the WebdriverIO instance here
 			//
 			// Level of logging verbosity: trace | debug | info | warn | error | silent
-			logLevel: 'silent',
+			logLevel: 'trace',
 			//
 			// Enables colors for log output.
 			coloredLogs: true,
@@ -221,18 +221,21 @@ module.exports.configure = (options) => {
 			 * @param {Array.<Object>} capabilities list of capabilities details
 			 * @param {Array.<String>} specs List of spec file paths that are to be run
 			 */
-			before: function () {
-				require('expect-webdriverio');
-				const chai = require('chai'),
-					dirtyChai = require('dirty-chai');
+			before: async function () {
+				await import('expect-webdriverio');
+				// const chai = require('chai'),
+				//	dirtyChai = require('dirty-chai');
 
-				global.wdioExpect = global.expect;
-				chai.use(dirtyChai);
-				global.expect = chai.expect;
-				chai.Should();
+				const chai = await import('chai');
+				const dirtyChai = await import('dirty-chai');
+
+				global.wdioExpect = await global.expect;
+				await chai.use(dirtyChai);
+				global.expect = await chai.expect;
+				await chai.Should();
 
 				if (options.before) {
-					options.before();
+					await options.before();
 				}
 			}
 		}
