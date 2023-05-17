@@ -1,5 +1,11 @@
+(async () => {
+	await import('expect-webdriverio');
+})();
+
 const parseArgs = require('minimist');
 const {execSync} = require('child_process');
+const chai = require('chai');
+const dirtyChai = require('dirty-chai');
 
 const args = parseArgs(process.argv);
 
@@ -221,21 +227,14 @@ module.exports.configure = (options) => {
 			 * @param {Array.<Object>} capabilities list of capabilities details
 			 * @param {Array.<String>} specs List of spec file paths that are to be run
 			 */
-			before: async function () {
-				await import('expect-webdriverio');
-				// const chai = require('chai'),
-				//	dirtyChai = require('dirty-chai');
-
-				const chai = await import('chai');
-				const dirtyChai = await import('dirty-chai');
-
-				global.wdioExpect = await global.expect;
-				await chai.use(dirtyChai);
-				global.expect = await chai.expect;
-				await chai.Should();
+			before: function () {
+				global.wdioExpect = global.expect;
+				chai.use(dirtyChai);
+				global.expect = chai.expect;
+				chai.Should();
 
 				if (options.before) {
-					await options.before();
+					options.before();
 				}
 			}
 		}
