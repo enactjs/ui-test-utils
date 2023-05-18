@@ -1,4 +1,5 @@
 #!/usr/bin/env node
-const cli = require('@wdio/cli');
-
-cli.run();
+(async () => {
+	const cli = await import('@wdio/cli');
+	cli.run();
+})();
