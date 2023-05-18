@@ -4,6 +4,10 @@
 import parseArgs from 'minimist';
 import {execSync} from 'child_process';
 
+import {expect} from 'expect-webdriverio';
+import chai from 'chai';
+import dirtyChai from 'dirty-chai';
+
 const args = parseArgs(process.argv);
 
 const visibleBrowser = !!args.visible,
@@ -74,7 +78,7 @@ export const configure = (options) => {
 			// directory is where your package.json resides, so `wdio` will be called from there.
 			//
 			specs: [
-				'../../../tests/' + base + '/specs/**/*-specs.mjs'
+				'../../../tests/' + base + '/specs/**/*-specs.js'
 			],
 			// Patterns to exclude.
 			exclude: [
@@ -224,13 +228,6 @@ export const configure = (options) => {
 			 * @param {Array.<String>} specs List of spec file paths that are to be run
 			 */
 			before: function () {
-				// require('expect-webdriverio');
-				import * from 'expect-webdriverio';
-				// const chai = require('chai'),
-				// 	dirtyChai = require('dirty-chai');
-				import chai from 'chai';
-				import dirtyChai form 'dirty-chai';
-
 				global.wdioExpect = global.expect;
 				chai.use(dirtyChai);
 				global.expect = chai.expect;
