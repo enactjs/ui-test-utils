@@ -3,9 +3,6 @@
 
 import parseArgs from 'minimist';
 import {execSync} from 'child_process';
-// import chai from 'chai';
-// import dirtyChai from 'dirty-chai';
-// import('expect-webdriverio');
 
 const args = parseArgs(process.argv);
 
@@ -77,7 +74,7 @@ export const configure = (options) => {
 			// directory is where your package.json resides, so `wdio` will be called from there.
 			//
 			specs: [
-				'/work/LG/agate/tests/' + base + '/specs/**/*-specs.js'
+				'../../../tests/' + base + '/specs/**/*-specs.mjs'
 			],
 			// Patterns to exclude.
 			exclude: [
@@ -123,7 +120,7 @@ export const configure = (options) => {
 			// Define all options that are relevant for the WebdriverIO instance here
 			//
 			// Level of logging verbosity: silent | verbose | command | data | result | error
-			logLevel: 'silent',
+			logLevel: 'trace',
 			//
 			// Enables colors for log output.
 			coloredLogs: true,
@@ -226,23 +223,21 @@ export const configure = (options) => {
 			 * @param {Array.<Object>} capabilities list of capabilities details
 			 * @param {Array.<String>} specs List of spec file paths that are to be run
 			 */
-			before: async function () {
+			before: function () {
 				// require('expect-webdriverio');
-				await import('expect-webdriverio');
+				import * from 'expect-webdriverio';
 				// const chai = require('chai'),
 				// 	dirtyChai = require('dirty-chai');
-				const chai = await import('chai');
-				const dirtyChai = await import('dirty-chai');
-				// import chai from 'chai';
-				// import dirtyChai from 'dirty-chai';
+				import chai from 'chai';
+				import dirtyChai form 'dirty-chai';
 
-				global.wdioExpect = await global.expect;
-				await chai.use(dirtyChai);
-				global.expect = await chai.expect;
-				await chai.Should();
+				global.wdioExpect = global.expect;
+				chai.use(dirtyChai);
+				global.expect = chai.expect;
+				chai.Should();
 
 				if (options.before) {
-					await options.before();
+					options.before();
 				}
 			}
 		}
