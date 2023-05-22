@@ -1,11 +1,11 @@
 // const ipAddress = require('../utils/ipAddress.js');
 import ipAddress from '../utils/ipAddress.js';
 // const {config} = require('./wdio.conf.js');
-import {config} from './wdio.conf.js';
+import {uiConfig} from './wdio.conf.js';
 
 export const config = Object.assign(
 	{},
-	config,
+	uiConfig,
 	{
 		capabilities: [{
 			maxInstances: 1,
@@ -20,8 +20,8 @@ export const config = Object.assign(
 		baseUrl: `http://${ipAddress()}:4567`,
 
 		before: function () {
-			if (config.before) {
-				config.before();
+			if (uiConfig.before) {
+				uiConfig.before();
 			}
 
 			browser._options = {remote: true};

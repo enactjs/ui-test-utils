@@ -1,0 +1,5 @@
+{
+  "name":"@enact/ui-tests",
+  "type": "module",
+  "main": "index.js"
+}
