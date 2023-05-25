@@ -1,5 +1,9 @@
 # Change Log
 
+## [unreleased]
+
+* Updated `fs-extra` version to `^11.1.1`.
+
 ## [1.0.3] (April 7, 2023)
 
 * Updated `eslint-plugin-react` version to `^7.32.2`.
