@@ -46,4 +46,4 @@ const config = configure({
 	onComplete: onComplete
 });
 
-export default config;
+export const ssConfig = {config};

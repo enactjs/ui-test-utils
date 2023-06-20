@@ -6,7 +6,7 @@ import path from 'node:path';
 import fs from 'node:fs';
 
 // const buildApps = require('../../src/build-apps');
-import buildApps from '../../src/build-apps.js';
+import {buildApps} from '../../src/build-apps.js';
 // const makeHeader = require('./headerTemplate');
 import makeHeader from './headerTemplate.js';
 

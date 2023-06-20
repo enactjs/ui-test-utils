@@ -7,7 +7,8 @@
   "main": "index.js",
   "exports": {
     "./ui/wdio.conf.js": "./ui/wdio.conf.js",
-    "./utils/index.js": "./utils/index.js"
+    "./utils/index.js": "./utils/index.js",
+    "./screenshot/wdio.conf.js": "./screenshot/wdio.conf.js"
   },
   "bin": {
     "start-tests": "./start-tests.js"
