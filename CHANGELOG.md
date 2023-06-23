@@ -1,6 +1,6 @@
 # Change Log
 
-## [unreleased]
+## [1.0.4] (June 20, 2023)
 
 * Updated `fs-extra` version to `^11.1.1`.
 
