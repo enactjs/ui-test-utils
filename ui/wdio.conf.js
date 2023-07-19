@@ -27,37 +27,33 @@ exports.config = configure({
 	 */
 	afterTest: function (testCase, _context, {duration, passed}) {
 		import('chalk').then(({default: chalk}) => {
-			return () => {
-				if (duration > 2000) {
-					console.log(chalk.yellow(`Long running test case: ${testCase.title}: ${duration}ms`));
-				}
-				this.__duration = (this.__duration || 0) + duration;
-				// if test passed, ignore, else take and save screenshot.
-				if (passed) {
-					return;
-				}
-				// get current test title and clean it, to use it as file name
-				const filename = encodeURIComponent(testCase.title.replace(/\s+/g, '-'));
-				// build file path
-				const filePath = this.screenshotPath + filename + '.png';
-				if (!fs.existsSync(this.screenshotPath)) {
-					fs.mkdirSync(this.screenshotPath, {recursive: true});	// May only work recursively on Node 10.12+
-				}
-				// save screenshot
-				browser.saveScreenshot(filePath);
-				console.log('\n\tScreenshot location:', filePath, '\n');
-			};
+			if (duration > 2000) {
+				console.log(chalk.yellow(`Long running test case: ${testCase.title}: ${duration}ms`));
+			}
+			this.__duration = (this.__duration || 0) + duration;
+			// if test passed, ignore, else take and save screenshot.
+			if (passed) {
+				return;
+			}
+			// get current test title and clean it, to use it as file name
+			const filename = encodeURIComponent(testCase.title.replace(/\s+/g, '-'));
+			// build file path
+			const filePath = this.screenshotPath + filename + '.png';
+			if (!fs.exists(this.screenshotPath)) {
+				fs.mkdir(this.screenshotPath, {recursive: true});	// May only work recursively on Node 10.12+
+			}
+			// save screenshot
+			browser.saveScreenshot(filePath);
+			console.log('\n\tScreenshot location:', filePath, '\n');
 		});
 	},
 	afterSuite: function (_suite) {
 		import('chalk').then(({default: chalk}) => {
-			return () => {
-				// Note: This duration will be less than reported by the various reporters. This seems like
-				// the best we can do without access to the internal runner
-				if (this.__duration > 80000) {
-					console.log(chalk.yellow(`Long running suite: ${_suite.title}: ${this.__duration}ms`));
-				}
-			};
+			// Note: This duration will be less than reported by the various reporters. This seems like
+			// the best we can do without access to the internal runner
+			if (this.__duration > 80000) {
+				console.log(chalk.yellow(`Long running suite: ${_suite.title}: ${this.__duration}ms`));
+			}
 		});
 	}
 });
