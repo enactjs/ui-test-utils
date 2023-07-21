@@ -20,9 +20,9 @@ function buildApps (base) {
 	console.log('Building content:\n');
 
 	return Promise.resolve()
-		.then(() => {
+		.then(async () => {
 			if (!process.argv.includes('--skip-enact')) {
-				epack({
+				await epack({
 					file: {basename: 'Enact framework bundle', fullPath: 'framework'},
 					opts: [
 						'pack',
@@ -44,12 +44,11 @@ function buildApps (base) {
 				return fs.copy(
 					path.join('node_modules', 'ilib', 'locale'),
 					path.join(ilibDist, 'locale')
-				).then(() => {
+				).then(async () => {
 					if (process.stdout.isTTY) {
-						clearLine();
-						import('chalk').then(({default: chalk}) => {
-							process.stdout.write(chalk.green('\t✔ ') + 'iLib locale data\n');
-						});
+						await clearLine();
+						const chalk = await import('chalk').then(({default: chalkDefault}) => chalkDefault);
+						process.stdout.write(chalk.green('\t✔ ') + 'iLib locale data\n');
 					} else {
 						process.stdout.write('DONE\n');
 					}
@@ -58,9 +57,9 @@ function buildApps (base) {
 		})
 		.then(() => {
 			if (!process.argv.includes('--skip-tests')) {
-				return findViews(base).then(files => (
-					files.forEach(file => (
-						epack({
+				return findViews(base).then(async files => {
+					for (let file of files) {
+						await epack({
 							file,
 							opts: [
 								'pack',
@@ -72,9 +71,9 @@ function buildApps (base) {
 								'tests/' + base + '/dist/framework',
 								'--externals-polyfill'
 							]
-						})
-					))
-				));
+						});
+					}
+				});
 			}
 		})
 		.then(() => {
@@ -99,12 +98,12 @@ function buildApps (base) {
 		});
 }
 
-function clearLine () {
+async function clearLine () {
 	process.stdout.clearLine();
 	process.stdout.cursorTo(0);
 }
 
-function epack ({file, opts}) {
+async function epack ({file, opts}) {
 	process.stdout.write('\t' + path.basename(file.basename, '.js') + '... ');
 	const result = spawn.sync('enact', opts, {
 		cwd: process.cwd(),
@@ -119,10 +118,9 @@ function epack ({file, opts}) {
 	});
 	if (result.status === 0) {
 		if (process.stdout.isTTY) {
-			clearLine();
-			import('chalk').then(({default: chalk}) => {
-				process.stdout.write(chalk.green('\t✔ ') + path.basename(file.basename, '.js') + '\n');
-			});
+			await clearLine();
+			const chalk = await import('chalk').then(({default: chalkDefault}) => chalkDefault);
+			process.stdout.write(chalk.green('\t✔ ') + path.basename(file.basename, '.js') + '\n');
 		} else {
 			process.stdout.write('DONE\n');
 		}
@@ -134,10 +132,9 @@ function epack ({file, opts}) {
 		if (result.stderr) err += '\n' + result.stderr;
 
 		if (process.stdout.isTTY) {
-			clearLine();
-			import('chalk').then(({default: chalk}) => {
-				process.stdout.write(chalk.red('\t✖ ') + path.basename(file.basename, '.js') + '\n\n');
-			});
+			await clearLine();
+			const chalk = await import('chalk').then(({default: chalkDefault}) => chalkDefault);
+			process.stdout.write(chalk.red('\t✖ ') + path.basename(file.basename, '.js') + '\n\n');
 		} else {
 			process.stdout.write('ERROR\n\n');
 		}
