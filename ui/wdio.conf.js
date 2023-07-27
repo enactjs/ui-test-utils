@@ -53,7 +53,7 @@ exports.config = configure({
 		if (this.__duration > 80000) {
 			import('chalk').then(({default: chalk}) => {
 				console.log(chalk.yellow(`Long running suite: ${_suite.title}: ${this.__duration}ms`));
-			}
+			});
 		}
 	}
 });
