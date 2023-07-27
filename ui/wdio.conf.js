@@ -1,6 +1,5 @@
 const buildApps = require('../src/build-apps'),
-	fs = require('fs'),
-	chalk = require('chalk');
+	fs = require('fs');
 
 const {configure} = require('../config/wdio.conf.js');
 
