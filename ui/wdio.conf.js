@@ -48,12 +48,12 @@ exports.config = configure({
 		});
 	},
 	afterSuite: function (_suite) {
-		import('chalk').then(({default: chalk}) => {
-			// Note: This duration will be less than reported by the various reporters. This seems like
-			// the best we can do without access to the internal runner
-			if (this.__duration > 80000) {
+		// Note: This duration will be less than reported by the various reporters. This seems like
+		// the best we can do without access to the internal runner
+		if (this.__duration > 80000) {
+			import('chalk').then(({default: chalk}) => {
 				console.log(chalk.yellow(`Long running suite: ${_suite.title}: ${this.__duration}ms`));
-			}
-		});
+			});
+		}
 	}
 });

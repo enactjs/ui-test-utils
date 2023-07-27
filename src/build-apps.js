@@ -1,5 +1,6 @@
 const path = require('path');
 
+let chalk;
 const spawn = require('cross-spawn');
 const fs = require('fs-extra');
 const readdirp = require('readdirp');
@@ -19,10 +20,11 @@ function buildApps (base) {
 	if (process.argv.includes('--skip-build')) return;
 	console.log('Building content:\n');
 
-	return Promise.resolve()
-		.then(async () => {
+	return import('chalk')
+		.then(({default: _chalk}) => {
+			chalk = _chalk;
 			if (!process.argv.includes('--skip-enact')) {
-				await epack({
+				epack({
 					file: {basename: 'Enact framework bundle', fullPath: 'framework'},
 					opts: [
 						'pack',
@@ -44,10 +46,9 @@ function buildApps (base) {
 				return fs.copy(
 					path.join('node_modules', 'ilib', 'locale'),
 					path.join(ilibDist, 'locale')
-				).then(async () => {
+				).then(() => {
 					if (process.stdout.isTTY) {
-						await clearLine();
-						const chalk = await import('chalk').then(({default: chalkDefault}) => chalkDefault);
+						clearLine();
 						process.stdout.write(chalk.green('\t✔ ') + 'iLib locale data\n');
 					} else {
 						process.stdout.write('DONE\n');
@@ -57,9 +58,9 @@ function buildApps (base) {
 		})
 		.then(() => {
 			if (!process.argv.includes('--skip-tests')) {
-				return findViews(base).then(async files => {
-					for (let file of files) {
-						await epack({
+				return findViews(base).then(files => (
+					files.forEach(file => (
+						epack({
 							file,
 							opts: [
 								'pack',
@@ -71,9 +72,9 @@ function buildApps (base) {
 								'tests/' + base + '/dist/framework',
 								'--externals-polyfill'
 							]
-						});
-					}
-				});
+						})
+					))
+				));
 			}
 		})
 		.then(() => {
@@ -89,21 +90,19 @@ function buildApps (base) {
 			}
 		})
 		.catch(err => {
-			import('chalk').then(({default: chalk}) => {
-				console.error(chalk.red('Build failed:'));
-			});
+			console.error(chalk.red('Build failed:'));
 			console.error();
 			console.error(err.message);
 			process.exit(1);
 		});
 }
 
-async function clearLine () {
+function clearLine () {
 	process.stdout.clearLine();
 	process.stdout.cursorTo(0);
 }
 
-async function epack ({file, opts}) {
+function epack ({file, opts}) {
 	process.stdout.write('\t' + path.basename(file.basename, '.js') + '... ');
 	const result = spawn.sync('enact', opts, {
 		cwd: process.cwd(),
@@ -118,8 +117,7 @@ async function epack ({file, opts}) {
 	});
 	if (result.status === 0) {
 		if (process.stdout.isTTY) {
-			await clearLine();
-			const chalk = await import('chalk').then(({default: chalkDefault}) => chalkDefault);
+			clearLine();
 			process.stdout.write(chalk.green('\t✔ ') + path.basename(file.basename, '.js') + '\n');
 		} else {
 			process.stdout.write('DONE\n');
@@ -132,8 +130,7 @@ async function epack ({file, opts}) {
 		if (result.stderr) err += '\n' + result.stderr;
 
 		if (process.stdout.isTTY) {
-			await clearLine();
-			const chalk = await import('chalk').then(({default: chalkDefault}) => chalkDefault);
+			clearLine();
 			process.stdout.write(chalk.red('\t✖ ') + path.basename(file.basename, '.js') + '\n\n');
 		} else {
 			process.stdout.write('ERROR\n\n');
