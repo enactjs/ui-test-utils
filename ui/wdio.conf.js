@@ -1,5 +1,6 @@
 const buildApps = require('../src/build-apps'),
-	fs = require('fs');
+	fs = require('fs'),
+	chalk = require('chalk');
 
 const {configure} = require('../config/wdio.conf.js');
 
@@ -26,34 +27,30 @@ exports.config = configure({
 	 * @param {Object} test test details
 	 */
 	afterTest: function (testCase, _context, {duration, passed}) {
-		import('chalk').then(({default: chalk}) => {
-			if (duration > 2000) {
-				console.log(chalk.yellow(`Long running test case: ${testCase.title}: ${duration}ms`));
-			}
-			this.__duration = (this.__duration || 0) + duration;
-			// if test passed, ignore, else take and save screenshot.
-			if (passed) {
-				return;
-			}
-			// get current test title and clean it, to use it as file name
-			const filename = encodeURIComponent(testCase.title.replace(/\s+/g, '-'));
-			// build file path
-			const filePath = this.screenshotPath + filename + '.png';
-			if (!fs.exists(this.screenshotPath)) {
-				fs.mkdir(this.screenshotPath, {recursive: true});	// May only work recursively on Node 10.12+
-			}
-			// save screenshot
-			browser.saveScreenshot(filePath);
-			console.log('\n\tScreenshot location:', filePath, '\n');
-		});
+		if (duration > 2000) {
+			console.log(chalk.yellow(`Long running test case: ${testCase.title}: ${duration}ms`));
+		}
+		this.__duration = (this.__duration || 0) + duration;
+		// if test passed, ignore, else take and save screenshot.
+		if (passed) {
+			return;
+		}
+		// get current test title and clean it, to use it as file name
+		const filename = encodeURIComponent(testCase.title.replace(/\s+/g, '-'));
+		// build file path
+		const filePath = this.screenshotPath + filename + '.png';
+		if (!fs.existsSync(this.screenshotPath)) {
+			fs.mkdirSync(this.screenshotPath, {recursive: true});	// May only work recursively on Node 10.12+
+		}
+		// save screenshot
+		browser.saveScreenshot(filePath);
+		console.log('\n\tScreenshot location:', filePath, '\n');
 	},
 	afterSuite: function (_suite) {
 		// Note: This duration will be less than reported by the various reporters. This seems like
 		// the best we can do without access to the internal runner
 		if (this.__duration > 80000) {
-			import('chalk').then(({default: chalk}) => {
-				console.log(chalk.yellow(`Long running suite: ${_suite.title}: ${this.__duration}ms`));
-			});
+			console.log(chalk.yellow(`Long running suite: ${_suite.title}: ${this.__duration}ms`));
 		}
 	}
 });
