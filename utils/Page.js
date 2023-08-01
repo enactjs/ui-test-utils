@@ -1,5 +1,7 @@
 'use strict';
 
+const queryString = require('query-string');
+
 class Page {
 	constructor () {
 		this.title = 'Untitled Test';
@@ -30,11 +32,9 @@ class Page {
 	}
 
 	serializeParams (params) {
-		import('query-string').then(({default: queryString}) => {
-			const queryObject =  queryString.stringify(params);
+		const queryObject =  queryString.stringify(params);
 
-			return queryObject;
-		});
+		return queryObject;
 	}
 
 	async delay (delay = 1000) {
