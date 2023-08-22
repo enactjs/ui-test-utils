@@ -34,7 +34,7 @@
     "expect-webdriverio": "^3.5.3",
     "fs-extra": "^11.1.1",
     "minimist": "^1.2.8",
-    "query-string": "^8.1.0",
+    "query-string": "^7.1.1",
     "ramda": "^0.29.0",
     "readdirp": "^3.6.0",
     "wdio-docker-service": "^3.2.1",
