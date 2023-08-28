@@ -1,5 +1,3 @@
-const queryString = require('query-string');
-
 const isJson = (str) => {
 	try {
 		JSON.parse(str);
@@ -10,16 +8,18 @@ const isJson = (str) => {
 };
 
 const urlParamsToObject = (query = window.location.search) => {
-	let parsed = queryString.parse(query);
-	delete parsed.locale;
+	return import('query-string').then(queryString => {
+		let parsed = queryString.parse(query);
+		delete parsed.locale;
 
-	for (const key in parsed) {
-		if (parsed[key] && isJson(parsed[key])) {
-			parsed[key] = JSON.parse(parsed[key]);
+		for (const key in parsed) {
+			if (parsed[key] && isJson(parsed[key])) {
+				parsed[key] = JSON.parse(parsed[key]);
+			}
 		}
-	}
 
-	return parsed;
+		return parsed;
+	});
 };
 
 // Generate a date (without time component) from a string in the format YYYY-MM-DD
