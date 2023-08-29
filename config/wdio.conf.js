@@ -222,6 +222,7 @@ module.exports.configure = (options) => {
 			 * @param {Array.<String>} specs List of spec file paths that are to be run
 			 */
 			before: function () {
+				require('webdriverio');
 				require('expect-webdriverio');
 				const chai = require('chai'),
 					dirtyChai = require('dirty-chai');
