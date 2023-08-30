@@ -45,7 +45,7 @@ const runTest = ({concurrency, filter, Page, testName, ...rest}) => {
 								return;
 							}
 							it(`${component}~/${testName}~/${testCase.title}`, async function () {
-								const params = Page.serializeParams(Object.assign({
+								const params = await Page.serializeParams(Object.assign({
 									component,
 									testId
 								}, rest));
