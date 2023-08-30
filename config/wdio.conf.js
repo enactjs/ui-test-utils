@@ -71,7 +71,7 @@ module.exports.configure = (options) => {
 			// directory is where your package.json resides, so `wdio` will be called from there.
 			//
 			specs: [
-				'./tests/' + base + '/specs/**/*-specs.js'
+				'../../tests/' + base + '/specs/**/*-specs.js'
 			],
 			// Patterns to exclude.
 			exclude: [
@@ -221,8 +221,8 @@ module.exports.configure = (options) => {
 			 * @param {Array.<Object>} capabilities list of capabilities details
 			 * @param {Array.<String>} specs List of spec file paths that are to be run
 			 */
-			before: function () {
-				require('expect-webdriverio');
+			before: async function () {
+				await import ('expect-webdriverio');
 				const chai = require('chai'),
 					dirtyChai = require('dirty-chai');
 
