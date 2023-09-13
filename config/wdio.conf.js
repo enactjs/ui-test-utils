@@ -17,7 +17,7 @@ module.exports.configure = (options) => {
 
 	if (!process.env.CHROME_DRIVER) {
 		if (process.env.TV_IP && process.argv.find(arg => arg.includes('tv.conf'))) {
-			process.env.CHROME_DRIVER = 2.44; // Currently, TV supports 83 and lower, but keep the previous version for safety.
+			process.env.CHROME_DRIVER = 3; // Currently, TV supports 83 and lower, but keep the previous version for safety.
 		} else {
 			let chromeVersionMajorNumber;
 			try {
@@ -42,7 +42,7 @@ module.exports.configure = (options) => {
 				}
 			} catch (error) {
 				console.log('ERROR: Cannnot find Chrome driver from Chrome ' + chromeVersionMajorNumber);
-				process.env.CHROME_DRIVER = 2.44;
+				process.env.CHROME_DRIVER = 3;
 			}
 		}
 
