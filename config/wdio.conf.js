@@ -34,7 +34,6 @@ module.exports.configure = (options) => {
 					chromeVersionMajorNumber = (chromeVersion && chromeVersion[1]);
 				}
 				const chromeDriverVersion = execSync('curl https://chromedriver.storage.googleapis.com/LATEST_RELEASE' + (chromeVersionMajorNumber ? ('_' + chromeVersionMajorNumber) : ''));
-				console.log('AAAAAAAAA', chromeDriverVersion);
 
 				if (chromeDriverVersion.includes('Error') || !/\d+.\d+.\d+.\d+/.exec(chromeDriverVersion)) {
 					throw new Error();
