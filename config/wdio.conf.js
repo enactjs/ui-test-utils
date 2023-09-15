@@ -33,7 +33,7 @@ module.exports.configure = (options) => {
 					const chromeVersion = /Chrome (\d+)/.exec(execSync('google-chrome -version'));
 					chromeVersionMajorNumber = (chromeVersion && chromeVersion[1]);
 				}
-				const chromeDriverVersion = execSync('curl https://chromedriver.storage.googleapis.com/LATEST_RELEASE' + (chromeVersionMajorNumber ? ('_' + chromeVersionMajorNumber) : ''));
+				const chromeDriverVersion = execSync('curl https://googlechromelabs.github.io/chrome-for-testing/LATEST_RELEASE' + (chromeVersionMajorNumber ? ('_' + chromeVersionMajorNumber) : ''));
 
 				if (chromeDriverVersion.includes('Error') || !/\d+.\d+.\d+.\d+/.exec(chromeDriverVersion)) {
 					throw new Error();
@@ -183,7 +183,8 @@ module.exports.configure = (options) => {
 							chrome : {
 								version : process.env.CHROME_DRIVER,
 								arch    : process.arch,
-								baseURL : 'https://chromedriver.storage.googleapis.com'
+								// baseURL : 'https://chromedriver.storage.googleapis.com'
+								// fullURL : 'https://edgedl.me.gvt1.com/edgedl/chrome/chrome-for-testing/' + process.env.CHROME_DRIVER + '/' + process.platform + '/chromedriver-' + process.platform +'.zip'
 							}
 						}
 					}
