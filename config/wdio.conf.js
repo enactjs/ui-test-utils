@@ -41,6 +41,7 @@ module.exports.configure = (options) => {
 					chromeDriverVersion = execSync('curl https://googlechromelabs.github.io/chrome-for-testing/LATEST_RELEASE' + (chromeVersionMajorNumber ? ('_' + chromeVersionMajorNumber) : ''));
 				}
 
+				console.log("chromeDriverVersion", chromeDriverVersion)
 				if (chromeDriverVersion.includes('Error') || !/\d+.\d+.\d+.\d+/.exec(chromeDriverVersion)) {
 					throw new Error();
 				} else {
