@@ -34,6 +34,7 @@ module.exports.configure = (options) => {
 					chromeVersionMajorNumber = (chromeVersion && chromeVersion[1]);
 				}
 
+				console.log(Number(chromeVersionMajorNumber), Number(chromeVersionMajorNumber) < 113);
 				if ( Number(chromeVersionMajorNumber) < 113 ) {
 					chromeDriverVersion = execSync('curl https://chromedriver.storage.googleapis.com/LATEST_RELEASE' + (chromeVersionMajorNumber ? ('_' + chromeVersionMajorNumber) : ''));
 				} else {
