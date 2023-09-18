@@ -189,7 +189,7 @@ module.exports.configure = (options) => {
 							chrome : {
 								version : process.env.CHROME_DRIVER,
 								arch    : process.arch,
-								// baseURL : 'https://chromedriver.storage.googleapis.com'
+								baseURL : 'https://chromedriver.storage.googleapis.com'
 								// fullURL : 'https://edgedl.me.gvt1.com/edgedl/chrome/chrome-for-testing/' + process.env.CHROME_DRIVER + '/' + process.platform + '/chromedriver-' + process.platform +'.zip'
 							}
 						}
