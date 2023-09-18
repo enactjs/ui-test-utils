@@ -33,9 +33,15 @@ module.exports.configure = (options) => {
 					const chromeVersion = /Chrome (\d+)/.exec(execSync('google-chrome -version'));
 					chromeVersionMajorNumber = (chromeVersion && chromeVersion[1]);
 				}
-				chromeDriverVersion = execSync('curl https://googlechromelabs.github.io/chrome-for-testing/LATEST_RELEASE' + (chromeVersionMajorNumber ? ('_' + chromeVersionMajorNumber) : ''));
 
-				if (chromeDriverVersion.includes('Error') || chromeDriverVersion.includes('File not found') || !/\d+.\d+.\d+.\d+/.exec(chromeDriverVersion)) {
+				console.log(chromeVersionMajorNumber, typeof chromeVersionMajorNumber);
+				if ( Number(chromeVersionMajorNumber) < 113 ) {
+					chromeDriverVersion = execSync('curl https://chromedriver.storage.googleapis.com/LATEST_RELEASE' + (chromeVersionMajorNumber ? ('_' + chromeVersionMajorNumber) : ''));
+				} else {
+					chromeDriverVersion = execSync('curl https://googlechromelabs.github.io/chrome-for-testing/LATEST_RELEASE' + (chromeVersionMajorNumber ? ('_' + chromeVersionMajorNumber) : ''));
+				}
+
+				if (chromeDriverVersion.includes('Error') || !/\d+.\d+.\d+.\d+/.exec(chromeDriverVersion)) {
 					throw new Error();
 				} else {
 					process.env.CHROME_DRIVER = chromeDriverVersion;
