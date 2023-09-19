@@ -19,7 +19,7 @@ module.exports.configure = (options) => {
 		if (process.env.TV_IP && process.argv.find(arg => arg.includes('tv.conf'))) {
 			process.env.CHROME_DRIVER = 2.44; // Currently, TV supports 83 and lower, but keep the previous version for safety.
 		} else {
-			let chromeVersionMajorNumber;
+			let chromeVersionMajorNumber, chromeDriverVersion;
 			try {
 				if (process.platform === 'win32') {
 					// Windows
@@ -33,7 +33,13 @@ module.exports.configure = (options) => {
 					const chromeVersion = /Chrome (\d+)/.exec(execSync('google-chrome -version'));
 					chromeVersionMajorNumber = (chromeVersion && chromeVersion[1]);
 				}
-				const chromeDriverVersion = execSync('curl https://chromedriver.storage.googleapis.com/LATEST_RELEASE' + (chromeVersionMajorNumber ? ('_' + chromeVersionMajorNumber) : ''));
+
+				console.log(Number(chromeVersionMajorNumber), Number(chromeVersionMajorNumber) < 113);
+				if ( Number(chromeVersionMajorNumber) < 113 ) {
+					chromeDriverVersion = execSync('curl https://chromedriver.storage.googleapis.com/LATEST_RELEASE' + (chromeVersionMajorNumber ? ('_' + chromeVersionMajorNumber) : ''));
+				} else {
+					chromeDriverVersion = execSync('curl https://googlechromelabs.github.io/chrome-for-testing/LATEST_RELEASE' + (chromeVersionMajorNumber ? ('_' + chromeVersionMajorNumber) : ''));
+				}
 
 				if (chromeDriverVersion.includes('Error') || !/\d+.\d+.\d+.\d+/.exec(chromeDriverVersion)) {
 					throw new Error();
