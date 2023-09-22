@@ -1,6 +1,6 @@
 {
   "name": "@enact/ui-test-utils",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "UI Testing for the Enact framework",
   "repository": "https://github.com/enactjs/ui-test-utils",
   "main": "index.js",
@@ -38,20 +38,20 @@
     "ramda": "^0.29.0",
     "readdirp": "^3.6.0",
     "wdio-docker-service": "^3.2.1",
-    "wdio-image-comparison-service": "^5.0.2",
+    "wdio-image-comparison-service": "^5.0.3",
     "webdriverio": "^7.30.0"
   },
   "devDependencies": {
-    "@babel/eslint-plugin": "^7.19.1",
-    "eslint": "^8.37.0",
-    "eslint-config-enact": "^4.1.4",
+    "@babel/eslint-plugin": "^7.22.5",
+    "eslint": "^8.45.0",
+    "eslint-config-enact": "^4.1.6",
     "eslint-config-prettier": "^8.8.0",
-    "eslint-plugin-enact": "^1.0.2",
+    "eslint-plugin-enact": "^1.0.4",
     "eslint-plugin-import": "^2.27.5",
-    "eslint-plugin-jest": "^27.2.1",
+    "eslint-plugin-jest": "^27.2.3",
     "eslint-plugin-jsx-a11y": "^6.7.1",
-    "eslint-plugin-prettier": "^4.2.1",
-    "eslint-plugin-react": "^7.32.2",
+    "eslint-plugin-prettier": "^5.0.0",
+    "eslint-plugin-react": "^7.33.0",
     "eslint-plugin-react-hooks": "^4.6.0"
   }
 }
