@@ -4,6 +4,11 @@
 
 * Updated `chalk` version to `^5.3.0`.
 
+## [1.0.5] (September 22, 2023)
+
+* Updated `eslint-plugin-prettier` version to `^5.0.0`.
+* Updated dependencies.
+
 ## [1.0.4] (June 20, 2023)
 
 * Updated `fs-extra` version to `^11.1.1`.
