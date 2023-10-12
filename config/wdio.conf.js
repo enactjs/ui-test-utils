@@ -109,9 +109,9 @@ module.exports.configure = (options) => {
 				'goog:chromeOptions': visibleBrowser ? {} : {
 					args: ['--headless', '--window-size=1920,1080']
 				},
-                                'wdio:chromedriverOptions': {
-                                        binary: process.env.CHROME_DRIVER_PATH
-                                }
+				'wdio:chromedriverOptions': {
+					binary: process.env.CHROME_DRIVER_PATH
+				}
 			}],
 			//
 			// ===================
