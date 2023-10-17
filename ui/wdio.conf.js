@@ -1,6 +1,9 @@
 const buildApps = require('../src/build-apps'),
-	fs = require('fs'),
-	chalk = require('chalk');
+	fs = require('fs');
+let chalk;
+import('chalk').then(({default: _chalk}) => {
+	chalk = _chalk;
+});
 
 const {configure} = require('../config/wdio.conf.js');
 
