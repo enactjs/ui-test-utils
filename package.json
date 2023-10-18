@@ -42,7 +42,7 @@
     "webdriverio": "^7.30.0"
   },
   "devDependencies": {
-    "@babel/eslint-plugin": "^7.22.5",
+    "@babel/eslint-plugin": "^7.22.10",
     "eslint": "^8.45.0",
     "eslint-config-enact": "^4.1.6",
     "eslint-config-prettier": "^9.0.0",
