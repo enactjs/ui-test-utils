@@ -1,6 +1,6 @@
 {
   "name": "@enact/ui-test-utils",
-  "version": "1.0.2",
+  "version": "1.0.5",
   "description": "UI Testing for the Enact framework",
   "repository": "https://github.com/enactjs/ui-test-utils",
   "main": "index.js",
@@ -13,6 +13,9 @@
   },
   "author": "Roy Sutton <roy.sutton@lge.com>",
   "license": "Apache-2.0",
+  "engines": {
+    "node": ">=14.14.0"
+  },
   "publishConfig": {
     "access": "public"
   },
@@ -29,26 +32,26 @@
     "cross-spawn": "^7.0.3",
     "dirty-chai": "2.0.1",
     "expect-webdriverio": "^3.5.3",
-    "fs-extra": "^10.1.0",
-    "minimist": "^1.2.7",
+    "fs-extra": "^11.1.1",
+    "minimist": "^1.2.8",
     "query-string": "^7.1.1",
-    "ramda": "^0.28.0",
+    "ramda": "^0.29.0",
     "readdirp": "^3.6.0",
     "wdio-docker-service": "^3.2.1",
-    "wdio-image-comparison-service": "^5.0.2",
+    "wdio-image-comparison-service": "^5.0.3",
     "webdriverio": "^7.30.0"
   },
   "devDependencies": {
-    "@babel/eslint-plugin": "^7.19.1",
-    "eslint": "^8.32.0",
-    "eslint-config-enact": "^4.1.2",
-    "eslint-config-prettier": "^8.6.0",
-    "eslint-plugin-enact": "^1.0.1",
+    "@babel/eslint-plugin": "^7.22.5",
+    "eslint": "^8.45.0",
+    "eslint-config-enact": "^4.1.6",
+    "eslint-config-prettier": "^8.8.0",
+    "eslint-plugin-enact": "^1.0.4",
     "eslint-plugin-import": "^2.27.5",
-    "eslint-plugin-jest": "^27.2.1",
+    "eslint-plugin-jest": "^27.2.3",
     "eslint-plugin-jsx-a11y": "^6.7.1",
-    "eslint-plugin-prettier": "^4.2.1",
-    "eslint-plugin-react": "7.31.11",
+    "eslint-plugin-prettier": "^5.0.0",
+    "eslint-plugin-react": "^7.33.0",
     "eslint-plugin-react-hooks": "^4.6.0"
   }
 }

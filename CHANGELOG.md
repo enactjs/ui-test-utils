@@ -1,5 +1,19 @@
 # Change Log
 
+## [1.0.5] (September 22, 2023)
+
+* Updated `eslint-plugin-prettier` version to `^5.0.0`.
+* Updated dependencies.
+
+## [1.0.4] (June 20, 2023)
+
+* Updated `fs-extra` version to `^11.1.1`.
+
+## [1.0.3] (April 7, 2023)
+
+* Updated `eslint-plugin-react` version to `^7.32.2`.
+* Updated dependencies.
+
 ## [1.0.2] (December 22, 2022)
 
 * Fixed the util method `waitTransitionEnd` in `utils/Page` by adding `await` to the callback and async-await for the handler function of ontransitionend event.
