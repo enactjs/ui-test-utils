@@ -1,6 +1,6 @@
 # Change Log
 
-## [unreleased]
+## [1.0.6] (December 21, 2023)
 
 * Updated `chalk` version to `^5.3.0`.
 
