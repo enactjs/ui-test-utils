@@ -1,5 +1,9 @@
 # Change Log
 
+## [1.0.6] (December 22, 2023)
+
+* Updated `chalk` version to `^5.3.0`.
+
 ## [1.0.5] (September 22, 2023)
 
 * Updated `eslint-plugin-prettier` version to `^5.0.0`.

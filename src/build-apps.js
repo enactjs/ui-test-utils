@@ -1,6 +1,6 @@
 const path = require('path');
 
-const chalk = require('chalk');
+let chalk;
 const spawn = require('cross-spawn');
 const fs = require('fs-extra');
 const readdirp = require('readdirp');
@@ -20,8 +20,9 @@ function buildApps (base) {
 	if (process.argv.includes('--skip-build')) return;
 	console.log('Building content:\n');
 
-	return Promise.resolve()
-		.then(() => {
+	return import('chalk')
+		.then(({default: _chalk}) => {
+			chalk = _chalk;
 			if (!process.argv.includes('--skip-enact')) {
 				epack({
 					file: {basename: 'Enact framework bundle', fullPath: 'framework'},
