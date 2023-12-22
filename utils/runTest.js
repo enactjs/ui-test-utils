@@ -1,5 +1,5 @@
 'use strict';
-const crypto = require('crypto');
+const cryptoModule = require('crypto');
 const parseArgs = require('minimist');
 
 const args = parseArgs(process.argv);
@@ -55,7 +55,7 @@ const runTest = ({concurrency, filter, Page, testName, ...rest}) => {
 								// Replace problematic filenames. Windows is much more restrictive.
 								testCaseName = testCaseName.replace(/[/\\:?*"|<>]/g, '_');
 								// shorten the name with a little bit of leading context to help find the file manually if necessary
-								testCaseName = testCaseName.substring(0, 128) + '-' + crypto.createHash('md5').update(testCaseName).digest('hex');
+								testCaseName = testCaseName.substring(0, 128) + '-' + cryptoModule.createHash('md5').update(testCaseName).digest('hex');
 								const screenshotFileName = (component + '/' + testName + '/' + testCaseName);
 
 								const context = {params, component, testName, url: Page.url, fileName: screenshotFileName};

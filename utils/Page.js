@@ -32,7 +32,7 @@ class Page {
 	}
 
 	serializeParams (params) {
-		const queryObject =  queryString.stringify(params);
+		const queryObject = queryString.stringify(params);
 
 		return queryObject;
 	}
