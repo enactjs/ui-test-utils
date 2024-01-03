@@ -43,7 +43,7 @@
   },
   "devDependencies": {
     "eslint": "^8.54.0",
-    "eslint-config-enact": "github:enactjs/eslint-config-enact#feature/unify-eslint-modules",
+    "eslint-config-enact": "^4.2.0",
     "eslint-config-prettier": "^9.0.0",
     "eslint-plugin-import": "^2.29.0"
   }
