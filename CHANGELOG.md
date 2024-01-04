@@ -1,5 +1,9 @@
 # Change Log
 
+## [unreleased]
+
+* Removed eslint related modules.
+
 ## [1.0.6] (December 22, 2023)
 
 * Updated `chalk` version to `^5.3.0`.
