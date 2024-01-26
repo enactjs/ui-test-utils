@@ -224,16 +224,11 @@ module.exports.configure = (options) => {
 			before: function () {
 				require('expect-webdriverio');
 				let chai;
-				import('chai').then(({default: _chai}) => {
-					chai = _chai;
+				import('chai').then(({default: _chai}) => {chai = _chai;});
 
-					global.wdioExpect = global.expect;
-					// chai.use(dirtyChai);
-					global.expect = chai.expect;
-					chai.Should();
-				});
-				// const {expect, should} = chai;
-				// const dirtyChai = require('dirty-chai');
+				global.wdioExpect = global.expect;
+				global.expect = chai.expect;
+				chai.Should();
 
 				if (options.before) {
 					options.before();
