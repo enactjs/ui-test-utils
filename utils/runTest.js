@@ -22,7 +22,7 @@ const runTest = ({concurrency, filter, Page, testName, ...rest}) => {
 				return await window.__TEST_DATA;
 			});
 
-			await expect(testCases).to.be.an('object', 'Test data failed to load');
+			await expect(typeof testCases).to.equal('object', 'Test data failed to load');
 
 			describe(testName, function () {
 				for (const component in testCases) {
