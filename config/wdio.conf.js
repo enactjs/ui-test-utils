@@ -228,7 +228,7 @@ module.exports.configure = (options) => {
 
 				global.wdioExpect = global.expect;
 				global.expect = chai.expect;
-				chai.Should();
+				chai.should();
 
 				if (options.before) {
 					options.before();
