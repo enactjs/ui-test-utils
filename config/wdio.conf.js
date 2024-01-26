@@ -228,7 +228,6 @@ module.exports.configure = (options) => {
 				const dirtyChai = require('dirty-chai');
 
 				global.wdioExpect = global.expect;
-				chai.use(dirtyChai);
 				global.expect = chai.expect;
 				chai.Should();
 
