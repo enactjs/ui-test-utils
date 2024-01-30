@@ -224,19 +224,20 @@ module.exports.configure = (options) => {
 			 * @param {Array.<Object>} capabilities list of capabilities details
 			 * @param {Array.<String>} specs List of spec file paths that are to be run
 			 */
-			before: async function () {
-				await import ('expect-webdriverio');
-				const chai = require('chai'),
-					dirtyChai = require('dirty-chai');
-
-				global.wdioExpect = global.expect;
-				chai.use(dirtyChai);
-				global.expect = chai.expect;
-				chai.Should();
-
-				if (options.before) {
-					options.before();
-				}
+			before: function () {
+				import ('expect-webdriverio').then(() => {
+					const chai = require('chai'),
+						dirtyChai = require('dirty-chai');
+	
+					global.wdioExpect = global.expect;
+					chai.use(dirtyChai);
+					global.expect = chai.expect;
+					chai.Should();
+	
+					if (options.before) {
+						options.before();
+					}
+				});
 			}
 		}
 	);
