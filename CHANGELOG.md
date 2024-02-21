@@ -1,6 +1,6 @@
 # Change Log
 
-## [1.0.7] (February 20, 2024)
+## [1.0.7] (February 21, 2024)
 
 * Removed eslint related modules.
 
