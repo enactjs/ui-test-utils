@@ -106,6 +106,7 @@ module.exports.configure = (options) => {
 				maxInstances,
 				//
 				browserName: 'chrome',
+				browserVersion: 'stable',
 				'goog:chromeOptions': visibleBrowser ? {} : {
 					args: ['--headless', '--window-size=1920,1080']
 				},
