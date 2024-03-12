@@ -9,6 +9,7 @@ exports.config = Object.assign(
 			maxInstances: 1,
 
 			browserName: 'chrome',
+			browserVersion: 'stable',
 			'goog:chromeOptions': {
 				w3c: false,
 				debuggerAddress: `${process.env.TV_IP}:9998`
