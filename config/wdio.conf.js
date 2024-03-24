@@ -15,11 +15,11 @@ module.exports.configure = (options) => {
 	delete opts.before;
 	delete opts.services;
 
+	let chromeVersionMajorNumber;
 	if (!process.env.CHROME_DRIVER) {
 		if (process.env.TV_IP && process.argv.find(arg => arg.includes('tv.conf'))) {
 			process.env.CHROME_DRIVER = 2.44; // Currently, TV supports 83 and lower, but keep the previous version for safety.
 		} else {
-			let chromeVersionMajorNumber;
 			try {
 				if (process.platform === 'win32') {
 					// Windows
@@ -111,7 +111,10 @@ module.exports.configure = (options) => {
 				},
 				'wdio:chromedriverOptions': process.env.CHROME_DRIVER_PATH ? {
 					binary: process.env.CHROME_DRIVER_PATH
-				} : {}
+					// match chromedriver version from jenkins
+				} : Number(chromeVersionMajorNumber) > 108 ? {} : {
+					binary: 'C:\\chromedriver\\chromedriver_v108.exe'
+				}
 			}],
 			//
 			// ===================
