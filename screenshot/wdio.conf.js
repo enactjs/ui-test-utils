@@ -3,6 +3,11 @@ const {afterTest, baselineFolder, beforeTest, onComplete, onPrepare, screenshotF
 
 exports.config = configure({
 	base: 'screenshot',
+	capabilities: [{
+		'wdio:chromedriverOptions': process.env.CHROME_DRIVER_PATH ? {
+			binary: process.env.CHROME_DRIVER_PATH
+		} : {}
+	}],
 	services: [[
 		'image-comparison',
 		{
