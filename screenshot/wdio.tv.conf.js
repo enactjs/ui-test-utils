@@ -1,5 +1,8 @@
 const ipAddress = require('../utils/ipAddress.js');
 const {config} = require('./wdio.conf.js');
+const {readChromeVersion} = require('../utils/readChromeVersionNumber');
+
+const chromeVersionMajorNumber = readChromeVersion();
 
 const services = config.services.map(service => {
 	if (service[0] === 'novus-visual-regression') {
@@ -36,13 +39,19 @@ exports.config = Object.assign(
 			'goog:chromeOptions': {
 				w3c: false,
 				debuggerAddress: `${process.env.TV_IP}:9998`
+			},
+			'wdio:chromedriverOptions': process.env.CHROME_DRIVER_PATH ? {
+				binary: process.env.CHROME_DRIVER_PATH
+				// match chromedriver version from jenkins
+			} : Number(chromeVersionMajorNumber) > 108 ? {} : {
+				binary: 'C:\\chromedriver\\chromedriver_v108.exe'
 			}
 		}],
 
 		//
 		// Set a base URL in order to shorten url command calls. If your url parameter starts
 		// with "/", then the base url gets prepended.
-		baseUrl: `http://${ipAddress()}:4567`,
+		baseUrl: `http://192.168.0.38:4567`,
 
 		/**
 		 * Gets executed before test execution begins. At this point you can access to all global
