@@ -22,7 +22,7 @@ const runTest = ({concurrency, filter, Page, testName, ...rest}) => {
 				return await window.__TEST_DATA;
 			});
 
-			await expect(testCases).to.be.an('object', 'Test data failed to load');
+			await expect(testCases).toBeInstanceOf(Object);
 
 			describe(testName, function () {
 				for (const component in testCases) {
@@ -67,7 +67,7 @@ const runTest = ({concurrency, filter, Page, testName, ...rest}) => {
 									disableCSSAnimation: true,
 									ignoreNothing: true,
 									rawMisMatchPercentage: true
-								})).to.equal(0);
+								})).toEqual(0);
 							});
 						});
 					});
