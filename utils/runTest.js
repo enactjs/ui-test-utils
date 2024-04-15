@@ -67,7 +67,7 @@ const runTest = ({concurrency, filter, Page, testName, ...rest}) => {
 									disableCSSAnimation: true,
 									ignoreNothing: true,
 									rawMisMatchPercentage: true
-								})).toEqual(0);
+								})).toBe(0);
 							});
 						});
 					});
