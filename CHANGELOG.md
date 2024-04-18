@@ -2,7 +2,7 @@
 
 ## [unreleased]
 
-* Removed `chai` dependency
+* Removed `chai` and `dirty-chai` dependencies
 
 ## [1.0.7] (February 21, 2024)
 
