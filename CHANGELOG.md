@@ -1,5 +1,9 @@
 # Change Log
 
+## [unreleased]
+
+* Removed `chai` dependency
+
 ## [1.0.7] (February 21, 2024)
 
 * Removed eslint related modules.
