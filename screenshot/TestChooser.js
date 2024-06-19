@@ -1,4 +1,4 @@
-import css from './TestChooser.module.css';
+import * as css from './TestChooser.module.css';
 
 // eslint-disable-next-line enact/prop-types
 const TestChooser = ({metadata}) => {
