@@ -1,12 +1,12 @@
 {
   "name": "@enact/ui-test-utils",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "lockfileVersion": 2,
   "requires": true,
   "packages": {
     "": {
       "name": "@enact/ui-test-utils",
-      "version": "1.0.7",
+      "version": "1.0.8",
       "license": "Apache-2.0",
       "dependencies": {
         "@wdio/cli": "^7.36.0",
