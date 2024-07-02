@@ -21,7 +21,7 @@ module.exports.configure = (options) => {
 		} else {
 			let chromeVersionMajorNumber;
 			let chromeVersion;
-
+			console.log('test/chrome-driver branch');
 			try {
 				if (process.platform === 'win32') {
 					// Windows
@@ -36,7 +36,10 @@ module.exports.configure = (options) => {
 					chromeVersionMajorNumber = (chromeVersion && chromeVersion[1]);
 				}
 				let chromeDriverVersion;
+				console.log('chromeVersionMajorNumber', chromeVersionMajorNumber, 'chromeVersion', chromeVersion);
+				
 				if (chromeVersionMajorNumber > 114) {
+					console.log('version 114 or higher')
 					chromeDriverVersion = execSync('curl https://storage.googleapis.com/chrome-for-testing-public/' + chromeVersion + '/linux64/chromedriver-linux64.zip');
 				} else {
 					chromeDriverVersion = execSync('curl https://chromedriver.storage.googleapis.com/LATEST_RELEASE' + (chromeVersionMajorNumber ? ('_' + chromeVersionMajorNumber) : ''));
