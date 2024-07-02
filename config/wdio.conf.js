@@ -40,7 +40,7 @@ module.exports.configure = (options) => {
 
 				if (chromeVersionMajorNumber > 114) {
 					console.log('version 114 or higher')
-					chromeDriverVersion = execSync('curl https://storage.googleapis.com/chrome-for-testing-public/' + chromeVersion.input.split(' ')[2] + '/linux64/chromedriver-linux64.zip');
+					chromeDriverVersion = chromeVersion.input.split(' ')[2];
 				} else {
 					chromeDriverVersion = execSync('curl https://chromedriver.storage.googleapis.com/LATEST_RELEASE' + (chromeVersionMajorNumber ? ('_' + chromeVersionMajorNumber) : ''));
 				}
@@ -193,7 +193,7 @@ module.exports.configure = (options) => {
 							chrome : {
 								version : process.env.CHROME_DRIVER,
 								arch    : process.arch,
-								baseURL : 'https://chromedriver.storage.googleapis.com'
+								baseURL : process.env.CHROME_DRIVER > 114 ? 'https://storage.googleapis.com' : 'https://chromedriver.storage.googleapis.com'
 							}
 						}
 					}
