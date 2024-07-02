@@ -20,20 +20,27 @@ module.exports.configure = (options) => {
 			process.env.CHROME_DRIVER = 2.44; // Currently, TV supports 83 and lower, but keep the previous version for safety.
 		} else {
 			let chromeVersionMajorNumber;
+			let chromeVersion;
+
 			try {
 				if (process.platform === 'win32') {
 					// Windows
-					const chromeVersion = /\d+/.exec(execSync('wmic datafile where "name=\'C:\\\\Program Files\\\\Google\\\\Chrome\\\\Application\\\\chrome.exe\'" get Version /value').toString());
+					chromeVersion = /\d+/.exec(execSync('wmic datafile where "name=\'C:\\\\Program Files\\\\Google\\\\Chrome\\\\Application\\\\chrome.exe\'" get Version /value').toString());
 					chromeVersionMajorNumber = (chromeVersion && chromeVersion[0]);
 				} else if (process.platform === 'darwin') {
 					// Mac
-					const chromeVersion = /Chrome (\d+)/.exec(execSync('/Applications/Google\\ Chrome.app/Contents/MacOS/Google\\ Chrome --version'));
+					chromeVersion = /Chrome (\d+)/.exec(execSync('/Applications/Google\\ Chrome.app/Contents/MacOS/Google\\ Chrome --version'));
 					chromeVersionMajorNumber = (chromeVersion && chromeVersion[1]);
 				} else {
-					const chromeVersion = /Chrome (\d+)/.exec(execSync('google-chrome -version'));
+					chromeVersion = /Chrome (\d+)/.exec(execSync('google-chrome -version'));
 					chromeVersionMajorNumber = (chromeVersion && chromeVersion[1]);
 				}
-				const chromeDriverVersion = execSync('curl https://chromedriver.storage.googleapis.com/LATEST_RELEASE' + (chromeVersionMajorNumber ? ('_' + chromeVersionMajorNumber) : ''));
+				let chromeDriverVersion;
+				if (chromeVersionMajorNumber > 114) {
+					chromeDriverVersion = execSync('curl https://storage.googleapis.com/chrome-for-testing-public/' + chromeVersion + '/linux64/chromedriver-linux64.zip');
+				} else {
+					chromeDriverVersion = execSync('curl https://chromedriver.storage.googleapis.com/LATEST_RELEASE' + (chromeVersionMajorNumber ? ('_' + chromeVersionMajorNumber) : ''));
+				}
 
 				if (chromeDriverVersion.includes('Error') || !/\d+.\d+.\d+.\d+/.exec(chromeDriverVersion)) {
 					throw new Error();
