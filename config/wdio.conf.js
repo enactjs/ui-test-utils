@@ -20,27 +20,24 @@ module.exports.configure = (options) => {
 			process.env.CHROME_DRIVER = 2.44; // Currently, TV supports 83 and lower, but keep the previous version for safety.
 		} else {
 			let chromeVersionMajorNumber;
-			let chromeVersion;
-			console.log('test/chrome-driver branch');
 			try {
 				if (process.platform === 'win32') {
 					// Windows
-					chromeVersion = /\d+/.exec(execSync('wmic datafile where "name=\'C:\\\\Program Files\\\\Google\\\\Chrome\\\\Application\\\\chrome.exe\'" get Version /value').toString());
+					const chromeVersion = /\d+/.exec(execSync('wmic datafile where "name=\'C:\\\\Program Files\\\\Google\\\\Chrome\\\\Application\\\\chrome.exe\'" get Version /value').toString());
 					chromeVersionMajorNumber = (chromeVersion && chromeVersion[0]);
 				} else if (process.platform === 'darwin') {
 					// Mac
-					chromeVersion = /Chrome (\d+)/.exec(execSync('/Applications/Google\\ Chrome.app/Contents/MacOS/Google\\ Chrome --version'));
+					const chromeVersion = /Chrome (\d+)/.exec(execSync('/Applications/Google\\ Chrome.app/Contents/MacOS/Google\\ Chrome --version'));
 					chromeVersionMajorNumber = (chromeVersion && chromeVersion[1]);
 				} else {
-					chromeVersion = /Chrome (\d+)/.exec(execSync('google-chrome -version'));
+					const chromeVersion = /Chrome (\d+)/.exec(execSync('google-chrome -version'));
 					chromeVersionMajorNumber = (chromeVersion && chromeVersion[1]);
 				}
 				let chromeDriverVersion;
-				console.log('chromeVersionMajorNumber', chromeVersionMajorNumber, 'chromeVersion', chromeVersion);
 
 				if (chromeVersionMajorNumber > 114) {
 					console.log('version 114 or higher')
-					chromeDriverVersion = chromeVersion.input.split(' ')[2];
+					chromeDriverVersion = execSync('curl https://googlechromelabs.github.io/chrome-for-testing/LATEST_RELEASE' + (chromeVersionMajorNumber ? ('_' + chromeVersionMajorNumber) : ''));
 				} else {
 					chromeDriverVersion = execSync('curl https://chromedriver.storage.googleapis.com/LATEST_RELEASE' + (chromeVersionMajorNumber ? ('_' + chromeVersionMajorNumber) : ''));
 				}
