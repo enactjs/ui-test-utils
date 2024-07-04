@@ -1,5 +1,6 @@
 const {generateTestData} = require('./generateTestData');
 const {Page} = require('./Page');
+const {PagePerformance} = require('./PagePerformance');
 const {runTest} = require('./runTest');
 const {
 	componentSelector,
@@ -24,5 +25,6 @@ module.exports = {
 	hasClass,
 	runTest,
 	Page,
+	PagePerformance,
 	urlParamsToObject
 };
