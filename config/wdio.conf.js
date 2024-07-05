@@ -8,10 +8,9 @@ console.log('[DEBUG] args = ',args);
 const visibleBrowser = !!args.visible,
 	maxInstances = args.instances || 5,
 	offline = args.offline,
-	chromeVersion = args.chromeVersion;
+	selectedChromeVersion = args.chromeVersion;
 
 module.exports.configure = (options) => {
-	console.log('[DEBUG] options = ', options)
 	const {base, services} = options;
 	const opts = Object.assign({}, options);
 
@@ -35,7 +34,7 @@ module.exports.configure = (options) => {
 					chromeVersionMajorNumber = (chromeVersion && chromeVersion[1]);
 				} else {
 					const chromeVersion = /Chrome (\d+)/.exec(execSync('google-chrome -version'));
-					chromeVersionMajorNumber = (chromeVersion && chromeVersion[1]);
+					chromeVersionMajorNumber = (chromeVersion && selectedChromeVersion);
 				}
 				const chromeDriverVersion = execSync('curl https://chromedriver.storage.googleapis.com/LATEST_RELEASE' + (chromeVersionMajorNumber ? ('_' + chromeVersionMajorNumber) : ''));
 
