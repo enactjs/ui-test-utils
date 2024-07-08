@@ -46,7 +46,7 @@ module.exports.configure = (options) => {
 					throw new Error();
 				} else {
 					process.env.CHROME_DRIVER = chromeDriverVersion;
-					execSync('dpkg -i google-chrome-stable_' + chromeDriverVersion + '-1_amd64.deb');
+					execSync('sudo dpkg -i google-chrome-stable_' + chromeDriverVersion + '-1_amd64.deb');
 					console.log('installedChrome = ', /Chrome (\d+)/.exec(execSync('google-chrome -version')));
 				}
 			} catch (error) {
