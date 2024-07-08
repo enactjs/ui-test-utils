@@ -46,11 +46,6 @@ module.exports.configure = (options) => {
 					throw new Error();
 				} else {
 					process.env.CHROME_DRIVER = chromeDriverVersion;
-					console.log(execSync('pwd'));
-
-					execSync('cd /home/jenkins');
-					execSync('sudo dpkg -i google-chrome-stable_' + chromeDriverVersion + '-1_amd64.deb');
-					console.log('installedChrome = ', /Chrome (\d+)/.exec(execSync('google-chrome -version')));
 				}
 			} catch (error) {
 				console.log('ERROR: Cannnot find Chrome driver from Chrome ' + chromeVersionMajorNumber);
