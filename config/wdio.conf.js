@@ -3,8 +3,6 @@ const {execSync} = require('child_process');
 
 const args = parseArgs(process.argv);
 
-console.log('[DEBUG] args = ',args);
-
 const visibleBrowser = !!args.visible,
 	maxInstances = args.instances || 5,
 	offline = args.offline,
