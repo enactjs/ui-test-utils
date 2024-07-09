@@ -5,8 +5,7 @@ const args = parseArgs(process.argv);
 
 const visibleBrowser = !!args.visible,
 	maxInstances = args.instances || 5,
-	offline = args.offline,
-	selectedChromeVersion = args.chromeVersion;
+	offline = args.offline;
 
 module.exports.configure = (options) => {
 	const {base, services} = options;
@@ -31,7 +30,8 @@ module.exports.configure = (options) => {
 					const chromeVersion = /Chrome (\d+)/.exec(execSync('/Applications/Google\\ Chrome.app/Contents/MacOS/Google\\ Chrome --version'));
 					chromeVersionMajorNumber = (chromeVersion && chromeVersion[1]);
 				} else {
-					chromeVersionMajorNumber = selectedChromeVersion;
+					const chromeVersion = /Chrome (\d+)/.exec(execSync('google-chrome -version'));
+					chromeVersionMajorNumber = (chromeVersion && chromeVersion[1]);
 				}
 				let chromeDriverVersion;
 
