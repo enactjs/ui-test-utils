@@ -33,7 +33,13 @@ module.exports.configure = (options) => {
 					const chromeVersion = /Chrome (\d+)/.exec(execSync('google-chrome -version'));
 					chromeVersionMajorNumber = (chromeVersion && chromeVersion[1]);
 				}
-				const chromeDriverVersion = execSync('curl https://chromedriver.storage.googleapis.com/LATEST_RELEASE' + (chromeVersionMajorNumber ? ('_' + chromeVersionMajorNumber) : ''));
+				let chromeDriverVersion;
+
+				if (chromeVersionMajorNumber > 114) {
+					chromeDriverVersion = execSync('curl https://googlechromelabs.github.io/chrome-for-testing/LATEST_RELEASE' + (chromeVersionMajorNumber ? ('_' + chromeVersionMajorNumber) : ''));
+				} else {
+					chromeDriverVersion = execSync('curl https://chromedriver.storage.googleapis.com/LATEST_RELEASE' + (chromeVersionMajorNumber ? ('_' + chromeVersionMajorNumber) : ''));
+				}
 
 				if (chromeDriverVersion.includes('Error') || !/\d+.\d+.\d+.\d+/.exec(chromeDriverVersion)) {
 					throw new Error();
@@ -183,7 +189,7 @@ module.exports.configure = (options) => {
 							chrome : {
 								version : process.env.CHROME_DRIVER,
 								arch    : process.arch,
-								baseURL : 'https://chromedriver.storage.googleapis.com'
+								baseURL : process.env.CHROME_DRIVER > 114 ? 'https://storage.googleapis.com' : 'https://chromedriver.storage.googleapis.com'
 							}
 						}
 					}
