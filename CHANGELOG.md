@@ -2,7 +2,7 @@
 
 ## [1.0.9] (July 19, 2024)
 
-* S Chrome driver url for version 114 or higher
+* Updated Chrome driver url for version 114 or higher
 
 ## [1.0.8] (June 11, 2024)
 
