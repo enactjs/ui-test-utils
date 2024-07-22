@@ -1,6 +1,6 @@
 {
   "name": "@enact/ui-test-utils",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "UI Testing for the Enact framework",
   "repository": "https://github.com/enactjs/ui-test-utils",
   "main": "index.js",
