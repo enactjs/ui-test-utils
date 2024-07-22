@@ -1,6 +1,6 @@
 # Change Log
 
-## [1.0.9] (July 19, 2024)
+## [1.0.9] (July 22, 2024)
 
 * Updated Chrome driver url for version 114 or higher
 
