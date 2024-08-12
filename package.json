@@ -44,5 +44,8 @@
     "eslint-config-enact": "^4.2.1",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-import": "^2.29.1"
+  },
+  "overrides": {
+    "ws": "^8.18.0"
   }
 }
