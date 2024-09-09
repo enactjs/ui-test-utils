@@ -77,7 +77,7 @@ module.exports.configure = (options) => {
 			// directory is where your package.json resides, so `wdio` will be called from there.
 			//
 			specs: [
-				'./tests/' + base + '/specs/**/*-specs.js'
+				'../../tests/' + base + '/specs/**/*-specs.js'
 			],
 			// Patterns to exclude.
 			exclude: [
@@ -114,7 +114,8 @@ module.exports.configure = (options) => {
 				browserName: 'chrome',
 				'goog:chromeOptions': visibleBrowser ? {} : {
 					args: ['--headless', '--window-size=1920,1080']
-				}
+				},
+				'wdio:enforceWebDriverClassic': true
 			}],
 			//
 			// ===================
@@ -174,26 +175,6 @@ module.exports.configure = (options) => {
 			// your test setup with almost no effort. Unlike plugins, they don't add new
 			// commands. Instead, they hook themselves up into the test process.
 			services: [
-				['selenium-standalone', {
-					skipSeleniumInstall: offline,
-					args: {
-						drivers : {
-							chrome : {
-								version : process.env.CHROME_DRIVER,
-								arch    : process.arch
-							}
-						}
-					},
-					installArgs: {
-						drivers : {
-							chrome : {
-								version : process.env.CHROME_DRIVER,
-								arch    : process.arch,
-								baseURL : process.env.CHROME_DRIVER > 114 ? 'https://storage.googleapis.com' : 'https://chromedriver.storage.googleapis.com'
-							}
-						}
-					}
-				}],
 				['static-server', {
 					folders: [
 						{mount: '/', path: './tests/' + base + '/dist'}
