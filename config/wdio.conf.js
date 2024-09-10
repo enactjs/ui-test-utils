@@ -4,8 +4,7 @@ const {execSync} = require('child_process');
 const args = parseArgs(process.argv);
 
 const visibleBrowser = !!args.visible,
-	maxInstances = args.instances || 5,
-	offline = args.offline;
+	maxInstances = args.instances || 5;
 
 module.exports.configure = (options) => {
 	const {base, services} = options;
@@ -175,26 +174,6 @@ module.exports.configure = (options) => {
 			// your test setup with almost no effort. Unlike plugins, they don't add new
 			// commands. Instead, they hook themselves up into the test process.
 			services: [
-				['selenium-standalone', {
-					skipSeleniumInstall: offline,
-					args: {
-						drivers : {
-							chrome : {
-								version : process.env.CHROME_DRIVER,
-								arch    : process.arch
-							}
-						}
-					},
-					installArgs: {
-						drivers : {
-							chrome : {
-								version : process.env.CHROME_DRIVER,
-								arch    : process.arch,
-								baseURL : process.env.CHROME_DRIVER > 114 ? 'https://storage.googleapis.com' : 'https://chromedriver.storage.googleapis.com'
-							}
-						}
-					}
-				}],
 				['static-server', {
 					folders: [
 						{mount: '/', path: './tests/' + base + '/dist'}
