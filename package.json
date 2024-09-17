@@ -14,7 +14,7 @@
   "author": "Roy Sutton <roy.sutton@lge.com>",
   "license": "Apache-2.0",
   "engines": {
-    "node": ">=14.14.0"
+    "node": ">=18.0.0"
   },
   "publishConfig": {
     "access": "public"
