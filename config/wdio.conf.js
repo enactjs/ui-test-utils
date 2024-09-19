@@ -1,5 +1,7 @@
-const parseArgs = require('minimist');
-const {execSync} = require('child_process');
+// const parseArgs = require('minimist');
+import parseArgs from 'minimist';
+// const {execSync} = require('child_process');
+import {execSync} from 'child_process';
 
 const args = parseArgs(process.argv);
 
@@ -7,7 +9,7 @@ const visibleBrowser = !!args.visible,
 	maxInstances = args.instances || 5,
 	offline = args.offline;
 
-module.exports.configure = (options) => {
+export const configure = (options) => {
 	const {base, services} = options;
 	const opts = Object.assign({}, options);
 
@@ -77,7 +79,7 @@ module.exports.configure = (options) => {
 			// directory is where your package.json resides, so `wdio` will be called from there.
 			//
 			specs: [
-				'../../tests/' + base + '/specs/**/*-specs.js'
+				'../../../tests/' + base + '/specs/**/*-specs.js'
 			],
 			// Patterns to exclude.
 			exclude: [
@@ -212,7 +214,7 @@ module.exports.configure = (options) => {
 			 * @param {Array.<String>} specs List of spec file paths that are to be run
 			 */
 			before: function () {
-				require('expect-webdriverio');
+				// require('expect-webdriverio');
 
 				global.wdioExpect = global.expect;
 

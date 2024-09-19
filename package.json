@@ -4,6 +4,11 @@
   "description": "UI Testing for the Enact framework",
   "repository": "https://github.com/enactjs/ui-test-utils",
   "main": "index.js",
+  "type": "module",
+  "exports": {
+    "./ui/wdio.conf.js": "./ui/wdio.conf.js",
+    "./utils": "./utils/index.js"
+  },
   "bin": {
     "start-tests": "./start-tests.js"
   },

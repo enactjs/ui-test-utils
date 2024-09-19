@@ -1,9 +1,14 @@
-const path = require('path');
+// const path = require('path');
+import path from 'path';
 
 let chalk;
-const spawn = require('cross-spawn');
-const fs = require('fs-extra');
-const readdirp = require('readdirp');
+// const spawn = require('cross-spawn');
+import spawn from 'cross-spawn';
+// const fs = require('fs-extra');
+import fs from 'fs-extra';
+// const readdirp = require('readdirp');
+import readdirp from 'readdirp';
+import * as url from 'url';
 
 const env = {
 	ILIB_BASE_PATH: '/framework/ilib',
@@ -15,6 +20,9 @@ const env = {
 function findViews (base) {
 	return readdirp.promise(path.join('tests', base, 'apps'), {fileFilter: '*-View.js'});
 }
+
+// eslint-disable-next-line no-shadow
+const __dirname = path.dirname(url.fileURLToPath(import.meta.url));
 
 function buildApps (base) {
 	if (process.argv.includes('--skip-build')) return;
@@ -139,5 +147,7 @@ function epack ({file, opts}) {
 	}
 }
 
-module.exports = buildApps;
-if (require.main === module) buildApps();
+// module.exports = buildApps;
+export default buildApps;
+// if (require.main === module) buildApps();
+if (import.meta.url === `${new URL('.', import.meta.url).href}index.js`) buildApps();

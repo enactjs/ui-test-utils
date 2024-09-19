@@ -1,4 +1,5 @@
-const queryString = require('query-string');
+// const queryString = require('query-string');
+import queryString from 'query-string';
 
 const isJson = (str) => {
 	try {
@@ -9,7 +10,7 @@ const isJson = (str) => {
 	return true;
 };
 
-const urlParamsToObject = (query = window.location.search) => {
+export const urlParamsToObject = (query = window.location.search) => {
 	let parsed = queryString.parse(query);
 	delete parsed.locale;
 
@@ -23,7 +24,7 @@ const urlParamsToObject = (query = window.location.search) => {
 };
 
 // Generate a date (without time component) from a string in the format YYYY-MM-DD
-const generateDate = dateStr => {
+export const generateDate = dateStr => {
 	const date = new Date(),
 		values = dateStr.match(/(\d{4})-(\d{2})-(\d{2})/);
 
@@ -41,7 +42,7 @@ const generateDate = dateStr => {
 	return date;
 };
 
-module.exports = {
-	generateDate,
-	urlParamsToObject
-};
+// module.exports = {
+// 	generateDate,
+// 	urlParamsToObject
+// };
