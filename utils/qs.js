@@ -1,4 +1,3 @@
-// const queryString = require('query-string');
 import queryString from 'query-string';
 
 const isJson = (str) => {
@@ -41,8 +40,3 @@ export const generateDate = dateStr => {
 
 	return date;
 };
-
-// module.exports = {
-// 	generateDate,
-// 	urlParamsToObject
-// };

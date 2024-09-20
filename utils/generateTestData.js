@@ -104,7 +104,3 @@ export const generateTestData = (component, componentTests) => {
 
 	return metaData;
 };
-
-// module.exports = {
-// 	generateTestData
-// };

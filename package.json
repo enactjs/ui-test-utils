@@ -7,7 +7,8 @@
   "type": "module",
   "exports": {
     "./ui/wdio.conf.js": "./ui/wdio.conf.js",
-    "./utils": "./utils/index.js"
+    "./utils": "./utils/index.js",
+    "./screenshot/wdio.conf.js": "./screenshot/wdio.conf.js"
   },
   "bin": {
     "start-tests": "./start-tests.js"

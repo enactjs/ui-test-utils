@@ -1,6 +1,5 @@
 'use strict';
 
-// const queryString = require('query-string');
 import queryString from 'query-string';
 
 export class Page {
@@ -171,7 +170,3 @@ export class Page {
 		);
 	}
 }
-
-// module.exports = {
-// 	Page
-// };

@@ -1,9 +1,9 @@
-const cryptoModule = require('crypto'),
-	path = require('path'),
-	fs = require('fs');
+import cryptoModule from 'crypto';
+import path from 'path';
+import fs from 'fs';
 
-const buildApps = require('../../src/build-apps');
-const makeHeader = require('./headerTemplate');
+import buildApps from '../../src/build-apps.js';
+import {makeHeader} from './headerTemplate.js';
 
 const newScreenshotFilename = 'tests/screenshot/dist/newFiles.html',
 	failedScreenshotFilename = 'tests/screenshot/dist/failedTests.html',
@@ -131,8 +131,7 @@ function onComplete () {
 	}
 }
 
-
-module.exports = {
+export {
 	afterTest,
 	baselineFolder,
 	beforeTest,

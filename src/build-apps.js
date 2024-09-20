@@ -1,12 +1,8 @@
-// const path = require('path');
 import path from 'path';
 
 let chalk;
-// const spawn = require('cross-spawn');
 import spawn from 'cross-spawn';
-// const fs = require('fs-extra');
 import fs from 'fs-extra';
-// const readdirp = require('readdirp');
 import readdirp from 'readdirp';
 import * as url from 'url';
 
@@ -147,7 +143,6 @@ function epack ({file, opts}) {
 	}
 }
 
-// module.exports = buildApps;
 export default buildApps;
-// if (require.main === module) buildApps();
-if (import.meta.url === `${new URL('.', import.meta.url).href}index.js`) buildApps();
+const modulePath = url.fileURLToPath(import.meta.url);
+if (process.argv[1] === modulePath) buildApps();

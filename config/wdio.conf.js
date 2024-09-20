@@ -1,7 +1,6 @@
-// const parseArgs = require('minimist');
 import parseArgs from 'minimist';
-// const {execSync} = require('child_process');
 import {execSync} from 'child_process';
+import {expect as wdioExpect} from 'expect-webdriverio';
 
 const args = parseArgs(process.argv);
 
@@ -214,8 +213,6 @@ export const configure = (options) => {
 			 * @param {Array.<String>} specs List of spec file paths that are to be run
 			 */
 			before: function () {
-				// require('expect-webdriverio');
-
 				global.wdioExpect = global.expect;
 
 				if (options.before) {
