@@ -60,16 +60,16 @@ TV_IP=10.0.1.1 npm run test-ui-tv
 npm run test-ui -- --spec <pattern>
 ```
 
-Example 1 -  will execute tests for 'ExpandableInput'
+Example 1 -  will execute tests for 'Button'
 
 ```bash
-npm run test-ui -- --spec ExpandableInput
+npm run test-ui -- --spec Button
 ```
 
-Example 2 - will execute tests for 'Input' component
+Example 2 - will execute tests for 'InputField' component
 
 ```bash
-npm run test-ui -- --spec /Input
+npm run test-ui -- --spec /InputField
 ```
 
 Note: `<pattern>` can also be a regex and may need to be in quotes to prevent expansion on the command
@@ -98,13 +98,13 @@ npm run test-ss -- --component Button
 ### Filtering Screenshot by Theme
 
 ```bash
-npm run test-ss -- --spec MoonstoneLight-specs
+npm run test-ss -- --spec Light-specs
 ```
 
 You can combine theme and component filtering for more precise runs:
 
 ```bash
-npm run test-ss -- --component CheckboxItem --spec Moonstone-specs
+npm run test-ss -- --component CheckboxItem --spec Default-specs
 ```
 
 ### Filtering Screenshot by Title
@@ -165,7 +165,7 @@ open tests/screenshot/dist/failedTests.html
 
 Images can be navigated using the keyboard arrow keys. Click on an image to zoom in.  Click out of the image to zoom out.
 
-In the output, the **test case** button opens the sample app with the parameters that produced the output. This requires that a server be running on port 5000. If you have globally installed the `serve` command with `npm install -g serve` you can start the server like this:
+In the output, the **test case** button opens the sample app with the parameters that produced the output. This requires that a server be running on port 3000. If you have globally installed the `serve` command with `npm install -g serve` you can start the server like this:
 
 ```bash
 serve tests/screenshot/dist
@@ -230,7 +230,7 @@ npm run test-ui -- --visible --spec /Input
 
 ### Loading sample apps in a browser
 
- This requires that a server be running on port 5000. If you have globally installed the `serve`
+ This requires that a server be running on port 3000. If you have globally installed the `serve`
  command with `npm install -g serve` you can start the server like this:
 
 ```bash
@@ -241,27 +241,27 @@ To open a specific test app, open the URL path for the test.  The path will matc
 source file for the app.  For example, to open the `VirtualList` test app, navigate to:
 
 ```none
-http://localhost:5000/VirtualList-View/
+http://localhost:3000/VirtualList-View/
 ```
 
 ### Viewing screenshot tests in the browser
 
-Navigate to a URL using the component name and test case number. Change 'Moonstone-View' to the name of the view appropriate for your library.
+Navigate to a URL using the component name and test case number. Change 'Sandstone-View' to the name of the view appropriate for your library.
 
 An index page will be served when no component is specified.  Select a test from the list to open it.
 
 ```none
-localhost:5000/Moonstone-View/
+localhost:3000/Sandstone-View/
 ```
 
 You can go directly to a test by specifying the component name and test ID number:
 
 ```none
-localhost:5000/Moonstone-View/?component=<component name>&testId=<number of the test>
+localhost:3000/Sandstone-View/?component=<component name>&testId=<number of the test>
 ```
 
 Example:
 
 ```none
-localhost:5000/Moonstone-View/?component=RadioItem&testId=10
+localhost:3000/Sandstone-View/?component=RadioItem&testId=10
 ```
