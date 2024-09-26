@@ -182,16 +182,6 @@ the Enact version or test apps will not be picked up.
 npm run test-ui -- --spec /Input --skip-build
 ```
 
-### Re-pack the apps without running the tests
-
-To re-pack just the tests, without rebuilding Enact or running the tests, use `--pack-tests`. This
-is primarily useful when using `serve dist` (See **Loading sample apps in a browser** below) to view
-test apps in the browser.
-
-```bash
-npm run test-ui -- --pack-tests
-```
-
 ## Advanced Usage
 
 ### Setting the Number of Concurrent Instances
