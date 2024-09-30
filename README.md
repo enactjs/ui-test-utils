@@ -15,7 +15,7 @@ and must be configured as a `devDependency` of the UI library.
     * `wdio.docker.conf.js` containing `module.exports = require('@enact/ui-test-utils/ui/wdio.docker.conf.js');`
     * `wdio.tv.conf.js` containing `module.exports = require('@enact/ui-test-utils/ui/wdio.tv.conf.js');`
 
-and `tests/screenshot`
+* and `tests/screenshot`
 
     * `wdio.conf.js` containing `module.exports = require('@enact/ui-test-utils/screenshot/wdio.conf.js');`
     * `wdio.docker.conf.js` containing `module.exports = require('@enact/ui-test-utils/screenshot/wdio.docker.conf.js');`
