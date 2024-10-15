@@ -112,10 +112,10 @@ module.exports.configure = (options) => {
 				maxInstances,
 				//
 				browserName: 'chrome',
+				browserVersion: 'beta',
 				'goog:chromeOptions': visibleBrowser ? {} : {
 					args: ['--headless', '--window-size=1920,1080']
-				},
-				'wdio:enforceWebDriverClassic': true
+				}
 			}],
 			//
 			// ===================
