@@ -1,5 +1,9 @@
 # Change Log
 
+## [1.0.9] (July 22, 2024)
+
+* Updated Chrome driver url for version 114 or higher
+
 ## [1.0.8] (June 11, 2024)
 
 * Removed `chai` and `dirty-chai` dependencies.
