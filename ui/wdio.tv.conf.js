@@ -10,7 +10,6 @@ exports.config = Object.assign(
 
 			browserName: 'chrome',
 			'goog:chromeOptions': {
-				args: ['--window-size=1920,1080'],
 				debuggerAddress: `${process.env.TV_IP}:9998`
 			},
 			'wdio:enforceWebDriverClassic': true
