@@ -19,6 +19,7 @@
   "publishConfig": {
     "access": "public"
   },
+
   "dependencies": {
     "@wdio/cli": "^9.1.2",
     "@wdio/dot-reporter": "^9.1.2",
