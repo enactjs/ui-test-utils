@@ -112,10 +112,11 @@ module.exports.configure = (options) => {
 				maxInstances,
 				//
 				browserName: 'chrome',
-				// WebdriverIO v8.14 and above downloads and uses the latest Chrome version when running tests.
-				// Uncomment `browserVersion` line when running ui-tests locally to match chromedriver version running in CI/CD environment.
-				// TODO: Update this version when chromedriver version in CI/CD is updated
-				// browserVersion: '120.0.6099.109',
+				/* WebdriverIO v8.14 and above downloads and uses the latest Chrome version when running tests.
+				We need to specify a browser version that match chromedriver version running in CI/CD environment to
+				ensure testing accuracy.
+				TODO: Update this version when chromedriver version in CI/CD is updated */
+				browserVersion: '120.0.6099.109',
 				'goog:chromeOptions': visibleBrowser ? {} : {
 					args: ['--headless', '--window-size=1920,1080']
 				}
