@@ -40,10 +40,10 @@
     "webdriverio": "^7.36.0"
   },
   "devDependencies": {
-    "eslint": "^8.57.0",
-    "eslint-config-enact": "^4.2.1",
+    "eslint": "^9.15.0",
+    "eslint-config-enact": "^5.0.0-alpha.1",
     "eslint-config-prettier": "^9.1.0",
-    "eslint-plugin-import": "^2.30.0"
+    "eslint-plugin-import": "^2.31.0"
   },
   "overrides": {
     "ws": "^8.18.0"
