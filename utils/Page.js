@@ -1,6 +1,7 @@
 'use strict';
 
 const queryString = require('query-string');
+const {Key} = require('webdriverio');
 
 class Page {
 	constructor () {
@@ -71,6 +72,13 @@ class Page {
 
 	pageDown () {
 		return this.keyDelay('PageDown');
+	}
+
+	pageUpKey () {
+		return Key.PageUp;
+	}
+	pageDownKey () {
+		return Key.PageDown;
 	}
 
 	// For testing "pointer off" by timeout.
