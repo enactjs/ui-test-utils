@@ -8,8 +8,8 @@
     "start-tests": "./start-tests.js"
   },
   "scripts": {
-    "lint": "eslint .",
-    "fix": "eslint . --fix"
+    "lint": "cross-env ESLINT_USE_FLAT_CONFIG=false eslint .",
+    "fix": "cross-env ESLINT_USE_FLAT_CONFIG=false eslint . --fix"
   },
   "author": "Roy Sutton <roy.sutton@lge.com>",
   "license": "Apache-2.0",
@@ -40,6 +40,7 @@
     "webdriverio": "^7.36.0"
   },
   "devDependencies": {
+    "cross-env": "^7.0.3",
     "eslint": "^9.15.0",
     "eslint-config-enact": "^5.0.0-alpha.1",
     "eslint-config-prettier": "^9.1.0",
