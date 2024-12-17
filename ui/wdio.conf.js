@@ -19,15 +19,17 @@ exports.config = configure({
 	// resolved to continue.
 	/**
 	 * Gets executed once before all workers get launched.
-	 * @param {Object} config wdio configuration object
-	 * @param {Array.<Object>} capabilities list of capabilities details
 	 */
 	onPrepare: function () {
 		return buildApps('ui');
 	},
 	/**
 	 * Function to be executed after a test (in Mocha/Jasmine) or a step (in Cucumber) starts.
-	 * @param {Object} test test details
+	 * @param {Object} testCase test details
+	 * @param {Object} _context scope object the test was executed with (unused)
+	 * @param {Object} result test result
+	 * @param {Number} result.duration duration of test
+	 * @param {Boolean} result.passed true if test has passed, otherwise false
 	 */
 	afterTest: function (testCase, _context, {duration, passed}) {
 		if (duration > 2000) {
