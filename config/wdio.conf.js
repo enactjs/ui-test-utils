@@ -47,7 +47,7 @@ module.exports.configure = (options) => {
 					process.env.CHROME_DRIVER = chromeDriverVersion;
 				}
 			} catch (error) {
-				console.log('ERROR: Cannnot find Chrome driver from Chrome ' + chromeVersionMajorNumber);
+				console.log('ERROR: Cannot find Chrome driver from Chrome ' + chromeVersionMajorNumber);
 				process.env.CHROME_DRIVER = 2.44;
 			}
 		}
@@ -95,7 +95,7 @@ module.exports.configure = (options) => {
 			// First, you can define how many instances should be started at the same time. Let's
 			// say you have 3 different capabilities (Chrome, Firefox, and Safari) and you have
 			// set maxInstances to 1; wdio will spawn 3 processes. Therefore, if you have 10 spec
-			// files and you set maxInstances to 10, all spec files will get tested at the same time
+			// files, and you set maxInstances to 10, all spec files will get tested at the same time
 			// and 30 processes will get spawned. The property handles how many capabilities
 			// from the same test should run tests.
 			//
@@ -212,8 +212,6 @@ module.exports.configure = (options) => {
 			/**
 			 * Gets executed before test execution begins. At this point you can access to all global
 			 * variables like `browser`. It is the perfect place to define custom commands.
-			 * @param {Array.<Object>} capabilities list of capabilities details
-			 * @param {Array.<String>} specs List of spec file paths that are to be run
 			 */
 			before: function () {
 				require('expect-webdriverio');
