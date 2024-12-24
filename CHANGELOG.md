@@ -1,5 +1,9 @@
 # Change Log
 
+## [unreleased]
+
+* Added `--no-animation` option for screenshot test.
+
 ## [1.0.10] (October 31, 2024)
 
 * Updated dependencies.

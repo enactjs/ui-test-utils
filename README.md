@@ -218,6 +218,15 @@ For example, filtering for the component 'Input'.
 npm run test-ui -- --visible --spec /Input
 ```
 
+### Running without animation effects
+
+The `--no-animation` option is used to pack Enact without animation.
+You can use this option to test the apps without animation effects.
+
+```bash
+npm run test-ss -- --no-animation
+```
+
 ### Loading sample apps in a browser
 
  This requires that a server be running on port 3000. If you have globally installed the `serve`
