@@ -52,6 +52,14 @@ function initFile (name, content) {
 }
 
 function onPrepare () {
+	browser.addCommand('waitForFonts', async() => {
+		await this.executeAsync(async (done) => {
+			document.fonts.ready.then(() => {
+				done();
+			});
+		});
+	});
+
 	if (!fs.existsSync('tests/screenshot/dist/screenshots/reference')) {
 		console.log('No reference screenshots found, creating new references!');
 	}

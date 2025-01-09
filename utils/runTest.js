@@ -63,11 +63,16 @@ const runTest = ({concurrency, filter, Page, testName, ...rest}) => {
 
 								await Page.open(`?${params}`);
 
+								await browser.executeAsync(async (done) => {
+									document.fonts.ready.then(() => {
+										done();
+									});
+								});
+
 								expect(await browser.checkScreen(screenshotFileName, {
 									disableCSSAnimation: true,
 									ignoreNothing: true,
-									rawMisMatchPercentage: true,
-									waitForFontsLoaded: true
+									rawMisMatchPercentage: true
 								})).toBe(0);
 							});
 						});
