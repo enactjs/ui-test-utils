@@ -7,6 +7,7 @@ exports.config = configure({
 		'image-comparison',
 		{
 			baselineFolder: baselineFolder,
+			disableCSSAnimation: true,
 			formatImageName: '{tag}',
 			screenshotPath: screenshotFolder,
 			autoSaveBaseline: true

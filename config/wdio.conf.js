@@ -228,7 +228,6 @@ module.exports.configure = (options) => {
 			before: async function () {
 				require('expect-webdriverio');
 
-				await browser.pause(1000);
 				global.wdioExpect = global.expect;
 
 				if (options.before) {

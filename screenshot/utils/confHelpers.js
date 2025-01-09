@@ -63,9 +63,12 @@ function onPrepare () {
 }
 
 async function beforeTest (testData) {
-	await browser.pause(1000);
 	// If title doesn't have a '/', it's not a screenshot test, don't save
 	if (testData && testData.title && testData.title.indexOf('/') > 0) {
+		await browser.waitUntil(async () => {
+			return await browser.execute(() => document.fonts.ready.then(() => true));
+		});
+
 		const filename = generateReferenceName({test: testData});
 		testData.ctx.isNewScreenshot = !fs.existsSync(filename);
 	}
