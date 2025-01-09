@@ -225,25 +225,14 @@ module.exports.configure = (options) => {
 			 * Gets executed before test execution begins. At this point you can access to all global
 			 * variables like `browser`. It is the perfect place to define custom commands.
 			 */
-			before: function () {
+			before: async function () {
 				require('expect-webdriverio');
 
+				await browser.pause(1000);
 				global.wdioExpect = global.expect;
 
 				if (options.before) {
 					options.before();
-				}
-			},
-
-			beforeEach: async function () {
-				await browser.waitUntil(async () => {
-					return await browser.execute(() => {
-						return document.fonts.ready.then(() => true).catch(() => false);
-					});
-				});
-
-				if (options.beforeEach) {
-					options.beforeEach();
 				}
 			}
 		}
