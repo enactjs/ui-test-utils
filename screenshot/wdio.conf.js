@@ -10,7 +10,8 @@ exports.config = configure({
 			disableCSSAnimation: true,
 			formatImageName: '{tag}',
 			screenshotPath: screenshotFolder,
-			autoSaveBaseline: true
+			autoSaveBaseline: true,
+			waitForFontsLoaded: true
 		}
 	]],
 	//

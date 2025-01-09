@@ -68,7 +68,8 @@ const runTest = ({concurrency, filter, Page, testName, ...rest}) => {
 								expect(await browser.checkScreen(screenshotFileName, {
 									disableCSSAnimation: true,
 									ignoreNothing: true,
-									rawMisMatchPercentage: true
+									rawMisMatchPercentage: true,
+									waitForFontsLoaded: true
 								})).toBe(0);
 							});
 						});
