@@ -18,6 +18,12 @@ const runTest = ({concurrency, filter, Page, testName, ...rest}) => {
 		it('should fetch test cases', async function () {
 			await Page.open('?request');
 
+			await browser.executeAsync(async (done) => {
+				document.fonts.ready.then(() => {
+					done();
+				});
+			});
+
 			let testCases = await browser.execute(async function () {
 				return await window.__TEST_DATA;
 			});
