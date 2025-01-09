@@ -63,9 +63,7 @@ const runTest = ({concurrency, filter, Page, testName, ...rest}) => {
 
 								await Page.open(`?${params}`);
 
-								await browser.waitUntil(async () => {
-									return await browser.execute(() => document.fonts.ready.then(() => true));
-								});
+								await browser.pause(500);
 
 								expect(await browser.checkScreen(screenshotFileName, {
 									disableCSSAnimation: true,
