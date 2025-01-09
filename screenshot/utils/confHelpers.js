@@ -62,7 +62,13 @@ function onPrepare () {
 	return buildApps('screenshot');
 }
 
-function beforeTest (testData) {
+async function beforeTest (testData) {
+	await browser.executeAsync(async (done) => {
+		document.fonts.ready.then(() => {
+			done();
+		});
+	});
+
 	// If title doesn't have a '/', it's not a screenshot test, don't save
 	if (testData && testData.title && testData.title.indexOf('/') > 0) {
 		const filename = generateReferenceName({test: testData});
