@@ -233,6 +233,18 @@ module.exports.configure = (options) => {
 				if (options.before) {
 					options.before();
 				}
+			},
+
+			beforeEach: async function () {
+				await browser.waitUntil(async () => {
+					return await browser.execute(() => {
+						return document.fonts.ready.then(() => true).catch(() => false);
+					});
+				});
+
+				if (options.beforeEach) {
+					options.beforeEach();
+				}
 			}
 		}
 	);
