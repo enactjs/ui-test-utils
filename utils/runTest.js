@@ -65,7 +65,7 @@ const runTest = ({concurrency, filter, Page, testName, ...rest}) => {
 
 								await browser.waitUntil(async () => {
 									return await browser.execute(() => {
-										return document.fonts.ready.then(() => true);
+										return document.fonts.ready.then(() => true).catch(() => false);
 									});
 								});
 
