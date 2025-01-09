@@ -68,6 +68,7 @@ const runTest = ({concurrency, filter, Page, testName, ...rest}) => {
 										done();
 									});
 								});
+								await browser.pause(100);
 
 								expect(await browser.checkScreen(screenshotFileName, {
 									disableCSSAnimation: true,
