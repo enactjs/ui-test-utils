@@ -31,7 +31,8 @@ function buildApps (base) {
 						'--output',
 						path.join('tests', base, 'dist', 'framework'),
 						'--framework',
-						'--externals-polyfill'
+						'--externals-polyfill',
+						process.argv.includes('--no-animation') ? '--no-animation' : null
 					]
 				});
 			}
