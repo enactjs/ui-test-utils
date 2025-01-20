@@ -41,7 +41,7 @@
   },
   "devDependencies": {
     "cross-env": "^7.0.3",
-    "eslint": "^9.15.0",
+    "eslint": "^9.18.0",
     "eslint-config-enact": "enactjs/eslint-config-enact#feature/eslint9",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-import": "^2.31.0"
