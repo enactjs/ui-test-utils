@@ -245,22 +245,22 @@ http://localhost:3000/VirtualList-View/
 
 ### Viewing screenshot tests in the browser
 
-Navigate to a URL using the component name and test case number. Change 'Sandstone-View' to the name of the view appropriate for your library.
+Navigate to a URL using the component name and test case number. Change 'Limestone-View' to the name of the view appropriate for your library.
 
 An index page will be served when no component is specified.  Select a test from the list to open it.
 
 ```none
-localhost:3000/Sandstone-View/
+localhost:3000/Limestone-View/
 ```
 
 You can go directly to a test by specifying the component name and test ID number:
 
 ```none
-localhost:3000/Sandstone-View/?component=<component name>&testId=<number of the test>
+localhost:3000/Limestone-View/?component=<component name>&testId=<number of the test>
 ```
 
 Example:
 
 ```none
-localhost:3000/Sandstone-View/?component=RadioItem&testId=10
+localhost:3000/Limestone-View/?component=RadioItem&testId=10
 ```
