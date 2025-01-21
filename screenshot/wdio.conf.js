@@ -4,7 +4,7 @@ const {afterTest, baselineFolder, beforeTest, onComplete, onPrepare, screenshotF
 exports.config = configure({
 	base: 'screenshot',
 	services: [[
-		'image-comparison',
+		'visual',
 		{
 			baselineFolder: baselineFolder,
 			formatImageName: '{tag}',
