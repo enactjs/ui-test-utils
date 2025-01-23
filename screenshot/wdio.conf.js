@@ -9,7 +9,8 @@ exports.config = configure({
 			baselineFolder: baselineFolder,
 			formatImageName: '{tag}',
 			screenshotPath: screenshotFolder,
-			autoSaveBaseline: true
+			autoSaveBaseline: true,
+			waitForFontsLoaded: true
 		}
 	]],
 	//
