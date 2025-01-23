@@ -2,7 +2,7 @@
 
 ## [unreleased]
 
-* Updated Enact ESLint config to `9.1.5` including eslint related modules and set temporary ESLINT_USE_FLAT_CONFIG env variable in `package.json`.
+* Updated `eslint` to `9.1.8` including eslint related modules and set temporary ESLINT_USE_FLAT_CONFIG env variable in `package.json`.
 * Added `--no-animation` option for screenshot test.
 
 ## [1.0.10] (October 31, 2024)
