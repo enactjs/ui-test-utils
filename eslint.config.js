@@ -11,15 +11,13 @@ const customGlobals = {
 module.exports = [
 	...enactStrict,
 	{
-		files: ['*/.js', '*/.jsx', '*/.ts', '*/.tsx'],
 		languageOptions: {
 			ecmaVersion: 'latest',
 			sourceType: 'module',
 			globals: {
-				...customGlobals,
 				...globals.node,
-				...globals.mocha
-
+				...globals.mocha,
+				...customGlobals
 			},
 			parserOptions: {
 				ecmaFeatures: {
