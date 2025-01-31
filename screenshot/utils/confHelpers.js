@@ -67,6 +67,13 @@ function beforeTest (testData) {
 	if (testData && testData.title && testData.title.indexOf('/') > 0) {
 		const filename = generateReferenceName({test: testData});
 		testData.ctx.isNewScreenshot = !fs.existsSync(filename);
+
+		const specsPath = testData.title.split('~/');
+		specsPath.pop();
+		const referenceSpecsPath = path.join('tests/screenshot/dist/screenshots/reference', ...specsPath).replace(/ /g, '_');
+		if (testData.ctx.isNewScreenshot) {
+			fs.mkdirSync(referenceSpecsPath, {recursive: true});
+		}
 	}
 }
 
