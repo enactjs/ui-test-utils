@@ -2,7 +2,7 @@
 
 ## [unreleased]
 
-* Updated `eslint` to v9 including eslint related modules and set temporary ESLINT_USE_FLAT_CONFIG env variable in `package.json`.
+* Updated `eslint` to v9 and adopted flat config.
 * Added `--no-animation` option for screenshot test.
 
 ## [1.0.10] (October 31, 2024)

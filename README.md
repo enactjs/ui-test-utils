@@ -35,7 +35,7 @@ and must be configured as a `devDependency` of the UI library.
    }
 ```
 
-6. Optionally configure different ESLint and git configuration rules using `.eslintrc.js` and
+6. Optionally configure different ESLint and git configuration rules using `eslint.config.js` and
    `.gitignore` files, respectively
 
 ## Creating tests
