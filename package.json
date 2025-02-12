@@ -41,7 +41,7 @@
   },
   "devDependencies": {
     "eslint": "^9.20.0",
-    "eslint-config-enact": "enactjs/eslint-config-enact#feature/WRR-12625",
+    "eslint-config-enact": "enactjs/eslint-config-enact#feature/eslint9",
     "globals": "^15.14.0"
   },
   "overrides": {
