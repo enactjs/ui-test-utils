@@ -2,6 +2,7 @@
 
 ## [unreleased]
 
+* Updated `eslint` to v9 and adopted flat config.
 * Added `--no-animation` option for screenshot test.
 
 ## [1.0.10] (October 31, 2024)
