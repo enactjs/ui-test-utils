@@ -2,6 +2,7 @@
 
 ## [unreleased]
 
+* Updated `eslint` to v9 and adopted flat config.
 * Added `--no-animation` option for screenshot test.
 * Updated `webdriverio` and related dependencies to version 9.
 * Dropped support for Node.js 16. Required Node.js version >= 18.

@@ -14,7 +14,7 @@
   "author": "Roy Sutton <roy.sutton@lge.com>",
   "license": "Apache-2.0",
   "engines": {
-    "node": ">=18.0.0"
+    "node": "^18.18.0 || ^20.9.0 || >=21.1.0"
   },
   "publishConfig": {
     "access": "public"
@@ -40,10 +40,9 @@
     "webdriverio": "^9.2.12"
   },
   "devDependencies": {
-    "eslint": "^8.57.1",
-    "eslint-config-enact": "^5.0.0-alpha.1",
-    "eslint-config-prettier": "^9.1.0",
-    "eslint-plugin-import": "^2.31.0"
+    "eslint": "^9.20.0",
+    "eslint-config-enact": "^5.0.0-alpha.5",
+    "globals": "^15.14.0"
   },
   "overrides": {
     "cross-spawn": "$cross-spawn",
