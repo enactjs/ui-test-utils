@@ -20,7 +20,7 @@
     "access": "public"
   },
   "dependencies": {
-    "@wdio/cli": "^9.9.3",
+    "@wdio/cli": "^9.10.0",
     "@wdio/dot-reporter": "^9.9.0",
     "@wdio/local-runner": "9.2.1",
     "@wdio/mocha-framework": "^9.9.0",
@@ -37,10 +37,10 @@
     "readdirp": "^3.6.0",
     "wdio-docker-service": "^3.2.1",
     "wdio-selenium-standalone-service": "^0.0.12",
-    "webdriverio": "^9.9.3"
+    "webdriverio": "^9.10.0"
   },
   "devDependencies": {
-    "eslint": "^9.20.1",
+    "eslint": "^9.21.0",
     "eslint-config-enact": "^5.0.0-alpha.5",
     "globals": "^15.14.0"
   },
