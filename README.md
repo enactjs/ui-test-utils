@@ -35,7 +35,7 @@ and must be configured as a `devDependency` of the UI library.
    }
 ```
 
-6. Optionally configure different ESLint and git configuration rules using `.eslintrc.js` and
+6. Optionally configure different ESLint and git configuration rules using `eslint.config.js` and
    `.gitignore` files, respectively
 
 ## Creating tests
@@ -216,6 +216,15 @@ For example, filtering for the component 'Input'.
 
 ```bash
 npm run test-ui -- --visible --spec /Input
+```
+
+### Running without animation effects
+
+The `--no-animation` option is used to pack Enact without animation.
+You can use this option to test the apps without animation effects.
+
+```bash
+npm run test-ss -- --no-animation
 ```
 
 ### Loading sample apps in a browser
