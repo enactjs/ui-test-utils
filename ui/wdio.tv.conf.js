@@ -15,7 +15,7 @@ exports.config = Object.assign(
 			}
 		}],
 
-		baseUrl: `http://${ipAddress()}:4567`,
+		baseUrl: `http://${ipAddress()}`,
 		port: 8080,
 
 		before: function () {

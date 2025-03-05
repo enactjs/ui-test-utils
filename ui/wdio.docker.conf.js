@@ -10,7 +10,7 @@ exports.config = Object.assign(
 	{},
 	config,
 	{
-		baseUrl: `http://${ipAddress()}:4567`,
+		baseUrl: `http://${ipAddress()}`,
 		port: 8080,
 		services,
 		dockerOptions: {

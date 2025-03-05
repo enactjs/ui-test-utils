@@ -42,7 +42,7 @@ exports.config = Object.assign(
 		//
 		// Set a base URL in order to shorten url command calls. If your url parameter starts
 		// with "/", then the base url gets prepended.
-		baseUrl: `http://${ipAddress()}:4567`,
+		baseUrl: `http://${ipAddress()}`,
 		port: 8080,
 
 		/**
