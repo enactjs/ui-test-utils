@@ -43,6 +43,7 @@ exports.config = Object.assign(
 		// Set a base URL in order to shorten url command calls. If your url parameter starts
 		// with "/", then the base url gets prepended.
 		baseUrl: `http://${ipAddress()}:4567`,
+		port: 8080,
 
 		/**
 		 * Gets executed before test execution begins. At this point you can access to all global

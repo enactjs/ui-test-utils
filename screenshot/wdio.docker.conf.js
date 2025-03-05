@@ -11,6 +11,7 @@ exports.config = Object.assign(
 	config,
 	{
 		baseUrl: `http://${ipAddress()}:4567`,
+		port: 8080,
 		services,
 		dockerOptions: {
 			image: 'selenium/standalone-chrome',
