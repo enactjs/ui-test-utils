@@ -1,5 +1,10 @@
 # Change Log
 
+## [2.0.0-alpha.1] (February 26, 2025)
+
+* Updated `eslint` to v9 and adopted flat config.
+* Added `--no-animation` option for screenshot test.
+
 ## [1.0.10] (October 31, 2024)
 
 * Updated dependencies.
