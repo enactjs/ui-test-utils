@@ -1,6 +1,6 @@
 # Change Log
 
-## [unreleased]
+## [2.0.0-alpha.2] (March 7, 2025)
 
 * Updated `webdriverio` and related dependencies to version 9.
 * Dropped support for Node.js 16. Required Node.js version >= 18.
