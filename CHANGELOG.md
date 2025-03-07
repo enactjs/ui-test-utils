@@ -1,5 +1,13 @@
 # Change Log
 
+## [2.0.0-alpha.2] (March 7, 2025)
+
+* Updated `webdriverio` and related dependencies to version 9.
+* Dropped support for Node.js 16. Required Node.js version >= 18.
+* Removed deprecated `@wdio/selenium-standalone-service` module and added `wdio-selenium-standalone-service` community package.
+* Removed `w3c: false` and replaced with `'wdio:enforceWebDriverClassic': true` when running tests on a remote debugger. w3c enforces the usage of JSON Wire Protocol which has been removed from `webdriverio` v9.
+* Replaced deprecated dependency `wdio-image-comparison-service` with `@wdio/visual-service`.
+
 ## [2.0.0-alpha.1] (February 26, 2025)
 
 * Updated `eslint` to v9 and adopted flat config.

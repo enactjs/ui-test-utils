@@ -72,12 +72,18 @@ module.exports.configure = (options) => {
 			// Specify Test Files
 			// ==================
 			// Define which test specs should run. The pattern is relative to the directory
-			// from which `wdio` was called. Notice that, if you are calling `wdio` from an
-			// NPM script (see https://docs.npmjs.com/cli/run-script) then the current working
-			// directory is where your package.json resides, so `wdio` will be called from there.
+			// of the configuration file being run.
+			//
+			// The specs are defined as an array of spec files (optionally using wildcards
+			// that will be expanded). The test for each spec file will be run in a separate
+			// worker process. In order to have a group of spec files run in the same worker
+			// process enclose them in an array within the specs array.
+			//
+			// The path of the spec files will be resolved relative from the directory of
+			// the config file unless it's absolute.
 			//
 			specs: [
-				'./tests/' + base + '/specs/**/*-specs.js'
+				'../../tests/' + base + '/specs/**/*-specs.js'
 			],
 			// Patterns to exclude.
 			exclude: [
@@ -112,6 +118,11 @@ module.exports.configure = (options) => {
 				maxInstances,
 				//
 				browserName: 'chrome',
+				/* WebdriverIO v8.14 and above downloads and uses the latest Chrome version when running tests.
+				We need to specify a browser version that matches chromedriver version running in CI/CD environment to
+				ensure testing accuracy.
+				TODO: Update this version when chromedriver version in CI/CD is updated */
+				browserVersion: '120.0.6099.109',
 				'goog:chromeOptions': visibleBrowser ? {} : {
 					args: ['--headless', '--window-size=1920,1080']
 				}
@@ -175,24 +186,7 @@ module.exports.configure = (options) => {
 			// commands. Instead, they hook themselves up into the test process.
 			services: [
 				['selenium-standalone', {
-					skipSeleniumInstall: offline,
-					args: {
-						drivers : {
-							chrome : {
-								version : process.env.CHROME_DRIVER,
-								arch    : process.arch
-							}
-						}
-					},
-					installArgs: {
-						drivers : {
-							chrome : {
-								version : process.env.CHROME_DRIVER,
-								arch    : process.arch,
-								baseURL : process.env.CHROME_DRIVER > 114 ? 'https://storage.googleapis.com' : 'https://chromedriver.storage.googleapis.com'
-							}
-						}
-					}
+					skipSeleniumInstall: offline
 				}],
 				['static-server', {
 					folders: [
