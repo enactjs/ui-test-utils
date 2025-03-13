@@ -1,7 +1,7 @@
-const {generateTestData} = require('./generateTestData');
-const {Page} = require('./Page');
-const {runTest} = require('./runTest');
-const {
+import {generateTestData} from './generateTestData.js';
+import {Page} from './Page.js';
+import {runTest} from './runTest.js';
+import {
 	componentSelector,
 	element,
 	expectOrdering,
@@ -9,10 +9,10 @@ const {
 	getSubComponent,
 	getText,
 	hasClass
-} = require('./selector');
-const {generateDate, urlParamsToObject} = require('./qs');
+} from './selector.js';
+import {generateDate, urlParamsToObject} from './qs.js';
 
-module.exports = {
+export {
 	componentSelector,
 	element,
 	expectOrdering,
