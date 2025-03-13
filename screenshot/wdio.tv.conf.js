@@ -33,6 +33,11 @@ exports.config = Object.assign(
 			maxInstances: 1,
 			//
 			browserName: 'chrome',
+			/* WebdriverIO v8.14 and above downloads and uses the latest Chrome version when running tests.
+			We need to specify a browser version that match chromedriver version running in CI/CD environment to
+			ensure testing accuracy.
+			TODO: Update this version when chromedriver version in CI/CD is updated */
+			browserVersion: '120.0.6099.109',
 			'goog:chromeOptions': {
 				args: ['--window-size=1920,1080'],
 				debuggerAddress: `${process.env.TV_IP}:9998`
@@ -48,8 +53,6 @@ exports.config = Object.assign(
 		/**
 		 * Gets executed before test execution begins. At this point you can access to all global
 		 * variables like `browser`. It is the perfect place to define custom commands.
-		 * @param {Array.<Object>} capabilities list of capabilities details
-		 * @param {Array.<String>} specs List of spec file paths that are to be run
 		 */
 		before: function () {
 			if (config.before) {

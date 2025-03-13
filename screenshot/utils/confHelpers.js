@@ -20,7 +20,7 @@ function getScreenshotName (basePath) {
 		// Replace problematic filenames. Windows is much more restrictive.
 		testName = testName.replace(/[/\\:?*"|<>]/g, '_');
 
-		// shorten the name with a little bit of leading context to help find the file manually if necessary
+		// shorten the name with a bit of leading context to help find the file manually if necessary
 		testName = testName.substring(0, 128) + '-' + cryptoModule.createHash('md5').update(testName).digest('hex');
 		let screenshotFileName = path.join(basePath, ...testNameParts, `${testName}.png`);
 		return screenshotFileName.replace(/ /g, '_');
@@ -67,6 +67,14 @@ function beforeTest (testData) {
 	if (testData && testData.title && testData.title.indexOf('/') > 0) {
 		const filename = generateReferenceName({test: testData});
 		testData.ctx.isNewScreenshot = !fs.existsSync(filename);
+
+		// if there are no reference screenshots, we must create the folder before running the tests.
+		const specsPath = testData.title.split('~/');
+		specsPath.pop();
+		const referenceSpecsPath = path.join('tests/screenshot/dist/screenshots/reference', ...specsPath).replace(/ /g, '_');
+		if (testData.ctx.isNewScreenshot) {
+			fs.mkdirSync(referenceSpecsPath, {recursive: true});
+		}
 	}
 }
 

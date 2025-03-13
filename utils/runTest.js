@@ -54,7 +54,7 @@ export const runTest = ({concurrency, filter, Page, testName, ...rest}) => {
 								let testCaseName = testNameParts.pop();
 								// Replace problematic filenames. Windows is much more restrictive.
 								testCaseName = testCaseName.replace(/[/\\:?*"|<>]/g, '_');
-								// shorten the name with a little bit of leading context to help find the file manually if necessary
+								// shorten the name with a bit of leading context to help find the file manually if necessary
 								testCaseName = testCaseName.substring(0, 128) + '-' + cryptoModule.createHash('md5').update(testCaseName).digest('hex');
 								const screenshotFileName = (component + '/' + testName + '/' + testCaseName);
 
@@ -66,7 +66,8 @@ export const runTest = ({concurrency, filter, Page, testName, ...rest}) => {
 								expect(await browser.checkScreen(screenshotFileName, {
 									disableCSSAnimation: true,
 									ignoreNothing: true,
-									rawMisMatchPercentage: true
+									rawMisMatchPercentage: true,
+									waitForFontsLoaded: true
 								})).toBe(0);
 							});
 						});

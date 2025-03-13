@@ -15,7 +15,7 @@ and must be configured as a `devDependency` of the UI library.
     * `wdio.docker.conf.js` containing `module.exports = require('@enact/ui-test-utils/ui/wdio.docker.conf.js');`
     * `wdio.tv.conf.js` containing `module.exports = require('@enact/ui-test-utils/ui/wdio.tv.conf.js');`
 
-and `tests/screenshot`
+* and `tests/screenshot`
 
     * `wdio.conf.js` containing `module.exports = require('@enact/ui-test-utils/screenshot/wdio.conf.js');`
     * `wdio.docker.conf.js` containing `module.exports = require('@enact/ui-test-utils/screenshot/wdio.docker.conf.js');`
@@ -35,7 +35,7 @@ and `tests/screenshot`
    }
 ```
 
-6. Optionally configure different ESLint and git configuration rules using `.eslintrc.js` and
+6. Optionally configure different ESLint and git configuration rules using `eslint.config.js` and
    `.gitignore` files, respectively
 
 ## Creating tests
@@ -60,16 +60,16 @@ TV_IP=10.0.1.1 npm run test-ui-tv
 npm run test-ui -- --spec <pattern>
 ```
 
-Example 1 -  will execute tests for 'ExpandableInput'
+Example 1 -  will execute tests for 'Button'
 
 ```bash
-npm run test-ui -- --spec ExpandableInput
+npm run test-ui -- --spec Button
 ```
 
-Example 2 - will execute tests for 'Input' component
+Example 2 - will execute tests for 'InputField' component
 
 ```bash
-npm run test-ui -- --spec /Input
+npm run test-ui -- --spec /InputField
 ```
 
 Note: `<pattern>` can also be a regex and may need to be in quotes to prevent expansion on the command
@@ -98,13 +98,13 @@ npm run test-ss -- --component Button
 ### Filtering Screenshot by Theme
 
 ```bash
-npm run test-ss -- --spec MoonstoneLight-specs
+npm run test-ss -- --spec Light-specs
 ```
 
 You can combine theme and component filtering for more precise runs:
 
 ```bash
-npm run test-ss -- --component CheckboxItem --spec Moonstone-specs
+npm run test-ss -- --component CheckboxItem --spec Default-specs
 ```
 
 ### Filtering Screenshot by Title
@@ -165,7 +165,7 @@ open tests/screenshot/dist/failedTests.html
 
 Images can be navigated using the keyboard arrow keys. Click on an image to zoom in.  Click out of the image to zoom out.
 
-In the output, the **test case** button opens the sample app with the parameters that produced the output. This requires that a server be running on port 5000. If you have globally installed the `serve` command with `npm install -g serve` you can start the server like this:
+In the output, the **test case** button opens the sample app with the parameters that produced the output. This requires that a server be running on port 3000. If you have globally installed the `serve` command with `npm install -g serve` you can start the server like this:
 
 ```bash
 serve tests/screenshot/dist
@@ -180,16 +180,6 @@ the Enact version or test apps will not be picked up.
 
 ```bash
 npm run test-ui -- --spec /Input --skip-build
-```
-
-### Re-pack the apps without running the tests
-
-To re-pack just the tests, without rebuilding Enact or running the tests, use `--pack-tests`. This
-is primarily useful when using `serve dist` (See **Loading sample apps in a browser** below) to view
-test apps in the browser.
-
-```bash
-npm run test-ui -- --pack-tests
 ```
 
 ## Advanced Usage
@@ -228,9 +218,18 @@ For example, filtering for the component 'Input'.
 npm run test-ui -- --visible --spec /Input
 ```
 
+### Running without animation effects
+
+The `--no-animation` option is used to pack Enact without animation.
+You can use this option to test the apps without animation effects.
+
+```bash
+npm run test-ss -- --no-animation
+```
+
 ### Loading sample apps in a browser
 
- This requires that a server be running on port 5000. If you have globally installed the `serve`
+ This requires that a server be running on port 3000. If you have globally installed the `serve`
  command with `npm install -g serve` you can start the server like this:
 
 ```bash
@@ -241,27 +240,27 @@ To open a specific test app, open the URL path for the test.  The path will matc
 source file for the app.  For example, to open the `VirtualList` test app, navigate to:
 
 ```none
-http://localhost:5000/VirtualList-View/
+http://localhost:3000/VirtualList-View/
 ```
 
 ### Viewing screenshot tests in the browser
 
-Navigate to a URL using the component name and test case number. Change 'Moonstone-View' to the name of the view appropriate for your library.
+Navigate to a URL using the component name and test case number. Change 'Sandstone-View' to the name of the view appropriate for your library.
 
 An index page will be served when no component is specified.  Select a test from the list to open it.
 
 ```none
-localhost:5000/Moonstone-View/
+localhost:3000/Sandstone-View/
 ```
 
 You can go directly to a test by specifying the component name and test ID number:
 
 ```none
-localhost:5000/Moonstone-View/?component=<component name>&testId=<number of the test>
+localhost:3000/Sandstone-View/?component=<component name>&testId=<number of the test>
 ```
 
 Example:
 
 ```none
-localhost:5000/Moonstone-View/?component=RadioItem&testId=10
+localhost:3000/Sandstone-View/?component=RadioItem&testId=10
 ```
