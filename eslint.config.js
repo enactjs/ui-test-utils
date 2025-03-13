@@ -1,5 +1,5 @@
-const enactStrict = require('eslint-config-enact/strict');
-const globals = require('globals');
+import enactStrict from 'eslint-config-enact/strict.js';
+import globals from 'globals';
 
 const customGlobals = {
 	'browser': true,
@@ -8,7 +8,7 @@ const customGlobals = {
 	'$$': true
 };
 
-module.exports = [
+export default [
 	...enactStrict,
 	{
 		languageOptions: {

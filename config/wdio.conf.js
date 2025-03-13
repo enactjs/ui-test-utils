@@ -1,6 +1,6 @@
 import parseArgs from 'minimist';
 import {execSync} from 'child_process';
-import {expect as wdioExpect} from 'expect-webdriverio';
+// import {expect as wdioExpect} from 'expect-webdriverio';
 
 const args = parseArgs(process.argv);
 

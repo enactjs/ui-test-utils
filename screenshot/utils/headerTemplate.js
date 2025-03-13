@@ -31,4 +31,4 @@ export function makeHeader (title) {
 	<script>
 		const results = [
 `;
-};
+}
