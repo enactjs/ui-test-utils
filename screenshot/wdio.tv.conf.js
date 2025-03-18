@@ -1,16 +1,16 @@
-const ipAddress = require('../utils/ipAddress.js');
-const {config} = require('./wdio.conf.js');
+import {ipAddress} from '../utils/ipAddress.js';
+import {ssConfig} from './wdio.conf.js';
 
-const services = config.services.map(service => {
+const services = ssConfig.services.map(service => {
 	if (service[0] === 'novus-visual-regression') {
 		delete service[1].viewports;
 	}
 	return service;
 });
 
-exports.config = Object.assign(
+export const config = Object.assign(
 	{},
-	config,
+	ssConfig,
 	{
 		services,
 

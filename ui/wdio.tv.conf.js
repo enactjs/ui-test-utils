@@ -1,9 +1,9 @@
-const ipAddress = require('../utils/ipAddress.js');
-const {config} = require('./wdio.conf.js');
+import {ipAddress} from '../utils/ipAddress.js';
+import {uiConfig} from './wdio.conf.js';
 
-exports.config = Object.assign(
+export const config = Object.assign(
 	{},
-	config,
+	uiConfig,
 	{
 		capabilities: [{
 			maxInstances: 1,
