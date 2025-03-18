@@ -84,7 +84,7 @@ export const configure = (options) => {
 			// the config file unless it's absolute.
 			//
 			specs: [
-				'../../tests/' + base + '/specs/**/*-specs.js'
+				'../../../tests/' + base + '/specs/**/*-specs.js'
 			],
 			// Patterns to exclude.
 			exclude: [
@@ -126,8 +126,7 @@ export const configure = (options) => {
 				browserVersion: '120.0.6099.109',
 				'goog:chromeOptions': visibleBrowser ? {} : {
 					args: ['--headless', '--window-size=1920,1080']
-				},
-				'wdio:enforceWebDriverClassic': true
+				}
 			}],
 			//
 			// ===================
