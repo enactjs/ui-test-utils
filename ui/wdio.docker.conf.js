@@ -6,7 +6,7 @@ const services = uiConfig.services
 	.filter(service => service[0] !== 'selenium-standalone')
 	.concat(['docker']);
 
-export const config = Object.assign(
+export const uiDockerconfig = Object.assign(
 	{},
 	uiConfig,
 	{

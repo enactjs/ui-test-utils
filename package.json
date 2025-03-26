@@ -6,9 +6,13 @@
   "main": "index.js",
   "type": "module",
   "exports": {
+    "./screenshot/wdio.conf.js": "./screenshot/wdio.conf.js",
+    "./screenshot/wdio.docker.conf.js": "./screenshot/wdio.docker.conf.js",
+    "./screenshot/wdio.tv.conf.js": "./screenshot/wdio.tv.conf.js",
     "./ui/wdio.conf.js": "./ui/wdio.conf.js",
-    "./utils": "./utils/index.js",
-    "./screenshot/wdio.conf.js": "./screenshot/wdio.conf.js"
+    "./ui/wdio.docker.conf.js": "./ui/wdio.docker.conf.js",
+    "./ui/wdio.tv.conf.js": "./ui/wdio.tv.conf.js",
+    "./utils": "./utils/index.js"
   },
   "bin": {
     "start-tests": "./start-tests.js"

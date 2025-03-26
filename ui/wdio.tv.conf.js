@@ -1,7 +1,7 @@
 import {ipAddress} from '../utils/ipAddress.js';
 import {uiConfig} from './wdio.conf.js';
 
-export const config = Object.assign(
+export const uiTVConfig = Object.assign(
 	{},
 	uiConfig,
 	{
@@ -23,8 +23,8 @@ export const config = Object.assign(
 		baseUrl: `http://${ipAddress()}:4567`,
 
 		before: function () {
-			if (config.before) {
-				config.before();
+			if (uiConfig.before) {
+				uiConfig.before();
 			}
 
 			browser._options = {remote: true};

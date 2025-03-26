@@ -8,7 +8,7 @@ const services = ssConfig.services.map(service => {
 	return service;
 });
 
-export const config = Object.assign(
+export const ssTVConfig = Object.assign(
 	{},
 	ssConfig,
 	{
@@ -54,8 +54,8 @@ export const config = Object.assign(
 		 * variables like `browser`. It is the perfect place to define custom commands.
 		 */
 		before: function () {
-			if (config.before) {
-				config.before();
+			if (ssConfig.before) {
+				ssConfig.before();
 			}
 
 			browser._options = {remote: true};
