@@ -1,5 +1,5 @@
 import {ipAddress} from '../utils/ipAddress.js';
-import {ssConfig} from './wdio.conf.js';
+import {config as ssConfig} from './wdio.conf.js';
 
 const services = ssConfig.services.map(service => {
 	if (service[0] === 'novus-visual-regression') {
@@ -8,7 +8,7 @@ const services = ssConfig.services.map(service => {
 	return service;
 });
 
-export const ssTVConfig = Object.assign(
+const config = Object.assign(
 	{},
 	ssConfig,
 	{
@@ -67,3 +67,5 @@ export const ssTVConfig = Object.assign(
 		}
 	}
 );
+
+export const ssTVConfig = {config};

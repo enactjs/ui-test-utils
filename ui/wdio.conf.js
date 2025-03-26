@@ -60,4 +60,5 @@ const config = configure({
 	}
 });
 
-export const uiConfig = {config};
+export default {config};
+export {config};

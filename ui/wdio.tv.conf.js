@@ -1,7 +1,7 @@
 import {ipAddress} from '../utils/ipAddress.js';
-import {uiConfig} from './wdio.conf.js';
+import {config as uiConfig} from './wdio.conf.js';
 
-export const uiTVConfig = Object.assign(
+const config = Object.assign(
 	{},
 	uiConfig,
 	{
@@ -31,3 +31,5 @@ export const uiTVConfig = Object.assign(
 		}
 	}
 );
+
+export const uiTVConfig = {config};
