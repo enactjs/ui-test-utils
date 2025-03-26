@@ -1,5 +1,9 @@
 # Change Log
 
+## [unreleased]
+
+* Fixed screenshot saving failure for ui-tests by adding `await` to `browser.saveScreenshot()`.
+
 ## [2.0.0-alpha.2] (March 7, 2025)
 
 * Updated `webdriverio` and related dependencies to version 9.
