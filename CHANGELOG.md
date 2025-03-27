@@ -2,7 +2,8 @@
 
 ## [unreleased]
 
-* Fixed screenshot saving failure for ui-tests by adding `await` to `browser.saveScreenshot()`.
+* Fixed ui-tests errorShot saving failure by adding `await` to `browser.saveScreenshot()`.
+* Fixed ss-tests number of running instances on tv board by fixing maxInstances config property name.
 
 ## [2.0.0-alpha.2] (March 7, 2025)
 
