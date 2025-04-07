@@ -6,8 +6,11 @@ exports.config = Object.assign(
 	config,
 	{
 		capabilities: [{
-			maxInstances: 1,
-
+			// maxInstances can get overwritten per capability. So if you have an in-house Selenium
+			// grid with only 5 firefox instances available you can make sure that not more than
+			// 5 instances get started at a time.
+			'wdio:maxInstances': 1,
+			//
 			browserName: 'chrome',
 			/* WebdriverIO v8.14 and above downloads and uses the latest Chrome version when running tests.
 			We need to specify a browser version that match chromedriver version running in CI/CD environment to

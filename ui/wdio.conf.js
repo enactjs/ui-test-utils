@@ -31,7 +31,7 @@ exports.config = configure({
 	 * @param {Number} result.duration duration of test
 	 * @param {Boolean} result.passed true if test has passed, otherwise false
 	 */
-	afterTest: function (testCase, _context, {duration, passed}) {
+	afterTest: async function (testCase, _context, {duration, passed}) {
 		if (duration > 2000) {
 			console.log(chalk.yellow(`Long running test case: ${testCase.title}: ${duration}ms`));
 		}
@@ -48,7 +48,7 @@ exports.config = configure({
 			fs.mkdirSync(this.screenshotPath, {recursive: true});	// May only work recursively on Node 10.12+
 		}
 		// save screenshot
-		browser.saveScreenshot(filePath);
+		await browser.saveScreenshot(filePath);
 		console.log('\n\tScreenshot location:', filePath, '\n');
 	},
 	afterSuite: function (_suite) {
