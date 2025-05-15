@@ -1,9 +1,10 @@
 # Change Log
 
-## [unreleased]
+## [2.0.0-rc.1] (may 15, 2025)
 
 * Fixed ui-tests errorShot saving failure by adding `await` to `browser.saveScreenshot()`.
 * Fixed ss-tests number of running instances on tv board by fixing maxInstances config property name.
+* Removed eslint-related configs in `package.json`.
 
 ## [2.0.0-alpha.2] (March 7, 2025)
 
