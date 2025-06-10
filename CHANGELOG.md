@@ -1,6 +1,10 @@
 # Change Log
 
-## [2.0.0-rc.1] (may 15, 2025)
+## [2.0.0] (June 10, 2025)
+
+* Updated dependencies.
+
+## [2.0.0-rc.1] (May 15, 2025)
 
 * Fixed ui-tests errorShot saving failure by adding `await` to `browser.saveScreenshot()`.
 * Fixed ss-tests number of running instances on tv board by fixing maxInstances config property name.
