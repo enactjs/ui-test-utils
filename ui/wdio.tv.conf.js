@@ -16,7 +16,7 @@ exports.config = Object.assign(
 			We need to specify a browser version that match chromedriver version running in CI/CD environment to
 			ensure testing accuracy.
 			TODO: Update this version when chromedriver version in CI/CD is updated */
-			browserVersion: '120.0.6099.109',
+			browserVersion: '132.0.6834.159',
 			'goog:chromeOptions': {
 				debuggerAddress: `${process.env.TV_IP}:9998`
 			},
