@@ -12,8 +12,8 @@ const env = {
 	BROWSERSLIST: 'Chrome 79'
 };
 
-function findViews (base) {
-	return readdirpPromise(path.join('tests', base, 'apps'), {fileFilter: '*-View.js'});
+async function findViews (base) {
+	return await readdirpPromise(path.join('tests', base, 'apps'), {fileFilter: '*-View.js'});
 }
 
 function buildApps (base) {
