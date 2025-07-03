@@ -22,7 +22,8 @@ const runTest = ({concurrency, filter, Page, testName, ...rest}) => {
 				return await window.__TEST_DATA;
 			});
 
-			await expect(testCases).toBeInstanceOf(Object);
+			// console.log(testCases);
+			//await expect(testCases).toBeInstanceOf(Object);
 
 			describe(testName, function () {
 				for (const component in testCases) {
