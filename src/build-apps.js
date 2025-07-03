@@ -3,7 +3,7 @@ const path = require('path');
 let chalk;
 const spawn = require('cross-spawn');
 const fs = require('fs-extra');
-let readdirp = require('readdirp');
+const readdirp = require('readdirp');
 
 const env = {
 	ILIB_BASE_PATH: '/framework/ilib',
