@@ -3,7 +3,7 @@ const path = require('path');
 let chalk;
 const spawn = require('cross-spawn');
 const fs = require('fs-extra');
-const readdirp = require('readdirp');
+const {readdirpPromise} = require('readdirp');
 
 const env = {
 	ILIB_BASE_PATH: '/framework/ilib',
@@ -13,7 +13,7 @@ const env = {
 };
 
 function findViews (base) {
-	return readdirp.promise(path.join('tests', base, 'apps'), {fileFilter: '*-View.js'});
+	return readdirpPromise(path.join('tests', base, 'apps'), {fileFilter: '*-View.js'});
 }
 
 function buildApps (base) {
