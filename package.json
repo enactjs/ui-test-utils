@@ -42,7 +42,7 @@
   "devDependencies": {
     "eslint": "^9.21.0",
     "eslint-config-enact": "^5.0.0",
-    "globals": "v16.3.0"
+    "globals": "^16.3.0"
   },
   "overrides": {
     "cross-spawn": "$cross-spawn",
