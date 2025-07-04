@@ -26,7 +26,7 @@
     "@wdio/mocha-framework": "^9.15.0",
     "@wdio/spec-reporter": "^9.15.0",
     "@wdio/static-server-service": "^9.15.0",
-    "@wdio/visual-service": "^6.4.0",
+    "@wdio/visual-service": "^8.0.4",
     "chalk": "^5.4.1",
     "cross-spawn": "^7.0.6",
     "expect-webdriverio": "^5.3.2",
@@ -42,7 +42,7 @@
   "devDependencies": {
     "eslint": "^9.29.0",
     "eslint-config-enact": "^5.0.0",
-    "globals": "^15.15.0"
+    "globals": "^16.3.0"
   },
   "overrides": {
     "cross-spawn": "$cross-spawn",
