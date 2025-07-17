@@ -1,4 +1,3 @@
-'use strict';
 import cryptoModule from 'crypto';
 import parseArgs from 'minimist';
 
