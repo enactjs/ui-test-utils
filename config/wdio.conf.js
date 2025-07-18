@@ -122,7 +122,7 @@ module.exports.configure = (options) => {
 				We need to specify a browser version that matches chromedriver version running in CI/CD environment to
 				ensure testing accuracy.
 				TODO: Update this version when chromedriver version in CI/CD is updated */
-				browserVersion: '120.0.6099.109',
+				browserVersion: '132.0.6834.84',
 				'goog:chromeOptions': visibleBrowser ? {} : {
 					args: ['--headless', '--window-size=1920,1080']
 				}
