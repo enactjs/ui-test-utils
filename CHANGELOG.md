@@ -4,6 +4,10 @@
 
 * Migrated to ESM
 
+## [2.0.1] (July 18, 2025)
+
+* Updated dependencies.
+
 ## [2.0.0] (June 10, 2025)
 
 * Updated dependencies.
