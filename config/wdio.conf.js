@@ -83,7 +83,7 @@ export const configure = (options) => {
 			// the config file unless it's absolute.
 			//
 			specs: [
-				'../../../tests/' + base + '/specs/**/*-specs.js'
+				'../../tests/' + base + '/specs/**/*-specs.js'
 			],
 			// Patterns to exclude.
 			exclude: [
