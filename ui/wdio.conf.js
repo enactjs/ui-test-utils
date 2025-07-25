@@ -1,13 +1,13 @@
-const buildApps = require('../src/build-apps'),
-	fs = require('fs');
+import buildApps from '../src/build-apps.js';
+import fs from 'fs';
 let chalk;
 import('chalk').then(({default: _chalk}) => {
 	chalk = _chalk;
 });
 
-const {configure} = require('../config/wdio.conf.js');
+import {configure} from '../config/wdio.conf.js';
 
-exports.config = configure({
+const config = configure({
 	base: 'ui',
 	//
 	// =====
@@ -59,3 +59,6 @@ exports.config = configure({
 		}
 	}
 });
+
+export default {config};
+export {config};

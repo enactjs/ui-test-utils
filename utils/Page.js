@@ -1,8 +1,6 @@
-'use strict';
+import queryString from 'query-string';
 
-const queryString = require('query-string');
-
-class Page {
+export class Page {
 	constructor () {
 		this.title = 'Untitled Test';
 		this._url = '';
@@ -170,7 +168,3 @@ class Page {
 		);
 	}
 }
-
-module.exports = {
-	Page
-};

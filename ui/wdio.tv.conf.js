@@ -1,9 +1,9 @@
-const ipAddress = require('../utils/ipAddress.js');
-const {config} = require('./wdio.conf.js');
+import {ipAddress} from '../utils/ipAddress.js';
+import {config as uiConfig} from './wdio.conf.js';
 
-exports.config = Object.assign(
+const config = Object.assign(
 	{},
-	config,
+	uiConfig,
 	{
 		capabilities: [{
 			// maxInstances can get overwritten per capability. So if you have an in-house Selenium
@@ -26,11 +26,13 @@ exports.config = Object.assign(
 		baseUrl: `http://${ipAddress()}:4567`,
 
 		before: function () {
-			if (config.before) {
-				config.before();
+			if (uiConfig.before) {
+				uiConfig.before();
 			}
 
 			browser._options = {remote: true};
 		}
 	}
 );
+
+export const uiTVConfig = {config};

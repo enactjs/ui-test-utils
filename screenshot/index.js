@@ -1,6 +1,6 @@
 import {createRoot} from 'react-dom/client';
 import App, {testMetadata} from 'UI_TEST_APP_ENTRY';
-import TestChooser from './TestChooser';
+import TestChooser from './TestChooser.js';
 
 const url = new URL(window.location.href);
 
