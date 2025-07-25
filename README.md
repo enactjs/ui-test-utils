@@ -11,15 +11,15 @@ and must be configured as a `devDependency` of the UI library.
 3. Add `apps` and `specs` folders to `tests/ui`
 4. Add local WebDriver configuration files within `tests/ui/config`
 
-    * `wdio.conf.js` containing `import {uiConfig} from '@enact/ui-test-utils/ui/wdio.conf.js'; export default uiConfig;`
-    * `wdio.docker.conf.js` containing `import {config} from '@enact/ui-test-utils/ui/wdio.docker.conf.js'; export default config;`
-    * `wdio.tv.conf.js` containing `import {config} from '@enact/ui-test-utils/ui/wdio.tv.conf.js'; export default config;`
+    * `wdio.conf.js` containing `import config from '@enact/ui-test-utils/ui/wdio.conf.js'; export default uiConfig;`
+    * `wdio.docker.conf.js` containing `import {uiDockerConfig} from '@enact/ui-test-utils/ui/wdio.docker.conf.js'; export default config;`
+    * `wdio.tv.conf.js` containing `import {uiTVConfig} from '@enact/ui-test-utils/ui/wdio.tv.conf.js'; export default config;`
 
 * and `tests/screenshot/config`
 
-    * `wdio.conf.js` containing `import {ssConfig} from '@enact/ui-test-utils/screenshot/wdio.conf.js'; export default ssConfig;`
-    * `wdio.docker.conf.js` containing `import {config} from '@enact/ui-test-utils/screenshot/wdio.docker.conf.js'; export default config;`
-    * `wdio.tv.conf.js` containing `import {config} from '@enact/ui-test-utils/screenshot/wdio.tv.conf.js'; export default config;`
+    * `wdio.conf.js` containing `import config from '@enact/ui-test-utils/screenshot/wdio.conf.js'; export default ssConfig;`
+    * `wdio.docker.conf.js` containing `import {ssDockerConfig} from '@enact/ui-test-utils/screenshot/wdio.docker.conf.js'; export default config;`
+    * `wdio.tv.conf.js` containing `import {ssTVConfig} from '@enact/ui-test-utils/screenshot/wdio.tv.conf.js'; export default config;`
 
 5. Add npm scripts for each of the above configuration files. There are likely other scripts already
    defined so these will be added to the existing scripts.
