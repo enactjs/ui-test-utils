@@ -1,6 +1,5 @@
-'use strict';
-const cryptoModule = require('crypto');
-const parseArgs = require('minimist');
+import cryptoModule from 'crypto';
+import parseArgs from 'minimist';
 
 const args = parseArgs(process.argv);
 
@@ -9,7 +8,7 @@ const pattern = args.component, // Component group to match
 	titlePattern = args.title,  // Pattern for matching test case title
 	maxInstances = args.instances || 5;  // concurrent instances for 'manual' concurrency
 
-const runTest = ({concurrency, filter, Page, testName, ...rest}) => {
+export const runTest = ({concurrency, filter, Page, testName, ...rest}) => {
 	if (concurrency && (concurrency > maxInstances)) {
 		return;
 	}
@@ -76,8 +75,4 @@ const runTest = ({concurrency, filter, Page, testName, ...rest}) => {
 			});
 		});
 	});
-};
-
-module.exports = {
-	runTest
 };

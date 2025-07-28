@@ -1,6 +1,4 @@
-'use strict';
-
-const curry = require('ramda/src/curry');
+import curry from 'ramda/src/curry';
 
 const toLower = (str) => str.replace(/^\w/, (chr) => chr.toLowerCase());
 
@@ -54,7 +52,7 @@ const hasClass = curry(async (className, el) => {
 	return elementClass.includes(className);
 });
 
-module.exports = {
+export {
 	componentSelector,
 	element,
 	expectOrdering,

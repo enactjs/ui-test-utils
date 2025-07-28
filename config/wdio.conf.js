@@ -1,5 +1,5 @@
-const parseArgs = require('minimist');
-const {execSync} = require('child_process');
+import parseArgs from 'minimist';
+import {execSync} from 'child_process';
 
 const args = parseArgs(process.argv);
 
@@ -7,7 +7,7 @@ const visibleBrowser = !!args.visible,
 	maxInstances = args.instances || 5,
 	offline = args.offline;
 
-module.exports.configure = (options) => {
+export const configure = (options) => {
 	const {base, services} = options;
 	const opts = Object.assign({}, options);
 
@@ -83,7 +83,7 @@ module.exports.configure = (options) => {
 			// the config file unless it's absolute.
 			//
 			specs: [
-				'../../tests/' + base + '/specs/**/*-specs.js'
+				'../../../tests/' + base + '/specs/**/*-specs.js'
 			],
 			// Patterns to exclude.
 			exclude: [
@@ -220,8 +220,6 @@ module.exports.configure = (options) => {
 			 * variables like `browser`. It is the perfect place to define custom commands.
 			 */
 			before: function () {
-				require('expect-webdriverio');
-
 				global.wdioExpect = global.expect;
 
 				if (options.before) {
