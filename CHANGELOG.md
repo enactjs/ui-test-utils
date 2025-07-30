@@ -1,6 +1,6 @@
 # Change Log
 
-## [unreleased]
+## [3.0.0] (July 30, 2025)
 
 * Migrated to ESM
 
