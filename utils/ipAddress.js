@@ -1,4 +1,4 @@
-const os = require('os');
+import os from 'os';
 
 function ipAddress () {
 	const ifaces = os.networkInterfaces();
@@ -17,4 +17,4 @@ function ipAddress () {
 	return address;
 }
 
-module.exports = ipAddress;
+export {ipAddress};

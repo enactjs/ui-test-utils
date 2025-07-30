@@ -1,5 +1,9 @@
 # Change Log
 
+## [3.0.0] (July 30, 2025)
+
+* Migrated to ESM
+
 ## [2.0.1] (July 18, 2025)
 
 * Updated dependencies.

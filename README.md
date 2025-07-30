@@ -9,29 +9,29 @@ and must be configured as a `devDependency` of the UI library.
 1. Add `@enact/ui-test-utils` as a devDependency: `npm i --save-dev @enact/ui-test-utils`
 2. Create the `tests/ui` folder structure within the UI library
 3. Add `apps` and `specs` folders to `tests/ui`
-4. Add local WebDriver configuration files within `tests/ui`
+4. Add local WebDriver configuration files within `tests/ui/config`
 
-    * `wdio.conf.js` containing `module.exports = require('@enact/ui-test-utils/ui/wdio.conf.js');`
-    * `wdio.docker.conf.js` containing `module.exports = require('@enact/ui-test-utils/ui/wdio.docker.conf.js');`
-    * `wdio.tv.conf.js` containing `module.exports = require('@enact/ui-test-utils/ui/wdio.tv.conf.js');`
+    * `wdio.conf.js` containing `import config from '@enact/ui-test-utils/ui/wdio.conf.js'; export default uiConfig;`
+    * `wdio.docker.conf.js` containing `import {uiDockerConfig} from '@enact/ui-test-utils/ui/wdio.docker.conf.js'; export default config;`
+    * `wdio.tv.conf.js` containing `import {uiTVConfig} from '@enact/ui-test-utils/ui/wdio.tv.conf.js'; export default config;`
 
-* and `tests/screenshot`
+* and `tests/screenshot/config`
 
-    * `wdio.conf.js` containing `module.exports = require('@enact/ui-test-utils/screenshot/wdio.conf.js');`
-    * `wdio.docker.conf.js` containing `module.exports = require('@enact/ui-test-utils/screenshot/wdio.docker.conf.js');`
-    * `wdio.tv.conf.js` containing `module.exports = require('@enact/ui-test-utils/screenshot/wdio.tv.conf.js');`
+    * `wdio.conf.js` containing `import config from '@enact/ui-test-utils/screenshot/wdio.conf.js'; export default ssConfig;`
+    * `wdio.docker.conf.js` containing `import {ssDockerConfig} from '@enact/ui-test-utils/screenshot/wdio.docker.conf.js'; export default config;`
+    * `wdio.tv.conf.js` containing `import {ssTVConfig} from '@enact/ui-test-utils/screenshot/wdio.tv.conf.js'; export default config;`
 
 5. Add npm scripts for each of the above configuration files. There are likely other scripts already
    defined so these will be added to the existing scripts.
 
 ```json
    "scripts": {
-      "test-ui": "start-tests tests/ui/wdio.conf.js",
-      "test-ui-docker": "start-tests tests/ui/wdio.docker.conf.js",
-      "test-ui-tv": "start-tests tests/ui/wdio.tv.conf.js",
-      "test-ss": "start-tests tests/screenshot/wdio.conf.js",
-      "test-ss-docker": "start-tests tests/screenshot/wdio.docker.conf.js",
-      "test-ss-tv": "start-tests tests/screenshot/wdio.tv.conf.js",
+      "test-ui": "start-tests tests/ui/config/wdio.conf.js",
+      "test-ui-docker": "start-tests tests/ui/config/wdio.docker.conf.js",
+      "test-ui-tv": "start-tests tests/ui/config/wdio.tv.conf.js",
+      "test-ss": "start-tests tests/screenshot/config/wdio.conf.js",
+      "test-ss-docker": "start-tests tests/screenshot/config/wdio.docker.conf.js",
+      "test-ss-tv": "start-tests tests/screenshot/config/wdio.tv.conf.js",
    }
 ```
 
