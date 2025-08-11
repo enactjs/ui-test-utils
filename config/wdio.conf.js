@@ -19,37 +19,8 @@ export const configure = (options) => {
 		if (process.env.TV_IP && process.argv.find(arg => arg.includes('tv.conf'))) {
 			process.env.CHROME_DRIVER = 2.44; // Currently, TV supports 83 and lower, but keep the previous version for safety.
 		} else {
-			let chromeVersionMajorNumber;
-			try {
-				if (process.platform === 'win32') {
-					// Windows
-					const chromeVersion = /\d+/.exec(execSync('wmic datafile where "name=\'C:\\\\Program Files\\\\Google\\\\Chrome\\\\Application\\\\chrome.exe\'" get Version /value').toString());
-					chromeVersionMajorNumber = (chromeVersion && chromeVersion[0]);
-				} else if (process.platform === 'darwin') {
-					// Mac
-					const chromeVersion = /Chrome (\d+)/.exec(execSync('/Applications/Google\\ Chrome.app/Contents/MacOS/Google\\ Chrome --version'));
-					chromeVersionMajorNumber = (chromeVersion && chromeVersion[1]);
-				} else {
-					const chromeVersion = /Chrome (\d+)/.exec(execSync('google-chrome -version'));
-					chromeVersionMajorNumber = (chromeVersion && chromeVersion[1]);
-				}
-				let chromeDriverVersion;
-
-				if (chromeVersionMajorNumber > 114) {
-					chromeDriverVersion = execSync('curl https://googlechromelabs.github.io/chrome-for-testing/LATEST_RELEASE' + (chromeVersionMajorNumber ? ('_' + chromeVersionMajorNumber) : ''));
-				} else {
-					chromeDriverVersion = execSync('curl https://chromedriver.storage.googleapis.com/LATEST_RELEASE' + (chromeVersionMajorNumber ? ('_' + chromeVersionMajorNumber) : ''));
-				}
-
-				if (chromeDriverVersion.includes('Error') || !/\d+.\d+.\d+.\d+/.exec(chromeDriverVersion)) {
-					throw new Error();
-				} else {
-					process.env.CHROME_DRIVER = chromeDriverVersion;
-				}
-			} catch (error) {
-				console.log('ERROR: Cannot find Chrome driver from Chrome ' + chromeVersionMajorNumber);
-				process.env.CHROME_DRIVER = 2.44;
-			}
+			// TODO: Update this version when chromedriver version in CI/CD is updated
+			process.env.CHROME_DRIVER = '132.0.6834.159';
 		}
 
 		console.log('Chrome Driver Version : ' + process.env.CHROME_DRIVER);
@@ -120,9 +91,8 @@ export const configure = (options) => {
 				browserName: 'chrome',
 				/* WebdriverIO v8.14 and above downloads and uses the latest Chrome version when running tests.
 				We need to specify a browser version that matches chromedriver version running in CI/CD environment to
-				ensure testing accuracy.
-				TODO: Update this version when chromedriver version in CI/CD is updated */
-				browserVersion: '120.0.6099.109',
+				ensure testing accuracy. */
+				browserVersion: process.env.CHROME_DRIVER,
 				'goog:chromeOptions': visibleBrowser ? {} : {
 					args: ['--headless', '--window-size=1920,1080']
 				}
