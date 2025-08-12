@@ -1,5 +1,4 @@
 import parseArgs from 'minimist';
-import {execSync} from 'child_process';
 
 const args = parseArgs(process.argv);
 
