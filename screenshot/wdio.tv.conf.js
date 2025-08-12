@@ -33,9 +33,6 @@ const config = Object.assign(
 			'wdio:maxInstances': 1,
 			//
 			browserName: 'chrome',
-			/* WebdriverIO v8.14 and above downloads and uses the latest Chrome version when running tests.
-			We need to specify a browser version that match chromedriver version running in CI/CD environment to
-			ensure testing accuracy. */
 			'goog:chromeOptions': {
 				debuggerAddress: `${process.env.TV_IP}:9998`
 			},
