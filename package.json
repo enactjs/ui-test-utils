@@ -45,7 +45,6 @@
     "ramda": "^0.30.1",
     "readdirp": "^3.6.0",
     "wdio-docker-service": "^3.2.1",
-    "wdio-selenium-standalone-service": "^0.0.12",
     "webdriverio": "^9.19.1"
   },
   "devDependencies": {

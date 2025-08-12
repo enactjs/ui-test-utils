@@ -150,9 +150,6 @@ export const configure = (options) => {
 			// your test setup with almost no effort. Unlike plugins, they don't add new
 			// commands. Instead, they hook themselves up into the test process.
 			services: [
-				['selenium-standalone', {
-					skipSeleniumInstall: offline
-				}],
 				['static-server', {
 					folders: [
 						{mount: '/', path: './tests/' + base + '/dist'}
