@@ -3,8 +3,7 @@ import parseArgs from 'minimist';
 const args = parseArgs(process.argv);
 
 const visibleBrowser = !!args.visible,
-	maxInstances = args.instances || 5,
-	offline = args.offline;
+	maxInstances = args.instances || 5;
 
 export const configure = (options) => {
 	const {base, services} = options;
