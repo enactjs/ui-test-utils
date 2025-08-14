@@ -14,8 +14,7 @@ const config = Object.assign(
 			browserName: 'chrome',
 			'goog:chromeOptions': {
 				debuggerAddress: `${process.env.TV_IP}:9998`
-			},
-			'wdio:enforceWebDriverClassic': true
+			}
 		}],
 
 		baseUrl: `http://${ipAddress()}:4567`,

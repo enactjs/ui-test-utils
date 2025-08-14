@@ -19,6 +19,8 @@ export class Page {
 			await browser.setWindowSize(1920, 1080);
 		}
 
+		await this.delay(200);
+
 		await browser.setViewport({width: 1920, height: 1080});
 		await browser.url(this.url);
 
