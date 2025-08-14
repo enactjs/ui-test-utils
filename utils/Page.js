@@ -13,11 +13,6 @@ export class Page {
 	async open (appPath, urlExtra = '?locale=en-US') {
 		await browser.setTimeout({script: 60000});
 
-		// await browser.pause(500);
-		await browser.execute( () => {
-			document.body.innerHTML = '';
-		});
-
 		this._url = `/${appPath}/${urlExtra}`;
 		// Can't resize browser window when connected to remote debugger!
 		if (!browser._options || !browser._options.remote) {
