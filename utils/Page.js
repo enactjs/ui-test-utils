@@ -11,9 +11,7 @@ export class Page {
 	}
 
 	async open (appPath, urlExtra = '?locale=en-US') {
-		await browser.execute(function () {
-			document.body.innerHTML = '';
-		});
+		await browser.setTimeout({script: 60000});
 
 		this._url = `/${appPath}/${urlExtra}`;
 		// Can't resize browser window when connected to remote debugger!
@@ -21,6 +19,9 @@ export class Page {
 			await browser.setWindowSize(1920, 1080);
 		}
 
+		await this.delay(200);
+
+		await browser.setViewport({width: 1920, height: 1080});
 		await browser.url(this.url);
 
 		const body = await $('body');
