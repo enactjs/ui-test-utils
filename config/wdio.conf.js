@@ -89,7 +89,8 @@ export const configure = (options) => {
 				browserVersion: process.env.CHROME_DRIVER,
 				'goog:chromeOptions': visibleBrowser ? {} : {
 					args: ['--headless', '--window-size=1920,1080']
-				}
+				},
+				'webSocketUrl': false // disables BiDi, forces classic mode
 			}],
 			//
 			// ===================
