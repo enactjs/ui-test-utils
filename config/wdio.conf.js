@@ -87,9 +87,35 @@ export const configure = (options) => {
 				We need to specify a browser version that matches chromedriver version running in CI/CD environment to
 				ensure testing accuracy. */
 				browserVersion: process.env.CHROME_DRIVER,
-				'goog:chromeOptions': visibleBrowser ? {args: ['--window-size=1920,1080']} : {
-					args: ['--headless', '--window-size=1920,1080']
-				},
+				'goog:chromeOptions': visibleBrowser ?
+					{
+						args: [
+							'--disable-gpu',
+							'--window-size=1920,1080',
+							'--no-sandbox',
+							'--disable-dev-shm-usage',
+							'--disable-search-engine-choice-screen',
+							'--disable-background-networking',
+							'--disable-background-timer-throttling',
+							'--disable-renderer-backgrounding',
+							'--disable-backgrounding-occluded-windows',
+							'--disable-features=Translate,BackForwardCache,UseChromeOSDirectVideoDecoder'
+						]
+					} : {
+						args: [
+							'--headless',
+							'--disable-gpu',
+							'--window-size=1920,1080',
+							'--no-sandbox',
+							'--disable-dev-shm-usage',
+							'--disable-search-engine-choice-screen',
+							'--disable-background-networking',
+							'--disable-background-timer-throttling',
+							'--disable-renderer-backgrounding',
+							'--disable-backgrounding-occluded-windows',
+							'--disable-features=Translate,BackForwardCache,UseChromeOSDirectVideoDecoder'
+						]
+					},
 				webSocketUrl: false, // disables BiDi, forces classic mode
 				'wdio:enforceWebDriverClassic': true
 			}],
@@ -122,7 +148,7 @@ export const configure = (options) => {
 			//
 			// Default timeout in milliseconds for request
 			// if Selenium Grid doesn't send response
-			connectionRetryTimeout: 90000,
+			connectionRetryTimeout: 120000,
 			//
 			// Default request retries count
 			connectionRetryCount: 3,

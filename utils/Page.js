@@ -14,45 +14,11 @@ export class Page {
 		// await browser.setTimeout({script: 60000});
 
 		this._url = `/${appPath}/${urlExtra}`;
-		// Can't resize browser window when connected to remote debugger!
-		// if (!browser._options || !browser._options.remote) {
-		// 	await browser.setWindowSize(1920, 1080);
-		// }
 
-		// await this.delay(200);
-		//
-		// await browser.setViewport({width: 1920, height: 1080});
-
-
-		// Ensure DOM is ready before querying body
-		await browser.waitUntil(
-			async () => {
-				try {
-					const state = await browser.execute(() => document.readyState);
-					return state === 'complete';
-				} catch (e) {
-					return false;
-				}
-			},
-			{
-				timeout: 20000,
-				timeoutMsg: 'Page did not reach readyState=complete in time'
-			}
-		);
-
-
-		await browser.url(this.url);
-
-		if (!await browser.getUrl()) {
-			console.log(await browser.getUrl());
-		}
-
-
+		// ✅ Always ensure <body> exists before proceeding
 		const body = await $('body');
-		await body.waitForExist({ timeout: 5000 });
-		await body.waitForDisplayed({timeout: 5000});
+		await body.waitForExist({timeout: 10000});
 
-		await this.delay(200);
 	}
 
 	serializeParams (params) {
