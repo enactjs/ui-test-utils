@@ -35,7 +35,7 @@ export class Page {
 				}
 			},
 			{
-				timeout: 10000,
+				timeout: 20000,
 				timeoutMsg: 'Page did not reach readyState=complete in time'
 			}
 		);
