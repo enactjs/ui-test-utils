@@ -87,7 +87,7 @@ export const configure = (options) => {
 				We need to specify a browser version that matches chromedriver version running in CI/CD environment to
 				ensure testing accuracy. */
 				browserVersion: process.env.CHROME_DRIVER,
-				'goog:chromeOptions': visibleBrowser ? {} : {
+				'goog:chromeOptions': visibleBrowser ? {args: ['--window-size=1920,1080']} : {
 					args: ['--headless', '--window-size=1920,1080']
 				},
 				'webSocketUrl': false // disables BiDi, forces classic mode
@@ -126,6 +126,12 @@ export const configure = (options) => {
 			connectionRetryCount: 3,
 			// Ignore deprecation warnings
 			deprecationWarnings: false,
+			//
+			// Default timeouts
+			//
+			timeouts: {
+				script: 60000 // extend script timeout to 60s just in case
+			},
 			//
 			// Initialize the browser instance with a WebdriverIO plugin. The object should have the
 			// plugin name as key and the desired plugin options as properties. Make sure you have
