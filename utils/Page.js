@@ -15,6 +15,8 @@ export class Page {
 
 		this._url = `/${appPath}/${urlExtra}`;
 
+		await browser.url(this.url);
+
 		// ✅ Always ensure <body> exists before proceeding
 		const body = await $('body');
 		await body.waitForExist({timeout: 10000});
