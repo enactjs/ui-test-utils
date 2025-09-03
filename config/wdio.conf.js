@@ -87,8 +87,8 @@ export const configure = (options) => {
 				We need to specify a browser version that matches chromedriver version running in CI/CD environment to
 				ensure testing accuracy. */
 				browserVersion: process.env.CHROME_DRIVER,
-				'goog:chromeOptions': visibleBrowser ? {args: ['--window-size=1920,1080', '--log-level=3']} : {
-					args: ['--headless', '--window-size=1920,1080', '--log-level=3']
+				'goog:chromeOptions': visibleBrowser ? {args: ['--window-size=1920,1080']} : {
+					args: ['--headless', '--window-size=1920,1080']
 				},
 				webSocketUrl: false, // disables BiDi, forces classic mode
 				'wdio:enforceWebDriverClassic': true
