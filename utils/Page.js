@@ -22,9 +22,34 @@ export class Page {
 		// await this.delay(200);
 		//
 		// await browser.setViewport({width: 1920, height: 1080});
+
+
+		// Ensure DOM is ready before querying body
+		await browser.waitUntil(
+			async () => {
+				try {
+					const state = await browser.execute(() => document.readyState);
+					return state === 'complete';
+				} catch (e) {
+					return false;
+				}
+			},
+			{
+				timeout: 10000,
+				timeoutMsg: 'Page did not reach readyState=complete in time'
+			}
+		);
+
+
 		await browser.url(this.url);
 
+		if (!await browser.getUrl()) {
+			console.log(await browser.getUrl());
+		}
+
+
 		const body = await $('body');
+		await body.waitForExist({ timeout: 5000 });
 		await body.waitForDisplayed({timeout: 5000});
 
 		await this.delay(200);
