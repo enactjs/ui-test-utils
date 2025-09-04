@@ -90,6 +90,8 @@ export const configure = (options) => {
 				'goog:chromeOptions': visibleBrowser ?
 					{
 						args: [
+							'--start-maximized',
+							'--start-fullscreen',
 							'--disable-gpu',
 							'--window-size=1920,1080',
 							'--no-sandbox',
@@ -103,6 +105,8 @@ export const configure = (options) => {
 						]
 					} : {
 						args: [
+							'--start-maximized',
+							'--start-fullscreen',
 							'--headless',
 							'--disable-gpu',
 							'--window-size=1920,1080',
@@ -215,11 +219,14 @@ export const configure = (options) => {
 			 * Gets executed before test execution begins. At this point you can access to all global
 			 * variables like `browser`. It is the perfect place to define custom commands.
 			 */
-			before: function () {
+			before: async function () {
 				global.wdioExpect = global.expect;
 
+				await browser.maximizeWindow();
+				await browser.setWindowSize(1936,1280);
+
 				if (options.before) {
-					options.before();
+					await options.before();
 				}
 			}
 		}

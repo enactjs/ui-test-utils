@@ -21,6 +21,8 @@ export class Page {
 		const body = await $('body');
 		await body.waitForExist({timeout: 10000});
 
+		await this.delay(200);
+
 	}
 
 	serializeParams (params) {
