@@ -223,7 +223,7 @@ export const configure = (options) => {
 				global.wdioExpect = global.expect;
 
 				await browser.maximizeWindow();
-				await browser.setWindowSize(1936,1280);
+				await browser.setWindowSize(1920, 1270);
 
 				if (options.before) {
 					await options.before();
