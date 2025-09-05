@@ -13,6 +13,18 @@ export class Page {
 	async open (appPath, urlExtra = '?locale=en-US') {
 		// await browser.setTimeout({script: 60000});
 
+		// Inject fallback font-family to normalize text
+		await browser.execute(() => {
+			const style = document.createElement('style');
+			style.innerHTML = `
+						* {
+						  -webkit-font-smoothing: antialiased !important;
+						  text-rendering: optimizeLegibility !important;
+						}
+      				`;
+			document.head.appendChild(style);
+		});
+
 		this._url = `/${appPath}/${urlExtra}`;
 
 		await browser.url(this.url);

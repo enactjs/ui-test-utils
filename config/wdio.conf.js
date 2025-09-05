@@ -90,6 +90,10 @@ export const configure = (options) => {
 				'goog:chromeOptions': visibleBrowser ?
 					{
 						args: [
+							// Make rendering more consistent across OS
+							'--disable-font-subpixel-positioning',
+							'--disable-lcd-text',
+							'--force-device-scale-factor=1',
 							'--start-maximized',
 							'--start-fullscreen',
 							'--disable-gpu',
@@ -105,6 +109,11 @@ export const configure = (options) => {
 						]
 					} : {
 						args: [
+							// Make rendering more consistent across OS
+							'--disable-font-subpixel-positioning',
+							'--disable-lcd-text',
+							'--force-device-scale-factor=1',
+							'--headless=new',
 							'--start-maximized',
 							'--start-fullscreen',
 							'--headless',
@@ -224,6 +233,8 @@ export const configure = (options) => {
 
 				await browser.maximizeWindow();
 				await browser.setWindowSize(1920, 1270);
+
+
 
 				if (options.before) {
 					await options.before();
