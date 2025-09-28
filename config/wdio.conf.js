@@ -14,7 +14,7 @@ module.exports.configure = (options) => {
 	delete opts.base;
 	delete opts.before;
 	delete opts.services;
-	process.env.CHROME_DRIVER = 132;
+	process.env.CHROME_DRIVER = 132.0.6834.159;
 
 	return Object.assign(
 		opts,
