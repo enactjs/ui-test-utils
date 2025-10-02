@@ -106,7 +106,7 @@ export const configure = (options) => {
 							'--start-fullscreen',
 							'--headless',
 							'--disable-gpu',
-							'--window-size=1920,1080',
+							'--window-size=1920,1080'
 						]
 					},
 				webSocketUrl: false, // disables BiDi, forces classic mode
