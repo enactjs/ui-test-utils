@@ -90,27 +90,15 @@ export const configure = (options) => {
 				'goog:chromeOptions': visibleBrowser ?
 					{
 						args: [
-							// Make rendering more consistent across OS
-							'--disable-font-subpixel-positioning',
 							'--disable-lcd-text',
 							'--force-device-scale-factor=1',
 							'--start-maximized',
 							'--start-fullscreen',
 							'--disable-gpu',
-							'--window-size=1920,1080',
-							'--no-sandbox',
-							'--disable-dev-shm-usage',
-							'--disable-search-engine-choice-screen',
-							'--disable-background-networking',
-							'--disable-background-timer-throttling',
-							'--disable-renderer-backgrounding',
-							'--disable-backgrounding-occluded-windows',
-							'--disable-features=Translate,BackForwardCache,UseChromeOSDirectVideoDecoder'
+							'--window-size=1920,1080'
 						]
 					} : {
 						args: [
-							// Make rendering more consistent across OS
-							'--disable-font-subpixel-positioning',
 							'--disable-lcd-text',
 							'--force-device-scale-factor=1',
 							'--headless=new',
@@ -119,20 +107,12 @@ export const configure = (options) => {
 							'--headless',
 							'--disable-gpu',
 							'--window-size=1920,1080',
-							'--no-sandbox',
-							'--disable-dev-shm-usage',
-							'--disable-search-engine-choice-screen',
-							'--disable-background-networking',
-							'--disable-background-timer-throttling',
-							'--disable-renderer-backgrounding',
-							'--disable-backgrounding-occluded-windows',
-							'--disable-features=Translate,BackForwardCache,UseChromeOSDirectVideoDecoder'
 						]
 					},
 				webSocketUrl: false, // disables BiDi, forces classic mode
 				'wdio:enforceWebDriverClassic': true
 			}],
-			restartBrowserBetweenTests: true, // ✅ isolates failures
+			restartBrowserBetweenTests: true, // isolates failures
 			//
 			// ===================
 			// Test Configurations

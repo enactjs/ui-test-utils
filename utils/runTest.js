@@ -65,7 +65,6 @@ export const runTest = ({concurrency, filter, Page, testName, ...rest}) => {
 								await Page.delay(200);
 
 								expect(await browser.checkScreen(screenshotFileName, {
-									enableLegacyScreenshotMethod: true,
 									disableCSSAnimation: true,
 									ignoreAntialiasing: true,
 									ignoreNothing: true,
