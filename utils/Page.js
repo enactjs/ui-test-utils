@@ -20,10 +20,9 @@ export class Page {
 		await browser.url(this.url);
 
 		const body = await $('body');
-		await body.waitForExist({timeout: 10000});
+		await body.waitForDisplayed({timeout: 10000});
 
 		await this.delay(200);
-
 	}
 
 	serializeParams (params) {
