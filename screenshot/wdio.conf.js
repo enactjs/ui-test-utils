@@ -13,12 +13,6 @@ const config = configure({
 			waitForFontsLoaded: true
 		}
 	]],
-	capabilities: [{
-		/* WebdriverIO v8.14 and above downloads and uses the latest Chrome version when running tests.
-		We need to specify a browser version that matches chromedriver version running in CI/CD environment to
-		ensure testing accuracy. */
-		browserVersion: '120.0.6099.109'
-	}],
 	//
 	// =====
 	// Hooks

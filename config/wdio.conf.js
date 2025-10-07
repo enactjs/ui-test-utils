@@ -15,7 +15,7 @@ export const configure = (options) => {
 
 	if (!process.env.CHROME_DRIVER) {
 		// TODO: Update this version when chromedriver version in CI/CD is updated
-		process.env.CHROME_DRIVER = '132.0.6834.159';
+		process.env.CHROME_DRIVER = base === 'screenshot' ? '120.0.6099.109' : '132.0.6834.159';
 
 		console.log('Chrome Driver Version : ' + process.env.CHROME_DRIVER);
 	}
