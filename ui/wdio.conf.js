@@ -9,6 +9,12 @@ import {configure} from '../config/wdio.conf.js';
 
 const config = configure({
 	base: 'ui',
+	capabilities: [{
+		/* WebdriverIO v8.14 and above downloads and uses the latest Chrome version when running tests.
+		We need to specify a browser version that matches chromedriver version running in CI/CD environment to
+		ensure testing accuracy. */
+		browserVersion: process.env.CHROME_DRIVER
+	}],
 	//
 	// =====
 	// Hooks
