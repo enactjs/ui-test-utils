@@ -112,7 +112,6 @@ export const configure = (options) => {
 				webSocketUrl: false, // disables BiDi, forces classic mode
 				'wdio:enforceWebDriverClassic': true
 			}],
-			restartBrowserBetweenTests: true, // isolates failures
 			//
 			// ===================
 			// Test Configurations
