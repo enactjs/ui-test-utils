@@ -13,6 +13,7 @@ const config = configure({
 			waitForFontsLoaded: true
 		}
 	]],
+	browserVersion: '120.0.6099.109',
 	//
 	// =====
 	// Hooks
