@@ -62,8 +62,6 @@ export const runTest = ({concurrency, filter, Page, testName, ...rest}) => {
 
 								await Page.open(`?${params}`);
 
-								await Page.delay(200);
-
 								expect(await browser.checkScreen(screenshotFileName, {
 									disableCSSAnimation: true,
 									ignoreAntialiasing: true,
