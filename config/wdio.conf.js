@@ -101,7 +101,6 @@ export const configure = (options) => {
 						args: [
 							'--disable-lcd-text',
 							'--force-device-scale-factor=1',
-							'--headless=new',
 							'--start-maximized',
 							'--start-fullscreen',
 							'--headless',
