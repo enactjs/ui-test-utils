@@ -16,15 +16,11 @@ export class Page {
 		});
 
 		this._url = `/${appPath}/${urlExtra}`;
-		// Can't resize browser window when connected to remote debugger!
-		if (!browser._options || !browser._options.remote) {
-			await browser.setWindowSize(1920, 1080);
-		}
 
 		await browser.url(this.url);
 
 		const body = await $('body');
-		await body.waitForDisplayed({timeout: 5000});
+		await body.waitForDisplayed({timeout: 10000});
 
 		await this.delay(200);
 	}

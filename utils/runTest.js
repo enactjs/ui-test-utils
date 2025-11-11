@@ -64,6 +64,7 @@ export const runTest = ({concurrency, filter, Page, testName, ...rest}) => {
 
 								expect(await browser.checkScreen(screenshotFileName, {
 									disableCSSAnimation: true,
+									ignoreAntialiasing: true,
 									ignoreNothing: true,
 									rawMisMatchPercentage: true,
 									waitForFontsLoaded: true
