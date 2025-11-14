@@ -1,6 +1,6 @@
 # Change Log
 
-## [unreleased]
+## [4.0.0] (November 14, 2025)
 
 * Updated Chrome driver version to 132.
 
