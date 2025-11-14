@@ -1,5 +1,9 @@
 # Change Log
 
+## [4.0.0] (November 14, 2025)
+
+* Updated Chrome driver version to 132.
+
 ## [3.0.0] (July 30, 2025)
 
 * Migrated to ESM
