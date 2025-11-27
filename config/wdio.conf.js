@@ -204,7 +204,7 @@ export const configure = (options) => {
 				global.wdioExpect = global.expect;
 				// in Chrome 132, the browser window size takes into account also the address bar and tab area
 				await browser.maximizeWindow();
-				await browser.setWindowSize(1920, 1175);
+				await browser.setWindowSize(1920, 1167);
 
 				if (options.before) {
 					await options.before();
