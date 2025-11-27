@@ -99,6 +99,7 @@ export const configure = (options) => {
 							'--start-maximized',
 							'--disable-gpu',
 							'--window-size=1920,1080',
+							'--disable-dev-shm-usage',
 							...(visibleBrowser ? [] : ['--headless'])
 						]
 					},
@@ -203,8 +204,22 @@ export const configure = (options) => {
 			before: async function () {
 				global.wdioExpect = global.expect;
 				// in Chrome 132, the browser window size takes into account also the address bar and tab area
-				await browser.maximizeWindow();
 				await browser.setWindowSize(1920, 1167);
+
+				// Add a small delay to let the window stabilize
+				await browser.pause(200);
+
+				// Verify the window is ready
+				await browser.waitUntil(
+					async () => {
+						const state = await browser.execute(() => document.readyState);
+						return state === 'complete';
+					},
+					{
+						timeout: 10000,
+						timeoutMsg: 'Page did not reach ready state'
+					}
+				);
 
 				if (options.before) {
 					await options.before();
