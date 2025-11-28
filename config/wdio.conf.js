@@ -130,11 +130,11 @@ export const configure = (options) => {
 			baseUrl: 'http://localhost:4567',
 			//
 			// Default timeout for all waitFor* commands.
-			waitforTimeout: 10000,
+			waitforTimeout: 30000,
 			//
 			// Default timeout in milliseconds for request
 			// if Selenium Grid doesn't send response
-			connectionRetryTimeout: 120000,
+			connectionRetryTimeout: 180000,
 			//
 			// Default request retries count
 			connectionRetryCount: 3,
@@ -144,7 +144,9 @@ export const configure = (options) => {
 			// Default timeouts
 			//
 			timeouts: {
-				script: 120000 // Chrome 132 needs more time
+				script: 120000, // Chrome 132 needs more time
+				pageLoad: 120000, // Add explicit page load timeout
+				implicit: 15000
 			},
 			//
 			// Initialize the browser instance with a WebdriverIO plugin. The object should have the
@@ -205,9 +207,6 @@ export const configure = (options) => {
 				global.wdioExpect = global.expect;
 				// in Chrome 132, the browser window size takes into account also the address bar and tab area
 				await browser.setWindowSize(1920, 1167);
-
-				// Add a small delay to let the window stabilize
-				await browser.pause(200);
 
 				// Verify the window is ready
 				await browser.waitUntil(

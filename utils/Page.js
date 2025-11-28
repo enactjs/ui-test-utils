@@ -28,7 +28,7 @@ export class Page {
 		);
 
 		// Small pause to let any initial scripts finish
-		await browser.pause(300);
+		await browser.pause(100);
 
 		// Now safe to clear body - line 14
 		await browser.execute(() => {
@@ -38,7 +38,7 @@ export class Page {
 		const body = await $('body');
 		await body.waitForDisplayed({timeout: 10000});
 
-		await this.delay(200);
+		await this.delay(100);
 	}
 
 	serializeParams (params) {
