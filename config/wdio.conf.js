@@ -3,7 +3,7 @@ import parseArgs from 'minimist';
 const args = parseArgs(process.argv);
 
 const visibleBrowser = !!args.visible,
-	maxInstances = args.instances || 3;
+	maxInstances = args.instances || 5;
 
 export const configure = (options) => {
 	const {base, services} = options;
@@ -98,8 +98,8 @@ export const configure = (options) => {
 							'--force-device-scale-factor=1',
 							'--start-maximized',
 							'--disable-gpu',
-							'--window-size=1920,1080',
 							'--disable-dev-shm-usage',
+							'--no-sandbox',
 							...(visibleBrowser ? [] : ['--headless'])
 						]
 					},
@@ -144,7 +144,7 @@ export const configure = (options) => {
 			// Default timeouts
 			//
 			timeouts: {
-				script: 60000 // extend script timeout to 60s just in case
+				script: 120000 // Chrome 132 needs more time
 			},
 			//
 			// Initialize the browser instance with a WebdriverIO plugin. The object should have the

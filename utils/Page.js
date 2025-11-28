@@ -11,13 +11,29 @@ export class Page {
 	}
 
 	async open (appPath, urlExtra = '?locale=en-US') {
-		await browser.execute(function () {
-			document.body.innerHTML = '';
-		});
-
 		this._url = `/${appPath}/${urlExtra}`;
 
 		await browser.url(this.url);
+
+		// Wait for page to be interactive
+		await browser.waitUntil(
+			async () => {
+				const state = await browser.execute(() => document.readyState);
+				return state === 'complete' || state === 'interactive';
+			},
+			{
+				timeout: 15000,
+				timeoutMsg: 'Page did not become ready'
+			}
+		);
+
+		// Small pause to let any initial scripts finish
+		await browser.pause(300);
+
+		// Now safe to clear body - line 14
+		await browser.execute(() => {
+			document.body.innerHTML = '';
+		});
 
 		const body = await $('body');
 		await body.waitForDisplayed({timeout: 10000});
