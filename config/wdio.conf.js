@@ -144,8 +144,8 @@ export const configure = (options) => {
 			// Default timeouts
 			//
 			timeouts: {
-				script: 120000, // Chrome 132 needs more time
-				pageLoad: 120000, // Add explicit page load timeout
+				script: 600000, // Chrome 132 needs more time
+				pageLoad: 600000, // Add explicit page load timeout
 				implicit: 15000
 			},
 			//
