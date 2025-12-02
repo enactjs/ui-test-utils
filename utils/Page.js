@@ -30,7 +30,6 @@ export class Page {
 		// Small pause to let any initial scripts finish
 		await browser.pause(100);
 
-		// Now safe to clear body - line 14
 		await browser.execute(() => {
 			document.body.innerHTML = '';
 		});

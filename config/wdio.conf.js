@@ -197,7 +197,8 @@ export const configure = (options) => {
 			// See the full list at http://mochajs.org/
 			mochaOpts: {
 				ui: 'bdd',
-				timeout: 60 * 60 * 1000
+				timeout: 60 * 60 * 1000,
+				retries: 2
 			},
 			/**
 			 * Gets executed before test execution begins. At this point you can access to all global

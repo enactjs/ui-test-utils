@@ -62,7 +62,17 @@ function onPrepare () {
 	return buildApps('screenshot');
 }
 
-function beforeTest (testData) {
+async function beforeTest (testData) {
+	try {
+		// Verify browser is responsive
+		await browser.execute(() => true);
+	} catch (e) {
+		console.log('Browser unresponsive, reloading session');
+		await browser.deleteSession();
+		await browser.reloadSession();
+		await browser.setWindowSize(1920, 1167);
+	}
+
 	// If title doesn't have a '/', it's not a screenshot test, don't save
 	if (testData && testData.title && testData.title.indexOf('/') > 0) {
 		const filename = generateReferenceName({test: testData});
@@ -78,7 +88,7 @@ function beforeTest (testData) {
 	}
 }
 
-function afterTest (testData, _context, {passed}) {
+async function afterTest (testData, _context, {error, passed}) {
 	// If this doesn't include context data, not a screenshot test
 	if (testData && testData.title && testData.context && testData.context.params) {
 		const fileName = testData.context.fileName.replace(/ /g, '_') + '.png';
@@ -113,6 +123,34 @@ function afterTest (testData, _context, {passed}) {
 					});
 				}
 			});
+		}
+
+		if (error) {
+			const isTimeout = error.message &&
+				(error.message.includes('timeout') ||
+					error.message.includes('aborted') ||
+					error.message.includes('HEADERS_TIMEOUT'));
+
+			if (isTimeout) {
+				console.log(`⚠️  Timeout in test "${test.title}" - recovering session`);
+
+				try {
+					// Stop any pending operations
+					await browser.execute(() => window.stop()).catch(() => {});
+
+					// Delete broken session
+					await browser.deleteSession();
+
+					// Start fresh
+					await browser.reloadSession();
+					await browser.setWindowSize(1920, 1167);
+					await browser.pause(500);
+
+					console.log('✅ Session recovered successfully');
+				} catch (recoveryError) {
+					console.error('❌ Session recovery failed:', recoveryError.message);
+				}
+			}
 		}
 	}
 }
