@@ -132,7 +132,7 @@ async function afterTest (testData, _context, {error, passed}) {
 					error.message.includes('HEADERS_TIMEOUT'));
 
 			if (isTimeout) {
-				console.log(`⚠️  Timeout in test "${test.title}" - recovering session`);
+				console.log(`⚠️  Timeout in test "${testData.title}" - recovering session`);
 
 				try {
 					// Stop any pending operations
