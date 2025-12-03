@@ -63,14 +63,31 @@ function onPrepare () {
 }
 
 async function beforeTest (testData) {
+	const workerId = browser.sessionId;
+
+	// Check if this worker has been marked as dead
+	if (global.failedWorkers && global.failedWorkers.has(workerId)) {
+		console.log(`⏭️  Skipping test - worker ${workerId} is marked as failed`);
+		throw new Error('Worker is marked as failed - skipping remaining tests');
+	}
+
+	// Quick health check with short timeout
 	try {
-		// Verify browser is responsive
-		await browser.execute(() => true);
+		await Promise.race([
+			browser.execute(() => true),
+			new Promise((_, reject) =>
+				setTimeout(() => reject(new Error('Health check timeout')), 3000)
+			)
+		]);
 	} catch (e) {
-		console.log('Browser unresponsive, reloading session');
-		await browser.deleteSession();
-		await browser.reloadSession();
-		await browser.setWindowSize(1920, 1167);
+		console.log(`❌ Worker ${workerId} health check failed`);
+
+		// Mark worker as dead - don't try to recover
+		if (global.failedWorkers) {
+			global.failedWorkers.add(workerId);
+		}
+
+		throw new Error('Worker health check failed - marking as dead');
 	}
 
 	// If title doesn't have a '/', it's not a screenshot test, don't save
@@ -124,33 +141,102 @@ async function afterTest (testData, _context, {error, passed}) {
 				}
 			});
 		}
+	}
 
-		if (error) {
-			const isTimeout = error.message &&
-				(error.message.includes('timeout') ||
-					error.message.includes('aborted') ||
-					error.message.includes('HEADERS_TIMEOUT'));
+	if (error) {
+		const isTimeout = error.message &&
+			(error.message.includes('timeout') ||
+				error.message.includes('aborted') ||
+				error.message.includes('HEADERS_TIMEOUT') ||
+				error.message.includes('ECONNREFUSED'));
 
-			if (isTimeout) {
-				console.log(`⚠️  Timeout in test "${testData.title}" - recovering session`);
+		if (isTimeout) {
+			const workerId = browser.sessionId;
 
-				try {
-					// Stop any pending operations
-					await browser.execute(() => window.stop()).catch(() => {});
-
-					// Delete broken session
-					await browser.deleteSession();
-
-					// Start fresh
-					await browser.reloadSession();
-					await browser.setWindowSize(1920, 1167);
-					await browser.pause(500);
-
-					console.log('✅ Session recovered successfully');
-				} catch (recoveryError) {
-					console.error('❌ Session recovery failed:', recoveryError.message);
-				}
+			// Track consecutive failures
+			if (!global.workerFailures) {
+				global.workerFailures = new Map();
 			}
+
+			const failures = (global.workerFailures.get(workerId) || 0) + 1;
+			global.workerFailures.set(workerId, failures);
+
+			console.log(`⚠️  Timeout #${failures} in worker ${workerId} - test: "${testData.title}"`);
+
+			// Circuit breaker: after 3 consecutive timeouts, kill the worker
+			if (failures >= 3) {
+				console.log(`🛑 Worker ${workerId} has failed 3 times consecutively - marking as dead`);
+
+				if (!global.failedWorkers) {
+					global.failedWorkers = new Set();
+				}
+				global.failedWorkers.add(workerId);
+
+				// Try to clean up with very short timeout, then give up
+				try {
+					await Promise.race([
+						(async () => {
+							try {
+								await browser.execute(() => window.stop());
+							} catch (e) {
+								// Ignore
+							}
+							await browser.deleteSession();
+						})(),
+						new Promise((_, reject) =>
+							setTimeout(() => reject(new Error('Cleanup timeout')), 2000)
+						)
+					]);
+					console.log('Worker cleanup completed');
+				} catch (e) {
+					console.log('Worker cleanup timed out - worker is dead');
+				}
+
+				return; // Don't try to recover
+			}
+
+			// For first 2 failures, attempt recovery
+			console.log(`🔄 Attempting recovery for worker ${workerId} (attempt ${failures}/3)`);
+
+			try {
+				// Try light recovery with timeout
+				await Promise.race([
+					(async () => {
+						try {
+							await browser.execute(() => window.stop());
+						} catch (e) {
+							// Ignore
+						}
+						await browser.deleteSession();
+						await browser.reloadSession();
+						await browser.setWindowSize(1920, 1167);
+						await browser.pause(500);
+					})(),
+					new Promise((_, reject) =>
+						setTimeout(() => reject(new Error('Recovery timeout')), 5000)
+					)
+				]);
+
+				console.log('✅ Session recovered successfully');
+
+				// Reset failure count on successful recovery
+				global.workerFailures.set(workerId, 0);
+
+			} catch (recoveryError) {
+				console.error(`❌ Session recovery failed: ${recoveryError.message}`);
+
+				global.workerFailures.set(workerId, failures + 1);
+			}
+		} else {
+			const workerId = browser.sessionId;
+			if (global.workerFailures && global.workerFailures.has(workerId)) {
+				global.workerFailures.set(workerId, 0);
+			}
+		}
+	} else if (passed) {
+		const workerId = browser.sessionId;
+		if (global.workerFailures && global.workerFailures.has(workerId)) {
+			global.workerFailures.set(workerId, 0);
 		}
 	}
 }
@@ -174,6 +260,11 @@ function onComplete () {
 		});
 	} else {
 		fs.appendFileSync(failedScreenshotFilename, failedScreenshotFooter, 'utf8');
+	}
+
+	// Summary of worker failures
+	if (global.failedWorkers && global.failedWorkers.size > 0) {
+		console.log(`\n⚠️  ${global.failedWorkers.size} worker(s) failed during test execution`);
 	}
 }
 

@@ -13,31 +13,70 @@ export class Page {
 	async open (appPath, urlExtra = '?locale=en-US') {
 		this._url = `/${appPath}/${urlExtra}`;
 
-		await browser.url(this.url);
+		const maxAttempts = 2;
 
-		// Wait for page to be interactive
-		await browser.waitUntil(
-			async () => {
-				const state = await browser.execute(() => document.readyState);
-				return state === 'complete' || state === 'interactive';
-			},
-			{
-				timeout: 15000,
-				timeoutMsg: 'Page did not become ready'
+		for (let attempt = 1; attempt <= maxAttempts; attempt++) {
+			try {
+				await browser.url(this.url);
+
+				// Wait for page to be ready
+				await browser.waitUntil(
+					async () => {
+						try {
+							const state = await browser.execute(() => document.readyState);
+							return state === 'complete' || state === 'interactive';
+						} catch (e) {
+							return false;
+						}
+					},
+					{
+						timeout: 30000, // Longer timeout for Chrome 132
+						timeoutMsg: `Page did not become ready: ${this.url}`
+					}
+				);
+
+				// Small pause to let Chrome 132 settle
+				await browser.pause(200);
+
+				// Clear body content using async execution (more reliable in Chrome 132)
+				await browser.executeAsync((done) => {
+					window.requestAnimationFrame(() => {
+						window.requestAnimationFrame(() => {
+							document.body.innerHTML = '';
+							done();
+						});
+					});
+				});
+
+				// Wait for body to be displayed
+				const body = await $('body');
+				await body.waitForDisplayed({timeout: 10000});
+
+				// Small final pause
+				await browser.pause(100);
+
+				// Success - exit retry loop
+				return;
+
+			} catch (error) {
+				console.log(`Navigation attempt ${attempt}/${maxAttempts} failed: ${error.message}`);
+
+				if (attempt === maxAttempts) {
+					// All retries exhausted - throw error
+					throw error;
+				}
+
+				// Quick recovery attempt before next retry
+				try {
+					await browser.execute(() => window.stop());
+				} catch (e) {
+					// Ignore
+				}
+
+				// Exponential backoff
+				await browser.pause(1000 * attempt);
 			}
-		);
-
-		// Small pause to let any initial scripts finish
-		await browser.pause(100);
-
-		await browser.execute(() => {
-			document.body.innerHTML = '';
-		});
-
-		const body = await $('body');
-		await body.waitForDisplayed({timeout: 10000});
-
-		await this.delay(100);
+		}
 	}
 
 	serializeParams (params) {

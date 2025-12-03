@@ -100,7 +100,12 @@ export const configure = (options) => {
 							'--disable-gpu',
 							'--disable-dev-shm-usage',
 							'--no-sandbox',
-							...(visibleBrowser ? [] : ['--headless'])
+							'--disable-setuid-sandbox',
+							// Performance optimizations for Chrome 132
+							'--disable-features=VizDisplayCompositor',
+							'--disable-features=IsolateOrigins,site-per-process',
+							'--js-flags=--max-old-space-size=512',
+							...(visibleBrowser ? [] : ['--headless=new'])
 						]
 					},
 				webSocketUrl: false, // disables BiDi, forces classic mode
@@ -130,14 +135,14 @@ export const configure = (options) => {
 			baseUrl: 'http://localhost:4567',
 			//
 			// Default timeout for all waitFor* commands.
-			waitforTimeout: 30000,
+			waitforTimeout: 45000,
 			//
 			// Default timeout in milliseconds for request
 			// if Selenium Grid doesn't send response
 			connectionRetryTimeout: 180000,
 			//
 			// Default request retries count
-			connectionRetryCount: 3,
+			connectionRetryCount: 5,
 			// Ignore deprecation warnings
 			deprecationWarnings: false,
 			//
@@ -146,7 +151,7 @@ export const configure = (options) => {
 			timeouts: {
 				script: 600000, // Chrome 132 needs more time
 				pageLoad: 600000, // Add explicit page load timeout
-				implicit: 15000
+				implicit: 20000
 			},
 			//
 			// Initialize the browser instance with a WebdriverIO plugin. The object should have the
@@ -200,6 +205,19 @@ export const configure = (options) => {
 				timeout: 60 * 60 * 1000,
 				retries: 2
 			},
+			//
+			// Retry failed spec files
+			specFileRetries: 1,
+			specFileRetriesDelay: 10000,
+			//
+			/**
+			 * Initialize circuit breaker for tracking worker health
+			 */
+			onPrepare: function() {
+				global.workerFailures = new Map();
+				global.failedWorkers = new Set();
+				console.log('🚀 Starting tests with Chrome 132 optimizations');
+			},
 			/**
 			 * Gets executed before test execution begins. At this point you can access to all global
 			 * variables like `browser`. It is the perfect place to define custom commands.
@@ -209,14 +227,21 @@ export const configure = (options) => {
 				// in Chrome 132, the browser window size takes into account also the address bar and tab area
 				await browser.setWindowSize(1920, 1167);
 
+				// Small pause to let window resize complete
+				await browser.pause(200);
+
 				// Verify the window is ready
 				await browser.waitUntil(
 					async () => {
-						const state = await browser.execute(() => document.readyState);
-						return state === 'complete';
+						try {
+							const state = await browser.execute(() => document.readyState);
+							return state === 'complete';
+						} catch (e) {
+							return false;
+						}
 					},
 					{
-						timeout: 10000,
+						timeout: 15000,
 						timeoutMsg: 'Page did not reach ready state'
 					}
 				);
