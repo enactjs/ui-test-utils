@@ -139,7 +139,7 @@ export const configure = (options) => {
 			//
 			// Default timeout in milliseconds for request
 			// if Selenium Grid doesn't send response
-			connectionRetryTimeout: 180000,
+			connectionRetryTimeout: 240000,
 			//
 			// Default request retries count
 			connectionRetryCount: 5,
@@ -212,11 +212,43 @@ export const configure = (options) => {
 			//
 			/**
 			 * Initialize circuit breaker for tracking worker health
+			 * and wait for static server to be ready
 			 */
-			onPrepare: function() {
+			onPrepare: async function() {
 				global.workerFailures = new Map();
 				global.failedWorkers = new Set();
 				console.log('🚀 Starting tests with Chrome 132 optimizations');
+
+				// Wait for static server to fully initialize
+				console.log('⏳ Waiting for static server to be ready...');
+				await new Promise(resolve => setTimeout(resolve, 5000));
+
+				// Verify static server is responding
+				const http = await import('http');
+				for (let i = 0; i < 10; i++) {
+					try {
+						await new Promise((resolve, reject) => {
+							const req = http.default.get('http://localhost:4567', (res) => {
+								if (res.statusCode === 200 || res.statusCode === 304) {
+									resolve();
+								} else {
+									reject(new Error(`Server returned ${res.statusCode}`));
+								}
+							});
+							req.on('error', reject);
+							req.setTimeout(3000, () => {
+								req.destroy();
+								reject(new Error('Request timeout'));
+							});
+						});
+						console.log('✅ Static server is ready');
+						return;
+					} catch (e) {
+						console.log(`Attempt ${i + 1}/10: Static server not ready yet...`);
+						await new Promise(resolve => setTimeout(resolve, 1000));
+					}
+				}
+				throw new Error('Static server failed to start');
 			},
 			/**
 			 * Gets executed before test execution begins. At this point you can access to all global

@@ -17,8 +17,20 @@ export const runTest = ({concurrency, filter, Page, testName, ...rest}) => {
 		it('should fetch test cases', async function () {
 			await Page.open('?request');
 
-			let testCases = await browser.execute(async function () {
-				return await window.__TEST_DATA;
+			await browser.waitUntil(
+				async () => {
+					const testData = await browser.execute(() => window.__TEST_DATA);
+					// eslint-disable-next-line no-undefined
+					return testData !== null && testData !== undefined;
+				},
+				{
+					timeout: 30000,
+					timeoutMsg: 'Test data (window.__TEST_DATA) was not loaded by the page'
+				}
+			);
+
+			let testCases = await browser.execute(function () {
+				return window.__TEST_DATA;
 			});
 
 			await expect(testCases).toBeInstanceOf(Object);
