@@ -208,7 +208,7 @@ export const configure = (options) => {
 			//
 			// Retry failed spec files
 			specFileRetries: 1,
-			specFileRetriesDelay: 10000,
+			specFileRetriesDelay: 10,
 			//
 			/**
 			 * Initialize circuit breaker for tracking worker health
