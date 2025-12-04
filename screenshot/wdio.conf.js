@@ -1,8 +1,6 @@
 import {configure} from '../config/wdio.conf.js';
 import {afterTest, baselineFolder, beforeTest, onComplete, onPrepare as screenshotOnPrepare, screenshotFolder} from './utils/confHelpers.js';
 
-let buildPromise = null;
-
 const config = configure({
 	base: 'screenshot',
 	services: [[
@@ -27,7 +25,7 @@ const config = configure({
 	 * Gets executed once before all workers get launched.
 	 * Combines base onPrepare with screenshot-specific onPrepare
 	 */
-	onPrepare: async function (config, capabilities) {
+	onPrepare: async function () {
 		// First initialize circuit breaker (from base config)
 		global.workerFailures = new Map();
 		global.failedWorkers = new Set();
@@ -56,5 +54,5 @@ const config = configure({
 	onComplete: onComplete
 });
 
-export default {config};
 export {config};
+export default config;
