@@ -1,6 +1,8 @@
 import {configure} from '../config/wdio.conf.js';
 import {afterTest, baselineFolder, beforeTest, onComplete, onPrepare as screenshotOnPrepare, screenshotFolder} from './utils/confHelpers.js';
 
+let buildPromise = null;
+
 const config = configure({
 	base: 'screenshot',
 	services: [[
@@ -25,14 +27,16 @@ const config = configure({
 	 * Gets executed once before all workers get launched.
 	 * Combines base onPrepare with screenshot-specific onPrepare
 	 */
-	onPrepare: async function () {
+	onPrepare: async function (config, capabilities) {
 		// First initialize circuit breaker (from base config)
 		global.workerFailures = new Map();
 		global.failedWorkers = new Set();
 		console.log('🚀 Starting tests with Chrome 132 optimizations');
 
-		// Then run screenshot build and validation
+		// Run screenshot build and validation
+		console.log('🔨 Running screenshot app build...');
 		await screenshotOnPrepare();
+		console.log('✅ Screenshot build complete');
 	},
 	/**
 	 * Function to be executed before a test (in Mocha/Jasmine) or a step (in Cucumber) starts.

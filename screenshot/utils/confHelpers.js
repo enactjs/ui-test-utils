@@ -52,58 +52,88 @@ function initFile (name, content) {
 }
 
 function onPrepare () {
+	console.log('📋 Screenshot onPrepare starting...');
+
 	if (!fs.existsSync('tests/screenshot/dist/screenshots/reference')) {
-		console.log('No reference screenshots found, creating new references!');
+		console.log('⚠️  No reference screenshots found, creating new references!');
 	}
 
-	initFile(failedScreenshotFilename, failedScreenshotHeader);
-	initFile(newScreenshotFilename, newScreenshotHeader);
+	try {
+		initFile(failedScreenshotFilename, failedScreenshotHeader);
+		initFile(newScreenshotFilename, newScreenshotHeader);
+		console.log('✅ Initialized screenshot log files');
+	} catch (e) {
+		console.error('❌ Failed to initialize log files:', e);
+		throw e;
+	}
 
 	console.log('🔨 Building screenshot apps...');
-	return buildApps('screenshot').then(() => {
-		console.log('✅ Build complete');
 
-		// Validate that the build created the necessary files
-		const distPath = path.join(process.cwd(), 'tests', 'screenshot', 'dist');
-		console.log('📁 Checking build output in:', distPath);
+	return buildApps('screenshot')
+		.then(() => {
+			console.log('✅ Build complete');
 
-		if (!fs.existsSync(distPath)) {
-			throw new Error(`Build output directory not found: ${distPath}`);
-		}
+			// Validate that the build created the necessary files
+			const distPath = path.join(process.cwd(), 'tests', 'screenshot', 'dist');
+			console.log('📁 Checking build output in:', distPath);
 
-		// Check for index.html or main entry point
-		const possibleEntryPoints = [
-			path.join(distPath, 'index.html'),
-			path.join(distPath, 'Limestone-View', 'index.html'),
-			path.join(distPath, 'Limestone-View.html')
-		];
-
-		let foundEntryPoint = false;
-		for (const entryPoint of possibleEntryPoints) {
-			if (fs.existsSync(entryPoint)) {
-				console.log('✅ Found entry point:', entryPoint);
-				const stats = fs.statSync(entryPoint);
-				console.log(`   File size: ${stats.size} bytes`);
-				foundEntryPoint = true;
-				break;
+			if (!fs.existsSync(distPath)) {
+				throw new Error(`Build output directory not found: ${distPath}`);
 			}
-		}
 
-		if (!foundEntryPoint) {
-			console.log('❌ No entry point found. Directory contents:');
-			try {
-				const files = fs.readdirSync(distPath);
-				console.log(files);
-			} catch (e) {
-				console.log('Could not read directory');
+			// Check for index.html or main entry point
+			const possibleEntryPoints = [
+				path.join(distPath, 'index.html'),
+				path.join(distPath, 'Limestone-View', 'index.html'),
+				path.join(distPath, 'Limestone-View.html')
+			];
+
+			let foundEntryPoint = false;
+			for (const entryPoint of possibleEntryPoints) {
+				if (fs.existsSync(entryPoint)) {
+					console.log('✅ Found entry point:', entryPoint);
+					const stats = fs.statSync(entryPoint);
+					console.log(`   File size: ${stats.size} bytes`);
+
+					// Read first 500 characters to see if it has content
+					const content = fs.readFileSync(entryPoint, 'utf8');
+					console.log(`   Content preview: ${content.substring(0, 200)}...`);
+
+					foundEntryPoint = true;
+					break;
+				}
 			}
-			throw new Error('Build did not create expected entry point files');
-		}
 
-		// Give extra time for static server to initialize
-		console.log('⏳ Waiting 5 seconds for static server to fully initialize...');
-		return new Promise(resolve => setTimeout(resolve, 5000));
-	});
+			if (!foundEntryPoint) {
+				console.log('❌ No entry point found. Directory contents:');
+				try {
+					const listDir = (dir, indent = '') => {
+						const items = fs.readdirSync(dir);
+						items.forEach(item => {
+							const fullPath = path.join(dir, item);
+							const stats = fs.statSync(fullPath);
+							console.log(`${indent}${item} (${stats.isDirectory() ? 'DIR' : stats.size + ' bytes'})`);
+							if (stats.isDirectory() && indent.length < 4) {
+								listDir(fullPath, indent + '  ');
+							}
+						});
+					};
+					listDir(distPath);
+				} catch (e) {
+					console.log('Could not read directory:', e.message);
+				}
+				throw new Error('Build did not create expected entry point files');
+			}
+
+			// Give extra time for static server to initialize
+			console.log('⏳ Waiting 5 seconds for static server to fully initialize...');
+			return new Promise(resolve => setTimeout(resolve, 5000));
+		})
+		.catch(err => {
+			console.error('❌ Screenshot build failed:', err);
+			console.error('Stack:', err.stack);
+			throw err;
+		});
 }
 
 /**
