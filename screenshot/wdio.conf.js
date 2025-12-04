@@ -25,16 +25,29 @@ export const config = configure({
 	 * Gets executed once before all workers get launched.
 	 * Combines base onPrepare with screenshot-specific onPrepare
 	 */
-	onPrepare: async function () {
-		// First initialize circuit breaker (from base config)
-		global.workerFailures = new Map();
-		global.failedWorkers = new Set();
-		console.log('🚀 Starting tests with Chrome 132 optimizations');
+	onPrepare: async function (config, capabilities) {
+		try {
+			// First initialize circuit breaker (from base config)
+			global.workerFailures = new Map();
+			global.failedWorkers = new Set();
+			console.log('🚀 Starting tests with Chrome 132 optimizations');
 
-		// Run screenshot build and validation
-		console.log('🔨 Running screenshot app build...');
-		await screenshotOnPrepare();
-		console.log('✅ Screenshot build complete');
+			// Run screenshot build and validation
+			console.log('🔨 Running screenshot app build...');
+
+			try {
+				await screenshotOnPrepare();
+				console.log('✅ Screenshot build complete');
+			} catch (buildError) {
+				console.error('❌ Screenshot build failed:', buildError);
+				console.error('Build error stack:', buildError.stack);
+				throw buildError; // Re-throw to stop test execution
+			}
+		} catch (error) {
+			console.error('❌ FATAL: onPrepare failed:', error);
+			console.error('Error stack:', error.stack);
+			throw error;
+		}
 	},
 	/**
 	 * Function to be executed before a test (in Mocha/Jasmine) or a step (in Cucumber) starts.
