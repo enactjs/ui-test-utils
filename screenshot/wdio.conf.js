@@ -1,7 +1,7 @@
 import {configure} from '../config/wdio.conf.js';
 import {afterTest, baselineFolder, beforeTest, onComplete, onPrepare as screenshotOnPrepare, screenshotFolder} from './utils/confHelpers.js';
 
-const config = configure({
+export const config = configure({
 	base: 'screenshot',
 	services: [[
 		'visual',
@@ -53,6 +53,3 @@ const config = configure({
 	 */
 	onComplete: onComplete
 });
-
-export {config};
-export default config;
