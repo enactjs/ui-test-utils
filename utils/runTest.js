@@ -17,15 +17,34 @@ export const runTest = ({concurrency, filter, Page, testName, ...rest}) => {
 		it('should fetch test cases', async function () {
 			await Page.open('?request');
 
+			// Debug: Check if page loaded
+			const pageContent = await browser.execute(() => {
+				return {
+					url: window.location.href,
+					readyState: document.readyState,
+					bodyLength: document.body.innerHTML.length,
+					hasTestData: typeof window.__TEST_DATA,
+					testDataValue: window.__TEST_DATA,
+					errors: window.__ERROR || null
+				};
+			});
+			console.log('Page state:', JSON.stringify(pageContent, null, 2));
+
+			// Wait for test data to be loaded (Chrome 132 needs more time)
 			await browser.waitUntil(
 				async () => {
 					const testData = await browser.execute(() => window.__TEST_DATA);
-					// eslint-disable-next-line no-undefined
-					return testData !== null && testData !== undefined;
+					if (testData === null || testData === undefined) {
+						console.log('Still waiting for window.__TEST_DATA...');
+						return false;
+					}
+					console.log('window.__TEST_DATA is now available');
+					return true;
 				},
 				{
-					timeout: 30000,
-					timeoutMsg: 'Test data (window.__TEST_DATA) was not loaded by the page'
+					timeout: 60000, // Increase to 60 seconds for debugging
+					interval: 2000, // Check every 2 seconds
+					timeoutMsg: 'Test data (window.__TEST_DATA) was not loaded by the page after 60 seconds'
 				}
 			);
 
