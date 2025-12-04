@@ -59,9 +59,56 @@ function onPrepare () {
 	initFile(failedScreenshotFilename, failedScreenshotHeader);
 	initFile(newScreenshotFilename, newScreenshotHeader);
 
-	return buildApps('screenshot');
+	console.log('🔨 Building screenshot apps...');
+	return buildApps('screenshot').then(() => {
+		console.log('✅ Build complete');
+
+		// Validate that the build created the necessary files
+		const distPath = path.join(process.cwd(), 'tests', 'screenshot', 'dist');
+		console.log('📁 Checking build output in:', distPath);
+
+		if (!fs.existsSync(distPath)) {
+			throw new Error(`Build output directory not found: ${distPath}`);
+		}
+
+		// Check for index.html or main entry point
+		const possibleEntryPoints = [
+			path.join(distPath, 'index.html'),
+			path.join(distPath, 'Limestone-View', 'index.html'),
+			path.join(distPath, 'Limestone-View.html')
+		];
+
+		let foundEntryPoint = false;
+		for (const entryPoint of possibleEntryPoints) {
+			if (fs.existsSync(entryPoint)) {
+				console.log('✅ Found entry point:', entryPoint);
+				const stats = fs.statSync(entryPoint);
+				console.log(`   File size: ${stats.size} bytes`);
+				foundEntryPoint = true;
+				break;
+			}
+		}
+
+		if (!foundEntryPoint) {
+			console.log('❌ No entry point found. Directory contents:');
+			try {
+				const files = fs.readdirSync(distPath);
+				console.log(files);
+			} catch (e) {
+				console.log('Could not read directory');
+			}
+			throw new Error('Build did not create expected entry point files');
+		}
+
+		// Give extra time for static server to initialize
+		console.log('⏳ Waiting 5 seconds for static server to fully initialize...');
+		return new Promise(resolve => setTimeout(resolve, 5000));
+	});
 }
 
+/**
+ * Before test hook with circuit breaker pattern for Chrome 132
+ */
 async function beforeTest (testData) {
 	const workerId = browser.sessionId;
 
