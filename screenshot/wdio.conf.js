@@ -1,7 +1,7 @@
 import {configure} from '../config/wdio.conf.js';
 import {afterTest, baselineFolder, beforeTest, onComplete, onPrepare as screenshotOnPrepare, screenshotFolder} from './utils/confHelpers.js';
 
-export const config = configure({
+const config = configure({
 	base: 'screenshot',
 	services: [[
 		'visual',
@@ -30,10 +30,10 @@ export const config = configure({
 			// First initialize circuit breaker (from base config)
 			global.workerFailures = new Map();
 			global.failedWorkers = new Set();
-			console.log('🚀 Starting tests with Chrome 132 optimizations');
+			console.log('🚀 2 Starting tests with Chrome 132 optimizations');
 
 			// Run screenshot build and validation
-			console.log('🔨 Running screenshot app build...');
+			console.log('🔨 3 Running screenshot app build...');
 
 			try {
 				await screenshotOnPrepare();
@@ -66,3 +66,6 @@ export const config = configure({
 	 */
 	onComplete: onComplete
 });
+
+export default {config};
+export {config};

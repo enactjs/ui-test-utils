@@ -97,7 +97,7 @@ function onPrepare () {
 
 					// Read first 500 characters to see if it has content
 					const content = fs.readFileSync(entryPoint, 'utf8');
-					console.log(`   Content preview: ${content.substring(0, 200)}...`);
+					// console.log(`   Content preview: ${content.substring(0, 200)}...`);
 
 					foundEntryPoint = true;
 					break;
@@ -112,7 +112,7 @@ function onPrepare () {
 						items.forEach(item => {
 							const fullPath = path.join(dir, item);
 							const stats = fs.statSync(fullPath);
-							console.log(`${indent}${item} (${stats.isDirectory() ? 'DIR' : stats.size + ' bytes'})`);
+							//console.log(`${indent}${item} (${stats.isDirectory() ? 'DIR' : stats.size + ' bytes'})`);
 							if (stats.isDirectory() && indent.length < 4) {
 								listDir(fullPath, indent + '  ');
 							}
@@ -120,7 +120,7 @@ function onPrepare () {
 					};
 					listDir(distPath);
 				} catch (e) {
-					console.log('Could not read directory:', e.message);
+					// console.log('Could not read directory:', e.message);
 				}
 				throw new Error('Build did not create expected entry point files');
 			}
@@ -144,7 +144,7 @@ async function beforeTest (testData) {
 
 	// Check if this worker has been marked as dead
 	if (global.failedWorkers && global.failedWorkers.has(workerId)) {
-		console.log(`⏭️  Skipping test - worker ${workerId} is marked as failed`);
+		// console.log(`⏭️  Skipping test - worker ${workerId} is marked as failed`);
 		throw new Error('Worker is marked as failed - skipping remaining tests');
 	}
 
@@ -238,7 +238,7 @@ async function afterTest (testData, _context, {error, passed}) {
 			const failures = (global.workerFailures.get(workerId) || 0) + 1;
 			global.workerFailures.set(workerId, failures);
 
-			console.log(`⚠️  Timeout #${failures} in worker ${workerId} - test: "${testData.title}"`);
+			// console.log(`⚠️  Timeout #${failures} in worker ${workerId} - test: "${testData.title}"`);
 
 			// Circuit breaker: after 3 consecutive timeouts, kill the worker
 			if (failures >= 3) {
@@ -273,7 +273,7 @@ async function afterTest (testData, _context, {error, passed}) {
 			}
 
 			// For first 2 failures, attempt recovery
-			console.log(`🔄 Attempting recovery for worker ${workerId} (attempt ${failures}/3)`);
+			// console.log(`🔄 Attempting recovery for worker ${workerId} (attempt ${failures}/3)`);
 
 			try {
 				// Try light recovery with timeout
@@ -341,7 +341,7 @@ function onComplete () {
 
 	// Summary of worker failures
 	if (global.failedWorkers && global.failedWorkers.size > 0) {
-		console.log(`\n⚠️  ${global.failedWorkers.size} worker(s) failed during test execution`);
+		// console.log(`\n⚠️  ${global.failedWorkers.size} worker(s) failed during test execution`);
 	}
 }
 

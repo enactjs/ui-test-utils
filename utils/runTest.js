@@ -28,7 +28,7 @@ export const runTest = ({concurrency, filter, Page, testName, ...rest}) => {
 					errors: window.__ERROR || null
 				};
 			});
-			console.log('Page state:', JSON.stringify(pageContent, null, 2));
+			// console.log('Page state:', JSON.stringify(pageContent, null, 2));
 
 			// Wait for test data to be loaded (Chrome 132 needs more time)
 			await browser.waitUntil(

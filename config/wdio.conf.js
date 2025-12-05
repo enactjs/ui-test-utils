@@ -21,7 +21,7 @@ export const configure = (options) => {
 	}
 
 	return Object.assign(
-		opts,
+		{},
 		{
 			path: '/',
 			//
@@ -244,6 +244,7 @@ export const configure = (options) => {
 					await options.before();
 				}
 			}
-		}
+		},
+		opts
 	);
 };
