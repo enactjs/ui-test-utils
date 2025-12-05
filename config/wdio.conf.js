@@ -100,11 +100,6 @@ export const configure = (options) => {
 							'--disable-gpu',
 							'--disable-dev-shm-usage',
 							'--no-sandbox',
-							'--disable-setuid-sandbox',
-							// Performance optimizations for Chrome 132
-							'--disable-features=VizDisplayCompositor',
-							'--disable-features=IsolateOrigins,site-per-process',
-							'--js-flags=--max-old-space-size=512',
 							...(visibleBrowser ? [] : ['--headless=new'])
 						]
 					},
