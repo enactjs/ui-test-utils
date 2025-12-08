@@ -148,46 +148,53 @@ async function beforeTest (testData) {
 		throw new Error('Worker is marked as failed - skipping remaining tests');
 	}
 
-	// Quick health check with short timeout
-	try {
-		await Promise.race([
-			browser.execute(() => true),
-			new Promise((_, reject) =>
-				setTimeout(() => reject(new Error('Health check timeout')), 3000)
-			)
-		]);
-
-		// Success - reset failure counter
-		if (global.workerFailures) {
-			global.workerFailures.set(workerId, 0);
-		}
-	} catch (e) {
-		// Track consecutive failures
-		const failures = (global.workerFailures?.get(workerId) || 0) + 1;
-		if (global.workerFailures) {
-			global.workerFailures.set(workerId, failures);
-		}
-
-		console.log(`❌ Worker ${workerId} health check failed (failure ${failures}/3)`);
-
-		// Only mark as dead after 3 consecutive failures
-		if (failures >= 3) {
-			console.log(`🛑 Worker ${workerId} has failed 3 times - marking as dead`);
-			if (global.failedWorkers) {
-				global.failedWorkers.add(workerId);
-			}
-			throw new Error('Worker health check failed - marking as dead');
-		}
-
-		// Try quick recovery for first 2 failures
-		console.log(`🔄 Attempting quick recovery for worker ${workerId}...`);
+	// Skip health check if we just recovered in afterTest
+	if (global.recentlyRecovered && global.recentlyRecovered.has(workerId)) {
+		console.log(`⏭️  Skipping health check - worker ${workerId} just recovered`);
+		global.recentlyRecovered.delete(workerId);
+		// Continue to test setup
+	} else {
+		// Quick health check with short timeout
 		try {
-			await browser.reloadSession();
-			await browser.setWindowSize(1920, 1167);
-			console.log(`✅ Worker ${workerId} recovered`);
-		} catch (recoveryError) {
-			console.log(`⚠️  Recovery attempt failed, will retry next test`);
-			// Don't throw - let it try again next test
+			await Promise.race([
+				browser.execute(() => true),
+				new Promise((_, reject) =>
+					setTimeout(() => reject(new Error('Health check timeout')), 3000)
+				)
+			]);
+
+			// Success - reset failure counter
+			if (global.workerFailures) {
+				global.workerFailures.set(workerId, 0);
+			}
+		} catch (e) {
+			// Track consecutive failures
+			const failures = (global.workerFailures?.get(workerId) || 0) + 1;
+			if (global.workerFailures) {
+				global.workerFailures.set(workerId, failures);
+			}
+
+			console.log(`❌ Worker ${workerId} health check failed (failure ${failures}/3)`);
+
+			// Only mark as dead after 3 consecutive failures
+			if (failures >= 3) {
+				console.log(`🛑 Worker ${workerId} has failed 3 times - marking as dead`);
+				if (global.failedWorkers) {
+					global.failedWorkers.add(workerId);
+				}
+				throw new Error('Worker health check failed - marking as dead');
+			}
+
+			// Try quick recovery for first 2 failures
+			console.log(`🔄 Attempting quick recovery for worker ${workerId}...`);
+			try {
+				await browser.reloadSession();
+				await browser.setWindowSize(1920, 1167);
+				console.log(`✅ Worker ${workerId} recovered`);
+			} catch (recoveryError) {
+				console.log(`⚠️  Recovery attempt failed, will retry next test`);
+				// Don't throw - let it try again next test
+			}
 		}
 	}
 
@@ -311,10 +318,10 @@ async function afterTest (testData, _context, {error, passed}) {
 						await browser.deleteSession();
 						await browser.reloadSession();
 						await browser.setWindowSize(1920, 1167);
-						await browser.pause(500);
+						await browser.pause(1000);
 					})(),
 					new Promise((_, reject) =>
-						setTimeout(() => reject(new Error('Recovery timeout')), 5000)
+						setTimeout(() => reject(new Error('Recovery timeout')), 10000)
 					)
 				]);
 
@@ -323,10 +330,14 @@ async function afterTest (testData, _context, {error, passed}) {
 				// Reset failure count on successful recovery
 				global.workerFailures.set(workerId, 0);
 
+				// Mark that we just recovered - skip next health check
+				if (!global.recentlyRecovered) {
+					global.recentlyRecovered = new Set();
+				}
+				global.recentlyRecovered.add(workerId);
+
 			} catch (recoveryError) {
 				console.error(`❌ Session recovery failed: ${recoveryError.message}`);
-
-				global.workerFailures.set(workerId, failures + 1);
 			}
 		} else {
 			const workerId = browser.sessionId;
@@ -365,7 +376,7 @@ function onComplete () {
 
 	// Summary of worker failures
 	if (global.failedWorkers && global.failedWorkers.size > 0) {
-		// console.log(`\n⚠️  ${global.failedWorkers.size} worker(s) failed during test execution`);
+		console.log(`\n⚠️  ${global.failedWorkers.size} worker(s) failed during test execution`);
 	}
 }
 
