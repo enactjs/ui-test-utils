@@ -25,24 +25,42 @@ const config = configure({
 	 * Gets executed once before all workers get launched.
 	 * Combines base onPrepare with screenshot-specific onPrepare
 	 */
-	onPrepare: async function (config, capabilities) {
+	onPrepare: async function () {
+		console.log('✓ onPrepare: Step 1 - Function called');
+
 		try {
+			console.log('✓ onPrepare: Step 2 - Inside try block');
+
 			// First initialize circuit breaker (from base config)
 			global.workerFailures = new Map();
 			global.failedWorkers = new Set();
-			console.log('🚀 2 Starting tests with Chrome 132 optimizations');
+			console.log('✓ onPrepare: Step 3 - Circuit breaker initialized');
+
+			console.log('🚀 Starting tests with Chrome 132 optimizations');
+			console.log('✓ onPrepare: Step 4 - About to call screenshotOnPrepare');
+
+			// Check if screenshotOnPrepare is actually a function
+			console.log('✓ onPrepare: Step 5 - screenshotOnPrepare type:', typeof screenshotOnPrepare);
+
+			if (typeof screenshotOnPrepare !== 'function') {
+				throw new Error('screenshotOnPrepare is not a function!');
+			}
 
 			// Run screenshot build and validation
-			console.log('🔨 3 Running screenshot app build...');
+			console.log('🔨 Running screenshot app build...');
 
 			try {
+				console.log('✓ onPrepare: Step 6 - Calling screenshotOnPrepare()...');
 				await screenshotOnPrepare();
+				console.log('✓ onPrepare: Step 7 - screenshotOnPrepare returned successfully');
 				console.log('✅ Screenshot build complete');
 			} catch (buildError) {
 				console.error('❌ Screenshot build failed:', buildError);
 				console.error('Build error stack:', buildError.stack);
 				throw buildError; // Re-throw to stop test execution
 			}
+
+			console.log('✓ onPrepare: Step 8 - Exiting onPrepare normally');
 		} catch (error) {
 			console.error('❌ FATAL: onPrepare failed:', error);
 			console.error('Error stack:', error.stack);

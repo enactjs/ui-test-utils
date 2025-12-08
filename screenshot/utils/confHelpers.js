@@ -97,7 +97,7 @@ function onPrepare () {
 
 					// Read first 500 characters to see if it has content
 					const content = fs.readFileSync(entryPoint, 'utf8');
-					// console.log(`   Content preview: ${content.substring(0, 200)}...`);
+					console.log(`   Content preview: ${content.substring(0, 200)}...`);
 
 					foundEntryPoint = true;
 					break;
@@ -112,7 +112,7 @@ function onPrepare () {
 						items.forEach(item => {
 							const fullPath = path.join(dir, item);
 							const stats = fs.statSync(fullPath);
-							//console.log(`${indent}${item} (${stats.isDirectory() ? 'DIR' : stats.size + ' bytes'})`);
+							console.log(`${indent}${item} (${stats.isDirectory() ? 'DIR' : stats.size + ' bytes'})`);
 							if (stats.isDirectory() && indent.length < 4) {
 								listDir(fullPath, indent + '  ');
 							}
@@ -120,7 +120,7 @@ function onPrepare () {
 					};
 					listDir(distPath);
 				} catch (e) {
-					// console.log('Could not read directory:', e.message);
+					console.log('Could not read directory:', e.message);
 				}
 				throw new Error('Build did not create expected entry point files');
 			}
@@ -144,7 +144,7 @@ async function beforeTest (testData) {
 
 	// Check if this worker has been marked as dead
 	if (global.failedWorkers && global.failedWorkers.has(workerId)) {
-		// console.log(`⏭️  Skipping test - worker ${workerId} is marked as failed`);
+		console.log(`⏭️  Skipping test - worker ${workerId} is marked as failed`);
 		throw new Error('Worker is marked as failed - skipping remaining tests');
 	}
 
@@ -156,15 +156,39 @@ async function beforeTest (testData) {
 				setTimeout(() => reject(new Error('Health check timeout')), 3000)
 			)
 		]);
-	} catch (e) {
-		console.log(`❌ Worker ${workerId} health check failed`);
 
-		// Mark worker as dead - don't try to recover
-		if (global.failedWorkers) {
-			global.failedWorkers.add(workerId);
+		// Success - reset failure counter
+		if (global.workerFailures) {
+			global.workerFailures.set(workerId, 0);
+		}
+	} catch (e) {
+		// Track consecutive failures
+		const failures = (global.workerFailures?.get(workerId) || 0) + 1;
+		if (global.workerFailures) {
+			global.workerFailures.set(workerId, failures);
 		}
 
-		throw new Error('Worker health check failed - marking as dead');
+		console.log(`❌ Worker ${workerId} health check failed (failure ${failures}/3)`);
+
+		// Only mark as dead after 3 consecutive failures
+		if (failures >= 3) {
+			console.log(`🛑 Worker ${workerId} has failed 3 times - marking as dead`);
+			if (global.failedWorkers) {
+				global.failedWorkers.add(workerId);
+			}
+			throw new Error('Worker health check failed - marking as dead');
+		}
+
+		// Try quick recovery for first 2 failures
+		console.log(`🔄 Attempting quick recovery for worker ${workerId}...`);
+		try {
+			await browser.reloadSession();
+			await browser.setWindowSize(1920, 1167);
+			console.log(`✅ Worker ${workerId} recovered`);
+		} catch (recoveryError) {
+			console.log(`⚠️  Recovery attempt failed, will retry next test`);
+			// Don't throw - let it try again next test
+		}
 	}
 
 	// If title doesn't have a '/', it's not a screenshot test, don't save
@@ -238,7 +262,7 @@ async function afterTest (testData, _context, {error, passed}) {
 			const failures = (global.workerFailures.get(workerId) || 0) + 1;
 			global.workerFailures.set(workerId, failures);
 
-			// console.log(`⚠️  Timeout #${failures} in worker ${workerId} - test: "${testData.title}"`);
+			console.log(`⚠️  Timeout #${failures} in worker ${workerId} - test: "${testData.title}"`);
 
 			// Circuit breaker: after 3 consecutive timeouts, kill the worker
 			if (failures >= 3) {
@@ -273,7 +297,7 @@ async function afterTest (testData, _context, {error, passed}) {
 			}
 
 			// For first 2 failures, attempt recovery
-			// console.log(`🔄 Attempting recovery for worker ${workerId} (attempt ${failures}/3)`);
+			console.log(`🔄 Attempting recovery for worker ${workerId} (attempt ${failures}/3)`);
 
 			try {
 				// Try light recovery with timeout

@@ -100,6 +100,17 @@ export const configure = (options) => {
 							'--disable-gpu',
 							'--disable-dev-shm-usage',
 							'--no-sandbox',
+							'--disable-features=AudioServiceOutOfProcess',
+							'--disable-background-networking',
+							'--disable-background-timer-throttling',
+							'--disable-backgrounding-occluded-windows',
+							'--disable-breakpad',
+							'--disable-component-extensions-with-background-pages',
+							'--disable-extensions',
+							'--disable-renderer-backgrounding',
+							'--metrics-recording-only',
+							'--mute-audio',
+							'--js-flags=--max-old-space-size=384', // Changed from 512
 							...(visibleBrowser ? [] : ['--headless=new'])
 						]
 					},
