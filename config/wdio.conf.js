@@ -210,9 +210,6 @@ export const configure = (options) => {
 				ui: 'bdd',
 				timeout: 60 * 60 * 1000
 			},
-			// Retry failed spec files
-			specFileRetries: 1,
-			specFileRetriesDelay: 10,
 			/**
 			 * Gets executed before test execution begins. At this point you can access to all global
 			 * variables like `browser`. It is the perfect place to define custom commands.
