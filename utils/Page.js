@@ -11,68 +11,18 @@ export class Page {
 	}
 
 	async open (appPath, urlExtra = '?locale=en-US') {
+		await browser.execute(function () {
+			document.body.innerHTML = '';
+		});
+
 		this._url = `/${appPath}/${urlExtra}`;
 
-		const maxAttempts = 2;
+		await browser.url(this.url);
 
-		for (let attempt = 1; attempt <= maxAttempts; attempt++) {
-			try {
-				await browser.url(this.url);
+		const body = await $('body');
+		await body.waitForDisplayed({timeout: 10000});
 
-				// Wait for page to be ready
-				await browser.waitUntil(
-					async () => {
-						try {
-							const state = await browser.execute(() => document.readyState);
-							return state === 'complete' || state === 'interactive';
-						} catch (e) {
-							return false;
-						}
-					},
-					{
-						timeout: 30000,
-						timeoutMsg: `Page did not become ready: ${this.url}`
-					}
-				);
-
-				await browser.pause(200);
-
-				// Clear body content using async execution
-				await browser.executeAsync((done) => {
-					window.requestAnimationFrame(() => {
-						window.requestAnimationFrame(() => {
-							document.body.innerHTML = '';
-							done();
-						});
-					});
-				});
-
-				const body = await $('body');
-				await body.waitForDisplayed({timeout: 10000});
-
-				// Small final pause
-				await browser.pause(100);
-
-				return;
-
-			} catch (error) {
-				console.log(`Navigation attempt ${attempt}/${maxAttempts} failed: ${error.message}`);
-
-				if (attempt === maxAttempts) {
-					// All retries exhausted - throw error
-					throw error;
-				}
-
-				// Quick recovery attempt before next retry
-				try {
-					await browser.execute(() => window.stop());
-				} catch (e) {
-					// Ignore
-				}
-
-				await this.delay(200);
-			}
-		}
+		await this.delay(200);
 	}
 
 	serializeParams (params) {
