@@ -1,5 +1,9 @@
 # Change Log
 
+## [unreleased]
+
+* Updated Chrome driver version to 132 for screenshot tests.
+
 ## [4.0.0] (November 14, 2025)
 
 * Updated Chrome driver version to 132.
