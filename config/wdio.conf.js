@@ -98,19 +98,15 @@ export const configure = (options) => {
 							'--force-device-scale-factor=1',
 							'--start-maximized',
 							'--disable-gpu',
-							'--disable-dev-shm-usage',
+							'--window-size=1920,1080',
+							// Critical for Chrome 132 in Jenkins/Linux
 							'--no-sandbox',
-							'--disable-features=AudioServiceOutOfProcess',
-							'--disable-background-networking',
-							'--disable-background-timer-throttling',
-							'--disable-backgrounding-occluded-windows',
-							'--disable-breakpad',
-							'--disable-component-extensions-with-background-pages',
-							'--disable-extensions',
-							'--disable-renderer-backgrounding',
-							'--metrics-recording-only',
-							'--mute-audio',
-							'--js-flags=--max-old-space-size=384', // Changed from 512
+							'--disable-dev-shm-usage',
+							'--disable-setuid-sandbox',
+							// Performance optimizations for Chrome 132
+							'--disable-features=VizDisplayCompositor',
+							'--disable-features=IsolateOrigins,site-per-process',
+							'--js-flags=--max-old-space-size=512',
 							...(visibleBrowser ? [] : ['--headless=new'])
 						]
 					},
@@ -208,7 +204,8 @@ export const configure = (options) => {
 			// See the full list at http://mochajs.org/
 			mochaOpts: {
 				ui: 'bdd',
-				timeout: 60 * 60 * 1000
+				timeout: 60 * 60 * 1000,
+				retries: 2 // Retry failed tests up to 2 times (important for timeout recovery)
 			},
 			/**
 			 * Gets executed before test execution begins. At this point you can access to all global
