@@ -156,20 +156,38 @@ async function afterTest (testData, _context, {error, passed}) {
 		}
 
 		if (!passed) {
-			const screenPath = path.join(screenshotRelativePath, 'actual', fileName);
-			const diffPath = path.join(screenshotRelativePath, 'diff', fileName);
-			fs.open(failedScreenshotFilename, 'a', (err, fd) => {
-				if (err) {
-					console.error('Unable to create failed test log file!');
-				} else {
-					const title = testData.title.replace(/~\//g, '/');
-					const {params, url} = testData.context;
-					const output = {title, diffPath, referencePath, screenPath, params, url};
-					fs.appendFile(fd, `${JSON.stringify(output)},`, 'utf8', () => {
-						fs.close(fd);
-					});
-				}
-			});
+			// Track failed tests to avoid duplicate logging during retries
+			if (!global.loggedFailures) {
+				global.loggedFailures = new Set();
+			}
+
+			const testIdentifier = testData.title + '::' + fileName;
+
+			// Only log if we haven't already logged this test failure
+			if (!global.loggedFailures.has(testIdentifier)) {
+				global.loggedFailures.add(testIdentifier);
+
+				const screenPath = path.join(screenshotRelativePath, 'actual', fileName);
+				const diffPath = path.join(screenshotRelativePath, 'diff', fileName);
+				fs.open(failedScreenshotFilename, 'a', (err, fd) => {
+					if (err) {
+						console.error('Unable to create failed test log file!');
+					} else {
+						const title = testData.title.replace(/~\//g, '/');
+						const {params, url} = testData.context;
+						const output = {title, diffPath, referencePath, screenPath, params, url};
+						fs.appendFile(fd, `${JSON.stringify(output)},`, 'utf8', () => {
+							fs.close(fd);
+						});
+					}
+				});
+			}
+		} else if (passed) {
+			// Test passed on retry - remove from logged failures
+			if (global.loggedFailures) {
+				const testIdentifier = testData.title + '::' + fileName;
+				global.loggedFailures.delete(testIdentifier);
+			}
 		}
 	}
 
