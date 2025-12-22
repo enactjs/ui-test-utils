@@ -49,7 +49,7 @@
   },
   "devDependencies": {
     "eslint": "^9.39.1",
-    "eslint-config-enact": "^5.0.2",
+    "eslint-config-enact": "enactjs/eslint-config-enact#feature/NXT-7081",
     "globals": "^16.5.0"
   },
   "overrides": {
