@@ -292,7 +292,7 @@ async function afterTest (testData, _context, {error, passed}) {
 			}
 		} else {
 			// Test passed on retry - remove from logged failures
-			if (global.loggedFailures) {
+			if (global.loggedFailures) { // eslint-disable-line no-lonely-if
 				const testIdentifier = testData.title + '::' + fileName;
 				global.loggedFailures.delete(testIdentifier);
 			}
