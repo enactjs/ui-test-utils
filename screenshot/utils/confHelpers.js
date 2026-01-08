@@ -122,7 +122,7 @@ async function checkSessionHealth () {
 	}
 }
 
-async function cleanUpSessionHealthCheck (testData, error, passed) {
+async function cleanUpSessionHealthCheck (testData, error) {
 	if (error) {
 		const isTimeout = error.message &&
 			(error.message.includes('timeout') ||
@@ -217,7 +217,7 @@ async function cleanUpSessionHealthCheck (testData, error, passed) {
 				global.sessionFailures.set(sessionId, 0);
 			}
 		}
-	} else if (passed) {
+	} else {
 		const sessionId = browser.sessionId;
 		if (global.sessionFailures && global.sessionFailures.has(sessionId)) {
 			global.sessionFailures.set(sessionId, 0);
@@ -290,7 +290,7 @@ async function afterTest (testData, _context, {error, passed}) {
 					}
 				});
 			}
-		} else if (passed) {
+		} else {
 			// Test passed on retry - remove from logged failures
 			if (global.loggedFailures) {
 				const testIdentifier = testData.title + '::' + fileName;
@@ -299,7 +299,7 @@ async function afterTest (testData, _context, {error, passed}) {
 		}
 	}
 
-	await cleanUpSessionHealthCheck(testData, error, passed);
+	await cleanUpSessionHealthCheck(testData, error);
 }
 
 function onComplete () {
