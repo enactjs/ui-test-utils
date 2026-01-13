@@ -1,6 +1,6 @@
 # Change Log
 
-## [unreleased]
+## [4.0.1] (January 13, 2026)
 
 * Updated Chrome driver version to 132 for screenshot tests.
 
