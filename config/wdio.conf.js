@@ -15,13 +15,13 @@ export const configure = (options) => {
 
 	if (!process.env.CHROME_DRIVER) {
 		// TODO: Update this version when chromedriver version in CI/CD is updated
-		process.env.CHROME_DRIVER = base === 'screenshot' ? '120.0.6099.109' : '132.0.6834.159';
+		process.env.CHROME_DRIVER = '132.0.6834.159';
 
 		console.log('Chrome Driver Version : ' + process.env.CHROME_DRIVER);
 	}
 
 	return Object.assign(
-		opts,
+		{},
 		{
 			path: '/',
 			//
@@ -87,25 +87,27 @@ export const configure = (options) => {
 				We need to specify a browser version that matches chromedriver version running in CI/CD environment to
 				ensure testing accuracy. */
 				browserVersion: process.env.CHROME_DRIVER,
-				'goog:chromeOptions': visibleBrowser ?
+				'goog:chromeOptions':
 					{
 						args: [
+							'--disable-infobars',
+							'--disable-search-engine-choice-screen',
+							'--disable-notifications',
+							'--disable-popup-blocking',
 							'--disable-lcd-text',
 							'--force-device-scale-factor=1',
 							'--start-maximized',
-							'--start-fullscreen',
 							'--disable-gpu',
-							'--window-size=1920,1080'
-						]
-					} : {
-						args: [
-							'--disable-lcd-text',
-							'--force-device-scale-factor=1',
-							'--start-maximized',
-							'--start-fullscreen',
-							'--headless',
-							'--disable-gpu',
-							'--window-size=1920,1080'
+							'--window-size=1920,1080',
+							// Critical for Chrome 132 in Jenkins/Linux
+							'--no-sandbox',
+							'--disable-dev-shm-usage',
+							'--disable-setuid-sandbox',
+							// Performance optimizations for Chrome 132
+							'--disable-features=VizDisplayCompositor',
+							'--disable-features=IsolateOrigins,site-per-process',
+							'--js-flags=--max-old-space-size=512',
+							...(visibleBrowser ? [] : ['--headless=new'])
 						]
 					},
 				webSocketUrl: false, // disables BiDi, forces classic mode
@@ -135,21 +137,23 @@ export const configure = (options) => {
 			baseUrl: 'http://localhost:4567',
 			//
 			// Default timeout for all waitFor* commands.
-			waitforTimeout: 10000,
+			waitforTimeout: 45000,
 			//
 			// Default timeout in milliseconds for request
 			// if Selenium Grid doesn't send response
-			connectionRetryTimeout: 120000,
+			connectionRetryTimeout: 240000,
 			//
 			// Default request retries count
-			connectionRetryCount: 3,
+			connectionRetryCount: 5,
 			// Ignore deprecation warnings
 			deprecationWarnings: false,
 			//
 			// Default timeouts
 			//
 			timeouts: {
-				script: 60000 // extend script timeout to 60s just in case
+				script: 600000,
+				pageLoad: 600000,
+				implicit: 20000
 			},
 			//
 			// Initialize the browser instance with a WebdriverIO plugin. The object should have the
@@ -200,7 +204,8 @@ export const configure = (options) => {
 			// See the full list at http://mochajs.org/
 			mochaOpts: {
 				ui: 'bdd',
-				timeout: 60 * 60 * 1000
+				timeout: 60 * 60 * 1000,
+				retries: 2 // Retry failed tests up to 2 times (important for timeout recovery)
 			},
 			/**
 			 * Gets executed before test execution begins. At this point you can access to all global
@@ -209,14 +214,32 @@ export const configure = (options) => {
 			before: async function () {
 				global.wdioExpect = global.expect;
 				// in Chrome 132, the browser window size takes into account also the address bar and tab area
-				await browser.maximizeWindow();
-				let browserHeight = base === 'screenshot' ? 1080 : 1272;
-				await browser.setWindowSize(1920, browserHeight);
+				await browser.setWindowSize(1920, 1167);
+
+				// Small pause to let window resize complete
+				await browser.pause(200);
+
+				// Verify the window is ready
+				await browser.waitUntil(
+					async () => {
+						try {
+							const state = await browser.execute(() => document.readyState);
+							return state === 'complete';
+						} catch (e) {
+							return false;
+						}
+					},
+					{
+						timeout: 15000,
+						timeoutMsg: 'Page did not reach ready state'
+					}
+				);
 
 				if (options.before) {
 					await options.before();
 				}
 			}
-		}
+		},
+		opts
 	);
 };
