@@ -3,7 +3,7 @@ import path from 'path';
 let chalk;
 import spawn from 'cross-spawn';
 import fs from 'fs-extra';
-import readdirp from 'readdirp';
+import {readdirpPromise} from 'readdirp';
 import * as url from 'url';
 
 const env = {
@@ -14,7 +14,9 @@ const env = {
 };
 
 function findViews (base) {
-	return readdirp.promise(path.join('tests', base, 'apps'), {fileFilter: '*-View.js'});
+	return readdirpPromise(path.join('tests', base, 'apps'), {
+		fileFilter: (entry) => entry.basename.endsWith('-View.js')
+	});
 }
 
 // eslint-disable-next-line no-shadow
