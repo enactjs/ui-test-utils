@@ -10,7 +10,7 @@ const env = {
 	ILIB_BASE_PATH: '/framework/ilib',
 	ILIB_ASSET_CREATE: 'false',
 	SIMPLE_CSS_IDENT: 'true',
-	BROWSERSLIST: 'Chrome 79'
+	BROWSERSLIST: 'Chrome 132'
 };
 
 function findViews (base) {
