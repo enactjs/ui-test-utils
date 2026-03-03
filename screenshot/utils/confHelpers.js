@@ -54,6 +54,7 @@ function initFile (name, content) {
 function onPrepare () {
 	global.sessionFailures = new Map();
 	global.failedSessions = new Set();
+	global.pendingFailures = new Map();
 
 	if (!fs.existsSync('tests/screenshot/dist/screenshots/reference')) {
 		console.log('No reference screenshots found, creating new references!');
@@ -263,38 +264,25 @@ async function afterTest (testData, _context, {error, passed}) {
 			});
 		}
 
+		const testIdentifier = testData.title + '::' + fileName;
+
 		if (!passed) {
-			// Track failed tests to avoid duplicate logging during retries
-			if (!global.loggedFailures) {
-				global.loggedFailures = new Set();
+			// Track pending failed tests to avoid duplicate logging during retries
+			if (!global.pendingFailures) {
+				global.pendingFailures = new Map();
 			}
 
-			const testIdentifier = testData.title + '::' + fileName;
-
-			// Only log if we haven't already logged this test failure
-			if (!global.loggedFailures.has(testIdentifier)) {
-				global.loggedFailures.add(testIdentifier);
-
+			if (!global.pendingFailures.has(testIdentifier)) {
 				const screenPath = path.join(screenshotRelativePath, 'actual', fileName);
 				const diffPath = path.join(screenshotRelativePath, 'diff', fileName);
-				fs.open(failedScreenshotFilename, 'a', (err, fd) => {
-					if (err) {
-						console.error('Unable to create failed test log file!');
-					} else {
-						const title = testData.title.replace(/~\//g, '/');
-						const {params, url} = testData.context;
-						const output = {title, diffPath, referencePath, screenPath, params, url};
-						fs.appendFile(fd, `${JSON.stringify(output)},`, 'utf8', () => {
-							fs.close(fd);
-						});
-					}
-				});
+				const title = testData.title.replace(/~\//g, '/');
+				const {params, url} = testData.context;
+				global.pendingFailures.set(testIdentifier, {title, diffPath, referencePath, screenPath, params, url});
 			}
 		} else {
-			// Test passed on retry - remove from logged failures
-			if (global.loggedFailures) { // eslint-disable-line no-lonely-if
-				const testIdentifier = testData.title + '::' + fileName;
-				global.loggedFailures.delete(testIdentifier);
+			// Test passed (possibly on retry) — remove from pending so it won't be reported as failed
+			if (global.pendingFailures) { // eslint-disable-line no-lonely-if
+				global.pendingFailures.delete(testIdentifier);
 			}
 		}
 	}
@@ -303,6 +291,13 @@ async function afterTest (testData, _context, {error, passed}) {
 }
 
 function onComplete () {
+	// Write all tests that ultimately failed
+	if (global.pendingFailures && global.pendingFailures.size > 0) {
+		for (const output of global.pendingFailures.values()) {
+			fs.appendFileSync(failedScreenshotFilename, `${JSON.stringify(output)},`, 'utf8');
+		}
+	}
+
 	const {size: newSize} = fs.statSync(newScreenshotFilename),
 		{size: failedSize} = fs.statSync(failedScreenshotFilename);
 
