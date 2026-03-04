@@ -32,10 +32,7 @@ const baselineRelativePath = 'screenshots/reference';
 const screenshotRelativePath = 'screenshots/screen';
 const baselineFolder = path.join(distPath, baselineRelativePath);
 const screenshotFolder = path.join(distPath, screenshotRelativePath);
-
-// afterTest (worker) writes a file on failure and deletes it on pass.
-// onComplete (main process) reads whatever survived and flushes them to failedTests.html.
-const pendingFailuresDir = path.join(distPath, 'pending-failures');
+const pendingFailuresFolder = path.join(distPath, 'pending-failures');
 
 const generateReferenceName = getScreenshotName(baselineFolder);
 
@@ -60,10 +57,10 @@ function onPrepare () {
 	global.failedSessions = new Set();
 
 	// Clear any leftover pending-failure files from a previous run
-	if (fs.existsSync(pendingFailuresDir)) {
-		fs.rmSync(pendingFailuresDir, {recursive: true, force: true});
+	if (fs.existsSync(pendingFailuresFolder)) {
+		fs.rmSync(pendingFailuresFolder, {recursive: true, force: true});
 	}
-	fs.mkdirSync(pendingFailuresDir, {recursive: true});
+	fs.mkdirSync(pendingFailuresFolder, {recursive: true});
 
 	if (!fs.existsSync('tests/screenshot/dist/screenshots/reference')) {
 		console.log('No reference screenshots found, creating new references!');
@@ -277,7 +274,7 @@ async function afterTest (testData, _context, {error, passed}) {
 		// delete the right file on a passing retry, even across different worker processes.
 		const testIdentifier = testData.title + '::' + fileName;
 		const pendingKey = cryptoModule.createHash('md5').update(testIdentifier).digest('hex');
-		const pendingFile = path.join(pendingFailuresDir, `${pendingKey}.json`);
+		const pendingFile = path.join(pendingFailuresFolder, `${pendingKey}.json`);
 
 		if (!passed) {
 			// Track pending failed tests to avoid duplicate logging during retries
@@ -306,17 +303,17 @@ async function afterTest (testData, _context, {error, passed}) {
 
 function onComplete () {
 	// Write all tests that ultimately failed
-	if (fs.existsSync(pendingFailuresDir)) {
-		const pendingFiles = fs.readdirSync(pendingFailuresDir).filter(f => f.endsWith('.json'));
+	if (fs.existsSync(pendingFailuresFolder)) {
+		const pendingFiles = fs.readdirSync(pendingFailuresFolder).filter(f => f.endsWith('.json'));
 		for (const file of pendingFiles) {
 			try {
-				const raw = fs.readFileSync(path.join(pendingFailuresDir, file), 'utf8');
+				const raw = fs.readFileSync(path.join(pendingFailuresFolder, file), 'utf8');
 				fs.appendFileSync(failedScreenshotFilename, `${raw},`, 'utf8');
 			} catch (e) {
 				console.error(`Failed to flush pending failure ${file}: ${e.message}`);
 			}
 		}
-		fs.rmSync(pendingFailuresDir, {recursive: true, force: true});
+		fs.rmSync(pendingFailuresFolder, {recursive: true, force: true});
 	}
 
 	const {size: newSize} = fs.statSync(newScreenshotFilename),
