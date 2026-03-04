@@ -33,6 +33,10 @@ const screenshotRelativePath = 'screenshots/screen';
 const baselineFolder = path.join(distPath, baselineRelativePath);
 const screenshotFolder = path.join(distPath, screenshotRelativePath);
 
+// afterTest (worker) writes a file on failure and deletes it on pass.
+// onComplete (main process) reads whatever survived and flushes them to failedTests.html.
+const pendingFailuresDir = path.join(distPath, 'pending-failures');
+
 const generateReferenceName = getScreenshotName(baselineFolder);
 
 function initFile (name, content) {
@@ -54,7 +58,12 @@ function initFile (name, content) {
 function onPrepare () {
 	global.sessionFailures = new Map();
 	global.failedSessions = new Set();
-	global.pendingFailures = new Map();
+
+	// Clear any leftover pending-failure files from a previous run
+	if (fs.existsSync(pendingFailuresDir)) {
+		fs.rmSync(pendingFailuresDir, {recursive: true, force: true});
+	}
+	fs.mkdirSync(pendingFailuresDir, {recursive: true});
 
 	if (!fs.existsSync('tests/screenshot/dist/screenshots/reference')) {
 		console.log('No reference screenshots found, creating new references!');
@@ -264,25 +273,30 @@ async function afterTest (testData, _context, {error, passed}) {
 			});
 		}
 
+		// Use a stable filename derived from the test identifier so the worker can find and
+		// delete the right file on a passing retry, even across different worker processes.
 		const testIdentifier = testData.title + '::' + fileName;
+		const pendingKey = cryptoModule.createHash('md5').update(testIdentifier).digest('hex');
+		const pendingFile = path.join(pendingFailuresDir, `${pendingKey}.json`);
 
 		if (!passed) {
 			// Track pending failed tests to avoid duplicate logging during retries
-			if (!global.pendingFailures) {
-				global.pendingFailures = new Map();
-			}
-
-			if (!global.pendingFailures.has(testIdentifier)) {
-				const screenPath = path.join(screenshotRelativePath, 'actual', fileName);
-				const diffPath = path.join(screenshotRelativePath, 'diff', fileName);
-				const title = testData.title.replace(/~\//g, '/');
-				const {params, url} = testData.context;
-				global.pendingFailures.set(testIdentifier, {title, diffPath, referencePath, screenPath, params, url});
+			const screenPath = path.join(screenshotRelativePath, 'actual', fileName);
+			const diffPath = path.join(screenshotRelativePath, 'diff', fileName);
+			const title = testData.title.replace(/~\//g, '/');
+			const {params, url} = testData.context;
+			const output = {title, diffPath, referencePath, screenPath, params, url};
+			try {
+				fs.writeFileSync(pendingFile, JSON.stringify(output), 'utf8');
+			} catch (writeErr) {
+				console.error(`Unable to stage failure for "${title}": ${writeErr.message}`);
 			}
 		} else {
-			// Test passed (possibly on retry) — remove from pending so it won't be reported as failed
-			if (global.pendingFailures) { // eslint-disable-line no-lonely-if
-				global.pendingFailures.delete(testIdentifier);
+			// Test passed (possibly on retry) — remove the staged failure so it won't be reported
+			try {
+				fs.unlinkSync(pendingFile);
+			} catch (e) {
+				// test passed on first attempt — nothing to do
 			}
 		}
 	}
@@ -292,10 +306,16 @@ async function afterTest (testData, _context, {error, passed}) {
 
 function onComplete () {
 	// Write all tests that ultimately failed
-	if (global.pendingFailures && global.pendingFailures.size > 0) {
-		for (const output of global.pendingFailures.values()) {
-			fs.appendFileSync(failedScreenshotFilename, `${JSON.stringify(output)},`, 'utf8');
+		const pendingFiles = fs.readdirSync(pendingFailuresDir).filter(f => f.endsWith('.json'));
+		for (const file of pendingFiles) {
+			try {
+				const raw = fs.readFileSync(path.join(pendingFailuresDir, file), 'utf8');
+				fs.appendFileSync(failedScreenshotFilename, `${raw},`, 'utf8');
+			} catch (e) {
+				console.error(`Failed to flush pending failure ${file}: ${e.message}`);
+			}
 		}
+		fs.rmSync(pendingFailuresDir, {recursive: true, force: true});
 	}
 
 	const {size: newSize} = fs.statSync(newScreenshotFilename),
