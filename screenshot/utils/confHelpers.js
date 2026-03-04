@@ -306,6 +306,7 @@ async function afterTest (testData, _context, {error, passed}) {
 
 function onComplete () {
 	// Write all tests that ultimately failed
+	if (fs.existsSync(pendingFailuresDir)) {
 		const pendingFiles = fs.readdirSync(pendingFailuresDir).filter(f => f.endsWith('.json'));
 		for (const file of pendingFiles) {
 			try {
