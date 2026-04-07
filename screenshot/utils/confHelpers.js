@@ -32,6 +32,7 @@ const baselineRelativePath = 'screenshots/reference';
 const screenshotRelativePath = 'screenshots/screen';
 const baselineFolder = path.join(distPath, baselineRelativePath);
 const screenshotFolder = path.join(distPath, screenshotRelativePath);
+const pendingFailuresFolder = path.join(distPath, 'pending-failures');
 
 const generateReferenceName = getScreenshotName(baselineFolder);
 
@@ -54,6 +55,12 @@ function initFile (name, content) {
 function onPrepare () {
 	global.sessionFailures = new Map();
 	global.failedSessions = new Set();
+
+	// Clear any leftover pending-failure files from a previous run
+	if (fs.existsSync(pendingFailuresFolder)) {
+		fs.rmSync(pendingFailuresFolder, {recursive: true, force: true});
+	}
+	fs.mkdirSync(pendingFailuresFolder, {recursive: true});
 
 	if (!fs.existsSync('tests/screenshot/dist/screenshots/reference')) {
 		console.log('No reference screenshots found, creating new references!');
@@ -263,38 +270,30 @@ async function afterTest (testData, _context, {error, passed}) {
 			});
 		}
 
+		// Use a stable filename derived from the test identifier so the worker can find and
+		// delete the right file on a passing retry, even across different worker processes.
+		const testIdentifier = testData.title + '::' + fileName;
+		const pendingKey = cryptoModule.createHash('md5').update(testIdentifier).digest('hex');
+		const pendingFile = path.join(pendingFailuresFolder, `${pendingKey}.json`);
+
 		if (!passed) {
-			// Track failed tests to avoid duplicate logging during retries
-			if (!global.loggedFailures) {
-				global.loggedFailures = new Set();
-			}
-
-			const testIdentifier = testData.title + '::' + fileName;
-
-			// Only log if we haven't already logged this test failure
-			if (!global.loggedFailures.has(testIdentifier)) {
-				global.loggedFailures.add(testIdentifier);
-
-				const screenPath = path.join(screenshotRelativePath, 'actual', fileName);
-				const diffPath = path.join(screenshotRelativePath, 'diff', fileName);
-				fs.open(failedScreenshotFilename, 'a', (err, fd) => {
-					if (err) {
-						console.error('Unable to create failed test log file!');
-					} else {
-						const title = testData.title.replace(/~\//g, '/');
-						const {params, url} = testData.context;
-						const output = {title, diffPath, referencePath, screenPath, params, url};
-						fs.appendFile(fd, `${JSON.stringify(output)},`, 'utf8', () => {
-							fs.close(fd);
-						});
-					}
-				});
+			// Track pending failed tests to avoid duplicate logging during retries
+			const screenPath = path.join(screenshotRelativePath, 'actual', fileName);
+			const diffPath = path.join(screenshotRelativePath, 'diff', fileName);
+			const title = testData.title.replace(/~\//g, '/');
+			const {params, url} = testData.context;
+			const output = {title, diffPath, referencePath, screenPath, params, url};
+			try {
+				fs.writeFileSync(pendingFile, JSON.stringify(output), 'utf8');
+			} catch (writeErr) {
+				console.error(`Unable to stage failure for "${title}": ${writeErr.message}`);
 			}
 		} else {
-			// Test passed on retry - remove from logged failures
-			if (global.loggedFailures) { // eslint-disable-line no-lonely-if
-				const testIdentifier = testData.title + '::' + fileName;
-				global.loggedFailures.delete(testIdentifier);
+			// Test passed (possibly on retry) — remove the staged failure so it won't be reported
+			try {
+				fs.unlinkSync(pendingFile);
+			} catch (e) {
+				// test passed on first attempt — nothing to do
 			}
 		}
 	}
@@ -303,6 +302,20 @@ async function afterTest (testData, _context, {error, passed}) {
 }
 
 function onComplete () {
+	// Write all tests that ultimately failed
+	if (fs.existsSync(pendingFailuresFolder)) {
+		const pendingFiles = fs.readdirSync(pendingFailuresFolder).filter(f => f.endsWith('.json'));
+		for (const file of pendingFiles) {
+			try {
+				const raw = fs.readFileSync(path.join(pendingFailuresFolder, file), 'utf8');
+				fs.appendFileSync(failedScreenshotFilename, `${raw},`, 'utf8');
+			} catch (e) {
+				console.error(`Failed to flush pending failure ${file}: ${e.message}`);
+			}
+		}
+		fs.rmSync(pendingFailuresFolder, {recursive: true, force: true});
+	}
+
 	const {size: newSize} = fs.statSync(newScreenshotFilename),
 		{size: failedSize} = fs.statSync(failedScreenshotFilename);
 

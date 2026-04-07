@@ -1,5 +1,11 @@
 # Change Log
 
+## [4.0.2] (April 7, 2026)
+
+* Fixed ss-tests to add entry in failedTests.html only if all retries of a test failed.
+* Updated dependencies versions to the latest.
+* Required Node.js version "^20.19.0 || ^22.0.0 || >=24.0.0"
+
 ## [4.0.1] (January 13, 2026)
 
 * Updated Chrome driver version to 132 for screenshot tests.

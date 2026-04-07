@@ -12,7 +12,7 @@ export class Page {
 
 	async open (appPath, urlExtra = '?locale=en-US') {
 		await browser.execute(function () {
-			document.body.innerHTML = '';
+			document.body.textContent = '';
 		});
 
 		this._url = `/${appPath}/${urlExtra}`;
