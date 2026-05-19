@@ -1,13 +1,13 @@
-const buildApps = require('../src/build-apps'),
-	fs = require('fs');
+import buildApps from '../src/build-apps.js';
+import fs from 'fs';
 let chalk;
 import('chalk').then(({default: _chalk}) => {
 	chalk = _chalk;
 });
 
-const {configure} = require('../config/wdio.conf.js');
+import {configure} from '../config/wdio.conf.js';
 
-exports.config = configure({
+const config = configure({
 	base: 'ui',
 	//
 	// =====
@@ -31,7 +31,7 @@ exports.config = configure({
 	 * @param {Number} result.duration duration of test
 	 * @param {Boolean} result.passed true if test has passed, otherwise false
 	 */
-	afterTest: function (testCase, _context, {duration, passed}) {
+	afterTest: async function (testCase, _context, {duration, passed}) {
 		if (duration > 2000) {
 			console.log(chalk.yellow(`Long running test case: ${testCase.title}: ${duration}ms`));
 		}
@@ -48,7 +48,7 @@ exports.config = configure({
 			fs.mkdirSync(this.screenshotPath, {recursive: true});	// May only work recursively on Node 10.12+
 		}
 		// save screenshot
-		browser.saveScreenshot(filePath);
+		await browser.saveScreenshot(filePath);
 		console.log('\n\tScreenshot location:', filePath, '\n');
 	},
 	afterSuite: function (_suite) {
@@ -59,3 +59,6 @@ exports.config = configure({
 		}
 	}
 });
+
+export default {config};
+export {config};

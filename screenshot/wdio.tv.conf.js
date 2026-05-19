@@ -1,16 +1,16 @@
-const ipAddress = require('../utils/ipAddress.js');
-const {config} = require('./wdio.conf.js');
+import {ipAddress} from '../utils/ipAddress.js';
+import {config as ssConfig} from './wdio.conf.js';
 
-const services = config.services.map(service => {
+const services = ssConfig.services.map(service => {
 	if (service[0] === 'novus-visual-regression') {
 		delete service[1].viewports;
 	}
 	return service;
 });
 
-exports.config = Object.assign(
+const config = Object.assign(
 	{},
-	config,
+	ssConfig,
 	{
 		services,
 
@@ -30,11 +30,10 @@ exports.config = Object.assign(
 			// maxInstances can get overwritten per capability. So if you have an in-house Selenium
 			// grid with only 5 firefox instances available you can make sure that not more than
 			// 5 instances get started at a time.
-			maxInstances: 1,
+			'wdio:maxInstances': 1,
 			//
 			browserName: 'chrome',
 			'goog:chromeOptions': {
-				w3c: false,
 				debuggerAddress: `${process.env.TV_IP}:9998`
 			}
 		}],
@@ -49,8 +48,8 @@ exports.config = Object.assign(
 		 * variables like `browser`. It is the perfect place to define custom commands.
 		 */
 		before: function () {
-			if (config.before) {
-				config.before();
+			if (ssConfig.before) {
+				ssConfig.before();
 			}
 
 			browser._options = {remote: true};
@@ -62,3 +61,5 @@ exports.config = Object.assign(
 		}
 	}
 );
+
+export const ssTVConfig = {config};

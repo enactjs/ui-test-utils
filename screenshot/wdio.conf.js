@@ -1,15 +1,16 @@
-const {configure} = require('../config/wdio.conf.js');
-const {afterTest, baselineFolder, beforeTest, onComplete, onPrepare, screenshotFolder} = require('./utils/confHelpers.js');
+import {configure} from '../config/wdio.conf.js';
+import {afterTest, baselineFolder, beforeTest, onComplete, onPrepare, screenshotFolder} from './utils/confHelpers.js';
 
-exports.config = configure({
+const config = configure({
 	base: 'screenshot',
 	services: [[
-		'image-comparison',
+		'visual',
 		{
 			baselineFolder: baselineFolder,
 			formatImageName: '{tag}',
 			screenshotPath: screenshotFolder,
-			autoSaveBaseline: true
+			autoSaveBaseline: true,
+			waitForFontsLoaded: true
 		}
 	]],
 	//
@@ -43,3 +44,6 @@ exports.config = configure({
 	 */
 	onComplete: onComplete
 });
+
+export default {config};
+export {config};

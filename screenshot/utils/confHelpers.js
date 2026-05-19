@@ -1,9 +1,9 @@
-const cryptoModule = require('crypto'),
-	path = require('path'),
-	fs = require('fs');
+import cryptoModule from 'crypto';
+import path from 'path';
+import fs from 'fs';
 
-const buildApps = require('../../src/build-apps');
-const makeHeader = require('./headerTemplate');
+import buildApps from '../../src/build-apps.js';
+import {makeHeader} from './headerTemplate.js';
 
 const newScreenshotFilename = 'tests/screenshot/dist/newFiles.html',
 	failedScreenshotFilename = 'tests/screenshot/dist/failedTests.html',
@@ -32,6 +32,7 @@ const baselineRelativePath = 'screenshots/reference';
 const screenshotRelativePath = 'screenshots/screen';
 const baselineFolder = path.join(distPath, baselineRelativePath);
 const screenshotFolder = path.join(distPath, screenshotRelativePath);
+const pendingFailuresFolder = path.join(distPath, 'pending-failures');
 
 const generateReferenceName = getScreenshotName(baselineFolder);
 
@@ -52,6 +53,15 @@ function initFile (name, content) {
 }
 
 function onPrepare () {
+	global.sessionFailures = new Map();
+	global.failedSessions = new Set();
+
+	// Clear any leftover pending-failure files from a previous run
+	if (fs.existsSync(pendingFailuresFolder)) {
+		fs.rmSync(pendingFailuresFolder, {recursive: true, force: true});
+	}
+	fs.mkdirSync(pendingFailuresFolder, {recursive: true});
+
 	if (!fs.existsSync('tests/screenshot/dist/screenshots/reference')) {
 		console.log('No reference screenshots found, creating new references!');
 	}
@@ -62,15 +72,185 @@ function onPrepare () {
 	return buildApps('screenshot');
 }
 
-function beforeTest (testData) {
+/* Checks if a browser session is healthy. If not, it will attempt to recover. */
+async function checkSessionHealth () {
+	const sessionId = browser.sessionId;
+
+	// Check if this session has been marked as dead
+	if (global.failedSessions && global.failedSessions.has(sessionId)) {
+		throw new Error('Session is marked as failed - skipping remaining tests');
+	}
+
+	// Skip health check if the session was just recovered
+	if (global.recentlyRecovered && global.recentlyRecovered.has(sessionId)) {
+		global.recentlyRecovered.delete(sessionId);
+	} else {
+		// Quick health check with a short timeout
+		try {
+			await Promise.race([
+				browser.execute(() => true),
+				new Promise((_, reject) =>
+					setTimeout(() => reject(new Error('Health check timeout')), 3000)
+				)
+			]);
+
+			// Success - reset failure counter
+			if (global.sessionFailures) {
+				global.sessionFailures.set(sessionId, 0);
+			}
+		} catch (e) {
+			// Track consecutive failures
+			const failures = (global.sessionFailures?.get(sessionId) || 0) + 1;
+			if (global.sessionFailures) {
+				global.sessionFailures.set(sessionId, failures);
+			}
+
+			console.log(`Session ${sessionId} health check failed (failure ${failures}/3)`);
+
+			// Only mark as dead after 3 consecutive failures
+			if (failures >= 3) {
+				console.log(`Session ${sessionId} has failed 3 times - marking as dead`);
+				if (global.failedSessions) {
+					global.failedSessions.add(sessionId);
+				}
+				throw new Error('Session health check failed - marking as dead');
+			}
+
+			// Try quick recovery for the first 2 failures
+			console.log(`Attempting quick recovery for session ${sessionId}...`);
+			try {
+				await browser.reloadSession();
+				await browser.setWindowSize(1920, 1167);
+				console.log(`Session ${sessionId} recovered`);
+			} catch (recoveryError) {
+				console.log(`Recovery attempt failed, will retry next test`);
+			}
+		}
+	}
+}
+
+async function cleanUpSessionHealthCheck (testData, error) {
+	if (error) {
+		const isTimeout = error.message &&
+			(error.message.includes('timeout') ||
+				error.message.includes('aborted') ||
+				error.message.includes('HEADERS_TIMEOUT') ||
+				error.message.includes('ECONNREFUSED'));
+
+		if (isTimeout) {
+			const sessionId = browser.sessionId;
+
+			// Track consecutive failures
+			if (!global.sessionFailures) {
+				global.sessionFailures = new Map();
+			}
+
+			const failures = (global.sessionFailures.get(sessionId) || 0) + 1;
+			global.sessionFailures.set(sessionId, failures);
+
+			console.log(`Timeout #${failures} in session ${sessionId} - test: "${testData.title}"`);
+
+			// Circuit breaker: after 3 consecutive timeouts, kill the session
+			if (failures >= 3) {
+				console.log(`Session ${sessionId} has failed 3 times consecutively - marking as dead`);
+
+				if (!global.failedSessions) {
+					global.failedSessions = new Set();
+				}
+				global.failedSessions.add(sessionId);
+
+				// Try to clean up with very short timeout, then give up
+				try {
+					await Promise.race([
+						(async () => {
+							try {
+								await browser.execute(() => window.stop());
+							} catch (e) {
+								// Ignore
+							}
+							await browser.deleteSession();
+						})(),
+						new Promise((_, reject) =>
+							setTimeout(() => reject(new Error('Cleanup timeout')), 2000)
+						)
+					]);
+					console.log('Session cleanup completed');
+				} catch (e) {
+					console.log('Session cleanup timed out - session is dead');
+				}
+
+				return; // Don't try to recover
+			}
+
+			// For first 2 failures, attempt recovery
+			console.log(`Attempting recovery for session ${sessionId} (attempt ${failures}/3)`);
+
+			try {
+				// Try light recovery with timeout
+				await Promise.race([
+					(async () => {
+						try {
+							await browser.execute(() => window.stop());
+						} catch (e) {
+							// Ignore
+						}
+						await browser.deleteSession();
+						await browser.reloadSession();
+						await browser.setWindowSize(1920, 1167);
+						await browser.pause(1000);
+					})(),
+					new Promise((_, reject) =>
+						setTimeout(() => reject(new Error('Recovery timeout')), 10000)
+					)
+				]);
+
+				console.log('Session recovered successfully');
+
+				// Reset failure count on successful recovery
+				global.sessionFailures.set(sessionId, 0);
+
+				// Mark that we just recovered - skip next health check
+				if (!global.recentlyRecovered) {
+					global.recentlyRecovered = new Set();
+				}
+				global.recentlyRecovered.add(sessionId);
+
+			} catch (recoveryError) {
+				console.error(`Session recovery failed: ${recoveryError.message}`);
+			}
+		} else {
+			const sessionId = browser.sessionId;
+			if (global.sessionFailures && global.sessionFailures.has(sessionId)) {
+				global.sessionFailures.set(sessionId, 0);
+			}
+		}
+	} else {
+		const sessionId = browser.sessionId;
+		if (global.sessionFailures && global.sessionFailures.has(sessionId)) {
+			global.sessionFailures.set(sessionId, 0);
+		}
+	}
+}
+
+async function beforeTest (testData) {
+	await checkSessionHealth();
+
 	// If title doesn't have a '/', it's not a screenshot test, don't save
 	if (testData && testData.title && testData.title.indexOf('/') > 0) {
 		const filename = generateReferenceName({test: testData});
 		testData.ctx.isNewScreenshot = !fs.existsSync(filename);
+
+		// if there are no reference screenshots, we must create the folder before running the tests.
+		const specsPath = testData.title.split('~/');
+		specsPath.pop();
+		const referenceSpecsPath = path.join('tests/screenshot/dist/screenshots/reference', ...specsPath).replace(/ /g, '_');
+		if (testData.ctx.isNewScreenshot) {
+			fs.mkdirSync(referenceSpecsPath, {recursive: true});
+		}
 	}
 }
 
-function afterTest (testData, _context, {passed}) {
+async function afterTest (testData, _context, {error, passed}) {
 	// If this doesn't include context data, not a screenshot test
 	if (testData && testData.title && testData.context && testData.context.params) {
 		const fileName = testData.context.fileName.replace(/ /g, '_') + '.png';
@@ -90,26 +270,52 @@ function afterTest (testData, _context, {passed}) {
 			});
 		}
 
+		// Use a stable filename derived from the test identifier so the worker can find and
+		// delete the right file on a passing retry, even across different worker processes.
+		const testIdentifier = testData.title + '::' + fileName;
+		const pendingKey = cryptoModule.createHash('md5').update(testIdentifier).digest('hex');
+		const pendingFile = path.join(pendingFailuresFolder, `${pendingKey}.json`);
+
 		if (!passed) {
+			// Track pending failed tests to avoid duplicate logging during retries
 			const screenPath = path.join(screenshotRelativePath, 'actual', fileName);
 			const diffPath = path.join(screenshotRelativePath, 'diff', fileName);
-			fs.open(failedScreenshotFilename, 'a', (err, fd) => {
-				if (err) {
-					console.error('Unable to create failed test log file!');
-				} else {
-					const title = testData.title.replace(/~\//g, '/');
-					const {params, url} = testData.context;
-					const output = {title, diffPath, referencePath, screenPath, params, url};
-					fs.appendFile(fd, `${JSON.stringify(output)},`, 'utf8', () => {
-						fs.close(fd);
-					});
-				}
-			});
+			const title = testData.title.replace(/~\//g, '/');
+			const {params, url} = testData.context;
+			const output = {title, diffPath, referencePath, screenPath, params, url};
+			try {
+				fs.writeFileSync(pendingFile, JSON.stringify(output), 'utf8');
+			} catch (writeErr) {
+				console.error(`Unable to stage failure for "${title}": ${writeErr.message}`);
+			}
+		} else {
+			// Test passed (possibly on retry) — remove the staged failure so it won't be reported
+			try {
+				fs.unlinkSync(pendingFile);
+			} catch (e) {
+				// test passed on first attempt — nothing to do
+			}
 		}
 	}
+
+	await cleanUpSessionHealthCheck(testData, error);
 }
 
 function onComplete () {
+	// Write all tests that ultimately failed
+	if (fs.existsSync(pendingFailuresFolder)) {
+		const pendingFiles = fs.readdirSync(pendingFailuresFolder).filter(f => f.endsWith('.json'));
+		for (const file of pendingFiles) {
+			try {
+				const raw = fs.readFileSync(path.join(pendingFailuresFolder, file), 'utf8');
+				fs.appendFileSync(failedScreenshotFilename, `${raw},`, 'utf8');
+			} catch (e) {
+				console.error(`Failed to flush pending failure ${file}: ${e.message}`);
+			}
+		}
+		fs.rmSync(pendingFailuresFolder, {recursive: true, force: true});
+	}
+
 	const {size: newSize} = fs.statSync(newScreenshotFilename),
 		{size: failedSize} = fs.statSync(failedScreenshotFilename);
 
@@ -131,8 +337,7 @@ function onComplete () {
 	}
 }
 
-
-module.exports = {
+export {
 	afterTest,
 	baselineFolder,
 	beforeTest,

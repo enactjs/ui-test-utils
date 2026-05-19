@@ -1,6 +1,5 @@
 import css from './TestChooser.module.css';
 
-// eslint-disable-next-line enact/prop-types
 const TestChooser = ({metadata}) => {
 	const tests = Object.keys(metadata);
 

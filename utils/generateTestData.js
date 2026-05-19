@@ -75,7 +75,7 @@ const stringifyProps = (props = {}) => {
 	return formattedString.length === 0 ? 'default' : formattedString;
 };
 
-const generateTestData = (component, componentTests) => {
+export const generateTestData = (component, componentTests) => {
 	let metaData = [];
 	componentTests.forEach((testCase) => {
 		let title = testCase.title;
@@ -103,8 +103,4 @@ const generateTestData = (component, componentTests) => {
 	});
 
 	return metaData;
-};
-
-module.exports = {
-	generateTestData
 };

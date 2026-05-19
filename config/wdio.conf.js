@@ -1,13 +1,11 @@
-const parseArgs = require('minimist');
-const {execSync} = require('child_process');
+import parseArgs from 'minimist';
 
 const args = parseArgs(process.argv);
 
 const visibleBrowser = !!args.visible,
-	maxInstances = args.instances || 5,
-	offline = args.offline;
+	maxInstances = args.instances || 5;
 
-module.exports.configure = (options) => {
+export const configure = (options) => {
 	const {base, services} = options;
 	const opts = Object.assign({}, options);
 
@@ -16,47 +14,14 @@ module.exports.configure = (options) => {
 	delete opts.services;
 
 	if (!process.env.CHROME_DRIVER) {
-		if (process.env.TV_IP && process.argv.find(arg => arg.includes('tv.conf'))) {
-			process.env.CHROME_DRIVER = 2.44; // Currently, TV supports 83 and lower, but keep the previous version for safety.
-		} else {
-			let chromeVersionMajorNumber;
-			try {
-				if (process.platform === 'win32') {
-					// Windows
-					const chromeVersion = /\d+/.exec(execSync('wmic datafile where "name=\'C:\\\\Program Files\\\\Google\\\\Chrome\\\\Application\\\\chrome.exe\'" get Version /value').toString());
-					chromeVersionMajorNumber = (chromeVersion && chromeVersion[0]);
-				} else if (process.platform === 'darwin') {
-					// Mac
-					const chromeVersion = /Chrome (\d+)/.exec(execSync('/Applications/Google\\ Chrome.app/Contents/MacOS/Google\\ Chrome --version'));
-					chromeVersionMajorNumber = (chromeVersion && chromeVersion[1]);
-				} else {
-					const chromeVersion = /Chrome (\d+)/.exec(execSync('google-chrome -version'));
-					chromeVersionMajorNumber = (chromeVersion && chromeVersion[1]);
-				}
-				let chromeDriverVersion;
-
-				if (chromeVersionMajorNumber > 114) {
-					chromeDriverVersion = execSync('curl https://googlechromelabs.github.io/chrome-for-testing/LATEST_RELEASE' + (chromeVersionMajorNumber ? ('_' + chromeVersionMajorNumber) : ''));
-				} else {
-					chromeDriverVersion = execSync('curl https://chromedriver.storage.googleapis.com/LATEST_RELEASE' + (chromeVersionMajorNumber ? ('_' + chromeVersionMajorNumber) : ''));
-				}
-
-				if (chromeDriverVersion.includes('Error') || !/\d+.\d+.\d+.\d+/.exec(chromeDriverVersion)) {
-					throw new Error();
-				} else {
-					process.env.CHROME_DRIVER = chromeDriverVersion;
-				}
-			} catch (error) {
-				console.log('ERROR: Cannot find Chrome driver from Chrome ' + chromeVersionMajorNumber);
-				process.env.CHROME_DRIVER = 2.44;
-			}
-		}
+		// TODO: Update this version when chromedriver version in CI/CD is updated
+		process.env.CHROME_DRIVER = '132.0.6834.159';
 
 		console.log('Chrome Driver Version : ' + process.env.CHROME_DRIVER);
 	}
 
 	return Object.assign(
-		opts,
+		{},
 		{
 			path: '/',
 			//
@@ -72,12 +37,18 @@ module.exports.configure = (options) => {
 			// Specify Test Files
 			// ==================
 			// Define which test specs should run. The pattern is relative to the directory
-			// from which `wdio` was called. Notice that, if you are calling `wdio` from an
-			// NPM script (see https://docs.npmjs.com/cli/run-script) then the current working
-			// directory is where your package.json resides, so `wdio` will be called from there.
+			// of the configuration file being run.
+			//
+			// The specs are defined as an array of spec files (optionally using wildcards
+			// that will be expanded). The test for each spec file will be run in a separate
+			// worker process. In order to have a group of spec files run in the same worker
+			// process enclose them in an array within the specs array.
+			//
+			// The path of the spec files will be resolved relative from the directory of
+			// the config file unless it's absolute.
 			//
 			specs: [
-				'./tests/' + base + '/specs/**/*-specs.js'
+				'../../../tests/' + base + '/specs/**/*-specs.js'
 			],
 			// Patterns to exclude.
 			exclude: [
@@ -109,12 +80,38 @@ module.exports.configure = (options) => {
 				// maxInstances can get overwritten per capability. So if you have an in-house Selenium
 				// grid with only 5 firefox instances available you can make sure that not more than
 				// 5 instances get started at a time.
-				maxInstances,
+				'wdio:maxInstances': maxInstances,
 				//
 				browserName: 'chrome',
-				'goog:chromeOptions': visibleBrowser ? {} : {
-					args: ['--headless', '--window-size=1920,1080']
-				}
+				/* WebdriverIO v8.14 and above downloads and uses the latest Chrome version when running tests.
+				We need to specify a browser version that matches chromedriver version running in CI/CD environment to
+				ensure testing accuracy. */
+				browserVersion: process.env.CHROME_DRIVER,
+				'goog:chromeOptions':
+					{
+						args: [
+							'--disable-infobars',
+							'--disable-search-engine-choice-screen',
+							'--disable-notifications',
+							'--disable-popup-blocking',
+							'--disable-lcd-text',
+							'--force-device-scale-factor=1',
+							'--start-maximized',
+							'--disable-gpu',
+							'--window-size=1920,1080',
+							// Critical for Chrome 132 in Jenkins/Linux
+							'--no-sandbox',
+							'--disable-dev-shm-usage',
+							'--disable-setuid-sandbox',
+							// Performance optimizations for Chrome 132
+							'--disable-features=VizDisplayCompositor',
+							'--disable-features=IsolateOrigins,site-per-process',
+							'--js-flags=--max-old-space-size=512',
+							...(visibleBrowser ? [] : ['--headless=new'])
+						]
+					},
+				webSocketUrl: false, // disables BiDi, forces classic mode
+				'wdio:enforceWebDriverClassic': true
 			}],
 			//
 			// ===================
@@ -140,16 +137,24 @@ module.exports.configure = (options) => {
 			baseUrl: 'http://localhost:4567',
 			//
 			// Default timeout for all waitFor* commands.
-			waitforTimeout: 10000,
+			waitforTimeout: 45000,
 			//
 			// Default timeout in milliseconds for request
 			// if Selenium Grid doesn't send response
-			connectionRetryTimeout: 90000,
+			connectionRetryTimeout: 240000,
 			//
 			// Default request retries count
-			connectionRetryCount: 3,
+			connectionRetryCount: 5,
 			// Ignore deprecation warnings
 			deprecationWarnings: false,
+			//
+			// Default timeouts
+			//
+			timeouts: {
+				script: 600000,
+				pageLoad: 600000,
+				implicit: 20000
+			},
 			//
 			// Initialize the browser instance with a WebdriverIO plugin. The object should have the
 			// plugin name as key and the desired plugin options as properties. Make sure you have
@@ -174,26 +179,6 @@ module.exports.configure = (options) => {
 			// your test setup with almost no effort. Unlike plugins, they don't add new
 			// commands. Instead, they hook themselves up into the test process.
 			services: [
-				['selenium-standalone', {
-					skipSeleniumInstall: offline,
-					args: {
-						drivers : {
-							chrome : {
-								version : process.env.CHROME_DRIVER,
-								arch    : process.arch
-							}
-						}
-					},
-					installArgs: {
-						drivers : {
-							chrome : {
-								version : process.env.CHROME_DRIVER,
-								arch    : process.arch,
-								baseURL : process.env.CHROME_DRIVER > 114 ? 'https://storage.googleapis.com' : 'https://chromedriver.storage.googleapis.com'
-							}
-						}
-					}
-				}],
 				['static-server', {
 					folders: [
 						{mount: '/', path: './tests/' + base + '/dist'}
@@ -219,21 +204,42 @@ module.exports.configure = (options) => {
 			// See the full list at http://mochajs.org/
 			mochaOpts: {
 				ui: 'bdd',
-				timeout: 60 * 60 * 1000
+				timeout: 60 * 60 * 1000,
+				retries: 2 // Retry failed tests up to 2 times (important for timeout recovery)
 			},
 			/**
 			 * Gets executed before test execution begins. At this point you can access to all global
 			 * variables like `browser`. It is the perfect place to define custom commands.
 			 */
-			before: function () {
-				require('expect-webdriverio');
-
+			before: async function () {
 				global.wdioExpect = global.expect;
+				// in Chrome 132, the browser window size takes into account also the address bar and tab area
+				await browser.setWindowSize(1920, 1167);
+
+				// Small pause to let window resize complete
+				await browser.pause(200);
+
+				// Verify the window is ready
+				await browser.waitUntil(
+					async () => {
+						try {
+							const state = await browser.execute(() => document.readyState);
+							return state === 'complete';
+						} catch (e) {
+							return false;
+						}
+					},
+					{
+						timeout: 15000,
+						timeoutMsg: 'Page did not reach ready state'
+					}
+				);
 
 				if (options.before) {
-					options.before();
+					await options.before();
 				}
 			}
-		}
+		},
+		opts
 	);
 };

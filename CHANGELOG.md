@@ -1,7 +1,48 @@
 # Change Log
 
-## [unreleased]
+## [4.0.2] (April 7, 2026)
 
+* Fixed ss-tests to add entry in failedTests.html only if all retries of a test failed.
+* Updated dependencies versions to the latest.
+* Required Node.js version "^20.19.0 || ^22.0.0 || >=24.0.0"
+
+## [4.0.1] (January 13, 2026)
+
+* Updated Chrome driver version to 132 for screenshot tests.
+
+## [4.0.0] (November 14, 2025)
+
+* Updated Chrome driver version to 132.
+
+## [3.0.0] (July 30, 2025)
+
+* Migrated to ESM
+
+## [2.0.1] (July 18, 2025)
+
+* Updated dependencies.
+
+## [2.0.0] (June 10, 2025)
+
+* Updated dependencies.
+
+## [2.0.0-rc.1] (May 15, 2025)
+
+* Fixed ui-tests errorShot saving failure by adding `await` to `browser.saveScreenshot()`.
+* Fixed ss-tests number of running instances on tv board by fixing maxInstances config property name.
+* Removed eslint-related configs in `package.json`.
+
+## [2.0.0-alpha.2] (March 7, 2025)
+
+* Updated `webdriverio` and related dependencies to version 9.
+* Dropped support for Node.js 16. Required Node.js version >= 18.
+* Removed deprecated `@wdio/selenium-standalone-service` module and added `wdio-selenium-standalone-service` community package.
+* Removed `w3c: false` and replaced with `'wdio:enforceWebDriverClassic': true` when running tests on a remote debugger. w3c enforces the usage of JSON Wire Protocol which has been removed from `webdriverio` v9.
+* Replaced deprecated dependency `wdio-image-comparison-service` with `@wdio/visual-service`.
+
+## [2.0.0-alpha.1] (February 26, 2025)
+
+* Updated `eslint` to v9 and adopted flat config.
 * Added `--no-animation` option for screenshot test.
 
 ## [1.0.10] (October 31, 2024)
