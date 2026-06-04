@@ -6,10 +6,10 @@ const args = parseArgs(process.argv);
 const pattern = args.component, // Component group to match
 	testToExecute = args.id,    // Specific test ID
 	titlePattern = args.title,  // Pattern for matching test case title
-	maxInstances = args.instances || 5;  // concurrent instances for 'manual' concurrency
+	shardCount = args.instances || 5;  // testId % shardCount (CI sharding)
 
 export const runTest = ({concurrency, filter, Page, testName, ...rest}) => {
-	if (concurrency && (concurrency > maxInstances)) {
+	if (concurrency && (concurrency > shardCount)) {
 		return;
 	}
 
@@ -34,7 +34,7 @@ export const runTest = ({concurrency, filter, Page, testName, ...rest}) => {
 
 					describe(component, function () {
 						testCases[component].forEach((testCase, testId) => {
-							if (concurrency && testId % maxInstances !== concurrency - 1) {
+							if (concurrency && testId % shardCount !== concurrency - 1) {
 								return;
 							}
 							if (testToExecute >= 0 && testToExecute !== testId) {

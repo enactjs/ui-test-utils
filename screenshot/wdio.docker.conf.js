@@ -1,5 +1,10 @@
+import parseArgs from 'minimist';
+
 import {ipAddress} from '../utils/ipAddress.js';
 import {config as ssConfig} from './wdio.conf.js';
+
+const args = parseArgs(process.argv);
+const maxSessions = args.parallel || args.instances || 5;
 
 // Remove selenium-standalone and replace with docker service
 const services = ssConfig.services
@@ -16,9 +21,12 @@ const config = Object.assign(
 			image: 'selenium/standalone-chrome',
 			healthCheck: 'http://localhost:4444',
 			options: {
-				e: ['NODE_MAX_INSTANCE=5', 'NODE_MAX_SESSION=5'],
+				e: [
+					`NODE_MAX_INSTANCE=${maxSessions}`,
+					`NODE_MAX_SESSION=${maxSessions}`
+				],
 				p: ['4444:4444'],
-				shmSize: '2g'
+				shmSize: maxSessions > 5 ? '3g' : '2g'
 			}
 		}
 	}

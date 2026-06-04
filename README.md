@@ -192,6 +192,12 @@ To limit or increase the number of concurrent tests, use the `--instances` optio
 npm run test-ui -- --instances 2
 ```
 
+To run more tests in parallel **without** changing CI sharding (`testId % instances`), use `--parallel` (concurrent browsers only). Sharding still uses `--instances`:
+
+```bash
+npm run test-ss -- --component Chip --spec Default-specs --instances 1 --parallel 5
+```
+
 ### Running Tests Offline
 
 By default, the latest versions of various drivers will be downloaded before starting tests. This
