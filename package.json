@@ -11,7 +11,8 @@
     "./ui/wdio.conf.js": "./ui/wdio.conf.js",
     "./ui/wdio.docker.conf.js": "./ui/wdio.docker.conf.js",
     "./ui/wdio.tv.conf.js": "./ui/wdio.tv.conf.js",
-    "./utils": "./utils/index.js"
+    "./utils": "./utils/index.js",
+    "./build-apps": "./src/build-apps.js"
   },
   "bin": {
     "start-tests": "./start-tests.js"
