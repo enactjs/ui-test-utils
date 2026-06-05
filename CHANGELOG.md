@@ -1,5 +1,11 @@
 # Change Log
 
+## [unreleased]
+
+* Added `--parallel` CLI option for WDIO configs to set `maxInstances` without changing `testId % --instances` sharding in `runTest.js`
+* Added package export `@enact/ui-test-utils/build-apps` for programmatic screenshot/UI app builds
+* Changed Docker screenshot config to derive Selenium `NODE_MAX_SESSION` from `--parallel` (fallback `--instances`)
+
 ## [4.0.2] (April 7, 2026)
 
 * Fixed ss-tests to add entry in failedTests.html only if all retries of a test failed.
