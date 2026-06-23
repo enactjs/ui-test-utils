@@ -49,7 +49,7 @@
   },
   "devDependencies": {
     "eslint": "^9.39.4",
-    "eslint-config-enact": "^5.1.1",
+    "eslint-config-enact": "^5.1.2",
     "globals": "^17.6.0"
   },
   "overrides": {
