@@ -1,5 +1,9 @@
 # Change Log
 
+## [4.0.3] (June 23, 2026)
+
+* Updated dependencies.
+
 ## [4.0.2] (April 7, 2026)
 
 * Fixed ss-tests to add entry in failedTests.html only if all retries of a test failed.
