@@ -10,12 +10,14 @@ export function makeHeader (title) {
 		</header>
 		<div class="cell body">
 			<div class="row">
-				<div class="cell fixed list">
+				<div class="cell fixed list" id="drawer">
 					<ol></ol>
 				</div>
+				<div id="overlay"></div>
 				<div class="cell preview">
 					<div class="column">
 						<div class="cell fixed preview-header">
+							<button id="menu">&#9776;</button> 
 							<button id="dec">&lt;</button>
 							<button id="inc">&gt;</button>
 							<div id="title">Select an image</div>

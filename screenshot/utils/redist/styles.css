@@ -54,10 +54,24 @@ ol li {
 }
 
 .list {
-	margin-right: 12px;
-	overflow: auto;
+	background: #fff;
+	bottom: 0;
+	box-shadow: 2px 0 12px rgba(0,0,0,0.25);
+	left: 0;
 	max-width: 40%;
+	overflow-y: auto;
+	padding-top: 8px;
+	position: fixed;
+	top: 0;
+	transform: translateX(-100%);
+	transition: transform 0.25s ease;
+	width: 360px;
+	z-index: 100;
 }
+.list.open {
+	transform: translateX(0);
+}
+
 .list ol {
 	margin-top: 0;
 }
@@ -155,4 +169,15 @@ button.active {
 	transform-origin: top left;
 	cursor: crosshair;
 	image-rendering: pixelated;
+}
+
+#overlay {
+	display: none;
+	position: fixed;
+	inset: 0;
+	background: rgba(0,0,0,0.3);
+	z-index: 99;
+}
+#overlay.visible {
+	display: block;
 }

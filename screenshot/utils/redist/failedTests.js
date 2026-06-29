@@ -1,6 +1,8 @@
 ((results) => {
 	const h = document.querySelector('h1');
 	const list = document.querySelector('.list > ol');
+	const drawer = document.querySelector('.list');
+	const overlay = document.querySelector('#overlay');
 	const count = results.length;
 	let currentIndex = -1;
 
@@ -56,9 +58,16 @@
 		target.appendChild(btn);
 		return btn;
 	}
+
+	function toggleDrawer (open) {
+		drawer.classList.toggle('open', open);
+		overlay.classList.toggle('visible', open);
+	}
+
 	function initializeButtons () {
 		const inc = document.querySelector('#inc'),
-			dec = document.querySelector('#dec');
+			dec = document.querySelector('#dec'),
+			menu = document.querySelector('#menu');
 		let nextTarget = inc;
 
 		const buttonbox = document.createElement('span');
@@ -86,6 +95,8 @@
 
 		inc.onclick = nextImage;
 		dec.onclick = prevImage;
+		menu.onclick = () => toggleDrawer(!drawer.classList.contains('open'));
+		overlay.onclick = () => toggleDrawer(false);
 	}
 
 	function updateButtons (type) {
@@ -108,13 +119,16 @@
 	}
 
 	document.onkeydown = (ev) => {
-		switch (ev.keyCode) {
-			case 37:
+		switch (ev.key) {
+			case "Escape":
+				toggleDrawer(false);
+				break;
+			case "ArrowLeft":
 				if (count > 0 && currentIndex > 0) {
 					prevImage();
 				}
 				break;
-			case 39:
+			case "ArrowRight":
 				if (count > 0 && currentIndex < (count - 1)) {
 					nextImage();
 				}
