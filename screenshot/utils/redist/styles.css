@@ -54,22 +54,13 @@ ol li {
 }
 
 .list {
-	background: #fff;
-	bottom: 0;
-	box-shadow: 2px 0 12px rgba(0,0,0,0.25);
-	left: 0;
-	max-width: 40%;
-	overflow-y: auto;
-	padding-top: 8px;
-	position: fixed;
-	top: 0;
-	transform: translateX(-100%);
-	transition: transform 0.25s ease;
-	width: 360px;
-	z-index: 100;
+	margin-right: 12px;
+	max-width: 25%;
+	overflow: auto;
+	transition: transform 0.2s ease;
 }
-.list.open {
-	transform: translateX(0);
+.list.closed {
+	max-width: 0;
 }
 
 .list ol {
@@ -163,21 +154,11 @@ button.active {
 
 #image {
 	cursor: zoom-in;
+	width: 100%;
 }
 #image:focus {
 	transform: scale(4);
 	transform-origin: top left;
 	cursor: crosshair;
 	image-rendering: pixelated;
-}
-
-#overlay {
-	display: none;
-	position: fixed;
-	inset: 0;
-	background: rgba(0,0,0,0.3);
-	z-index: 99;
-}
-#overlay.visible {
-	display: block;
 }

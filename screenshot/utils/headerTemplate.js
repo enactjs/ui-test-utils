@@ -13,7 +13,6 @@ export function makeHeader (title) {
 				<div class="cell fixed list" id="drawer">
 					<ol></ol>
 				</div>
-				<div id="overlay"></div>
 				<div class="cell preview">
 					<div class="column">
 						<div class="cell fixed preview-header">

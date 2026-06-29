@@ -2,7 +2,6 @@
 	const h = document.querySelector('h1');
 	const list = document.querySelector('.list > ol');
 	const drawer = document.querySelector('.list');
-	const overlay = document.querySelector('#overlay');
 	const count = results.length;
 	let currentIndex = -1;
 
@@ -59,9 +58,8 @@
 		return btn;
 	}
 
-	function toggleDrawer (open) {
-		drawer.classList.toggle('open', open);
-		overlay.classList.toggle('visible', open);
+	function toggleDrawer (closed) {
+		drawer.classList.toggle('closed', closed);
 	}
 
 	function initializeButtons () {
@@ -95,8 +93,7 @@
 
 		inc.onclick = nextImage;
 		dec.onclick = prevImage;
-		menu.onclick = () => toggleDrawer(!drawer.classList.contains('open'));
-		overlay.onclick = () => toggleDrawer(false);
+		menu.onclick = () => toggleDrawer(!drawer.classList.contains('closed'));
 	}
 
 	function updateButtons (type) {
@@ -121,7 +118,7 @@
 	document.onkeydown = (ev) => {
 		switch (ev.key) {
 			case "Escape":
-				toggleDrawer(false);
+				toggleDrawer(true);
 				break;
 			case "ArrowLeft":
 				if (count > 0 && currentIndex > 0) {
