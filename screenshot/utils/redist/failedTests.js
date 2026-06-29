@@ -58,8 +58,13 @@
 		return btn;
 	}
 
-	function toggleDrawer (collapsed) {
-		drawer.classList.toggle('collapsed', collapsed);
+	function toggleDrawer ({collapsed}) {
+		if (collapsed) {
+			return drawer.classList.toggle('collapsed', collapsed);
+		}
+
+		const currentState = !drawer.classList.contains('collapsed');
+		drawer.classList.toggle('collapsed', currentState);
 	}
 
 	function initializeButtons () {
@@ -93,7 +98,7 @@
 
 		inc.onclick = nextImage;
 		dec.onclick = prevImage;
-		menu.onclick = () => toggleDrawer(!drawer.classList.contains('collapsed'));
+		menu.onclick = toggleDrawer;
 	}
 
 	function updateButtons (type) {
@@ -118,7 +123,7 @@
 	document.onkeydown = (ev) => {
 		switch (ev.key) {
 			case "Escape":
-				toggleDrawer(true);
+				toggleDrawer({collapsed: true});
 				break;
 			case "ArrowLeft":
 				if (count > 0 && currentIndex > 0) {
