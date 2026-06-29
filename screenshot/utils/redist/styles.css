@@ -58,7 +58,6 @@ ol li {
 	margin-right: 12px;
 	max-width: 25%;
 	overflow: auto;
-	transition: transform 0.2s ease;
 }
 .list.collapsed {
 	max-width: 0;

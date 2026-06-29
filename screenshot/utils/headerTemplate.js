@@ -10,7 +10,7 @@ export function makeHeader (title) {
 		</header>
 		<div class="cell body">
 			<div class="row">
-				<div class="cell fixed list" id="drawer">
+				<div class="cell fixed list">
 					<ol></ol>
 				</div>
 				<div class="cell preview">
