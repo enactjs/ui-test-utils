@@ -58,8 +58,8 @@
 		return btn;
 	}
 
-	function toggleDrawer (closed) {
-		drawer.classList.toggle('closed', closed);
+	function toggleDrawer (collapsed) {
+		drawer.classList.toggle('collapsed', collapsed);
 	}
 
 	function initializeButtons () {
@@ -93,7 +93,7 @@
 
 		inc.onclick = nextImage;
 		dec.onclick = prevImage;
-		menu.onclick = () => toggleDrawer(!drawer.classList.contains('closed'));
+		menu.onclick = () => toggleDrawer(!drawer.classList.contains('collapsed'));
 	}
 
 	function updateButtons (type) {

@@ -60,7 +60,7 @@ ol li {
 	overflow: auto;
 	transition: transform 0.2s ease;
 }
-.list.closed {
+.list.collapsed {
 	max-width: 0;
 }
 
