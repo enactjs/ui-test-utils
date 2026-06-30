@@ -82,7 +82,7 @@ function onPrepare () {
 }
 
 /* Checks if a browser session is healthy. If not, it will attempt to recover. */
-async function checkSessionHealth (testData) {
+async function checkSessionHealth () {
 	const sessionId = browser.sessionId;
 
 	// Check if this session has been marked as dead
@@ -129,8 +129,6 @@ async function checkSessionHealth (testData) {
 			console.log(`Attempting quick recovery for session ${sessionId}...`);
 			try {
 				await browser.reloadSession();
-				await setScreenResolution(testData);
-				await browser.pause(1000);
 				console.log(`Session ${sessionId} recovered`);
 			} catch (recoveryError) {
 				console.log(`Recovery attempt failed, will retry next test`);
@@ -206,8 +204,6 @@ async function cleanUpSessionHealthCheck (testData, error) {
 						}
 						await browser.deleteSession();
 						await browser.reloadSession();
-						await setScreenResolution(testData);
-						await browser.pause(1000);
 					})(),
 					new Promise((_, reject) =>
 						setTimeout(() => reject(new Error('Recovery timeout')), 10000)
@@ -243,7 +239,7 @@ async function cleanUpSessionHealthCheck (testData, error) {
 }
 
 async function beforeTest (testData) {
-	await checkSessionHealth(testData);
+	await checkSessionHealth();
 	await setScreenResolution(testData);
 
 	// If title doesn't have a '/', it's not a screenshot test, don't save
@@ -310,6 +306,7 @@ async function afterTest (testData, _context, {error, passed}) {
 	}
 
 	await cleanUpSessionHealthCheck(testData, error);
+	await setScreenResolution(testData);
 }
 
 function onComplete () {
