@@ -59,6 +59,7 @@ export const runTest = ({concurrency, filter, Page, testName, ...rest}) => {
 
 								const context = {params, component, testName, url: Page.url, fileName: screenshotFileName};
 								this.test.context = context;
+								this.portrait = !!testCase.portrait;
 
 								await Page.open(`?${params}`);
 
