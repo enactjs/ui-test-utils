@@ -9,6 +9,7 @@ body {
 }
 
 header h1 {
+	margin-top: 0;
 	padding: 0 1em;
 }
 
@@ -42,7 +43,8 @@ ol li {
 }
 
 .cell {
-	flex: 1 1 100%;
+	flex: 1 1 0;
+	min-height: 0;
 	position: relative;
 }
 .cell.fixed {
@@ -55,9 +57,13 @@ ol li {
 
 .list {
 	margin-right: 12px;
+	max-width: 25%;
 	overflow: auto;
-	max-width: 40%;
 }
+.list.collapsed {
+	max-width: 0;
+}
+
 .list ol {
 	margin-top: 0;
 }
@@ -146,9 +152,12 @@ button.active {
 #title {
 	display: inline;
 }
-
 #image {
 	cursor: zoom-in;
+	display: block;
+	margin: 0 auto;
+	max-width: 100%;
+	max-height: 100%;
 }
 #image:focus {
 	transform: scale(4);
