@@ -29,7 +29,7 @@ function getScreenshotName (basePath) {
 
 async function setScreenResolution (data) {
 	// in Chrome 132, the browser window size takes into account also the address bar and tab area
-	const [width, height] = data.ctx?.portrait ? [1080, 2007] : [1920, 1167];
+	const [width, height] = data?.portrait ? [1080, 2007] : [1920, 1167];
 
 	await browser.setWindowSize(width, height);
 	// Small pause to let window resize complete

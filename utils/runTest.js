@@ -43,7 +43,7 @@ export const runTest = ({concurrency, filter, Page, testName, ...rest}) => {
 							if (titlePattern && !testCase.title.match(titlePattern)) {
 								return;
 							}
-							it(`${component}~/${testName}~/${testCase.title}`, async function () {
+							const componentTest = it(`${component}~/${testName}~/${testCase.title}`, async function () {
 								const params = Page.serializeParams(Object.assign({
 									component,
 									testId
@@ -71,6 +71,8 @@ export const runTest = ({concurrency, filter, Page, testName, ...rest}) => {
 									waitForFontsLoaded: true
 								})).toBe(0);
 							});
+
+							componentTest.portrait = !!testCase.portrait;
 						});
 					});
 				}
