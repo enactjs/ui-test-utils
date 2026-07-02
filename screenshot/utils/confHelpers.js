@@ -27,6 +27,15 @@ function getScreenshotName (basePath) {
 	};
 }
 
+async function setScreenResolution (data) {
+	// in Chrome 132, the browser window size takes into account also the address bar and tab area
+	const [width, height] = (data?.portrait || data.ctx?.portrait) ? [1080, 2007] : [1920, 1167];
+
+	await browser.setWindowSize(width, height);
+	// Small pause to let window resize complete
+	await browser.pause(500);
+}
+
 const distPath = path.join(process.cwd(), 'tests', 'screenshot', 'dist');
 const baselineRelativePath = 'screenshots/reference';
 const screenshotRelativePath = 'screenshots/screen';
@@ -120,7 +129,6 @@ async function checkSessionHealth () {
 			console.log(`Attempting quick recovery for session ${sessionId}...`);
 			try {
 				await browser.reloadSession();
-				await browser.setWindowSize(1920, 1167);
 				console.log(`Session ${sessionId} recovered`);
 			} catch (recoveryError) {
 				console.log(`Recovery attempt failed, will retry next test`);
@@ -196,8 +204,6 @@ async function cleanUpSessionHealthCheck (testData, error) {
 						}
 						await browser.deleteSession();
 						await browser.reloadSession();
-						await browser.setWindowSize(1920, 1167);
-						await browser.pause(1000);
 					})(),
 					new Promise((_, reject) =>
 						setTimeout(() => reject(new Error('Recovery timeout')), 10000)
@@ -234,6 +240,7 @@ async function cleanUpSessionHealthCheck (testData, error) {
 
 async function beforeTest (testData) {
 	await checkSessionHealth();
+	await setScreenResolution(testData);
 
 	// If title doesn't have a '/', it's not a screenshot test, don't save
 	if (testData && testData.title && testData.title.indexOf('/') > 0) {
@@ -299,6 +306,7 @@ async function afterTest (testData, _context, {error, passed}) {
 	}
 
 	await cleanUpSessionHealthCheck(testData, error);
+	await setScreenResolution(testData);
 }
 
 function onComplete () {

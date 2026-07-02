@@ -1,5 +1,9 @@
 # Change Log
 
+## [unreleased]
+
+* Added support for `portrait` orientation
+
 ## [4.0.3] (June 23, 2026)
 
 * Updated dependencies.

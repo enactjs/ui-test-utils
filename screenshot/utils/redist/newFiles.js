@@ -2,6 +2,7 @@
 ((results) => {
 	const h = document.querySelector('h1');
 	const list = document.querySelector('.list > ol');
+	const drawer = document.querySelector('.list');
 	const count = results.length;
 	let currentIndex = -1;
 
@@ -46,11 +47,22 @@
 		loadImage(currentIndex - 1);
 	}
 
+	function toggleDrawer ({collapsed}) {
+		if (collapsed) {
+			return drawer.classList.toggle('collapsed', collapsed);
+		}
+
+		const currentState = !drawer.classList.contains('collapsed');
+		drawer.classList.toggle('collapsed', currentState);
+	}
+
 	function initializeButtons () {
 		const inc = document.querySelector('#inc'),
-			dec = document.querySelector('#dec');
+			dec = document.querySelector('#dec'),
+			menu = document.querySelector('#menu');
 		inc.onclick = nextImage;
 		dec.onclick = prevImage;
+		menu.onclick = toggleDrawer;
 
 		const btn = document.createElement('button');
 		btn.innerText = 'test case';
@@ -76,13 +88,16 @@
 	}
 
 	document.onkeydown = (ev) => {
-		switch (ev.keyCode) {
-			case 37:
+		switch (ev.key) {
+			case "Escape":
+				toggleDrawer({collapsed: true});
+				break;
+			case "ArrowLeft":
 				if (count > 0 && currentIndex > 0) {
 					prevImage();
 				}
 				break;
-			case 39:
+			case "ArrowRight":
 				if (count > 0 && currentIndex < (count - 1)) {
 					nextImage();
 				}
