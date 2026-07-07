@@ -43,7 +43,7 @@ export const runTest = ({concurrency, filter, Page, testName, ...rest}) => {
 							if (titlePattern && !testCase.title.match(titlePattern)) {
 								return;
 							}
-							it(`${component}~/${testName}~/${testCase.title}`, async function () {
+							const componentTest = it(`${component}~/${testName}~/${testCase.title}`, async function () {
 								const params = Page.serializeParams(Object.assign({
 									component,
 									testId
@@ -59,6 +59,7 @@ export const runTest = ({concurrency, filter, Page, testName, ...rest}) => {
 
 								const context = {params, component, testName, url: Page.url, fileName: screenshotFileName};
 								this.test.context = context;
+								this.portrait = !!testCase.portrait; // Used when screenshots are compared; otherwise, it may compare portrait with landscape
 
 								await Page.open(`?${params}`);
 
@@ -70,6 +71,8 @@ export const runTest = ({concurrency, filter, Page, testName, ...rest}) => {
 									waitForFontsLoaded: true
 								})).toBe(0);
 							});
+							// Used for creating references for portrait mode; otherwise, references for portrait mode may not be saved
+							componentTest.portrait = !!testCase.portrait;
 						});
 					});
 				}

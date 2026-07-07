@@ -79,6 +79,7 @@ export const generateTestData = (component, componentTests) => {
 	let metaData = [];
 	componentTests.forEach((testCase) => {
 		let title = testCase.title;
+		const portrait = testCase.portrait;
 
 		if (!title) {
 			// Note: This isn't terribly extensible, but we need to correct the order of props
@@ -92,12 +93,14 @@ export const generateTestData = (component, componentTests) => {
 				props: testCase.props ? testCase.props : testCase.component.props,
 				wrapper: testCase.wrapper,
 				textSize: testCase.textSize,
-				skinVariants: testCase.skinVariants
+				skinVariants: testCase.skinVariants,
+				...(portrait && {portrait})
 			});
 		}
 
 		const meta = {
-			title
+			title,
+			...(portrait && {portrait})
 		};
 		metaData.push(meta);
 	});
