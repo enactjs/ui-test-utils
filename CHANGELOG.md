@@ -1,5 +1,9 @@
 # Change Log
 
+## [unreleased]
+
+* Fixed ss-tests to correctly log failing tests to failedTests.html
+
 ## [4.0.4] (July 7, 2026)
 
 * Added support for `portrait` orientation
