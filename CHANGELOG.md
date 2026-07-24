@@ -1,5 +1,9 @@
 # Change Log
 
+## [unreleased]
+
+* Fixed screenshot tests to determine title based also on `focus` and `portrait` props.
+
 ## [4.0.4] (July 7, 2026)
 
 * Added support for `portrait` orientation
