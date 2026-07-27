@@ -3,6 +3,7 @@
 ## [unreleased]
 
 * Fixed screenshot tests to determine title based also on `focus` and `portrait` props.
+* Fixed screenshot tests to correctly log failing tests to failedTests.html
 
 ## [4.0.4] (July 7, 2026)
 

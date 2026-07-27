@@ -258,9 +258,13 @@ async function beforeTest (testData) {
 }
 
 async function afterTest (testData, _context, {error, passed}) {
+	// WDIO v9 passes `testData` as an identity snapshot captured before the test body runs,
+	// so the `context` assigned inside the test is not present on it.
+	const testContext = (_context && _context.test && _context.test.context) || testData.context;
+
 	// If this doesn't include context data, not a screenshot test
-	if (testData && testData.title && testData.context && testData.context.params) {
-		const fileName = testData.context.fileName.replace(/ /g, '_') + '.png';
+	if (testData && testData.title && testContext && testContext.params) {
+		const fileName = testContext.fileName.replace(/ /g, '_') + '.png';
 		const referencePath = path.join(baselineRelativePath, fileName);
 
 		if (_context.isNewScreenshot) {
@@ -268,7 +272,7 @@ async function afterTest (testData, _context, {error, passed}) {
 				if (err) {
 					console.error('Unable to create log file!');
 				} else {
-					const {params, url} = testData.context;
+					const {params, url} = testContext;
 					const output = {title: testData.title.replace(/~\//g, '/'), path: referencePath, params, url};
 					fs.appendFile(fd, `${JSON.stringify(output)},`, 'utf8', () => {
 						fs.close(fd);
@@ -288,7 +292,7 @@ async function afterTest (testData, _context, {error, passed}) {
 			const screenPath = path.join(screenshotRelativePath, 'actual', fileName);
 			const diffPath = path.join(screenshotRelativePath, 'diff', fileName);
 			const title = testData.title.replace(/~\//g, '/');
-			const {params, url} = testData.context;
+			const {params, url} = testContext;
 			const output = {title, diffPath, referencePath, screenPath, params, url};
 			try {
 				fs.writeFileSync(pendingFile, JSON.stringify(output), 'utf8');
