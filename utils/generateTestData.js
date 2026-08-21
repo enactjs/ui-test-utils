@@ -90,6 +90,8 @@ export const generateTestData = (component, componentTests) => {
 			title = stringifyProps({
 				skin: testCase.skin,
 				locale: testCase.locale,
+				focus: testCase.focus,
+				portrait: testCase.portrait,
 				props: testCase.props ? testCase.props : testCase.component.props,
 				wrapper: testCase.wrapper,
 				textSize: testCase.textSize,
