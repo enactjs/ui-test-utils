@@ -1,6 +1,6 @@
 # Change Log
 
-## [unreleased]
+## [4.0.5] (August 21, 2026)
 
 * Fixed screenshot tests to determine title based also on `focus` and `portrait` props.
 * Fixed screenshot tests to correctly log failing tests to failedTests.html
