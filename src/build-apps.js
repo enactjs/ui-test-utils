@@ -64,8 +64,8 @@ function buildApps (base) {
 		})
 		.then(() => {
 			if (!process.argv.includes('--skip-tests')) {
-				return findViews(base).then(files => (
-					files.forEach(file => (
+				return findViews(base).then(files => {
+					files.forEach(file => {
 						epack({
 							file,
 							opts: [
@@ -79,9 +79,12 @@ function buildApps (base) {
 								'tests/' + base + '/dist/framework',
 								'--externals-polyfill'
 							]
-						})
-					))
-				));
+						});
+						ensureViewIndex(
+							path.join('tests', base, 'dist', path.basename(file.fullPath, '.js'))
+						);
+					});
+				});
 			}
 		})
 		.then(() => {
@@ -100,6 +103,44 @@ function buildApps (base) {
 			console.error(err.message);
 			process.exit(1);
 		});
+}
+
+function ensureViewIndex (outDir) {
+	const defaultDist = path.join(process.cwd(), 'dist');
+	if (!fs.existsSync(path.join(outDir, 'main.js')) && fs.existsSync(path.join(defaultDist, 'main.js'))) {
+		fs.copySync(defaultDist, outDir);
+	}
+
+	const listing = fs.existsSync(outDir) ? fs.readdirSync(outDir) : [];
+	process.stdout.write('\t' + outDir + ': ' + (listing.join(', ') || '(empty)') + '\n');
+
+	const indexPath = path.join(outDir, 'index.html');
+	if (fs.existsSync(indexPath)) return;
+
+	const js = listing.find(name => name === 'main.js') || listing.find(name => name.endsWith('.js')) || 'main.js';
+	const css = listing.find(name => name === 'main.css') || listing.find(name => name.endsWith('.css'));
+	const cssLink = css ? `<link rel="stylesheet" href="${css}"/>` : '';
+
+	fs.ensureDirSync(outDir);
+	fs.writeFileSync(
+		indexPath,
+		`<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8"/>
+		<title>UI Test</title>
+		<link rel="stylesheet" href="../framework/enact.css"/>
+		${cssLink}
+	</head>
+	<body>
+		<div id="root"></div>
+		<script src="../framework/enact.js"></script>
+		<script src="${js}"></script>
+	</body>
+</html>
+`
+	);
+	process.stdout.write('\twrote missing ' + indexPath + '\n');
 }
 
 function clearLine () {

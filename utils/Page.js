@@ -15,7 +15,9 @@ export class Page {
 			document.body.textContent = '';
 		});
 
-		this._url = `/${appPath}/${urlExtra}`;
+		this._url = urlExtra.startsWith('?') ?
+			`/${appPath}/index.html${urlExtra}` :
+			`/${appPath}/${urlExtra}`;
 
 		await browser.url(this.url);
 
