@@ -17,13 +17,30 @@ export const runTest = ({concurrency, filter, Page, testName, ...rest}) => {
 		it('should fetch test cases', async function () {
 			await Page.open('?request');
 
-			// Classic WebDriver (wdio:enforceWebDriverClassic) cannot serialize Promises.
-			// An async execute callback returns a Promise and comes back as null.
-			let testCases = await browser.execute(function () {
-				return window.__TEST_DATA;
+			// Classic WebDriver cannot serialize Promises; keep this callback sync.
+			// The view bundle can take longer than Page.open's 200ms pause to evaluate.
+			await browser.waitUntil(async function () {
+				return await browser.execute(function () {
+					return window.__TEST_DATA != null || window.__TEST_LOAD_ERROR != null;
+				});
+			}, {
+				timeout: 15000,
+				timeoutMsg: 'timed out waiting for window.__TEST_DATA'
 			});
 
-			await expect(testCases).toBeInstanceOf(Object);
+			const pageState = await browser.execute(function () {
+				return {
+					testCases: window.__TEST_DATA,
+					loadError: window.__TEST_LOAD_ERROR || null,
+					href: window.location.href,
+					scripts: document.scripts.length
+				};
+			});
+
+			expect(pageState.loadError).toBeNull();
+			await expect(pageState.testCases).toBeInstanceOf(Object);
+
+			const testCases = pageState.testCases;
 
 			describe(testName, function () {
 				for (const component in testCases) {
