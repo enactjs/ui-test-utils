@@ -1,7 +1,7 @@
-import {generateTestData} from './generateTestData.js';
-import {Page} from './Page.js';
-import {runTest} from './runTest.js';
-import {
+export {generateTestData} from './generateTestData.js';
+export {Page} from './Page.js';
+export {runTest} from './runTest.js';
+export {
 	componentSelector,
 	element,
 	expectOrdering,
@@ -10,19 +10,4 @@ import {
 	getText,
 	hasClass
 } from './selector.js';
-import {generateDate, urlParamsToObject} from './qs.js';
-
-export {
-	componentSelector,
-	element,
-	expectOrdering,
-	generateDate,
-	generateTestData,
-	getComponent,
-	getSubComponent,
-	getText,
-	hasClass,
-	runTest,
-	Page,
-	urlParamsToObject
-};
+export {generateDate, urlParamsToObject} from './qs.js';

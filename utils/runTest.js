@@ -1,7 +1,7 @@
 import cryptoModule from 'crypto';
 import parseArgs from 'minimist';
 
-const args = parseArgs(process.argv);
+const args = parseArgs(typeof process !== 'undefined' && process.argv ? process.argv : []);
 
 const pattern = args.component, // Component group to match
 	testToExecute = args.id,    // Specific test ID
@@ -17,11 +17,45 @@ export const runTest = ({concurrency, filter, Page, testName, ...rest}) => {
 		it('should fetch test cases', async function () {
 			await Page.open('?request');
 
-			let testCases = await browser.execute(async function () {
-				return await window.__TEST_DATA;
-			});
+			const readPageState = function () {
+				const scripts = [];
+				for (let i = 0; i < document.scripts.length; i++) {
+					scripts.push(document.scripts[i].src || document.scripts[i].getAttribute('src') || '');
+				}
+				return {
+					testCases: window.__TEST_DATA,
+					loadError: window.__TEST_LOAD_ERROR || null,
+					booted: window.__TEST_BOOT === true,
+					href: window.location.href,
+					title: document.title,
+					readyState: document.readyState,
+					scripts: scripts,
+					body: (document.body && document.body.textContent || '').slice(0, 500)
+				};
+			};
 
-			await expect(testCases).toBeInstanceOf(Object);
+			// Classic WebDriver cannot serialize Promises; keep this callback sync.
+			// Production framework + view bundles can still take a while to evaluate in CI.
+			try {
+				await browser.waitUntil(async function () {
+					return await browser.execute(function () {
+						return window.__TEST_DATA != null || window.__TEST_LOAD_ERROR != null;
+					});
+				}, {
+					timeout: 60000,
+					timeoutMsg: 'timed out waiting for window.__TEST_DATA'
+				});
+			} catch (err) {
+				const failedState = await browser.execute(readPageState);
+				throw new Error(err.message + ' page=' + JSON.stringify(failedState));
+			}
+
+			const pageState = await browser.execute(readPageState);
+
+			expect(pageState.loadError).toBeNull();
+			await expect(pageState.testCases).toBeInstanceOf(Object);
+
+			const testCases = pageState.testCases;
 
 			describe(testName, function () {
 				for (const component in testCases) {
@@ -68,7 +102,9 @@ export const runTest = ({concurrency, filter, Page, testName, ...rest}) => {
 									ignoreAntialiasing: true,
 									ignoreNothing: true,
 									rawMisMatchPercentage: true,
-									waitForFontsLoaded: true
+									// Page.open already waits for fonts with a timeout.
+									// The visual-service wait has no timeout and can hang on ar-SA.
+									waitForFontsLoaded: false
 								})).toBe(0);
 							});
 							// Used for creating references for portrait mode; otherwise, references for portrait mode may not be saved

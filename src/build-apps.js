@@ -34,21 +34,22 @@ function buildApps (base) {
 					file: {basename: 'Enact framework bundle', fullPath: 'framework'},
 					opts: [
 						'pack',
+						'--production',
+						'--no-linting',
 						'--output',
 						path.join('tests', base, 'dist', 'framework'),
 						'--framework',
 						'--externals-polyfill',
 						process.argv.includes('--no-animation') ? '--no-animation' : null
-					]
+					].filter(Boolean),
+					artifact: path.join('tests', base, 'dist', 'framework', 'enact.js')
 				});
 			}
 		})
 		.then(() => {
 			if (!process.argv.includes('--skip-ilib')) {
 				const ilibDist = path.join('tests', base, 'dist', 'framework', 'ilib');
-				if (!fs.existsSync(ilibDist)) {
-					fs.mkdirSync(ilibDist);
-				}
+				fs.ensureDirSync(ilibDist);
 				process.stdout.write('\tiLib locale data... ');
 				return fs.copy(
 					path.join('node_modules', 'ilib', 'locale'),
@@ -65,12 +66,14 @@ function buildApps (base) {
 		})
 		.then(() => {
 			if (!process.argv.includes('--skip-tests')) {
-				return findViews(base).then(files => (
-					files.forEach(file => (
+				return findViews(base).then(files => {
+					files.forEach(file => {
 						epack({
 							file,
 							opts: [
 								'pack',
+								'--production',
+								'--no-linting',
 								'--entry',
 								path.join(__dirname, '..', base, 'index.js'),
 								'--output',
@@ -78,10 +81,20 @@ function buildApps (base) {
 								'--externals',
 								'tests/' + base + '/dist/framework',
 								'--externals-polyfill'
-							]
-						})
-					))
-				));
+							],
+							artifact: path.join(
+								'tests',
+								base,
+								'dist',
+								path.basename(file.fullPath, '.js'),
+								'main.js'
+							)
+						});
+						ensureViewIndex(
+							path.join('tests', base, 'dist', path.basename(file.fullPath, '.js'))
+						);
+					});
+				});
 			}
 		})
 		.then(() => {
@@ -89,9 +102,7 @@ function buildApps (base) {
 				const distUtils = path.join('tests', base, 'dist', 'utils'),
 					redistSrc = path.join(__dirname, '..', 'screenshot', 'utils', 'redist');
 
-				if (!fs.existsSync(distUtils)) {
-					fs.mkdirSync(distUtils);
-				}
+				fs.ensureDirSync(distUtils);
 
 				return fs.copy(redistSrc, distUtils);
 			}
@@ -104,12 +115,50 @@ function buildApps (base) {
 		});
 }
 
+function ensureViewIndex (outDir) {
+	const defaultDist = path.join(process.cwd(), 'dist');
+	if (!fs.existsSync(path.join(outDir, 'main.js')) && fs.existsSync(path.join(defaultDist, 'main.js'))) {
+		fs.copySync(defaultDist, outDir);
+	}
+
+	const listing = fs.existsSync(outDir) ? fs.readdirSync(outDir) : [];
+	process.stdout.write('\t' + outDir + ': ' + (listing.join(', ') || '(empty)') + '\n');
+
+	const indexPath = path.join(outDir, 'index.html');
+	if (fs.existsSync(indexPath)) return;
+
+	const js = listing.find(name => name === 'main.js') || listing.find(name => name.endsWith('.js')) || 'main.js';
+	const css = listing.find(name => name === 'main.css') || listing.find(name => name.endsWith('.css'));
+	const cssLink = css ? `<link rel="stylesheet" href="${css}"/>` : '';
+
+	fs.ensureDirSync(outDir);
+	fs.writeFileSync(
+		indexPath,
+		`<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8"/>
+		<title>UI Test</title>
+		<link rel="stylesheet" href="../framework/enact.css"/>
+		${cssLink}
+	</head>
+	<body>
+		<div id="root"></div>
+		<script src="../framework/enact.js"></script>
+		<script src="${js}"></script>
+	</body>
+</html>
+`
+	);
+	process.stdout.write('\twrote missing ' + indexPath + '\n');
+}
+
 function clearLine () {
 	process.stdout.clearLine();
 	process.stdout.cursorTo(0);
 }
 
-function epack ({file, opts}) {
+function epack ({file, opts, artifact}) {
 	process.stdout.write('\t' + path.basename(file.basename, '.js') + '... ');
 	const result = spawn.sync('enact', opts, {
 		cwd: process.cwd(),
@@ -122,28 +171,36 @@ function epack ({file, opts}) {
 		},
 		encoding: 'utf8'
 	});
-	if (result.status === 0) {
+	const spawnOutput = [result.stdout, result.stderr].filter(Boolean).join('\n');
+	if (result.status === 0 && artifact) {
+		const fallback = path.join(process.cwd(), 'dist', path.basename(artifact));
+		if (!fs.existsSync(artifact) && fs.existsSync(fallback)) {
+			fs.ensureDirSync(path.dirname(artifact));
+			fs.copySync(path.dirname(fallback), path.dirname(artifact));
+		}
+	}
+	if (result.status === 0 && (!artifact || fs.existsSync(artifact))) {
 		if (process.stdout.isTTY) {
 			clearLine();
 			process.stdout.write(chalk.green('\t✔ ') + path.basename(file.basename, '.js') + '\n');
 		} else {
 			process.stdout.write('DONE\n');
 		}
-	} else {
-		let err = '';
-		if (result.stdout) {
-			err += result.stdout.split(/\n+/).slice(2).join('\n');
-		}
-		if (result.stderr) err += '\n' + result.stderr;
-
-		if (process.stdout.isTTY) {
-			clearLine();
-			process.stdout.write(chalk.red('\t✖ ') + path.basename(file.basename, '.js') + '\n\n');
-		} else {
-			process.stdout.write('ERROR\n\n');
-		}
-		throw new Error(err || 'Unknown error');
+		return;
 	}
+
+	let err = spawnOutput;
+	if (result.status === 0 && artifact && !fs.existsSync(artifact)) {
+		err = 'Pack exited 0 but missing ' + artifact + (err ? '\n' + err : '');
+	}
+
+	if (process.stdout.isTTY) {
+		clearLine();
+		process.stdout.write(chalk.red('\t✖ ') + path.basename(file.basename, '.js') + '\n\n');
+	} else {
+		process.stdout.write('ERROR\n\n');
+	}
+	throw new Error(err || 'Unknown error');
 }
 
 export default buildApps;
