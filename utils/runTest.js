@@ -17,8 +17,10 @@ export const runTest = ({concurrency, filter, Page, testName, ...rest}) => {
 		it('should fetch test cases', async function () {
 			await Page.open('?request');
 
-			let testCases = await browser.execute(async function () {
-				return await window.__TEST_DATA;
+			// Classic WebDriver (wdio:enforceWebDriverClassic) cannot serialize Promises.
+			// An async execute callback returns a Promise and comes back as null.
+			let testCases = await browser.execute(function () {
+				return window.__TEST_DATA;
 			});
 
 			await expect(testCases).toBeInstanceOf(Object);
