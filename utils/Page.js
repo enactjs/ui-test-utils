@@ -11,9 +11,13 @@ export class Page {
 	}
 
 	async open (appPath, urlExtra = '?locale=en-US') {
-		await browser.execute(function () {
-			document.body.textContent = '';
-		});
+		try {
+			await browser.execute(function () {
+				document.body.textContent = '';
+			});
+		} catch (e) {
+			// Previous page or session may already be gone; url() below reloads.
+		}
 
 		this._url = urlExtra.startsWith('?') ?
 			`/${appPath}/index.html${urlExtra}` :
@@ -23,6 +27,21 @@ export class Page {
 
 		const body = await $('body');
 		await body.waitForDisplayed({timeout: 10000});
+
+		// Bounded wait. wdio-visual-service waitForFontsLoaded uses document.fonts.ready
+		// with no timeout, which can hang forever on locale @font-face (ar-SA on CI).
+		try {
+			await browser.waitUntil(async function () {
+				return await browser.execute(function () {
+					return !document.fonts || document.fonts.status === 'loaded';
+				});
+			}, {
+				timeout: 5000,
+				timeoutMsg: 'timed out waiting for document.fonts'
+			});
+		} catch (e) {
+			// Continue with whatever glyphs are available.
+		}
 
 		await this.delay(200);
 	}

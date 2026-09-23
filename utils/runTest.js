@@ -102,7 +102,9 @@ export const runTest = ({concurrency, filter, Page, testName, ...rest}) => {
 									ignoreAntialiasing: true,
 									ignoreNothing: true,
 									rawMisMatchPercentage: true,
-									waitForFontsLoaded: true
+									// Page.open already waits for fonts with a timeout.
+									// The visual-service wait has no timeout and can hang on ar-SA.
+									waitForFontsLoaded: false
 								})).toBe(0);
 							});
 							// Used for creating references for portrait mode; otherwise, references for portrait mode may not be saved
