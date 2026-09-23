@@ -35,12 +35,14 @@ function buildApps (base) {
 					opts: [
 						'pack',
 						'--production',
+						'--no-linting',
 						'--output',
 						path.join('tests', base, 'dist', 'framework'),
 						'--framework',
 						'--externals-polyfill',
 						process.argv.includes('--no-animation') ? '--no-animation' : null
-					].filter(Boolean)
+					].filter(Boolean),
+					artifact: path.join('tests', base, 'dist', 'framework', 'enact.js')
 				});
 			}
 		})
@@ -71,6 +73,7 @@ function buildApps (base) {
 							opts: [
 								'pack',
 								'--production',
+								'--no-linting',
 								'--entry',
 								path.join(__dirname, '..', base, 'index.js'),
 								'--output',
@@ -78,7 +81,14 @@ function buildApps (base) {
 								'--externals',
 								'tests/' + base + '/dist/framework',
 								'--externals-polyfill'
-							]
+							],
+							artifact: path.join(
+								'tests',
+								base,
+								'dist',
+								path.basename(file.fullPath, '.js'),
+								'main.js'
+							)
 						});
 						ensureViewIndex(
 							path.join('tests', base, 'dist', path.basename(file.fullPath, '.js'))
@@ -148,7 +158,7 @@ function clearLine () {
 	process.stdout.cursorTo(0);
 }
 
-function epack ({file, opts}) {
+function epack ({file, opts, artifact}) {
 	process.stdout.write('\t' + path.basename(file.basename, '.js') + '... ');
 	const result = spawn.sync('enact', opts, {
 		cwd: process.cwd(),
@@ -161,28 +171,36 @@ function epack ({file, opts}) {
 		},
 		encoding: 'utf8'
 	});
-	if (result.status === 0) {
+	const spawnOutput = [result.stdout, result.stderr].filter(Boolean).join('\n');
+	if (result.status === 0 && artifact) {
+		const fallback = path.join(process.cwd(), 'dist', path.basename(artifact));
+		if (!fs.existsSync(artifact) && fs.existsSync(fallback)) {
+			fs.ensureDirSync(path.dirname(artifact));
+			fs.copySync(path.dirname(fallback), path.dirname(artifact));
+		}
+	}
+	if (result.status === 0 && (!artifact || fs.existsSync(artifact))) {
 		if (process.stdout.isTTY) {
 			clearLine();
 			process.stdout.write(chalk.green('\t✔ ') + path.basename(file.basename, '.js') + '\n');
 		} else {
 			process.stdout.write('DONE\n');
 		}
-	} else {
-		let err = '';
-		if (result.stdout) {
-			err += result.stdout.split(/\n+/).slice(2).join('\n');
-		}
-		if (result.stderr) err += '\n' + result.stderr;
-
-		if (process.stdout.isTTY) {
-			clearLine();
-			process.stdout.write(chalk.red('\t✖ ') + path.basename(file.basename, '.js') + '\n\n');
-		} else {
-			process.stdout.write('ERROR\n\n');
-		}
-		throw new Error(err || 'Unknown error');
+		return;
 	}
+
+	let err = spawnOutput;
+	if (result.status === 0 && artifact && !fs.existsSync(artifact)) {
+		err = 'Pack exited 0 but missing ' + artifact + (err ? '\n' + err : '');
+	}
+
+	if (process.stdout.isTTY) {
+		clearLine();
+		process.stdout.write(chalk.red('\t✖ ') + path.basename(file.basename, '.js') + '\n\n');
+	} else {
+		process.stdout.write('ERROR\n\n');
+	}
+	throw new Error(err || 'Unknown error');
 }
 
 export default buildApps;
