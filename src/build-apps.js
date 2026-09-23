@@ -39,16 +39,14 @@ function buildApps (base) {
 						'--framework',
 						'--externals-polyfill',
 						process.argv.includes('--no-animation') ? '--no-animation' : null
-					]
+					].filter(Boolean)
 				});
 			}
 		})
 		.then(() => {
 			if (!process.argv.includes('--skip-ilib')) {
 				const ilibDist = path.join('tests', base, 'dist', 'framework', 'ilib');
-				if (!fs.existsSync(ilibDist)) {
-					fs.mkdirSync(ilibDist);
-				}
+				fs.ensureDirSync(ilibDist);
 				process.stdout.write('\tiLib locale data... ');
 				return fs.copy(
 					path.join('node_modules', 'ilib', 'locale'),
@@ -89,9 +87,7 @@ function buildApps (base) {
 				const distUtils = path.join('tests', base, 'dist', 'utils'),
 					redistSrc = path.join(__dirname, '..', 'screenshot', 'utils', 'redist');
 
-				if (!fs.existsSync(distUtils)) {
-					fs.mkdirSync(distUtils);
-				}
+				fs.ensureDirSync(distUtils);
 
 				return fs.copy(redistSrc, distUtils);
 			}
