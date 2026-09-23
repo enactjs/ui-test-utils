@@ -1,7 +1,7 @@
 import cryptoModule from 'crypto';
 import parseArgs from 'minimist';
 
-const args = parseArgs(process.argv);
+const args = parseArgs(typeof process !== 'undefined' && process.argv ? process.argv : []);
 
 const pattern = args.component, // Component group to match
 	testToExecute = args.id,    // Specific test ID
@@ -17,25 +17,40 @@ export const runTest = ({concurrency, filter, Page, testName, ...rest}) => {
 		it('should fetch test cases', async function () {
 			await Page.open('?request');
 
-			// Classic WebDriver cannot serialize Promises; keep this callback sync.
-			// The view bundle can take longer than Page.open's 200ms pause to evaluate.
-			await browser.waitUntil(async function () {
-				return await browser.execute(function () {
-					return window.__TEST_DATA != null || window.__TEST_LOAD_ERROR != null;
-				});
-			}, {
-				timeout: 15000,
-				timeoutMsg: 'timed out waiting for window.__TEST_DATA'
-			});
-
-			const pageState = await browser.execute(function () {
+			const readPageState = function () {
+				const scripts = [];
+				for (let i = 0; i < document.scripts.length; i++) {
+					scripts.push(document.scripts[i].src || document.scripts[i].getAttribute('src') || '');
+				}
 				return {
 					testCases: window.__TEST_DATA,
 					loadError: window.__TEST_LOAD_ERROR || null,
+					booted: window.__TEST_BOOT === true,
 					href: window.location.href,
-					scripts: document.scripts.length
+					title: document.title,
+					readyState: document.readyState,
+					scripts: scripts,
+					body: (document.body && document.body.textContent || '').slice(0, 500)
 				};
-			});
+			};
+
+			// Classic WebDriver cannot serialize Promises; keep this callback sync.
+			// Production framework + view bundles can still take a while to evaluate in CI.
+			try {
+				await browser.waitUntil(async function () {
+					return await browser.execute(function () {
+						return window.__TEST_DATA != null || window.__TEST_LOAD_ERROR != null;
+					});
+				}, {
+					timeout: 60000,
+					timeoutMsg: 'timed out waiting for window.__TEST_DATA'
+				});
+			} catch (err) {
+				const failedState = await browser.execute(readPageState);
+				throw new Error(err.message + ' page=' + JSON.stringify(failedState));
+			}
+
+			const pageState = await browser.execute(readPageState);
 
 			expect(pageState.loadError).toBeNull();
 			await expect(pageState.testCases).toBeInstanceOf(Object);

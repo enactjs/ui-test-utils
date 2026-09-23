@@ -34,6 +34,7 @@ function buildApps (base) {
 					file: {basename: 'Enact framework bundle', fullPath: 'framework'},
 					opts: [
 						'pack',
+						'--production',
 						'--output',
 						path.join('tests', base, 'dist', 'framework'),
 						'--framework',
@@ -69,6 +70,7 @@ function buildApps (base) {
 							file,
 							opts: [
 								'pack',
+								'--production',
 								'--entry',
 								path.join(__dirname, '..', base, 'index.js'),
 								'--output',
