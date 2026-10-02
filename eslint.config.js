@@ -27,8 +27,7 @@ export default [
 		},
 		rules: {
 			'max-nested-callbacks': 'off',
-			'no-console': 'off',
-			'react/forbid-foreign-prop-types': 'off' // proptypes not removed in storybook config
+			'no-console': 'off'
 		}
 	}
 ];
