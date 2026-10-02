@@ -1,5 +1,9 @@
 # Change Log
 
+## [unreleased]
+
+* Fixed app builds to not inherit the `tsx` loader added to `NODE_OPTIONS` by WebdriverIO, which broke ESM-only ESLint plugins used by `eslint-config-enact`.
+
 ## [4.0.5] (August 21, 2026)
 
 * Fixed screenshot tests to determine title based also on `focus` and `portrait` props.

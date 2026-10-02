@@ -109,12 +109,25 @@ function clearLine () {
 	process.stdout.cursorTo(0);
 }
 
+// WebdriverIO adds `--import <tsx loader>` to NODE_OPTIONS, which is inherited by child processes. The tsx hook
+// compiles required ES modules to CommonJS, which breaks ESM-only packages with an `import`-only `exports` map
+// (e.g. @eslint-react/eslint-plugin used by eslint-config-enact). Enact builds do not need tsx, so drop it.
+function getNodeOptions () {
+	const nodeOptions = (process.env.NODE_OPTIONS || '').replace(/--(?:import|loader)[= ]+\S*tsx\S*/g, '').trim();
+	return nodeOptions || null;
+}
+
 function epack ({file, opts}) {
 	process.stdout.write('\t' + path.basename(file.basename, '.js') + '... ');
+	const nodeOptions = getNodeOptions();
+	const processEnv = {...process.env};
+	delete processEnv.NODE_OPTIONS;
+
 	const result = spawn.sync('enact', opts, {
 		cwd: process.cwd(),
 		env: {
-			...process.env,
+			...processEnv,
+			...(nodeOptions ? {NODE_OPTIONS: nodeOptions} : {}),
 			...env,
 			ILIB_CONTEXT: path.dirname(file.fullPath),
 			ENACT_ALIAS: JSON.stringify({UI_TEST_APP_ENTRY: file.fullPath}),
