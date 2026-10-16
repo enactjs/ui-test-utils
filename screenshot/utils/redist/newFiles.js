@@ -1,4 +1,3 @@
-/* eslint-env browser */
 ((results) => {
 	const h = document.querySelector('h1');
 	const list = document.querySelector('.list > ol');

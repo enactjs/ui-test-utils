@@ -122,7 +122,7 @@ async function checkSessionHealth () {
 				if (global.failedSessions) {
 					global.failedSessions.add(sessionId);
 				}
-				throw new Error('Session health check failed - marking as dead');
+				throw new Error('Session health check failed - marking as dead', {cause: e});
 			}
 
 			// Try quick recovery for the first 2 failures
