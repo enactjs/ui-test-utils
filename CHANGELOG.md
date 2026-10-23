@@ -2,6 +2,11 @@
 
 ## [unreleased]
 
+* Updated `webdriverio` and related `@wdio/*` dependencies to version 10, `@wdio/visual-service` to version 11 and `expect-webdriverio` to version 8.
+* Required Node.js version ">=22.19.0".
+* Changed `$` selectors to be strict, following the WebdriverIO v10 default. A selector that matches more than one element now throws a `StrictSelectorError`. Use `$$()`, a narrower selector, or `$(selector, {strict: false})`.
+* Fixed `expectOrdering` to await element locations and use an `expect-webdriverio` matcher.
+* Updated `chalk` dependency to version 6.x
 * Fixed app builds to not inherit the `tsx` loader added to `NODE_OPTIONS` by WebdriverIO, which broke ESM-only ESLint plugins used by `eslint-config-enact`.
 
 ## [4.0.5] (August 21, 2026)

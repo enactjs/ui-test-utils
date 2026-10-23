@@ -41,7 +41,9 @@ const getSubComponent = curry((opts, el) => element(
 // Given two elements, determine if the first element is to the left of the second element
 // element, element => Boolean
 async function expectOrdering (firstElement, secondElement) {
-	expect(await firstElement.getLocation().x < secondElement.getLocation().x).to.be.true();
+	const {x: firstX} = await firstElement.getLocation();
+	const {x: secondX} = await secondElement.getLocation();
+	expect(firstX < secondX).toBe(true);
 }
 
 const hasClass = curry(async (className, el) => {

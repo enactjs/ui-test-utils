@@ -258,7 +258,7 @@ async function beforeTest (testData) {
 }
 
 async function afterTest (testData, _context, {error, passed}) {
-	// WDIO v9 passes `testData` as an identity snapshot captured before the test body runs,
+	// WDIO (since v9) passes `testData` as an identity snapshot captured before the test body runs,
 	// so the `context` assigned inside the test is not present on it.
 	const testContext = (_context && _context.test && _context.test.context) || testData.context;
 
