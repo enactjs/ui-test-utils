@@ -81,160 +81,128 @@ function onPrepare () {
 	return buildApps('screenshot');
 }
 
+function isSessionDeadError (error) {
+	const msg = (error && error.message) || '';
+	return /ECONNREFUSED|ECONNRESET|invalid session|session deleted|session is marked|not reachable|chrome not reachable|disconnected|aborted|HEADERS_TIMEOUT/i.test(msg);
+}
+
+function resetSessionFailures (sessionId) {
+	if (global.sessionFailures && sessionId) {
+		global.sessionFailures.set(sessionId, 0);
+	}
+	if (global.failedSessions && sessionId) {
+		global.failedSessions.delete(sessionId);
+	}
+}
+
+function markRecentlyRecovered (sessionId) {
+	if (!global.recentlyRecovered) {
+		global.recentlyRecovered = new Set();
+	}
+	global.recentlyRecovered.add(sessionId);
+	resetSessionFailures(sessionId);
+}
+
+async function reloadBrowserSession (timeout = 30000) {
+	await Promise.race([
+		browser.reloadSession(),
+		new Promise((_, reject) =>
+			setTimeout(() => reject(new Error('Recovery timeout')), timeout)
+		)
+	]);
+	markRecentlyRecovered(browser.sessionId);
+}
+
 /* Checks if a browser session is healthy. If not, it will attempt to recover. */
 async function checkSessionHealth () {
 	const sessionId = browser.sessionId;
 
-	// Check if this session has been marked as dead
 	if (global.failedSessions && global.failedSessions.has(sessionId)) {
-		throw new Error('Session is marked as failed - skipping remaining tests');
+		console.log(`Session ${sessionId} was marked failed - attempting reload`);
+		try {
+			await reloadBrowserSession();
+			console.log(`Session resurrected as ${browser.sessionId}`);
+			return;
+		} catch (e) {
+			throw new Error('Session is marked as failed - skipping remaining tests');
+		}
 	}
 
 	// Skip health check if the session was just recovered
 	if (global.recentlyRecovered && global.recentlyRecovered.has(sessionId)) {
 		global.recentlyRecovered.delete(sessionId);
-	} else {
-		// Quick health check with a short timeout
+		return;
+	}
+
+	try {
+		await Promise.race([
+			browser.execute(function () { return true; }),
+			new Promise((_, reject) =>
+				setTimeout(() => reject(new Error('Health check timeout')), 3000)
+			)
+		]);
+		resetSessionFailures(sessionId);
+	} catch (e) {
+		const failures = (global.sessionFailures?.get(sessionId) || 0) + 1;
+		if (global.sessionFailures) {
+			global.sessionFailures.set(sessionId, failures);
+		}
+
+		console.log(`Session ${sessionId} health check failed (failure ${failures}/3): ${e.message}`);
+
 		try {
-			await Promise.race([
-				browser.execute(() => true),
-				new Promise((_, reject) =>
-					setTimeout(() => reject(new Error('Health check timeout')), 3000)
-				)
-			]);
-
-			// Success - reset failure counter
-			if (global.sessionFailures) {
-				global.sessionFailures.set(sessionId, 0);
-			}
-		} catch (e) {
-			// Track consecutive failures
-			const failures = (global.sessionFailures?.get(sessionId) || 0) + 1;
-			if (global.sessionFailures) {
-				global.sessionFailures.set(sessionId, failures);
-			}
-
-			console.log(`Session ${sessionId} health check failed (failure ${failures}/3)`);
-
-			// Only mark as dead after 3 consecutive failures
+			await reloadBrowserSession();
+			console.log(`Session recovered as ${browser.sessionId}`);
+		} catch (recoveryError) {
+			console.log(`Recovery attempt failed: ${recoveryError.message}`);
 			if (failures >= 3) {
-				console.log(`Session ${sessionId} has failed 3 times - marking as dead`);
 				if (global.failedSessions) {
 					global.failedSessions.add(sessionId);
 				}
 				throw new Error('Session health check failed - marking as dead');
-			}
-
-			// Try quick recovery for the first 2 failures
-			console.log(`Attempting quick recovery for session ${sessionId}...`);
-			try {
-				await browser.reloadSession();
-				console.log(`Session ${sessionId} recovered`);
-			} catch (recoveryError) {
-				console.log(`Recovery attempt failed, will retry next test`);
 			}
 		}
 	}
 }
 
 async function cleanUpSessionHealthCheck (testData, error) {
-	if (error) {
-		const isTimeout = error.message &&
-			(error.message.includes('timeout') ||
-				error.message.includes('aborted') ||
-				error.message.includes('HEADERS_TIMEOUT') ||
-				error.message.includes('ECONNREFUSED'));
+	if (!error) {
+		resetSessionFailures(browser.sessionId);
+		return;
+	}
 
-		if (isTimeout) {
-			const sessionId = browser.sessionId;
+	console.log(`afterTest error for "${testData.title}": ${error.message}`);
 
-			// Track consecutive failures
-			if (!global.sessionFailures) {
-				global.sessionFailures = new Map();
-			}
+	// Font / waitUntil / mocha timeouts are test failures. Do not kill Chrome for them.
+	if (!isSessionDeadError(error)) {
+		return;
+	}
 
-			const failures = (global.sessionFailures.get(sessionId) || 0) + 1;
-			global.sessionFailures.set(sessionId, failures);
+	const sessionId = browser.sessionId;
 
-			console.log(`Timeout #${failures} in session ${sessionId} - test: "${testData.title}"`);
+	if (!global.sessionFailures) {
+		global.sessionFailures = new Map();
+	}
 
-			// Circuit breaker: after 3 consecutive timeouts, kill the session
-			if (failures >= 3) {
-				console.log(`Session ${sessionId} has failed 3 times consecutively - marking as dead`);
+	const failures = (global.sessionFailures.get(sessionId) || 0) + 1;
+	global.sessionFailures.set(sessionId, failures);
 
-				if (!global.failedSessions) {
-					global.failedSessions = new Set();
-				}
-				global.failedSessions.add(sessionId);
+	console.log(`Session death #${failures} in ${sessionId} - test: "${testData.title}"`);
 
-				// Try to clean up with very short timeout, then give up
-				try {
-					await Promise.race([
-						(async () => {
-							try {
-								await browser.execute(() => window.stop());
-							} catch (e) {
-								// Ignore
-							}
-							await browser.deleteSession();
-						})(),
-						new Promise((_, reject) =>
-							setTimeout(() => reject(new Error('Cleanup timeout')), 2000)
-						)
-					]);
-					console.log('Session cleanup completed');
-				} catch (e) {
-					console.log('Session cleanup timed out - session is dead');
-				}
-
-				return; // Don't try to recover
-			}
-
-			// For first 2 failures, attempt recovery
-			console.log(`Attempting recovery for session ${sessionId} (attempt ${failures}/3)`);
-
-			try {
-				// Try light recovery with timeout
-				await Promise.race([
-					(async () => {
-						try {
-							await browser.execute(() => window.stop());
-						} catch (e) {
-							// Ignore
-						}
-						await browser.deleteSession();
-						await browser.reloadSession();
-					})(),
-					new Promise((_, reject) =>
-						setTimeout(() => reject(new Error('Recovery timeout')), 10000)
-					)
-				]);
-
-				console.log('Session recovered successfully');
-
-				// Reset failure count on successful recovery
-				global.sessionFailures.set(sessionId, 0);
-
-				// Mark that we just recovered - skip next health check
-				if (!global.recentlyRecovered) {
-					global.recentlyRecovered = new Set();
-				}
-				global.recentlyRecovered.add(sessionId);
-
-			} catch (recoveryError) {
-				console.error(`Session recovery failed: ${recoveryError.message}`);
-			}
-		} else {
-			const sessionId = browser.sessionId;
-			if (global.sessionFailures && global.sessionFailures.has(sessionId)) {
-				global.sessionFailures.set(sessionId, 0);
-			}
+	if (failures >= 3) {
+		if (!global.failedSessions) {
+			global.failedSessions = new Set();
 		}
-	} else {
-		const sessionId = browser.sessionId;
-		if (global.sessionFailures && global.sessionFailures.has(sessionId)) {
-			global.sessionFailures.set(sessionId, 0);
-		}
+		global.failedSessions.add(sessionId);
+	}
+
+	console.log(`Attempting recovery for session ${sessionId} (attempt ${failures}/3)`);
+
+	try {
+		await reloadBrowserSession();
+		console.log(`Session recovered as ${browser.sessionId}`);
+	} catch (recoveryError) {
+		console.error(`Session recovery failed: ${recoveryError.message}`);
 	}
 }
 
@@ -310,7 +278,11 @@ async function afterTest (testData, _context, {error, passed}) {
 	}
 
 	await cleanUpSessionHealthCheck(testData, error);
-	await setScreenResolution(testData);
+	try {
+		await setScreenResolution(testData);
+	} catch (e) {
+		console.log(`afterTest setScreenResolution skipped: ${e.message}`);
+	}
 }
 
 function onComplete () {

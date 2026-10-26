@@ -10,7 +10,7 @@ const config = configure({
 			formatImageName: '{tag}',
 			screenshotPath: screenshotFolder,
 			autoSaveBaseline: true,
-			waitForFontsLoaded: true
+			waitForFontsLoaded: false
 		}
 	]],
 	//

@@ -106,7 +106,7 @@ export const configure = (options) => {
 							// Performance optimizations for Chrome 132
 							'--disable-features=VizDisplayCompositor',
 							'--disable-features=IsolateOrigins,site-per-process',
-							'--js-flags=--max-old-space-size=512',
+							'--js-flags=--max-old-space-size=2048',
 							...(visibleBrowser ? [] : ['--headless=new'])
 						]
 					},
