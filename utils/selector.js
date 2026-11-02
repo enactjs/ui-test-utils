@@ -2,9 +2,12 @@ import curry from 'ramda/src/curry';
 
 const toLower = (str) => str.replace(/^\w/, (chr) => chr.toLowerCase());
 
-// Given a selector and a starting element, returns the first matching descendant Element
+// Given a selector and a starting element, returns the first matching descendant Element.
+// `strict: false` opts out of WebdriverIO v10 strict selector mode so that a selector
+// matching multiple elements returns the first match (the historical behavior) instead
+// of throwing a StrictSelectorError.
 // String => Element => Element
-const element = curry((selector, el) => el.$(selector));
+const element = curry((selector, el) => el.$(selector, {strict: false}));
 
 // Given an element, returns its inner text
 // Element => String
