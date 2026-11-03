@@ -21,7 +21,7 @@
         "expect-webdriverio": "^8.0.0",
         "fs-extra": "^11.4.1",
         "minimist": "^1.2.8",
-        "query-string": "^9.5.1",
+        "query-string": "^10.0.0",
         "ramda": "^0.32.0",
         "readdirp": "^5.1.1",
         "wdio-docker-service": "^3.2.1",
@@ -31,9 +31,9 @@
         "start-tests": "start-tests.js"
       },
       "devDependencies": {
-        "eslint": "^10.13.0",
+        "eslint": "^10.14.0",
         "eslint-config-enact": "github:enactjs/eslint-config-enact#test/6.0.0",
-        "globals": "^17.13.0"
+        "globals": "^17.14.0"
       },
       "engines": {
         "node": ">=22.19.0"
@@ -64,20 +64,20 @@
       }
     },
     "node_modules/@babel/core": {
-      "version": "8.0.10",
-      "resolved": "https://registry.npmjs.org/@babel/core/-/core-8.0.10.tgz",
-      "integrity": "sha512-T6dEcoMJ3L1hyLuNfRXcVlqQrN79kU/SB5bDygVgQNIOUgStdyEGzigtRA9K+9Coh7SZUSt543oWRBxvqYdyuQ==",
+      "version": "8.1.0",
+      "resolved": "https://registry.npmjs.org/@babel/core/-/core-8.1.0.tgz",
+      "integrity": "sha512-3jqm7xh3kJCmIeOK8sk6/EvOWdSzvOqvjt0tJEDOHHmzWjcQSvIh2/tq1I9RA741tl0QZdMzPJWCulWE+Dy5ww==",
       "dev": true,
       "license": "MIT",
       "dependencies": {
         "@babel/code-frame": "^8.0.6",
-        "@babel/generator": "^8.0.10",
+        "@babel/generator": "^8.1.0",
         "@babel/helper-compilation-targets": "^8.0.7",
-        "@babel/helpers": "^8.0.10",
-        "@babel/parser": "^8.0.10",
+        "@babel/helpers": "^8.1.0",
+        "@babel/parser": "^8.1.0",
         "@babel/template": "^8.0.0",
-        "@babel/traverse": "^8.0.10",
-        "@babel/types": "^8.0.10",
+        "@babel/traverse": "^8.1.0",
+        "@babel/types": "^8.1.0",
         "@types/gensync": "^1.0.5",
         "convert-source-map": "^2.0.0",
         "empathic": "^2.0.1",
@@ -115,9 +115,9 @@
       }
     },
     "node_modules/@babel/eslint-plugin": {
-      "version": "8.0.6",
-      "resolved": "https://registry.npmjs.org/@babel/eslint-plugin/-/eslint-plugin-8.0.6.tgz",
-      "integrity": "sha512-KvFOhhufmQmKYDVe5qv6CDFo4n8jHjFMIKp1+mOnKqSSMMiEO+XZOvcWEbss46MbCljAY8OWV1xIpD0Cfy3zng==",
+      "version": "8.1.0",
+      "resolved": "https://registry.npmjs.org/@babel/eslint-plugin/-/eslint-plugin-8.1.0.tgz",
+      "integrity": "sha512-LLDd+wOHbRT4ghljq9VWBpARTdOXZ3MLAtKQjXQiPgeOPKzGFjK9jhgCIR2BfaqztPay+9Ry3jcRR7jjjj0DDQ==",
       "dev": true,
       "license": "MIT",
       "engines": {
@@ -130,14 +130,14 @@
       }
     },
     "node_modules/@babel/generator": {
-      "version": "8.0.10",
-      "resolved": "https://registry.npmjs.org/@babel/generator/-/generator-8.0.10.tgz",
-      "integrity": "sha512-iC9p3U4Y3vp0qKjRcfFeNzpj+kkK8BVYZTbQepBWVD7vOBLH6ji0drNzKPTPtumFd2w2r/hbEKYjG4pscKa4bg==",
+      "version": "8.1.0",
+      "resolved": "https://registry.npmjs.org/@babel/generator/-/generator-8.1.0.tgz",
+      "integrity": "sha512-7fiBJ61wDV3AHbg7n/EfLBv3RU+lsdRP8QNJnydkKWA7e48FnnvKQWbVHsJQCBE7JHTj4xlzZL9fvQYsBUip2A==",
       "dev": true,
       "license": "MIT",
       "dependencies": {
-        "@babel/parser": "^8.0.10",
-        "@babel/types": "^8.0.10",
+        "@babel/parser": "^8.1.0",
+        "@babel/types": "^8.1.0",
         "@jridgewell/gen-mapping": "0.4.0-beta.0",
         "@jridgewell/trace-mapping": "^0.3.31",
         "@types/jsesc": "^2.5.0",
@@ -363,27 +363,27 @@
       }
     },
     "node_modules/@babel/helpers": {
-      "version": "8.0.10",
-      "resolved": "https://registry.npmjs.org/@babel/helpers/-/helpers-8.0.10.tgz",
-      "integrity": "sha512-tBG9yuaR26JJWFafcl/Dk4eib6bkRJ9H5e6lENcwZqFudA9ImNCuMXLjB3/t+Ub7/DOZv2Rmi5LCOi8q2DCekQ==",
+      "version": "8.1.0",
+      "resolved": "https://registry.npmjs.org/@babel/helpers/-/helpers-8.1.0.tgz",
+      "integrity": "sha512-949bjw10dhaRdtQeCpfVShFA4jIcto97BkqmWnRjpzyQuHVZ7EDriaoCn/4D8h1NqSKlmI20xPU0vHf3jQbQRg==",
       "dev": true,
       "license": "MIT",
       "dependencies": {
         "@babel/template": "^8.0.0",
-        "@babel/types": "^8.0.10"
+        "@babel/types": "^8.1.0"
       },
       "engines": {
         "node": "^22.18.0 || >=24.11.0"
       }
     },
     "node_modules/@babel/parser": {
-      "version": "8.0.10",
-      "resolved": "https://registry.npmjs.org/@babel/parser/-/parser-8.0.10.tgz",
-      "integrity": "sha512-h+ah2Kg0ne1Vii892dShj9gky9I5jPzkd8x4s/3xgN/P2bMWmHS3qq59tum3mCVjCBXI8uqfYyYtrfp1Mz6+1w==",
+      "version": "8.1.0",
+      "resolved": "https://registry.npmjs.org/@babel/parser/-/parser-8.1.0.tgz",
+      "integrity": "sha512-fpqZYAC+Tthr19JbEKxXhCGutvfm/+roMe+ULrgUKI+GVyzkQiTMTSheORcWIAzW8T3Oo3W5UavWSvAWmsp7fA==",
       "dev": true,
       "license": "MIT",
       "dependencies": {
-        "@babel/types": "^8.0.10"
+        "@babel/types": "^8.1.0"
       },
       "bin": {
         "parser": "bin/babel-parser.js"
@@ -408,18 +408,18 @@
       }
     },
     "node_modules/@babel/traverse": {
-      "version": "8.0.10",
-      "resolved": "https://registry.npmjs.org/@babel/traverse/-/traverse-8.0.10.tgz",
-      "integrity": "sha512-t5DaGzMi9WlhMSFT2YavI8gl8yGihoQymSQUkIq9+MUh5tO3Vx9KHwr5gMCzeBdYkvs00xNvr18PxtQTRayucA==",
+      "version": "8.1.0",
+      "resolved": "https://registry.npmjs.org/@babel/traverse/-/traverse-8.1.0.tgz",
+      "integrity": "sha512-oQ0QI6MR4cm6bOR/Ua5HLPxvO7vborT7Le5HNt9GmZUKpNsaPl2yj4gsQ440lXaZjc4vmUbSeVgEcK4cHuCL2A==",
       "dev": true,
       "license": "MIT",
       "dependencies": {
         "@babel/code-frame": "^8.0.6",
-        "@babel/generator": "^8.0.10",
+        "@babel/generator": "^8.1.0",
         "@babel/helper-globals": "^8.0.6",
-        "@babel/parser": "^8.0.10",
+        "@babel/parser": "^8.1.0",
         "@babel/template": "^8.0.0",
-        "@babel/types": "^8.0.10",
+        "@babel/types": "^8.1.0",
         "obug": "^3.0.0"
       },
       "engines": {
@@ -427,9 +427,9 @@
       }
     },
     "node_modules/@babel/types": {
-      "version": "8.0.10",
-      "resolved": "https://registry.npmjs.org/@babel/types/-/types-8.0.10.tgz",
-      "integrity": "sha512-KV8Y+teoRsmXeEPS4sCJY1kwV+hcPzHP1qQqgCxrjKOehLdBaxpsFBfoJ8MXWFV80y6Jw56+TM95wR0Per8dYw==",
+      "version": "8.1.0",
+      "resolved": "https://registry.npmjs.org/@babel/types/-/types-8.1.0.tgz",
+      "integrity": "sha512-8V8aSTDx012YPmDQF30vrokyxVFdRAU2YBS2VzrnfLAGkP8floVnjckwgFcD0Jrvf6GWMSRdCrYVsk3tyMwZRg==",
       "dev": true,
       "license": "MIT",
       "dependencies": {
@@ -1584,6 +1584,12 @@
         }
       }
     },
+    "node_modules/@isaacs/nonrecursive-glob-match": {
+      "version": "1.0.3",
+      "resolved": "https://registry.npmjs.org/@isaacs/nonrecursive-glob-match/-/nonrecursive-glob-match-1.0.3.tgz",
+      "integrity": "sha512-SI7kyKHq4XXDRozw+r9GlRZkia1ZkFrpLW98r2IC2Bpr8YkFGE3fvjzmxCG0x78A++69HmDNrDvSMYBZmHGpKA==",
+      "license": "BlueOak-1.0.0"
+    },
     "node_modules/@jest/diff-sequences": {
       "version": "30.5.0",
       "resolved": "https://registry.npmjs.org/@jest/diff-sequences/-/diff-sequences-30.5.0.tgz",
@@ -2277,9 +2283,9 @@
       }
     },
     "node_modules/@vitest/pretty-format": {
-      "version": "5.0.5",
-      "resolved": "https://registry.npmjs.org/@vitest/pretty-format/-/pretty-format-5.0.5.tgz",
-      "integrity": "sha512-24sSdIlMA9DVPXnYiB9siwU0bTd887Y9jX3+vabztCSsvHwo7ipvJ/a2L3Rljw8+2rK1f5fCj3h5U9I/Jsqgbw==",
+      "version": "5.1.0",
+      "resolved": "https://registry.npmjs.org/@vitest/pretty-format/-/pretty-format-5.1.0.tgz",
+      "integrity": "sha512-IRx5mc30CrFzyMNni6SZKQ1r53kv049Mcvvk0WbWcD6PUz/bFjG4zYv0KosQAeonPpGp5WxqYBMqdSOfJfvVWw==",
       "license": "MIT",
       "dependencies": {
         "tinyrainbow": "^3.2.0"
@@ -2289,13 +2295,13 @@
       }
     },
     "node_modules/@vitest/snapshot": {
-      "version": "5.0.5",
-      "resolved": "https://registry.npmjs.org/@vitest/snapshot/-/snapshot-5.0.5.tgz",
-      "integrity": "sha512-dHyFElWMQy0wFBGrIaPPeUWfJFh+jAUrv46ImIJGd8CADdKV3mlrAu3FyD0wesdxELFCs9M807e040Kba/XKtA==",
+      "version": "5.1.0",
+      "resolved": "https://registry.npmjs.org/@vitest/snapshot/-/snapshot-5.1.0.tgz",
+      "integrity": "sha512-6tLM70+37LVXz+A6QmOlMQUuj+taODAyXZhz58lNNNNKHH0D81yzPBEezKQQGPlABc8OpAQBOBVvssVLLQqixw==",
       "license": "MIT",
       "dependencies": {
-        "@vitest/pretty-format": "5.0.5",
-        "@vitest/utils": "5.0.5",
+        "@vitest/pretty-format": "5.1.0",
+        "@vitest/utils": "5.1.0",
         "magic-string": "^1.4.3",
         "pathe": "^2.0.3"
       },
@@ -2304,12 +2310,12 @@
       }
     },
     "node_modules/@vitest/utils": {
-      "version": "5.0.5",
-      "resolved": "https://registry.npmjs.org/@vitest/utils/-/utils-5.0.5.tgz",
-      "integrity": "sha512-/rBu7gzLDQI/SC79Tn98b5DwOgaHU/Gt4I9OVeP3YofzNaYtbImRCOJQmT1S6vOJg9gEIlWC+r3QxKkjuSa1nQ==",
+      "version": "5.1.0",
+      "resolved": "https://registry.npmjs.org/@vitest/utils/-/utils-5.1.0.tgz",
+      "integrity": "sha512-V+qgCwkvVw+s1t1S5TaoBHsLi5Sz/YmohCMoOu0mZ8ZQst2bKhRYARAQucWpVg8D0mv0x5MHcWXY5QdOsoiGBQ==",
       "license": "MIT",
       "dependencies": {
-        "@vitest/pretty-format": "5.0.5",
+        "@vitest/pretty-format": "5.1.0",
         "convert-source-map": "^2.0.0",
         "tinyrainbow": "^3.2.0"
       },
@@ -3131,9 +3137,9 @@
       "license": "MIT"
     },
     "node_modules/baseline-browser-mapping": {
-      "version": "2.11.34",
-      "resolved": "https://registry.npmjs.org/baseline-browser-mapping/-/baseline-browser-mapping-2.11.34.tgz",
-      "integrity": "sha512-Aqr8mA1kIvyJ3UY5YAY7ib8LSo1DmDMbMnVqGPtsKW1LxaFQFwn9Eb3yvq2fUKJsRvaXjnAV7R5osqETapzNiA==",
+      "version": "2.11.35",
+      "resolved": "https://registry.npmjs.org/baseline-browser-mapping/-/baseline-browser-mapping-2.11.35.tgz",
+      "integrity": "sha512-GNk8KX52CHqeNKGk8+7tZnQab/2k1t/BgrUHPKNdijzpEhF1saPQZHVKb6m5loSAxB39gyrTYw34Qf9CQ3u1qQ==",
       "dev": true,
       "license": "Apache-2.0",
       "bin": {
@@ -3811,15 +3817,6 @@
         "url": "https://github.com/sponsors/sindresorhus"
       }
     },
-    "node_modules/decode-uri-component": {
-      "version": "0.5.1",
-      "resolved": "https://registry.npmjs.org/decode-uri-component/-/decode-uri-component-0.5.1.tgz",
-      "integrity": "sha512-vWHQkXgg2cE3BB4rR0c+PYw9BCQzLoNIRMI7AunIkZst74tw/vpPp7VLoYtsR/cy1f55g3XDWUslfeCZjiZJyA==",
-      "license": "MIT",
-      "engines": {
-        "node": ">=14.16"
-      }
-    },
     "node_modules/deep-is": {
       "version": "0.1.4",
       "resolved": "https://registry.npmjs.org/deep-is/-/deep-is-0.1.4.tgz",
@@ -4062,9 +4059,9 @@
       }
     },
     "node_modules/electron-to-chromium": {
-      "version": "1.5.472",
-      "resolved": "https://registry.npmjs.org/electron-to-chromium/-/electron-to-chromium-1.5.472.tgz",
-      "integrity": "sha512-s4+nfT29b0FKpVKoaIxl2pWsoNcn7A/nMPSrxayw4T3BsmPeV2lF9Y06BsAQeMGhCTQ4nYJ5XST7jkqe4ZEqFw==",
+      "version": "1.5.473",
+      "resolved": "https://registry.npmjs.org/electron-to-chromium/-/electron-to-chromium-1.5.473.tgz",
+      "integrity": "sha512-9njcRQK+6FOXNAWw5g+h2RPiyazqo5RFMVJ39ZMHjDHUNnnFlhnOGV7O0WmJetODDx19ES5p+FLi+KCVFQGugw==",
       "license": "ISC"
     },
     "node_modules/emoji-regex": {
@@ -4431,25 +4428,25 @@
     },
     "node_modules/eslint-config-enact": {
       "version": "5.1.3",
-      "resolved": "git+ssh://git@github.com/enactjs/eslint-config-enact.git#aecd025954966e5ea3065d97272aaed43380ce94",
+      "resolved": "git+ssh://git@github.com/enactjs/eslint-config-enact.git#feb259bfa278e8a718fc810a52ccfc40c2651a38",
       "dev": true,
       "license": "Apache-2.0",
       "dependencies": {
-        "@babel/core": "^8.0.10",
+        "@babel/core": "^8.1.0",
         "@babel/eslint-parser": "^8.0.7",
-        "@babel/eslint-plugin": "^8.0.6",
+        "@babel/eslint-plugin": "^8.1.0",
         "@eslint-react/eslint-plugin": "^5.28.8",
         "@eslint/js": "^10.0.1",
         "@stylistic/eslint-plugin": "^5.10.0",
         "@typescript-eslint/eslint-plugin": "^8.72.1",
         "@typescript-eslint/parser": "^8.72.1",
-        "eslint": "^10.12.0",
+        "eslint": "^10.14.0",
         "eslint-plugin-enact": "github:enactjs/eslint-plugin-enact#release/3.0.0",
         "eslint-plugin-jest": "^29.17.0",
         "eslint-plugin-jsx-a11y-x": "^0.2.0",
         "eslint-plugin-react-hooks": "^7.1.1",
         "eslint-plugin-testing-library": "^7.16.2",
-        "globals": "^17.13.0"
+        "globals": "^17.14.0"
       },
       "engines": {
         "node": "^20.19.0 || ^22.13.0 || >=24.0.0"
@@ -4460,13 +4457,13 @@
     },
     "node_modules/eslint-plugin-enact": {
       "version": "2.0.5",
-      "resolved": "git+ssh://git@github.com/enactjs/eslint-plugin-enact.git#14de601384d58230445352e0777184498c8ed777",
+      "resolved": "git+ssh://git@github.com/enactjs/eslint-plugin-enact.git#0e346e25798289c42baac1e4e58551044f1b1a77",
       "dev": true,
       "license": "Apache-2.0",
       "dependencies": {
         "doctrine": "^3.0.0",
         "jsx-ast-utils": "^3.3.5",
-        "minimatch": "^10.2.6"
+        "minimatch": "^11.0.4"
       },
       "engines": {
         "node": "^20.19.0 || ^22.13.0 || >=24.0.0"
@@ -4832,9 +4829,9 @@
       }
     },
     "node_modules/eslint-plugin-react-hooks/node_modules/semver": {
-      "version": "6.3.1",
-      "resolved": "https://registry.npmjs.org/semver/-/semver-6.3.1.tgz",
-      "integrity": "sha512-BR7VvDCVHO+q2xBEWskxS6DJE1qRnb7DxzUrogb71CWoSficBxYsiAGd+Kl0mmq/MprG9yArRkyrQxTO6XjMzA==",
+      "version": "6.3.2",
+      "resolved": "https://registry.npmjs.org/semver/-/semver-6.3.2.tgz",
+      "integrity": "sha512-GYrCADwpu6yV5OAvchkQ27Z5wwMxWAEMg5NNWjyHh/5DboFFqbdbvYNIvZouQpxXyeMPoTOh0vdPYKlf0ZswdQ==",
       "dev": true,
       "license": "ISC",
       "bin": {
@@ -5371,12 +5368,12 @@
       }
     },
     "node_modules/filter-obj": {
-      "version": "5.1.0",
-      "resolved": "https://registry.npmjs.org/filter-obj/-/filter-obj-5.1.0.tgz",
-      "integrity": "sha512-qWeTREPoT7I0bifpPUXtxkZJ1XJzxWtfoWWkdVGqa+eCr3SHW/Ocp89o8vLvbUuQnadybJpjOKu4V+RwO6sGng==",
+      "version": "6.1.0",
+      "resolved": "https://registry.npmjs.org/filter-obj/-/filter-obj-6.1.0.tgz",
+      "integrity": "sha512-xdMtCAODmPloU9qtmPcdBV9Kd27NtMse+4ayThxqIHUES5Z2S6bGpap5PpdmNM56ub7y3i1eyr+vJJIIgWGKmA==",
       "license": "MIT",
       "engines": {
-        "node": ">=14.16"
+        "node": ">=18"
       },
       "funding": {
         "url": "https://github.com/sponsors/sindresorhus"
@@ -5713,14 +5710,14 @@
       }
     },
     "node_modules/glob": {
-      "version": "13.0.6",
-      "resolved": "https://registry.npmjs.org/glob/-/glob-13.0.6.tgz",
-      "integrity": "sha512-Wjlyrolmm8uDpm/ogGyXZXb1Z+Ca2B8NbJwqBVg0axK9GbBeoS7yGV6vjXnYdGm6X53iehEuxxbyiKp8QmN4Vw==",
+      "version": "14.0.3",
+      "resolved": "https://registry.npmjs.org/glob/-/glob-14.0.3.tgz",
+      "integrity": "sha512-A1vjIwC3qpdCso45Iw127gnp7sPhqgY8lUQhDrArIs+GbmfaaVPFuoyy7WyLT9EPZCRZ7j7aLdwUhQmHWesEow==",
       "license": "BlueOak-1.0.0",
       "dependencies": {
-        "minimatch": "^10.2.2",
+        "minimatch": "^11.0.2",
         "minipass": "^7.1.3",
-        "path-scurry": "^2.0.2"
+        "path-scurry": "^3.0.0"
       },
       "engines": {
         "node": "18 || 20 || >=22"
@@ -7338,15 +7335,16 @@
       }
     },
     "node_modules/minimatch": {
-      "version": "10.2.6",
-      "resolved": "https://registry.npmjs.org/minimatch/-/minimatch-10.2.6.tgz",
-      "integrity": "sha512-vpLQEs+VLCr1nU0BXS07maYoFwlDAH0gngQuuttxIwutDFEMHq2blX+8vpgxDdK3J1PwjCJiep77OitTZ4Ll1A==",
+      "version": "11.0.4",
+      "resolved": "https://registry.npmjs.org/minimatch/-/minimatch-11.0.4.tgz",
+      "integrity": "sha512-/UJ1dEoVQTjPNDh6SGlUo+ueLMmoHTas4q+8yaAR/5t6nLAIiBDJtoYUh20IYleix7ehiQkgczb84PE3uzHkxg==",
       "license": "BlueOak-1.0.0",
       "dependencies": {
-        "brace-expansion": "^5.0.8"
+        "@isaacs/nonrecursive-glob-match": "^1.0.3",
+        "brace-expansion": "^5.0.12"
       },
       "engines": {
-        "node": "18 || 20 || >=22"
+        "node": "20 || >=22"
       },
       "funding": {
         "url": "https://github.com/sponsors/isaacs"
@@ -7938,9 +7936,9 @@
       }
     },
     "node_modules/path-scurry": {
-      "version": "2.0.2",
-      "resolved": "https://registry.npmjs.org/path-scurry/-/path-scurry-2.0.2.tgz",
-      "integrity": "sha512-3O/iVVsJAPsOnpwWIeD+d6z/7PmqApyQePUtCndjatj/9I5LylHvt5qluFaBT3I5h3r1ejfR056c+FCv+NnNXg==",
+      "version": "3.0.0",
+      "resolved": "https://registry.npmjs.org/path-scurry/-/path-scurry-3.0.0.tgz",
+      "integrity": "sha512-1pTbQqH1wIwMi/eleQ5leFTTCkzFsPcgXNjwOA8YGGW/W4/kHT3dssE7Z6NH+zuqNLOzOB0uaD61yl7cAcVhgg==",
       "license": "BlueOak-1.0.0",
       "dependencies": {
         "lru-cache": "^11.0.0",
@@ -8160,17 +8158,16 @@
       "license": "MIT"
     },
     "node_modules/query-string": {
-      "version": "9.5.1",
-      "resolved": "https://registry.npmjs.org/query-string/-/query-string-9.5.1.tgz",
-      "integrity": "sha512-/zO3RwuRCMTIcEgq6YMv4OrtEE1XzBG7w5N6zc6ydYnkWYOWsnLI/5894hYEzfESfMOT4cHCsRTIdxsSl1KjGg==",
+      "version": "10.0.0",
+      "resolved": "https://registry.npmjs.org/query-string/-/query-string-10.0.0.tgz",
+      "integrity": "sha512-QYodx/Ywk8lCcOmsyupXVN91yWPAdjq0xVqE2FE2BHFYnma71C8txR8JCBptjzoUpkfAK7Qjua9VjYRTru4LYg==",
       "license": "MIT",
       "dependencies": {
-        "decode-uri-component": "^0.5.0",
-        "filter-obj": "^5.1.0",
-        "split-on-first": "^3.0.0"
+        "filter-obj": "^6.1.0",
+        "split-on-first": "^4.0.0"
       },
       "engines": {
-        "node": ">=18"
+        "node": ">=22"
       },
       "funding": {
         "url": "https://github.com/sponsors/sindresorhus"
@@ -8489,9 +8486,9 @@
       "license": "MIT"
     },
     "node_modules/semver": {
-      "version": "7.8.5",
-      "resolved": "https://registry.npmjs.org/semver/-/semver-7.8.5.tgz",
-      "integrity": "sha512-Y7/KDsb8LjooZpwaqGyulO6DQlksgCncchHGk+sZIY4SBvUocMBEFH5Ur1fI4dV+Jvl0w6cjvucaIi40puRioA==",
+      "version": "7.8.6",
+      "resolved": "https://registry.npmjs.org/semver/-/semver-7.8.6.tgz",
+      "integrity": "sha512-9lpSSU4Mly3mrtruwLs1eLK6+gzbzqeBFwRNjIjE+9LuDpWdYctrQlQ3ej1Ilgi7gknpsTRnPoLP8DpCHqHIJw==",
       "license": "ISC",
       "bin": {
         "semver": "bin/semver.js"
@@ -8527,9 +8524,9 @@
       }
     },
     "node_modules/serialize-error": {
-      "version": "13.0.2",
-      "resolved": "https://registry.npmjs.org/serialize-error/-/serialize-error-13.0.2.tgz",
-      "integrity": "sha512-G+YKwp9I6IvWMe5RlwqxdmTPIcq/G8HK/sU51gdV1XAJznYkRSTB0ph+zB9AfSxG0fx6xrqYA6i9HeIcHFTXow==",
+      "version": "13.1.0",
+      "resolved": "https://registry.npmjs.org/serialize-error/-/serialize-error-13.1.0.tgz",
+      "integrity": "sha512-FT1EL2Pz7lAWA48I6Qb1qHEvGT9ZGz2pb1sYZ9Dhu2t+RmHN6O12WMu7HzFcqFRQaUWEl3Q+++EYBTrZpCoykQ==",
       "license": "MIT",
       "dependencies": {
         "non-error": "^0.1.0",
@@ -8794,12 +8791,12 @@
       "license": "CC0-1.0"
     },
     "node_modules/split-on-first": {
-      "version": "3.0.0",
-      "resolved": "https://registry.npmjs.org/split-on-first/-/split-on-first-3.0.0.tgz",
-      "integrity": "sha512-qxQJTx2ryR0Dw0ITYyekNQWpz6f8dGd7vffGNflQQ3Iqj9NJ6qiZ7ELpZsJ/QBhIVAiDfXdag3+Gp8RvWa62AA==",
+      "version": "4.0.0",
+      "resolved": "https://registry.npmjs.org/split-on-first/-/split-on-first-4.0.0.tgz",
+      "integrity": "sha512-pyrgNqiEBHA9KlEtg9quYGagtrlTyukL3ryQ+RmjRn9SYmcNQmfa+sWIsI+hlcL4WrmFdrt7IfM6o8ktBAooDQ==",
       "license": "MIT",
       "engines": {
-        "node": ">=12"
+        "node": ">=20"
       },
       "funding": {
         "url": "https://github.com/sponsors/sindresorhus"
