@@ -1,6 +1,6 @@
 # Change Log
 
-## [unreleased]
+## [4.1.0] (November 9, 2026)
 
 * Updated `webdriverio` and related `@wdio/*` dependencies to version 10, `@wdio/visual-service` to version 11 and `expect-webdriverio` to version 8.
 * Required Node.js version ">=22.19.0".
