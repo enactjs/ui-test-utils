@@ -2,9 +2,12 @@ import curry from 'ramda/src/curry';
 
 const toLower = (str) => str.replace(/^\w/, (chr) => chr.toLowerCase());
 
-// Given a selector and a starting element, returns the first matching descendant Element
+// Given a selector and a starting element, returns the first matching descendant Element.
+// `strict: false` opts out of WebdriverIO v10 strict selector mode so that a selector
+// matching multiple elements returns the first match (the historical behavior) instead
+// of throwing a StrictSelectorError.
 // String => Element => Element
-const element = curry((selector, el) => el.$(selector));
+const element = curry((selector, el) => el.$(selector, {strict: false}));
 
 // Given an element, returns its inner text
 // Element => String
@@ -41,7 +44,9 @@ const getSubComponent = curry((opts, el) => element(
 // Given two elements, determine if the first element is to the left of the second element
 // element, element => Boolean
 async function expectOrdering (firstElement, secondElement) {
-	expect(await firstElement.getLocation().x < secondElement.getLocation().x).to.be.true();
+	const {x: firstX} = await firstElement.getLocation();
+	const {x: secondX} = await secondElement.getLocation();
+	expect(firstX < secondX).toBe(true);
 }
 
 const hasClass = curry(async (className, el) => {

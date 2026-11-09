@@ -122,7 +122,7 @@ async function checkSessionHealth () {
 				if (global.failedSessions) {
 					global.failedSessions.add(sessionId);
 				}
-				throw new Error('Session health check failed - marking as dead');
+				throw new Error('Session health check failed - marking as dead', {cause: e});
 			}
 
 			// Try quick recovery for the first 2 failures
@@ -258,7 +258,7 @@ async function beforeTest (testData) {
 }
 
 async function afterTest (testData, _context, {error, passed}) {
-	// WDIO v9 passes `testData` as an identity snapshot captured before the test body runs,
+	// WDIO (since v9) passes `testData` as an identity snapshot captured before the test body runs,
 	// so the `context` assigned inside the test is not present on it.
 	const testContext = (_context && _context.test && _context.test.context) || testData.context;
 
